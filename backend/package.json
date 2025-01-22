@@ -1,0 +1,41 @@
+{
+  "name": "grow-global-project",
+  "version": "1.0.0",
+  "description": "simple web application where a user can perform crud ops and also the application has login and registration implementation",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server.js" ,
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Aryesh",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "coinpayments": "^2.2.0",
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "dotenv": "^16.4.5",
+    "emailjs": "^4.0.3",
+    "ethers": "^6.13.2",
+    "express": "^4.19.2",
+    "express-async-handler": "^1.2.0",
+    "filestack-js": "^3.32.3",
+    "gridfs-stream": "^1.1.1",
+    "hapi-auth-jwt2": "^10.6.0",
+    "hapi-swagger": "^17.3.0",
+    "joi": "^17.13.3",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.6.1",
+    "nodemailer": "^6.9.15",
+    "nodemon": "^3.1.4",
+    "otp-generator": "^4.0.1",
+    "process": "^0.11.10",
+    "qs": "^6.13.0",
+    "socket.io": "^4.7.5",
+    "sol-merger": "^4.4.1",
+    "solc": "^0.8.27",
+    "stream-to-file": "^2.0.1",
+    "stripe": "^16.10.0",
+    "uuid": "^10.0.0"
+  }
+}
