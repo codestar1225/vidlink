@@ -11,8 +11,10 @@
   "dependencies": {
     "jotai": "^2.11.1",
     "next": "15.1.5",
+    "next-fonts": "^1.5.1",
     "next-themes": "^0.4.4",
     "react": "^19.0.0",
+    "react-device-detect": "^2.2.3",
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
