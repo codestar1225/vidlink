@@ -1,4 +1,5 @@
 import { Video } from "@/components/ui/video";
+import Link from "next/link";
 interface Type {
   name: string;
   review: number;
@@ -8,9 +9,9 @@ interface Type {
 const Item: React.FC<Type> = ({ name, review, src, no }) => {
   return (
     <>
-      <div className="h-[149.33px] w-[117.73px] flex flex-col items-center  justify-between">
-        <div className="w-full h-[86.48px] rounded-[8.37px] overflow-hidden ">
-          <Video src={src} />
+      <li className="h-[149.33px] w-[117.73px] flex flex-col items-center  justify-between">
+        <div className="w-full h-[86.48px] rounded-[8.37px] overflow-hidden ">         
+            <Video src={src} />      
         </div>
         <div className="w-[58.6px] h-[43.32px] flex flex-col justify-between items-center">
           <h1 className="text-[7.81px] font-semibold">VIDEO {no}</h1>
@@ -23,7 +24,7 @@ const Item: React.FC<Type> = ({ name, review, src, no }) => {
             <p className=" text-[6.7px] text-[#7C889D]">{review}</p>
           </div>
         </div>
-      </div>
+      </li>
     </>
   );
 };

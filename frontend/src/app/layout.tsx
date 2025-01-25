@@ -5,6 +5,7 @@ import "./globals.css";
 import ThemeProvider from "@/provider/themeProvider";
 import JotaiProvider from "@/provider/jotaiProvider";
 import Header from "@/components/layout/mobile/header";
+import SessionProvide from "@/provider/sessionProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,8 +34,10 @@ export default function RootLayout({
       >
         <JotaiProvider>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            {!isMobile ? <Header /> : <></>}
-            {children}
+            <SessionProvide>
+                {!isMobile ? <Header /> : <></>}
+                {children}
+            </SessionProvide>
           </ThemeProvider>
         </JotaiProvider>
       </body>

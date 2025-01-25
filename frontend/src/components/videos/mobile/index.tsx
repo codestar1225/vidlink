@@ -7,6 +7,7 @@ import videos2 from "./videos2.json";
 import { useRouter } from "next/navigation";
 import Header from "@/components/layout/mobile/header";
 import Footer from "@/components/layout/mobile/footer";
+import Link from "next/link";
 
 interface Videos {
   editor: string;
@@ -25,13 +26,12 @@ const VideosMobile = () => {
     }
     router.refresh();
   }, [replace]);
-  console.log(replace);
   return (
     <>
-      <main className="h-svh">
+      <main className="h-svh grid grid-col">
         <Header />
         <SubHeader replace={replace} setReplace={setReplace} />
-        <div className="w-svw overflow-scroll gap-x-[11px] gap-y-[15px] flex flex-wrap justify-center items-start">
+        <ul className="w-svw overflow-scroll gap-x-[11px] gap-y-[15px] flex flex-wrap justify-center items-start">
           {videos.map((item, index) => (
             <Item
               name={item.editor}
@@ -41,7 +41,15 @@ const VideosMobile = () => {
               key={index}
             />
           ))}
-        </div>
+          <div className="w-svw flex justify-center">
+            <Link
+              href={"/videos"}
+              className="border-[1.5px] dark:border-white border-black rounded-[3.2px] text-[14.91px] pt-[3.2px] pb-[1.5px] px-[2.13px] mt-[59.62px] mb-[109.23px]"
+            >
+              ALL VIDEOS
+            </Link>
+          </div>
+        </ul>
         <Footer isFixed={true} />
       </main>
     </>

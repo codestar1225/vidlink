@@ -9,7 +9,7 @@ interface Type {
 const Header: React.FC<Type> = ({ replace, setReplace }) => {
   return (
     <>
-      <header className="pt-[103px]  flex flex-col items-center gap-[28.1px] mx-[22px]">
+      <header className="pt-[103px] z-10 flex flex-col items-center gap-[28.1px] mx-[22px]">
         <div className="flex gap-[83px]">
           <button
             onClick={() => setReplace("you")}

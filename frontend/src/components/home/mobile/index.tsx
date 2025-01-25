@@ -1,15 +1,22 @@
 "use client";
-import { Video } from "./video";
 import Link from "next/link";
 import { basicBold } from "@/style/fonts/fonts";
 import { useTheme } from "next-themes";
 import Footer from "@/components/layout/mobile/footer";
+import { Video1 } from "./video1";
+import { Video2 } from "./video2";
+import { useState } from "react";
 
 export default function HomeMobile() {
+  const [isPlay, setIsPLay] = useState<boolean>(false);
+  const videoPlay = () => {
+    setIsPLay(true);
+  };
   return (
     <>
       <div className=" relative">
-        <Video src="https://s3-figma-videos-production-sig.figma.com/video/TEAM/1393144935889806437/21ccd5fbb587ece024aabb6db8830cd85bb7a8f0?Expires=1738540800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=Oymt56DcqCqtmiMbL8xH5XpbPkzBiB0THOeL5Z~nieE~CYDpsxvM1FjMT~HIKgkK70CbrtW~C5wgdKJzRzyFXnMLAhvhcXrJeTd47FXIt5STcOeKTFg5qPx~5rek2dQAYs5MMGzOSpXDg2GWLa2NYcSCUjZVdo6g2ZN71ROHHlH5HnHc1YKbddDMmB-VJJSFhs2XR3~ANTsGJGzjgMeXwcyA1hOnz-FnhYlVAMZHJWAxs2IalLknURlO-g8HaGsSZYxrLpSSenDOoTrRnS7KdT66jIbCpRYRk9iTJttqjpy0zmdrNcNXg~v4xfNLq7OnhPcZW00y3WLBmfzbyRKOPg__" />
+        <Video1 src="/video/home/home.mp4" />
+        {/* <Video1 src="/video/home/home1.mp4" /> */}
         <div className="absolute top-[332px] w-full flex justify-center items-centers">
           <div>
             <img src="/icon/home/title.svg" alt="" />
@@ -38,10 +45,23 @@ export default function HomeMobile() {
         >
           HOW IT WORKS
         </h1>
-        <p className="flex justify-center items-center border-black dark:border-white border-[2px] rounded-[9.42px] w-full h-[574px]">
-          <img className="dark:hidden" src="/icon/home/play_dark.svg" alt="" />
-          <img className="dark:block hidden" src="/icon/home/play.svg" alt="" />
-        </p>
+        <div className="flex justify-center items-center border-black dark:border-white border-[2px] rounded-[9.42px] w-full h-[574px] relative overflow-hidden">
+          {isPlay && <Video2 src="/video/home/home.mp4" />}
+          {isPlay || (
+            <button onClick={videoPlay}>
+              <img
+                className="dark:hidden absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+                src="/icon/home/play_dark.svg"
+                alt=""
+              />
+              <img
+                className="dark:block hidden absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+                src="/icon/home/play.svg"
+                alt=""
+              />
+            </button>
+          )}
+        </div>
         <p className="text-[12px] w-full pt-[21px] px-[5px] text-justify leading-[14.4px]">
           A tool that allows you to insert content into your favorite videos.
           Thanks to its non intrusive design you can watch and interact or not.
@@ -50,7 +70,7 @@ export default function HomeMobile() {
           you don’t click where you should not.
         </p>
         <Link
-          href={""}
+          href={"/videos"}
           className="border-[1.5px] dark:border-white border-black rounded-[3.2px] text-[14.91px] pt-[3.2px] pb-[1.5px] px-[2.13px] my-[43px] "
         >
           ALL VIDEOS
