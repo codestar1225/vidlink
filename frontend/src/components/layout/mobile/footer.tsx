@@ -1,6 +1,7 @@
+import Image from "next/image";
 import Link from "next/link";
 
-const Footer = ({ isFixed }: { isFixed: boolean }) => {
+const FooterMobile = ({ isFixed }: { isFixed: boolean }) => {
   return (
     <>
       <footer
@@ -20,7 +21,7 @@ const Footer = ({ isFixed }: { isFixed: boolean }) => {
           <p className="text-[6px]">TERMS & CONDITIONS</p>
         </div>
         <div className="flex flex-col items-center">
-          <Link href={"/profile"}>
+          <Link href={"/"}>
             <img src="/icon/layout/title.svg" alt="" />
           </Link>
           <p className="text-[7px]">A TOOL BY FALCA</p>
@@ -40,4 +41,4 @@ const Footer = ({ isFixed }: { isFixed: boolean }) => {
     </>
   );
 };
-export default Footer;
+export default FooterMobile;

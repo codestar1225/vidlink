@@ -1,7 +1,7 @@
 const Card = () => {
   return (
     <>
-      <li className="border-[0.7px] border-[#0068FF] bg-[#0068FF] rounded-[6px] w-[122.41px] h-[93.06px] p-[5.9px] flex flex-col justify-between">
+      <li className="border-[0.7px] border-[#0068FF] bg-[#0068FF] rounded-[6px] w-[122.41px] h-[94.5px] p-[5.9px] flex flex-col justify-between">
         <div className="text-[13.86px] font-semibold flex justify-between w-full items-center">
           <div>01</div> <i className="font-normal">(0:01)</i>
         </div>

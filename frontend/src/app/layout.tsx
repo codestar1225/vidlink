@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { isMobile } from "react-device-detect";
 import "./globals.css";
 import ThemeProvider from "@/provider/themeProvider";
 import JotaiProvider from "@/provider/jotaiProvider";
@@ -35,7 +34,6 @@ export default function RootLayout({
         <JotaiProvider>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <SessionProvide>
-                {!isMobile ? <Header /> : <></>}
                 {children}
             </SessionProvide>
           </ThemeProvider>

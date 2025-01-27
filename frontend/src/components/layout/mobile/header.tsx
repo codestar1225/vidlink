@@ -1,31 +1,73 @@
+"use client";
 import Link from "next/link";
 import Item from "./Item";
+import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import Loading from "@/components/ui/loading";
 
-const Header = () => {
-  return (
-    <>
-      <header className="fixed top-0 left-0 w-screen z-10">
-        <div className="flex justify-between pt-[30px] bg-transparent mx-[32px]">
-          <Link href={"/menu"}>
-            <img src="/icon/layout/menu.svg" alt="" />
-          </Link>
-          <div className="flex gap-[9px]">
-            <Link href={"/message"}>
-              <img src="/icon/layout/message.svg" alt="" />
+const HeaderMobile = () => {
+  const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false);
+  const [isAuth, setIsAuth] = useState<boolean>(false);
+  const { data: session, status } = useSession();
+  const router = useRouter();
+  useEffect(() => {
+    if (status === "authenticated") {
+      setIsAuth(true);
+    }
+  }, [status, router]);
+
+  return !isOpenMenu ? (
+    <header className="fixed z-10 top-0 left-0 w-screen visible ">
+      <div className="flex justify-between pt-[30px] bg-transparent mx-[32px]">
+        <button onClick={() => setIsOpenMenu(true)}>
+          <img src="/icon/layout/menu.svg" alt="" />
+        </button>
+        <div className="flex gap-[9px]">
+          {isAuth ? (
+            <>
+              <Link href={"/message"}>
+                <img src="/icon/layout/message.svg" alt="" />
+              </Link>
+
+              <Link href={"/profile"}>
+                <img src="/icon/layout/avatar.svg" alt="" />
+              </Link>
+            </>
+          ) : (
+            <Link href={"/register"}>
+              <img src="/icon/layout/logo.svg" alt="" />
             </Link>
-            <Link href={"/profile"}>
-              <img src="/icon/layout/avatar.svg" alt="" />
-            </Link>
-          </div>
+          )}
         </div>
-        <div className=" absolute">
-          <Item url={"/"} name="HOME" />
-          <Item url={"/videos"} name="VIDEOS" />
-          <Item url={"/upload"} name="UPLOAD" />
-          <Item url={"/profile"} name="PROFILE" />
+      </div>
+    </header>
+  ) : (
+    <header className="fixed z-10 top-0 left-0 w-screen">
+      <div className="pt-[30px] bg-transparent mx-[32px]">
+        <button onClick={() => setIsOpenMenu(false)}>
+          <img src="/icon/layout/close.svg" alt="" />
+        </button>
+        <div className={`mt-[15px] flex  ${isAuth?"justify-between":"justify-start gap-5"}`}>
+          <Item url={"/"} name="HOME" setIsOpenMenu={setIsOpenMenu} />
+          <Item url={"/videos"} name="VIDEOS" setIsOpenMenu={setIsOpenMenu} />
+          {isAuth && (
+            <>
+              <Item
+                url={"/upload"}
+                name="UPLOAD"
+                setIsOpenMenu={setIsOpenMenu}
+              />
+              <Item
+                url={"/profile"}
+                name="PROFILE"
+                setIsOpenMenu={setIsOpenMenu}
+              />
+            </>
+          )}
         </div>
-      </header>
-    </>
+      </div>
+    </header>
   );
 };
-export default Header;
+export default HeaderMobile;

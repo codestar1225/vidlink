@@ -4,6 +4,7 @@ import CardNext from "@/components/ui/cardNext";
 import UserVideo from "./userVideo";
 import RelatedVideo from "./relatedVideo";
 import Link from "next/link";
+import Image from "next/image";
 
 const VideoMobile = ({ id }: { id: string }) => {
   return (
@@ -25,8 +26,8 @@ const VideoMobile = ({ id }: { id: string }) => {
           </div>
         </div>
         {/* image */}
-        <div className="relative rounded-[7.36px] overflow-hidden">
-          <img src="/image/detail/man.svg" alt="" />
+        <div className="relative rounded-[7.36px] flex justify-center overflow-hidden">
+          <img src="/image/detail/man.png" alt="" />
           <div className=" absolute"></div>
         </div>
         {/* detail */}
@@ -73,7 +74,7 @@ const VideoMobile = ({ id }: { id: string }) => {
       <div className="w-svw flex justify-center">
         <Link
           href={"/videos"}
-          className="border-[1.5px] dark:border-white border-black rounded-[3.2px] text-[14.91px] pt-[3.2px] pb-[1.5px] px-[2.13px] mt-[94.5px] mb-[132.6px]"
+          className="border-[1.5px] border-white rounded-[3.2px] text-[14.91px] pt-[3.2px] pb-[1.3px] px-[2.13px] mt-[94.5px] mb-[132.6px]"
         >
           ALL VIDEOS
         </Link>

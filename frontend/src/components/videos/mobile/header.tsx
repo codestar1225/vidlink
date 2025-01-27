@@ -9,21 +9,21 @@ interface Type {
 const Header: React.FC<Type> = ({ replace, setReplace }) => {
   return (
     <>
-      <header className="pt-[103px] z-10 flex flex-col items-center gap-[28.1px] mx-[22px]">
+      <header className="pt-[103px] flex flex-col items-center gap-[28.1px] mx-[22px]">
         <div className="flex gap-[83px]">
           <button
             onClick={() => setReplace("you")}
             className={`${
-              replace === "you" ? "text-[#0068FF] " : "text-[#3C4450]"
-            } font-bold text-[20px] leading-[18.07px] underline underline-offset-[25%]`}
+              replace === "you" ? "text-[#0068FF] font-bold" : "text-[#3C4450] font-semibold "
+            } text-[20px] leading-[18.07px] underline underline-offset-[25%]`}
           >
             FOR YOU
           </button>
           <button
             onClick={() => setReplace("follow")}
             className={`${
-              replace === "follow" ? "text-[#0068FF] " : "text-[#3C4450]"
-            } font-bold text-[20px] leading-[18.07px] underline underline-offset-[25%]`}
+              replace === "follow" ? "text-[#0068FF] font-bold" : "text-[#3C4450] font-semibold "
+            } text-[20px] leading-[18.07px] underline underline-offset-[25%]`}
           >
             FOLLOWING
           </button>

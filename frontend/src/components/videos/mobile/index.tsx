@@ -29,7 +29,6 @@ const VideosMobile = () => {
   return (
     <>
       <main className="h-svh grid grid-col">
-        <Header />
         <SubHeader replace={replace} setReplace={setReplace} />
         <ul className="w-svw overflow-scroll gap-x-[11px] gap-y-[15px] flex flex-wrap justify-center items-start">
           {videos.map((item, index) => (
@@ -44,9 +43,9 @@ const VideosMobile = () => {
           <div className="w-svw flex justify-center">
             <Link
               href={"/videos"}
-              className="border-[1.5px] dark:border-white border-black rounded-[3.2px] text-[14.91px] pt-[3.2px] pb-[1.5px] px-[2.13px] mt-[59.62px] mb-[109.23px]"
+              className="rounded-xl font-semibold text-[18px] py-[7px] px-[10px] bg-[#0068FF] mt-[59.62px] mb-[109.23px] tracking-widest"
             >
-              ALL VIDEOS
+              VIEW MORE
             </Link>
           </div>
         </ul>
