@@ -10,6 +10,7 @@ const AuthProvider =  ({ children }: { children: React.ReactNode }) => {
 
     const router = useRouter();
     const { data: session, status } = useSession();
+    console.log(session)
     useEffect(() => {
       if (status === "unauthenticated") {
         router.push("/register");

@@ -85,7 +85,6 @@ const Preview:React.FC<Type> = ({setIsAdd}) => {
           EDIT
         </button>
         <button
-          // onClick={() => setIsAdd(true)}
           className="w-[282.8px] h-[50px] text-[21.5px] font-semibold rounded-[20px] bg-[#0068FF] mx-auto flex justify-center items-center mb-[56px] tracking-wider"
         >
           PUBLISH

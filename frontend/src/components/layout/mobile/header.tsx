@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Loading from "@/components/ui/loading";
+import { useAtom } from "jotai";
+import { sessionAtom } from "@/app/store/sessionAtom";
 
 const HeaderMobile = () => {
   const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false);
@@ -17,8 +19,32 @@ const HeaderMobile = () => {
     }
   }, [status, router]);
 
+  const [isBlurred, setIsBlurred] = useState(false);
+  const [ses, setSes] = useAtom(sessionAtom);
+  console.log(ses,'aaaaaaaaaaaaaaa');
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setIsBlurred(true);
+      } else {
+        setIsBlurred(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return !isOpenMenu ? (
-    <header className="fixed z-10 top-0 left-0 w-screen visible ">
+    <header
+      className={`${
+        isBlurred ? "backdrop-blur-md bg-white/50" : "bg-transparent"
+      } fixed z-10 top-0 left-0 w-screen visible`}
+    >
       <div className="flex justify-between pt-[30px] bg-transparent mx-[32px]">
         <button onClick={() => setIsOpenMenu(true)}>
           <img src="/icon/layout/menu.svg" alt="" />
@@ -48,7 +74,11 @@ const HeaderMobile = () => {
         <button onClick={() => setIsOpenMenu(false)}>
           <img src="/icon/layout/close.svg" alt="" />
         </button>
-        <div className={`mt-[15px] flex  ${isAuth?"justify-between":"justify-start gap-5"}`}>
+        <div
+          className={`mt-[15px] flex  ${
+            isAuth ? "justify-between" : "justify-start gap-5"
+          }`}
+        >
           <Item url={"/"} name="HOME" setIsOpenMenu={setIsOpenMenu} />
           <Item url={"/videos"} name="VIDEOS" setIsOpenMenu={setIsOpenMenu} />
           {isAuth && (

@@ -6,7 +6,7 @@ interface Type {
   src: string;
   no: number;
 }
-const Item: React.FC<Type> = ({ name, review, src, no }) => {
+const VideoItem: React.FC<Type> = ({ name, review, src, no }) => {
   return (
     <>
       <li className="h-[149.33px] w-[117.73px] flex flex-col items-center  justify-between">
@@ -28,4 +28,4 @@ const Item: React.FC<Type> = ({ name, review, src, no }) => {
     </>
   );
 };
-export default Item;
+export default VideoItem;

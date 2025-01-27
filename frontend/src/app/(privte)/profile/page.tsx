@@ -1,7 +1,7 @@
-import UploadDesktop from "@/components/upload/desktop";
-import UploadMobile from "@/components/upload/mobile";
+import ProfileDesktop from "@/components/profile/desktop";
+import ProfileMobile from "@/components/profile/mobile";
 import { isMobile } from "react-device-detect";
 const Page = () => {
-  return <>{!isMobile ? <UploadMobile /> : <UploadDesktop />}</>;
+  return <>{!isMobile ? <ProfileMobile/> : <ProfileDesktop />}</>;
 };
 export default Page;
