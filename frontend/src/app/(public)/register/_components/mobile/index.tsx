@@ -17,25 +17,25 @@ const RegisterMobile = () => {
     // const data = await register(session?.idToken);
     // alert(data?.message);
     // console.log(data?.token);
-    if (session) {
-      signOut({ callbackUrl: "/" });
-    } else {
+    // if (session) {
+    //   signOut({ callbackUrl: "/" });
+    // } else {
     const res = await signIn("google");
-    console.log(res)
-    if (res?.ok) {
-      // Fetch the updated session after signing in
-      // const updatedSession = await fetch("/api/auth/[aaa]").then((res) =>
-      //   res.json()
-      // );
+    // console.log(res)
+    // if (res?.ok) {
+    // Fetch the updated session after signing in
+    // const updatedSession = await fetch("/api/auth/[aaa]").then((res) =>
+    //   res.json()
+    // );
 
-      // if (updatedSession) {
-      //   // Call the register function with the updated session
-      //   await register(updatedSession);
-      // }
-    } else {
-      console.error("Sign-in failed:", res?.error);
-    }
-    }
+    // if (updatedSession) {
+    //   // Call the register function with the updated session
+    //   await register(updatedSession);
+    // }
+    // } else {
+    // console.error("Sign-in failed:", res?.error);
+    // }
+    // }
   };
 
   if (status === "loading") {
@@ -43,18 +43,22 @@ const RegisterMobile = () => {
   }
   return (
     <>
-      <main className="pt-[331px] w-fll h-[] flex flex-col items-center gap-[40px]">
+      <main className="pt-[331px] w-fll flex flex-col items-center gap-[40px]">
         <img className="h-[55.4px]" src="/icon/home/title.png" alt="" />
         <button
           type="submit"
           onClick={handleSign}
-          className="flex items-center justify-center gap-[12.81px] bg-[#0368fb] rounded-[12.81px] w-[309px] h-[48px]"
+          className="flex items-center justify-center gap-[12.81px] bg-blue rounded-[12.81px] w-[309px] h-[48px]"
         >
           <h1 className="text-[16px] font-semibold text-white">
-            {!session ? "SIGN UP WITH GOOGLE" : "LOG OUT"}
+            SIGN UP WITH GOOGLE
           </h1>
           <img src="/icon/register/google.svg" alt="" />
         </button>
+        <div className="flex gap-[20px] text-[13px] tracking-wide">
+          <h1>Already on VIDLINK?</h1>
+          <button className="text-blue">Sign in</button>
+        </div>
       </main>
       <Footer isFixed={true} />
     </>

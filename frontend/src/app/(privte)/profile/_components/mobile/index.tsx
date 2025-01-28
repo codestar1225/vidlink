@@ -6,6 +6,8 @@ import { useState } from "react";
 import VideoItem from "@/app/(public)/videos/_components/mobile/videoItem";
 import videos from "../../../../(public)/videos/_components/mobile/videos1.json";
 import { Video } from "@/app/_components/ui/video";
+import { signOut } from "next-auth/react";
+import { redirect } from "next/dist/server/api-utils";
 
 const ProfileMobile = () => {
   const [nav, setNav] = useState<string>("videos");
@@ -32,13 +34,16 @@ const ProfileMobile = () => {
               <AmountItem number={227} label="VIDEOS" />
             </div>
             <div className="flex flex-col gap-[5.47px] ">
-              <button className="h-[28.88px] bg-[#0068FF] rounded-[4.97px] flex items-center justify-center text-[10.5px] font-semibold">
+              <button className="h-[28.88px] bg-blue rounded-[4.97px] flex items-center justify-center text-[10.5px] font-semibold">
                 DASHBOARD
               </button>
               <button className="h-[28.88px] bg-[#7C889D] rounded-[4.97px] flex items-center justify-center text-[10.5px] font-semibold">
                 SETTINGS
               </button>
-              <button className="h-[28.88px] bg-[#002355] rounded-[4.97px] flex items-center justify-center text-[10.5px] font-semibold">
+              <button
+                onClick={() => signOut({ callbackUrl: "/" })}
+                className="h-[28.88px] bg-[#002355] rounded-[4.97px] flex items-center justify-center text-[10.5px] font-semibold"
+              >
                 LOG OUT
               </button>
             </div>

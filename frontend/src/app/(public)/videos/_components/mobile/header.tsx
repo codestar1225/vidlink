@@ -14,7 +14,7 @@ const Header: React.FC<Type> = ({ replace, setReplace }) => {
           <button
             onClick={() => setReplace("you")}
             className={`${
-              replace === "you" ? "text-[#0068FF] font-bold" : "text-[#3C4450] font-semibold "
+              replace === "you" ? "text-blue font-bold" : "text-[#3C4450] font-semibold "
             } text-[20px] leading-[18.07px] underline underline-offset-[25%]`}
           >
             FOR YOU
@@ -22,7 +22,7 @@ const Header: React.FC<Type> = ({ replace, setReplace }) => {
           <button
             onClick={() => setReplace("follow")}
             className={`${
-              replace === "follow" ? "text-[#0068FF] font-bold" : "text-[#3C4450] font-semibold "
+              replace === "follow" ? "text-blue font-bold" : "text-[#3C4450] font-semibold "
             } text-[20px] leading-[18.07px] underline underline-offset-[25%]`}
           >
             FOLLOWING

@@ -86,7 +86,7 @@ const AddCards: React.FC<Type> = ({ isAdd, setIsAdd }) => {
         <Cards />
         <button
           onClick={() => setIsAdd(true)}
-          className="w-[309px] h-[50px] text-[21.5px] font-semibold rounded-[16px] bg-[#0068FF] mx-auto flex justify-center items-center mt-[57px] mb-[65px] tracking-wider"
+          className="w-[309px] h-[50px] text-[21.5px] font-semibold rounded-[16px] bg-blue mx-auto flex justify-center items-center mt-[57px] mb-[65px] tracking-wider"
         >
           PREVIEW & PUBLISH
         </button>

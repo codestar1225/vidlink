@@ -5,7 +5,7 @@ const UserVideo = () => {
     <>
       <div className=" px-[11px]">
         <h1 className="text-[12px] pb-[11px]">
-          <span className="text-[#0068FF]">MORE OF</span>&nbsp;- USERNAME
+          <span className="text-blue">MORE OF</span>&nbsp;- USERNAME
         </h1>
         <ul className=" overflow-hidden h-[189.5px] gap-x-[11px] gap-y-[15px] flex flex-wrap justify-center items-start">
           {videos.map((item, index) => (

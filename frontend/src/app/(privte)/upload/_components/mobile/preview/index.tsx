@@ -14,7 +14,7 @@ const Preview:React.FC<Type> = ({setIsAdd}) => {
         {/* title */}
         <div className="flex justify-between items-center px-[15px] w-full pb-[10px]">
           <h1 className="text-[14px] font-normal ">
-            <span className="text-[#0068FF]">WHERE SHE GOES</span>
+            <span className="text-blue">WHERE SHE GOES</span>
             &nbsp;- BAD BUNNY
           </h1>
           <div className="flex gap-[13px] items-center">
@@ -36,7 +36,7 @@ const Preview:React.FC<Type> = ({setIsAdd}) => {
           <div className="absolute top-[18.6px] left-[11px] flex gap-[10.3px] items-start">
             <img src="/icon/detail/avatar.svg" alt="" />
             <div className="flex flex-col h-[38.3px] justify-between items-start">
-              <div className="text-[12px] text-[#0068FF] font-semibold ">
+              <div className="text-[12px] text-blue font-semibold ">
                 USERNAME
               </div>
               <div className="text-[8px] font-normal ">227 VIDEOS</div>
@@ -85,7 +85,7 @@ const Preview:React.FC<Type> = ({setIsAdd}) => {
           EDIT
         </button>
         <button
-          className="w-[282.8px] h-[50px] text-[21.5px] font-semibold rounded-[20px] bg-[#0068FF] mx-auto flex justify-center items-center mb-[56px] tracking-wider"
+          className="w-[282.8px] h-[50px] text-[21.5px] font-semibold rounded-[20px] bg-blue mx-auto flex justify-center items-center mb-[56px] tracking-wider"
         >
           PUBLISH
         </button>

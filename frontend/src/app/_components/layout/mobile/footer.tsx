@@ -6,7 +6,7 @@ const FooterMobile = ({ isFixed }: { isFixed: boolean }) => {
       <footer
         className={`${
           isFixed && "fixed  bottom-0 left-0"
-        } flex justify-between items-center w-svw pt-[9.28px] pb-[8.28px] px-[23px] text-white bg-[#0368fb]`}
+        } flex justify-between items-center w-svw pt-[9.28px] pb-[8.28px] px-[23px] text-white bg-blue`}
       >
         <div className="flex flex-col items-start gap-[3px]">
           <div className="flex gap-[10px] items-center">

@@ -44,7 +44,7 @@ const VideosMobile = () => {
           <div className="w-svw flex justify-center">
             <Link
               href={"/videos"}
-              className="rounded-xl font-semibold text-[18px] py-[7px] px-[10px] bg-[#0068FF] mt-[59.62px] mb-[109.23px] tracking-widest"
+              className="rounded-xl font-semibold text-[18px] py-[7px] px-[10px] bg-blue mt-[59.62px] mb-[109.23px] tracking-widest"
             >
               VIEW MORE
             </Link>

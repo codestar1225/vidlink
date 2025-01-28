@@ -81,7 +81,7 @@ const Upload: React.FC<Type> = ({ fileName, handleUpload, setIsUpload }) => {
             return;
           }}
           className={` ${
-            fileName ? "bg-[#0068FF]" : "bg-[#1E1E1E]"
+            fileName ? "bg-blue" : "bg-[#1E1E1E]"
           } w-[282.81px] h-[50px] flex justify-center rounded-[20px] items-center gap-[10px] mx-auto mt-[88px]  mb-[60px]`}
         >
           <div className="font-semibold text-black text-[21px]">NEXT</div>

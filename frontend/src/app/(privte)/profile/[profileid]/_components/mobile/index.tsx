@@ -32,7 +32,7 @@ const ProfilesMobile = ({id}:{id:string}) => {
               <AmountItem number={227} label="VIDEOS" />
             </div>
             <div className="flex flex-col gap-[5.47px] ">
-              <button className="h-[28.88px] bg-[#0068FF] rounded-[4.97px] flex items-center justify-center text-[10.5px] font-semibold">
+              <button className="h-[28.88px] bg-blue rounded-[4.97px] flex items-center justify-center text-[10.5px] font-semibold">
                 FOLLOW
               </button>
               <button className="h-[28.88px] bg-[#002355] rounded-[4.97px] flex items-center justify-center text-[10.5px] font-semibold">
