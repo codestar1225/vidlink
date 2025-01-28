@@ -1,4 +1,4 @@
-import HeaderMobile from "@/components/layout/mobile/header";
+import HeaderMobile from "@/app/_components/layout/mobile/header";
 import { isMobile } from "react-device-detect";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {

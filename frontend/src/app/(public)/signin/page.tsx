@@ -1,6 +1,6 @@
-import RegisterDesktop from "@/components/register/desktop";
-import RegisterMobile from "@/components/register/mobile";
-import SigninMobile from "@/components/signin/mobile";
+import RegisterDesktop from "@/app/(public)/register/_components/desktop";
+import RegisterMobile from "@/app/(public)/register/_components/mobile";
+import SigninMobile from "@/app/(public)/signin/_components/mobile";
 import { isMobile } from "react-device-detect";
 
 const Page = () => {

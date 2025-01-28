@@ -1,4 +1,4 @@
-import HeaderMobile from "@/components/layout/mobile/header";
+import HeaderMobile from "@/app/_components/layout/mobile/header";
 import AuthProvider from "@/provider/authProvider";
 import { isMobile } from "react-device-detect";
 

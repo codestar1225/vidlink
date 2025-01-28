@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { getSession, useSession } from "next-auth/react";
 import { getTokenFromLocalStorage } from "@/constant/token";
-import Loading from "@/components/ui/loading";
+import Loading from "@/app/_components/ui/loading";
 import { getServerSession } from "next-auth";
 import { useRouter } from "next/navigation";
 
@@ -10,7 +10,8 @@ const AuthProvider =  ({ children }: { children: React.ReactNode }) => {
 
     const router = useRouter();
     const { data: session, status } = useSession();
-    console.log(session)
+    // alert(session?.idToken)
+    console.log('session',session?.idToken)
     useEffect(() => {
       if (status === "unauthenticated") {
         router.push("/register");

@@ -1,6 +1,6 @@
-import HomeDesktop from "@/components/home/desktop";
-import HomeMobile from "@/components/home/mobile";
-import HeaderMobile from "@/components/layout/mobile/header";
+import HomeDesktop from "@/app/_components/root/desktop";
+import HomeMobile from "@/app/_components/root/mobile";
+import HeaderMobile from "@/app/_components/layout/mobile/header";
 import { isMobile } from "react-device-detect";
 
 export default function Page() {

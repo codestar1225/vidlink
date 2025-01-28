@@ -18,8 +18,10 @@ app.use(
   })
 );
 
+
 // Middleware
 app.use(express.json()); // Parse JSON requests
+// app.use(express.urlencoded({ extended: true }));
 
 // Database connection
 connectDB();
@@ -30,6 +32,7 @@ app.use("/api/video", videoRoutes);
 app.get('/about', (req, res) => {
   res.send('about')
 })
+
 // Protected Route Example
 // app.get("/api/protected", authMiddleware, (req, res) => {
 //   res.json({ message: "You are authenticated!" });

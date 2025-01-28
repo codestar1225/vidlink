@@ -10,7 +10,6 @@ export type GoogleTokenPayload = {
 };
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
-
 const register = async (req: Request, res: Response) => {
   try {
     const { idToken } = req.body;
@@ -26,7 +25,6 @@ const register = async (req: Request, res: Response) => {
     }
 
     const user = await authService.findUser(payload.email);
-
     if (user)
       res
         .status(400)
@@ -42,6 +40,7 @@ const register = async (req: Request, res: Response) => {
     }
   } catch (error: any) {
     res.status(400).json({ message: error.message });
+    console.log("error", error.message);
   }
 };
 
@@ -68,8 +67,10 @@ const login = async (req: Request, res: Response) => {
         { expiresIn: "1h" }
       );
       res.status(201).json({ message: "User Logged In", token });
-    }
-    else res.status(400).json({ message: "User doesn't exist, please sign up firstly" });
+    } else
+      res
+        .status(400)
+        .json({ message: "User doesn't exist, please sign up firstly" });
   } catch (error: any) {
     res.status(400).json({ message: error.message });
   }

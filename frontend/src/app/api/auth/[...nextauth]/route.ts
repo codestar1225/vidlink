@@ -1,3 +1,4 @@
+import axios from "axios";
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 
@@ -19,19 +20,19 @@ const handler = NextAuth({
         token.accessToken = account.access_token;
         token.idToken = account.id_token;
       }
+      console.log(token)
       return token;
     },
     async session({ session, token }) {
       session.accessToken = token.accessToken;
       session.idToken = token.idToken;
-      console.log("----------------", session, "oooooooooooooooo");
       return session;
     },
   },
   secret: process.env.NEXTAUTH_SECRET,
   session: {
-    maxAge: 24 * 60 * 60, 
-    updateAge: 4 * 60 * 60, 
+    maxAge: 24 * 60 * 60,
+    updateAge: 4 * 60 * 60,
   },
 });
 
