@@ -4,17 +4,25 @@ import Item from "./Item";
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { useAtom } from "jotai";
+import { tokenAtom } from "@/store";
+import { getItem } from "@/utils/localstorageUtils";
+import Cookies from "js-cookie";
 
 const HeaderMobile = () => {
   const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false);
   const [isAuth, setIsAuth] = useState<boolean>(false);
-  const { data: session, status } = useSession();
+  const [token, setToken] = useAtom<string>(tokenAtom);
   const router = useRouter();
   useEffect(() => {
-    if (status === "authenticated") {
+    // const localToken = getItem("token");
+    const localToken = Cookies.get('token')
+    if (localToken) {
       setIsAuth(true);
+    } else {
+      setIsAuth(false);
     }
-  }, [status, router]);
+  }, [token, router]);
 
   const [isBlurred, setIsBlurred] = useState(false);
 
@@ -56,7 +64,7 @@ const HeaderMobile = () => {
               </Link>
             </>
           ) : (
-            <Link href={"/register"}>
+            <Link href={"/signin"}>
               <img src="/icon/layout/logo.svg" alt="" />
             </Link>
           )}
@@ -69,7 +77,7 @@ const HeaderMobile = () => {
         <button
           onClick={() => setIsOpenMenu(false)}
           className={`${
-            isBlurred ? "backdrop-blur-md bg-white/50" : "bg-transparent"
+            isBlurred ? "backdrop-blur-md bg-white/50 " : "bg-transparent"
           } p-[3px] rounded-full ml-[7px]`}
         >
           <img src="/icon/layout/close.svg" alt="" />

@@ -5,6 +5,7 @@ import ThemeProvider from "@/provider/themeProvider";
 import JotaiProvider from "@/provider/jotaiProvider";
 import Header from "@/app/_components/layout/mobile/header";
 import SessionProvide from "@/provider/sessionProvider";
+import { ToastContainer } from "react-toastify";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -38,6 +39,7 @@ export default function RootLayout({
             </SessionProvide>
           </ThemeProvider>
         </JotaiProvider>
+        <ToastContainer />
       </body>
     </html>
   );

@@ -1,4 +1,4 @@
-import { REGISTER } from "@/constant/api";
+import { SIGNUP, SIGNIN } from "@/utils/constant";
 import axios from "axios";
 
 const useAuth = () => {
@@ -8,24 +8,24 @@ const useAuth = () => {
     },
   };
   //register
-  const register = async (idToken: string | undefined) => {
+  const signup = async (idToken: string | undefined) => {
     try {
-      const { data } = await axios.post(REGISTER, { idToken: idToken }, config);
-      return data;
+      const res: any = await axios.post(SIGNUP, { idToken }, config);
+      return res;
     } catch (error) {
       return error;
     }
   };
-  //login
 
-  const login = async (idToken: string | undefined) => {
+  //login
+  const signin = async (idToken: string | undefined) => {
     try {
-      const { data } = await axios.post(REGISTER, { idToken: idToken }, config);
-      return data;
+      const res: any = await axios.post(SIGNIN, { idToken: idToken }, config);
+      return res;
     } catch (error) {
       return error;
     }
   };
-  return { register, login };
+  return { signup, signin };
 };
 export default useAuth;

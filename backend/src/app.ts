@@ -21,7 +21,7 @@ app.use(
 
 // Middleware
 app.use(express.json()); // Parse JSON requests
-// app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
 
 // Database connection
 connectDB();

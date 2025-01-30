@@ -14,6 +14,9 @@ export default {
         blue: "#0368fb", // Blue color.
       },
     },
+    screens: {
+      shortheight: { raw: "(max-height: 800px)" },
+    },
   },
   plugins: [],
 } satisfies Config;

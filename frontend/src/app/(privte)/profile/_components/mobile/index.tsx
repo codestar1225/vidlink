@@ -3,14 +3,23 @@ import FooterMobile from "@/app/_components/layout/mobile/footer";
 import NavItem from "./navItem";
 import AmountItem from "./amountItem";
 import { useState } from "react";
-import VideoItem from "@/app/(public)/videos/_components/mobile/videoItem";
 import videos from "../../../../(public)/videos/_components/mobile/videos1.json";
 import { Video } from "@/app/_components/ui/video";
 import { signOut } from "next-auth/react";
-import { redirect } from "next/dist/server/api-utils";
+import { removeItem } from "@/utils/localstorageUtils";
+import { useAtom } from "jotai";
+import { tokenAtom } from "@/store";
+import Cookies from "js-cookie";
 
 const ProfileMobile = () => {
   const [nav, setNav] = useState<string>("videos");
+  const [, setToken] = useAtom(tokenAtom);
+  const handleSignOut = async () => {
+    await signOut({ callbackUrl: "/signin" });
+    // removeItem("token");
+    Cookies.remove("token");
+    setToken("");
+  };
   return (
     <>
       <main className="w-screen mt-[109px] ">
@@ -41,7 +50,7 @@ const ProfileMobile = () => {
                 SETTINGS
               </button>
               <button
-                onClick={() => signOut({ callbackUrl: "/" })}
+                onClick={handleSignOut}
                 className="h-[28.88px] bg-[#002355] rounded-[4.97px] flex items-center justify-center text-[10.5px] font-semibold"
               >
                 LOG OUT

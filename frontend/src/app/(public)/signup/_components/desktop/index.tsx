@@ -1,8 +1,8 @@
-const RegisterDesktop = () => {
+const SignupDesktop = () => {
   return (
     <>
       <div>Welcome desktop</div>
     </>
   );
 };
-export default RegisterDesktop;
+export default SignupDesktop;

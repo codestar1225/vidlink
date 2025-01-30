@@ -4,10 +4,10 @@ import NavItem from "./navItem";
 import AmountItem from "./amountItem";
 import { useState } from "react";
 import VideoItem from "@/app/(public)/videos/_components/mobile/videoItem";
-import videos from "../../../app/(public)/videos/_components/mobile/videos1.json";
+import videos from "@/app/(public)/videos/_components/mobile/videos1.json";
 import { Video } from "@/app/_components/ui/video";
 
-const ProfilesMobile = ({id}:{id:string}) => {
+const ProfilesMobile = ({ id }: { id: string }) => {
   const [nav, setNav] = useState<string>("videos");
   return (
     <>

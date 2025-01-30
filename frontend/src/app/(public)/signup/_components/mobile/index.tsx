@@ -1,71 +1,76 @@
 "use client";
 import Footer from "@/app/_components/layout/mobile/footer";
 import useAuth from "@/hooks/useAuth";
-import { tokenAtom } from "@/store";
-import { getItem, removeItem, setItem } from "@/utils/localstorageUtils";
 import { useAtom } from "jotai";
-import { getSession, signIn } from "next-auth/react";
+import { getSession, signIn, signOut, useSession } from "next-auth/react";
+import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { toast, ToastContainer } from "react-toastify";
 import { useEffect } from "react";
-import { toast } from "react-toastify";
+import { getItem, removeItem, setItem } from "@/utils/localstorageUtils";
+import { tokenAtom } from "@/store/token";
+import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 
-
-const SigninMobile = () => {
+const SignupMobile = () => {
   const [, setToken] = useAtom<string>(tokenAtom);
-  const { signin } = useAuth();
+  const { signup } = useAuth();
   const router = useRouter();
-
-  //cutstomized sign in
+  //cutstomized sign up
   useEffect(() => {
     const fetchSession = async () => {
       const session = await getSession();
-      const isSignin = getItem("isSignin");
-      if (session && isSignin) {
-        removeItem("isSignin");
-        const res = await signin(session.idToken);
+      const isSignup = getItem("isSignup");
+      if (session && isSignup) {
+        removeItem("isSignup");
+        const res = await signup(session.idToken);
         if (res.status === 201 && res?.data?.token) {
-          // setItem("token", res?.data?.token);
           Cookies.set("token", res?.data?.token, { expires: 1 });
           setToken(res?.data?.token);
-          toast.success("Logged in successfully.", {
+          toast.success("Signed up successfully.", {
             autoClose: 2000,
             onClose: () => router.push("/"),
           });
+        } else {
+          removeItem("token");
+          toast.error("You have already signed up. Please sign in.", {
+            autoClose: 2000,
+            onClose: () => router.push("/signin"),
+          });
         }
       }
-      removeItem("isSignin");
+      removeItem("isSignup");
     };
     fetchSession();
   }, []);
 
   //google sign
-  const handleSignin = async () => {
+  const handleSignup = async () => {
     try {
-      setItem("isSignin", true);
+      setItem("isSignup", true);
       await signIn("google", { redirect: false });
     } catch (error) {
       console.error("Failed google signup", error);
     }
   };
+
   return (
     <>
       <main className="pt-[331px] h-screen shortheight:pt-0 w-fll flex flex-col items-center shortheight:justify-center gap-[40px]">
         <img className="h-[55.4px]" src="/icon/home/title.png" alt="" />
         <div className="flex flex-col items-center gap-[20px]">
           <button
+            onClick={handleSignup}
             type="submit"
-            onClick={handleSignin}
             className="flex items-center justify-center gap-[12.81px] bg-blue rounded-[12.81px] w-[309px] h-[48px]"
           >
-            <h1 className="text-[16px] font-semibold">SIGN IN WITH GOOGLE</h1>
+            <h1 className="text-[16px] font-semibold">SIGN UP WITH GOOGLE</h1>
             <img src="/icon/register/google.svg" alt="" />
           </button>
           <div className="flex gap-[10px] text-[13px] tracking-wide">
-            <h1>New to VIDLINK?</h1>
-            <Link href={"/signup"} className="text-blue">
-              Sign up
+            <h1>Already on VIDLINK?</h1>
+            <Link href={"/signin"} className="text-blue">
+              Sign in
             </Link>
           </div>
         </div>
@@ -74,4 +79,4 @@ const SigninMobile = () => {
     </>
   );
 };
-export default SigninMobile;
+export default SignupMobile;

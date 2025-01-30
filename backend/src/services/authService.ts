@@ -14,7 +14,6 @@ export const createUser = async (payload: GoogleTokenPayload) => {
     name: payload.name,
     picture: payload.picture,
   });
-  console.log(user)
   await user.save();
 
   return user;

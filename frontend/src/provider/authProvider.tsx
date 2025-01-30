@@ -1,32 +1,30 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { getSession, useSession } from "next-auth/react";
-import { getTokenFromLocalStorage } from "@/constant/token";
 import Loading from "@/app/_components/ui/loading";
 import { getServerSession } from "next-auth";
 import { useRouter } from "next/navigation";
+import { useAtom } from "jotai";
+import { tokenAtom } from "@/store";
+import { getItem } from "@/utils/localstorageUtils";
 
-const AuthProvider =  ({ children }: { children: React.ReactNode }) => {
+const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+  // const router = useRouter();
+  // const [token] = useAtom<string>(tokenAtom);
+  // const [isAuth, setIsAuth] = useState<boolean>(false);
 
-    const router = useRouter();
-    const { data: session, status } = useSession();
-    // alert(session?.idToken)
-    console.log('session',session?.idToken)
-    useEffect(() => {
-      if (status === "unauthenticated") {
-        router.push("/register");
-      }
-    }, [status, router]);
+  // useEffect(() => {
+  //   const localTolen = getItem("token");
+  //   console.log("Auth navigation");
+  //   if (!localTolen) {
+  //     router.push("/signin");
+  //     return;
+  //   }
+  //   setIsAuth(true);
+  // }, [token, router]);
 
-    // if (status === "loading") {
-    //   return <Loading />;
-    // }
-
-    if (status === "authenticated") {
-      return <>{children}</>;
-    }
-  // const session = await getServerSession();
-  // return session ? <>{children}</> : <div>login</div>;
+  // return isAuth ? <>{children}</> : <></>;
+  return <>{children}</>;
 };
 
 export default AuthProvider;

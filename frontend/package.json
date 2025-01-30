@@ -10,7 +10,10 @@
   },
   "dependencies": {
     "axios": "^1.7.9",
+    "jose": "^5.9.6",
     "jotai": "^2.11.1",
+    "js-cookie": "^3.0.5",
+    "jsonwebtoken": "^9.0.2",
     "next": "15.1.5",
     "next-auth": "^4.24.11",
     "next-fonts": "^1.5.1",
@@ -22,6 +25,8 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@types/js-cookie": "^3.0.6",
+    "@types/jsonwebtoken": "^9.0.8",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
