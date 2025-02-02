@@ -17,9 +17,9 @@ export default function HomeMobile() {
       <div className=" overflow-y-scroll h-full">
         <div className=" relative">
           <div className="h-screen w-screen">
-            <Video src="/video/home/home.mp4" />
+            {/* <Video src="/video/home/home.mp4" /> */}
+          <Video src="/video/home/home1.mp4" />
           </div>
-          {/* <Video1 src="/video/home/home1.mp4" /> */}
           <div className="absolute top-[332px] w-full flex justify-center items-centers">
             <div>
               <img src="/icon/home/title.png" alt="" />
