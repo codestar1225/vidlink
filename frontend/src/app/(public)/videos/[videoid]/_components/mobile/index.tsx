@@ -1,71 +1,50 @@
+"use client";
 import Footer from "@/app/_components/layout/mobile/footer";
-import Card from "@/app/_components/ui/card";
-import CardNext from "@/app/_components/ui/cardNext";
+import Card from "@/app/(public)/videos/[videoid]/_components/mobile/card/card";
+import CardNext from "@/app/(public)/videos/[videoid]/_components/mobile/card/cardNext";
 import UserVideo from "./userVideo";
 import RelatedVideo from "./relatedVideo";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useAtom } from "jotai";
+import { tokenAtom } from "@/store";
+import useAuth from "@/hooks/useAuth";
+import SettingBar from "./settingBar";
+import VideoFrame from "./videoFrame";
+import HeaderTitle from "./headerTitle";
 
 const VideoMobile = ({ id }: { id: string }) => {
+  const [token] = useAtom<string>(tokenAtom);
+  const { verifyToken } = useAuth();
+  const [isAuth, setIsAuth] = useState<boolean>(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      const result = await verifyToken();
+      setIsAuth(result);
+    };
+    checkAuth();
+  }, [token, router]);
+
+  const handleLike = () => {
+    if (!isAuth) {
+      router.push("/signin");
+    }
+  };
+
   return (
     <>
-      <div className="min-h-screen pt-[84px] pb-[50px] w-svw flex flex-col items-center">
-        {/* title */}
-        <div className="flex justify-between items-center px-[15px] w-full pb-[10px]">
-          <h1 className="text-[14px] font-semibold ">
-            <span className="text-blue">WHERE SHE GOES</span>
-            &nbsp;- BAD BUNNY
-          </h1>
-          <div className="flex gap-[13px] items-center">
-            <button>
-              <img src="/icon/detail/heart.svg" alt="" />
-            </button>
-            <button>
-              <img src="/icon/detail/forward.svg" alt="" />
-            </button>
-          </div>
-        </div>
-        {/* image */}
-        <div className="relative rounded-[7.36px] flex justify-center overflow-hidden">
-          <img src="/image/detail/man.png" alt="" />
-          <div className=" absolute"></div>
-        </div>
-        {/* detail */}
-        <div className="h-[72.58px] w-full relative flex items-center justify-center">
-          <div className="absolute top-[18.6px] left-[11px] flex gap-[10.3px] items-start">
-            <img src="/icon/detail/avatar.svg" alt="" />
-            <div className="flex flex-col h-[38.3px] justify-between items-start">
-              <div className="text-[12px] text-blue font-semibold ">
-                USERNAME
-              </div>
-              <div className="text-[8px] font-normal ">227 VIDEOS</div>
-              <div className="text-[8px] font-semibold border-[0.41px] rounded-[1.24px] px-[0.82px]">
-                FOLLOW
-              </div>
-            </div>
-          </div>
-          <button className=" pl-[12px] pt-[4px]">
-            <img src="/icon/detail/heart.svg" alt="" />
-          </button>
-          <div className=" absolute right-[9.23px] top-[10.6px] flex gap-[12px]">
-            <div className="flex flex-col items-center gap-[5px]">
-              <h1 className="text-[8px] font-semibold">CARDS</h1>
-              <button className="border-[1.43px] w-[43px] h-[34px] rounded-[4.76px] text-center">
-                12
-              </button>
-            </div>
-            <div className="flex flex-col items-center gap-[5px]">
-              <h1 className="text-[8px] font-semibold">SUGGEST</h1>
-              <button className="border-[1.43px] w-[43px] h-[34px] rounded-[4.76px] flex justify-center items-center">
-                <img src="/icon/detail/card/plus.svg" alt="" />
-              </button>
-            </div>
-          </div>
-        </div>
+      <div className="min-h-screen  pt-[110px] pb-[50px] w-svw flex flex-col items-center">
+        <HeaderTitle handleLike={handleLike} />
+        <VideoFrame />
+        <SettingBar isAuth={isAuth} handleLike={handleLike} />
         <div className="flex justify-center w-full px-[10px]">
           <ul className="flex gap-[6px] justify-start w-full">
             <CardNext />
-            <Card />
+            <Card name="song" time="0:01" />
           </ul>
         </div>
       </div>

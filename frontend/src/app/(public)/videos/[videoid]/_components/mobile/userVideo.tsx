@@ -1,5 +1,6 @@
 import { Video } from "@/app/_components/ui/video";
 import videos from "../../../_components/mobile/videos1.json";
+import Link from "next/link";
 const UserVideo = () => {
   return (
     <>
@@ -13,7 +14,9 @@ const UserVideo = () => {
               className="w-[118.43px] h-[86.48px] rounded-[8.37px] overflow-hidden "
               key={index}
             >
-              <Video src={item.src} />
+              <Link href={`/videos/${index}`}>
+                <Video src={item.src} />
+              </Link>
             </li>
           ))}
         </ul>

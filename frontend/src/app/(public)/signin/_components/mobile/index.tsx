@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 import Cookies from "js-cookie";
-
+import { Video } from "@/app/_components/ui/video";
 
 const SigninMobile = () => {
   const [, setToken] = useAtom<string>(tokenAtom);
@@ -31,7 +31,7 @@ const SigninMobile = () => {
           setToken(res?.data?.token);
           toast.success("Logged in successfully.", {
             autoClose: 2000,
-            onClose: () => router.push("/"),
+            onClose: () => router.push("/videos"),
           });
         }
       }
@@ -51,22 +51,29 @@ const SigninMobile = () => {
   };
   return (
     <>
-      <main className="pt-[331px] h-screen shortheight:pt-0 w-fll flex flex-col items-center shortheight:justify-center gap-[40px]">
-        <img className="h-[55.4px]" src="/icon/home/title.png" alt="" />
-        <div className="flex flex-col items-center gap-[20px]">
-          <button
-            type="submit"
-            onClick={handleSignin}
-            className="flex items-center justify-center gap-[12.81px] bg-blue rounded-[12.81px] w-[309px] h-[48px]"
-          >
-            <h1 className="text-[16px] font-semibold">SIGN IN WITH GOOGLE</h1>
-            <img src="/icon/register/google.svg" alt="" />
-          </button>
-          <div className="flex gap-[10px] text-[13px] tracking-wide">
-            <h1>New to VIDLINK?</h1>
-            <Link href={"/signup"} className="text-blue">
-              Sign up
-            </Link>
+      <main className="h-screen w-screen relative">
+        <div className="h-full w-full">
+          <Video src="/video/home/home2.mp4" />
+        </div>
+        <div className=" absolute top-[331px] left-0 right-0 flex flex-col gap-[40px] items-center">
+          <img className="h-[55.4px]" src="/icon/home/title.png" alt="" />
+          <div className="flex flex-col items-center gap-[20px]">
+            <button
+              type="submit"
+              onClick={handleSignin}
+              className="flex items-center justify-center gap-[12.81px] bg-blue rounded-[12.81px] w-[309px] h-[48px]"
+            >
+              <h1 className="text-[16px]  font-semibold">
+                SIGN IN WITH GOOGLE
+              </h1>
+              <img src="/icon/register/google.svg" alt="" />
+            </button>
+            <div className="flex gap-[10px] text-[13px] tracking-wide">
+              <h1 className="text-gray-400">New to VIDLINK?</h1>
+              <Link href={"/signup"} className="text-blue">
+                Sign up
+              </Link>
+            </div>
           </div>
         </div>
       </main>

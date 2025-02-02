@@ -2,29 +2,29 @@
 import Link from "next/link";
 import Item from "./Item";
 import { useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useAtom } from "jotai";
 import { tokenAtom } from "@/store";
-import { getItem } from "@/utils/localstorageUtils";
-import Cookies from "js-cookie";
+import useAuth from "@/hooks/useAuth";
 
 const HeaderMobile = () => {
   const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false);
   const [isAuth, setIsAuth] = useState<boolean>(false);
   const [token, setToken] = useAtom<string>(tokenAtom);
-  const router = useRouter();
-  useEffect(() => {
-    // const localToken = getItem("token");
-    const localToken = Cookies.get('token')
-    if (localToken) {
-      setIsAuth(true);
-    } else {
-      setIsAuth(false);
-    }
-  }, [token, router]);
-
   const [isBlurred, setIsBlurred] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const router = useRouter();
+  const { verifyToken } = useAuth();
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      setLoading(true);
+      const result = await verifyToken();
+      setIsAuth(result);
+      setLoading(false);
+    };
+    checkAuth();
+  }, [token, router]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -34,38 +34,46 @@ const HeaderMobile = () => {
         setIsBlurred(false);
       }
     };
-
     window.addEventListener("scroll", handleScroll);
-
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
+  if (loading) return null;
   return !isOpenMenu ? (
     <header className="fixed z-10 top-0 left-0 w-screen">
       <div
         className={`${
           isBlurred ? "backdrop-blur-md bg-white/50" : "bg-transparent"
-        } flex justify-between mt-[27px] bg-[red] mx-[29px] p-[3px] rounded-full`}
+        } flex justify-between items-center mt-[27px] bg-[red] mx-[29px] p-[3px] rounded-full`}
       >
         <button onClick={() => setIsOpenMenu(true)}>
           <img src="/icon/layout/menu.svg" alt="" />
         </button>
-        <div className="flex gap-[9px]">
+        <div className="flex gap-[9px] h-[32px] items-center">
           {isAuth ? (
             <>
-              <Link href={"/message"}>
-                <img src="/icon/layout/message.svg" alt="" />
-              </Link>
-
+              <div className=''>
+                <Link href={"/message"}>
+                  <img
+                    className="size-[32px]"
+                    src="/icon/layout/alert.png"
+                    alt=""
+                  />
+                </Link>
+              </div>
               <Link href={"/profile"}>
-                <img src="/icon/layout/avatar.svg" alt="" />
+                <img
+                  className="w-[33.95px] h-[33px]"
+                  src="/icon/layout/avatar.png"
+                  alt=""
+                />
               </Link>
             </>
           ) : (
             <Link href={"/signin"}>
-              <img src="/icon/layout/logo.svg" alt="" />
+              <img className="h-[23px]" src="/icon/layout/logo.svg" alt="" />
             </Link>
           )}
         </div>
@@ -82,14 +90,13 @@ const HeaderMobile = () => {
         >
           <img src="/icon/layout/close.svg" alt="" />
         </button>
-        <div
-          className={`mt-[4px] flex px-[10px] py-[8px] rounded-full ${
-            isAuth ? "justify-between" : "justify-start gap-5"
-          } ${isBlurred ? "backdrop-blur-md bg-white/50" : "bg-transparent"}`}
+        <nav
+          className={`mt-[4px] flex px-[10px] py-[8px] rounded-full justify-between
+           ${isBlurred ? "backdrop-blur-md bg-white/50" : "bg-transparent"}`}
         >
           <Item url={"/"} name="HOME" setIsOpenMenu={setIsOpenMenu} />
           <Item url={"/videos"} name="VIDEOS" setIsOpenMenu={setIsOpenMenu} />
-          {isAuth && (
+          {isAuth ? (
             <>
               <Item
                 url={"/upload"}
@@ -102,8 +109,25 @@ const HeaderMobile = () => {
                 setIsOpenMenu={setIsOpenMenu}
               />
             </>
+          ) : (
+            <>
+              <Link
+                href={"/signin"}
+                onClick={() => setIsOpenMenu(false)}
+                className="border-[1.07px] h-[18.39px] text-[#303030] border-[#303030] font-semibold  rounded-[3.2px] text-[15px]  px-[2.13px] tracking-widest "
+              >
+                UPLOAD
+              </Link>
+              <Link
+                href={"/signin"}
+                onClick={() => setIsOpenMenu(false)}
+                className="border-[1.07px] h-[18.39px] text-[#303030] border-[#303030] font-semibold  rounded-[3.2px] text-[15px]  px-[2.13px] tracking-widest "
+              >
+                PROFILE
+              </Link>
+            </>
           )}
-        </div>
+        </nav>
       </div>
     </header>
   );

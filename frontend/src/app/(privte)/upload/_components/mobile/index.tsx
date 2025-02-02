@@ -18,12 +18,12 @@ const UploadMobile = () => {
   }
   return (
     <>
-      <ProgressLine />
+      <ProgressLine fileName={fileName} isUpload={isUpload} isAdd={isAdd} />
       {isUpload && fileName ? (
         !isAdd ? (
           <AddCards isAdd={isAdd} setIsAdd={setIsAdd} />
         ) : (
-          <Preview setIsAdd={setIsAdd}/>
+          <Preview setIsAdd={setIsAdd} />
         )
       ) : (
         <>

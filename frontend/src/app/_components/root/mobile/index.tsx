@@ -3,10 +3,9 @@ import Link from "next/link";
 import { basicBold } from "@/style/fonts/fonts";
 import { useTheme } from "next-themes";
 import Footer from "@/app/_components/layout/mobile/footer";
-import { Video1 } from "./video1";
-import { Video2 } from "./video2";
 import { useState } from "react";
 import Image from "next/image";
+import { Video } from "../../ui/video";
 
 export default function HomeMobile() {
   const [isPlay, setIsPLay] = useState<boolean>(false);
@@ -17,7 +16,9 @@ export default function HomeMobile() {
     <>
       <div className=" overflow-y-scroll h-full">
         <div className=" relative">
-          <Video1 src="/video/home/home.mp4" />
+          <div className="h-screen w-screen">
+            <Video src="/video/home/home.mp4" />
+          </div>
           {/* <Video1 src="/video/home/home1.mp4" /> */}
           <div className="absolute top-[332px] w-full flex justify-center items-centers">
             <div>
@@ -32,9 +33,9 @@ export default function HomeMobile() {
               </div>
             </div>
           </div>
-          <div className=" absolute text-[10px] bottom-[37px] left-[23px] right-[23px]">
+          <div className=" absolute text-[10px] bottom-[37px] left-[20px] right-[20px]">
             <h1 className="mb-[15.5px] font-bold ">POWERED BY HUMANS</h1>
-            <p className="font-normal leading-[12px]">
+            <p className="font-normal leading-[12px] text-justify tracking-normal">
               WE FILL VIDEOS WITH KNOWLEDGE AND ACTIONS THANKS TO OUR
               SYNCHRONIZED CARDS. MADE FOR MOVIE LOVERS, DESIGN AFICIONADOS,
               ADVERTISING PROS, SPORTS ANALYTICS AND FANS OF CASABLANCA...
@@ -48,7 +49,11 @@ export default function HomeMobile() {
             HOW IT WORKS
           </h1>
           <div className="flex justify-center items-center  border-white border-[2px] rounded-[9.42px] w-full h-[574px] relative overflow-hidden">
-            {isPlay && <Video2 src="/video/home/home.mp4" />}
+            {isPlay && (
+              <div className="h-[574px] w-screen">
+                <Video src="/video/home/home.mp4" />
+              </div>
+            )}
             {isPlay || (
               <button onClick={videoPlay}>
                 {/* <img

@@ -11,6 +11,7 @@ import { getItem, removeItem, setItem } from "@/utils/localstorageUtils";
 import { tokenAtom } from "@/store/token";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
+import { Video } from "@/app/_components/ui/video";
 
 const SignupMobile = () => {
   const [, setToken] = useAtom<string>(tokenAtom);
@@ -29,7 +30,7 @@ const SignupMobile = () => {
           setToken(res?.data?.token);
           toast.success("Signed up successfully.", {
             autoClose: 2000,
-            onClose: () => router.push("/"),
+            onClose: () => router.push("/videos"),
           });
         } else {
           removeItem("token");
@@ -56,22 +57,27 @@ const SignupMobile = () => {
 
   return (
     <>
-      <main className="pt-[331px] h-screen shortheight:pt-0 w-fll flex flex-col items-center shortheight:justify-center gap-[40px]">
-        <img className="h-[55.4px]" src="/icon/home/title.png" alt="" />
-        <div className="flex flex-col items-center gap-[20px]">
-          <button
-            onClick={handleSignup}
-            type="submit"
-            className="flex items-center justify-center gap-[12.81px] bg-blue rounded-[12.81px] w-[309px] h-[48px]"
-          >
-            <h1 className="text-[16px] font-semibold">SIGN UP WITH GOOGLE</h1>
-            <img src="/icon/register/google.svg" alt="" />
-          </button>
-          <div className="flex gap-[10px] text-[13px] tracking-wide">
-            <h1>Already on VIDLINK?</h1>
-            <Link href={"/signin"} className="text-blue">
-              Sign in
-            </Link>
+      <main className="h-screen w-screen relative">
+        <div className="h-full w-full">
+          <Video src="/video/home/home2.mp4" />
+        </div>
+        <div className=" absolute top-[331px] left-0 right-0 flex flex-col gap-[40px] items-center">
+          <img className="h-[55.4px]" src="/icon/home/title.png" alt="" />
+          <div className="flex flex-col items-center gap-[20px]">
+            <button
+              onClick={handleSignup}
+              type="submit"
+              className="flex items-center justify-center gap-[12.81px] bg-blue rounded-[12.81px] w-[309px] h-[48px]"
+            >
+              <h1 className="text-[16px] font-semibold">SIGN UP WITH GOOGLE</h1>
+              <img src="/icon/register/google.svg" alt="" />
+            </button>
+            <div className="flex gap-[10px] text-[13px] tracking-wide">
+              <h1 className="text-gray-400">Already on VIDLINK?</h1>
+              <Link href={"/signin"} className="text-blue">
+                Sign in
+              </Link>
+            </div>
           </div>
         </div>
       </main>

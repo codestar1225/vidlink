@@ -1,12 +1,16 @@
 "use client";
 import { useEffect, useState } from "react";
-import SubHeader from "./header";
+import SubHeaderIn from "./subHeaderIn";
 import videos1 from "./videos1.json";
 import videos2 from "./videos2.json";
 import { useRouter } from "next/navigation";
 import Footer from "@/app/_components/layout/mobile/footer";
 import Link from "next/link";
 import VideoItem from "./videoItem";
+import { useAtom } from "jotai";
+import { tokenAtom } from "@/store";
+import SubHeaderOut from "./subHeaderOut";
+import useAuth from "@/hooks/useAuth";
 
 interface Videos {
   editor: string;
@@ -17,6 +21,11 @@ const VideosMobile = () => {
   const [replace, setReplace] = useState<string>("you");
   const [videos, setVideos] = useState<Videos[]>([]);
   const router = useRouter();
+  const [token, setToken] = useAtom<string>(tokenAtom);
+  const [loading, setLoading] = useState(true);
+  const [isAuth, setIsAuth] = useState<boolean>(false);
+  const { verifyToken } = useAuth();
+
   useEffect(() => {
     if (replace === "you") {
       setVideos(videos1);
@@ -25,10 +34,27 @@ const VideosMobile = () => {
     }
     router.refresh();
   }, [replace]);
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      setLoading(true);
+      const result = await verifyToken();
+      setIsAuth(result);
+      setLoading(false);
+    };
+    checkAuth();
+  }, [token, router]);
+
   return (
     <>
       <main className="h-svh grid grid-col">
-        <SubHeader replace={replace} setReplace={setReplace} />
+        {loading ? (
+          <div className="h-[70px] mt-[103px]"></div>
+        ) : isAuth ? (
+          <SubHeaderIn replace={replace} setReplace={setReplace} />
+        ) : (
+          <SubHeaderOut />
+        )}
         <div className="w-svw overflow-scroll">
           <ul className=" gap-x-[11px] gap-y-[15px] flex flex-wrap justify-center items-start">
             {videos.map((item, index) => (
@@ -44,7 +70,7 @@ const VideosMobile = () => {
           <div className="w-svw flex justify-center">
             <Link
               href={"/videos"}
-              className="rounded-xl font-semibold text-[18px] py-[7px] px-[10px] bg-blue mt-[59.62px] mb-[109.23px] tracking-widest"
+              className={`${isAuth?'bg-blue':'bg-none'} rounded-xl font-semibold text-[18px] py-[7px] px-[10px] mt-[59.62px] mb-[109.23px] tracking-widest`}
             >
               VIEW MORE
             </Link>

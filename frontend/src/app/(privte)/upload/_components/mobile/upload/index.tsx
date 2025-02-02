@@ -8,6 +8,12 @@ interface Type {
   setIsUpload(value: boolean): void;
 }
 const Upload: React.FC<Type> = ({ fileName, handleUpload, setIsUpload }) => {
+  const handleNext = () => {
+    if (fileName) {
+      setIsUpload(true);
+    }
+    return;
+  };
   return (
     <>
       <main className="w-screen">
@@ -30,26 +36,44 @@ const Upload: React.FC<Type> = ({ fileName, handleUpload, setIsUpload }) => {
           </span>
         </div>
         <div className="h-[210px] flex justify-center items-center rounded-[10px] bg-[#1E1E1E] mt-[43px] mx-[13.5px]">
-          <label
-            htmlFor="upload"
-            className="h-[75.64px] flex flex-col items-center mb-[26.36px] gap-[8px]"
-          >
-            {!fileName ? (
-              <img src="/icon/upload/file.svg" alt="" />
-            ) : (
-              <>
-                <img
-                  className="mb-[21px]"
-                  src="/icon/upload/checked.svg"
-                  alt=""
-                />
-              </>
-            )}
-            <div className="border-[1.5px] border-white rounded-[3.2px] text-[14.91px] pt-[3.2px] pb-[1.3px] px-[2.13px] mb-[149px]">
-              BROWSE FILE
+          {true ? (
+            <label
+              htmlFor="upload"
+              className="h-[75.64px] flex flex-col items-center mb-[26.36px] gap-[8px]"
+            >
+              {!fileName ? (
+                <>
+                  <img src="/icon/upload/file.svg" alt="" />
+                  <div className="border-[1.5px] border-white rounded-[3.2px] text-[14.91px] pt-[3.2px] pb-[1.3px] px-[2.13px] mb-[149px]">
+                    BROWSE FILE
+                  </div>
+                </>
+              ) : (
+                <>
+                  <img
+                    className="mb-[21px]"
+                    src="/icon/upload/checked.svg"
+                    alt=""
+                  />
+                </>
+              )}
+            </label>
+          ) : (
+            <div className="h-[114.64px] flex flex-col items-center justify-between">
+              <img
+                className="size-[50.4px]"
+                src="/icon/upload/error.png"
+                alt=""
+              />
+              <div className="flex flex-col justify-between items-center text-[#EA003B] font-semibold h-[50px]">
+                <span className="text-[14.53px] ">ERROR</span>
+                <p className="text-justify text-[12px] w-[225px] leading-[14.4px]">
+                  An error occurred: the file may be too large or exceed the
+                  allowed duration.
+                </p>
+              </div>
             </div>
-          </label>
-
+          )}
           <input
             className=" hidden"
             id="upload"
@@ -74,12 +98,7 @@ const Upload: React.FC<Type> = ({ fileName, handleUpload, setIsUpload }) => {
           <p>YOUR VIDEOS WILL BE PRIVATE UNTIL YOU PUBLISH THEM.</p>
         </div>
         <button
-          onClick={() => {
-            if (fileName) {
-              setIsUpload(true);
-            }
-            return;
-          }}
+          onClick={handleNext}
           className={` ${
             fileName ? "bg-blue" : "bg-[#1E1E1E]"
           } w-[282.81px] h-[50px] flex justify-center rounded-[20px] items-center gap-[10px] mx-auto mt-[88px]  mb-[60px]`}

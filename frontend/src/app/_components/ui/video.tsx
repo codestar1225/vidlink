@@ -1,8 +1,7 @@
 import Link from "next/link";
 
 export function Video({ src }: { src: string }) {
-  return (
-    <Link href={`/videos/videoid`}>
+  return (  
       <video
         className="h-full w-full object-cover"
         autoPlay
@@ -20,6 +19,5 @@ export function Video({ src }: { src: string }) {
         /> */}
         Your browser does not support the video tag.
       </video>
-    </Link>
   );
 }

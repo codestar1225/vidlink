@@ -4,19 +4,24 @@ import NavItem from "./navItem";
 import AmountItem from "./amountItem";
 import { useState } from "react";
 import videos from "../../../../(public)/videos/_components/mobile/videos1.json";
-import { Video } from "@/app/_components/ui/video";
 import { signOut } from "next-auth/react";
-import { removeItem } from "@/utils/localstorageUtils";
 import { useAtom } from "jotai";
 import { tokenAtom } from "@/store";
 import Cookies from "js-cookie";
+import SocialLinks from "./socialLinks";
+import Videos from "./videos";
+import Cards from "./cards";
+import Likes from "./likes";
+import Link from "next/link";
+import AddPic from "./addPic";
 
 const ProfileMobile = () => {
   const [nav, setNav] = useState<string>("videos");
   const [, setToken] = useAtom(tokenAtom);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
   const handleSignOut = async () => {
     await signOut({ callbackUrl: "/signin" });
-    // removeItem("token");
     Cookies.remove("token");
     setToken("");
   };
@@ -30,13 +35,15 @@ const ProfileMobile = () => {
               src="/image/profile/avatar.png"
               alt=""
             />
-            <img
+            <button
+              onClick={() => setIsOpen(!isOpen)}
               className="absolute top-[9px] size-[18px] right-[17px]"
-              src="/icon/profile/edit.png"
-              alt=""
-            />
+            >
+              <img src="/icon/profile/edit.png" alt="" />
+            </button>
+            {isOpen && <AddPic setIsOpen={setIsOpen} />}
           </div>
-          <div className="h-[147.04.67px] mx-[91px] mt-[28px]">
+          <div className="h-[147.04.67px] mx-[91px] mt-[28px] mb-[28px]">
             <div className="flex justify-between mb-[21px]">
               <AmountItem number={1860} label="FOLLOWING" />
               <AmountItem number={2546} label="PROMPTS ADDED" />
@@ -46,9 +53,12 @@ const ProfileMobile = () => {
               <button className="h-[28.88px] bg-blue rounded-[4.97px] flex items-center justify-center text-[10.5px] font-semibold">
                 DASHBOARD
               </button>
-              <button className="h-[28.88px] bg-[#7C889D] rounded-[4.97px] flex items-center justify-center text-[10.5px] font-semibold">
+              <Link
+                href={"/settings"}
+                className="h-[28.88px] bg-[#7C889D] rounded-[4.97px] flex items-center justify-center text-[10.5px] font-semibold"
+              >
                 SETTINGS
-              </button>
+              </Link>
               <button
                 onClick={handleSignOut}
                 className="h-[28.88px] bg-[#002355] rounded-[4.97px] flex items-center justify-center text-[10.5px] font-semibold"
@@ -57,16 +67,16 @@ const ProfileMobile = () => {
               </button>
             </div>
           </div>
-          <div className="flex gap-[14px] justify-center mt-[28px] mb-[44px]">
-            <img src="/icon/profile/instagram.png" alt="" />
-            <img src="/icon/profile/tiktok.png" alt="" />
-          </div>
-          <div className="flex flex-col items-center gap-[7px] text-[10.5px] font-semibold">
+          <SocialLinks />
+          <Link
+            href={"/upload"}
+            className="flex flex-col items-center gap-[7px] text-[10.5px] font-semibold mt-[44px]"
+          >
             <img src="/icon/profile/plus.png" alt="" />
-            <div>NEW VIDEO</div>
-          </div>
+            <span>NEW VIDEO</span>
+          </Link>
         </div>
-        <div className="mx-[11.5px] mt-[45px] ">
+        <div className="mx-[11px] mt-[45px] h-[699px] overflow-hidden mb-[71px]">
           <nav className="flex justify-between relative">
             <NavItem name="videos" nav={nav} setNav={setNav} />
             <NavItem name="cards" nav={nav} setNav={setNav} />
@@ -91,16 +101,13 @@ const ProfileMobile = () => {
               />
             </div>
           </div>
-          <ul className="overflow-scroll gap-x-[11px] gap-y-[11.25px] flex flex-wrap justify-center items-start mb-[71px]">
-            {videos.map((item, index) => (
-              <li
-                className="w-[118.43px] h-[86.48px] rounded-[8.37px] overflow-hidden "
-                key={index}
-              >
-                <Video src={item.src} />
-              </li>
-            ))}
-          </ul>
+          {nav === "videos" ? (
+            <Videos videos={videos} />
+          ) : nav === "cards" ? (
+            <Cards />
+          ) : (
+            <Likes videos={videos} />
+          )}
         </div>
       </main>
       <FooterMobile isFixed={false} />

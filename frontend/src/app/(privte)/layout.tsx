@@ -1,14 +1,12 @@
-import HeaderMobile from "@/app/_components/layout/mobile/header";
-import AuthProvider from "@/provider/authProvider";
 import { isMobile } from "react-device-detect";
+import PrivateHeaderMobile from "../_components/layout/mobile/header";
+import HeaderMobile from "../_components/layout/mobile/header";
 
 const PrivateLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
-      <AuthProvider>
-        {!isMobile ? <HeaderMobile /> : <></>}
-        {children}
-      </AuthProvider>
+      {!isMobile ? <HeaderMobile /> : <></>}
+      {children}
     </>
   );
 };

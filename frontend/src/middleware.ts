@@ -8,18 +8,13 @@ export async function middleware(req: NextRequest): Promise<NextResponse> {
     return NextResponse.redirect(new URL("/signin", req.url));
   }
 
-  const jwtSecret = process.env.JWT_SECRET;
+  const jwtSecret = process.env.NEXT_PUBLIC_JWT_SECRET;
   if (!jwtSecret || typeof jwtSecret !== "string") {
     throw new Error("JWT_SECRET is not defined or is not a string");
   }
 
   try {
-    const { payload } = await jwtVerify(
-      token,
-      new TextEncoder().encode(jwtSecret)
-    );
-    console.log("Decoded JWT Payload:", payload);
-
+    await jwtVerify(token, new TextEncoder().encode(jwtSecret));
     return NextResponse.next();
   } catch (error) {
     console.error("JWT Verification Error:", error);
@@ -28,5 +23,5 @@ export async function middleware(req: NextRequest): Promise<NextResponse> {
 }
 
 export const config = {
-  matcher: ["/profile/:path*", "/upload/:path*"],
+  matcher: ["/profile", "/upload/:path*"],
 };

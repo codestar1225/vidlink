@@ -10,8 +10,10 @@ const VideoItem: React.FC<Type> = ({ name, review, src, no }) => {
   return (
     <>
       <li className="h-[149.33px] w-[117.73px] flex flex-col items-center  justify-between">
-        <div className="w-full h-[86.48px] rounded-[8.37px] overflow-hidden ">         
-            <Video src={src} />      
+        <div className="w-full h-[86.48px] rounded-[8.37px] overflow-hidden ">
+          <Link href={`/videos/${no}`}>
+            <Video src={src} />{" "}
+          </Link>
         </div>
         <div className="w-[58.6px] h-[43.32px] flex flex-col justify-between items-center">
           <h1 className="text-[7.81px] font-semibold">VIDEO {no}</h1>
