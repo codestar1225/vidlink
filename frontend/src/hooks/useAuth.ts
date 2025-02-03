@@ -1,6 +1,6 @@
 "use client";
 import { SIGNUP, SIGNIN } from "@/utils/constant";
-import axios, { AxiosResponse, AxiosError } from "axios";
+import axios, { AxiosResponse} from "axios";
 import { useState } from "react";
 
 // Define response types
