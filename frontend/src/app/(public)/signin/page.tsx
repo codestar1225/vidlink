@@ -1,9 +1,9 @@
-import RegisterDesktop from "@/app/(public)/signup/_components/desktop";
-import RegisterMobile from "@/app/(public)/signup/_components/mobile";
-import SigninMobile from "@/app/(public)/signin/_components/mobile";
 import { isMobile } from "react-device-detect";
+import dynamic from "next/dynamic";
+const SigninDesktop = dynamic(() => import("./_components/desktop"));
+const SigninMobile = dynamic(() => import("./_components/mobile"));
 
 const Page = () => {
-  return <>{!isMobile ? <SigninMobile /> : <RegisterDesktop />}</>;
+  return <>{!isMobile ? <SigninMobile /> : <SigninDesktop />}</>;
 };
 export default Page;

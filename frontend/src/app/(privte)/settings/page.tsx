@@ -1,6 +1,9 @@
 import { isMobile } from "react-device-detect";
-import SettingsMobile from "./_components/mobile";
-import SettingsDesktop from "./_components/desktop";
+import dynamic from "next/dynamic";
+
+const SettingsMobile = dynamic(() => import("./_components/mobile"));
+const SettingsDesktop = dynamic(() => import("./_components/desktop"));
+
 const Page = () => {
   return <>{!isMobile ? <SettingsMobile /> : <SettingsDesktop />}</>;
 };

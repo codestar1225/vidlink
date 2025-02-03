@@ -2,7 +2,7 @@
 import Footer from "@/app/_components/layout/mobile/footer";
 import useAuth from "@/hooks/useAuth";
 import { tokenAtom } from "@/store";
-import { getItem, removeItem, setItem } from "@/utils/localstorageUtils";
+import { getItem, removeItem, setItem } from "@/utils/localstorage";
 import { useAtom } from "jotai";
 import { getSession, signIn } from "next-auth/react";
 import Link from "next/link";
@@ -27,7 +27,9 @@ const SigninMobile = () => {
         const res = await signin(session.idToken);
         if (res.status === 201 && res?.data?.token) {
           // setItem("token", res?.data?.token);
-          Cookies.set("token", res?.data?.token, { expires: 1 });
+          Cookies.set("token", res?.data?.token, {
+            expires: 1,
+          });
           setToken(res?.data?.token);
           toast.success("Logged in successfully.", {
             autoClose: 2000,

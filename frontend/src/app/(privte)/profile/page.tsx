@@ -1,7 +1,9 @@
-import ProfileDesktop from "@/app/(privte)/profile/_components/desktop";
-import ProfileMobile from "@/app/(privte)/profile/_components/mobile";
+import dynamic from "next/dynamic";
 import { isMobile } from "react-device-detect";
+const ProfileDesktop = dynamic(() => import("./_components/desktop"));
+const ProfileMobile = dynamic(() => import("./_components/mobile"));
+
 const Page = () => {
-  return <>{!isMobile ? <ProfileMobile/> : <ProfileDesktop />}</>;
+  return <>{!isMobile ? <ProfileMobile /> : <ProfileDesktop />}</>;
 };
 export default Page;

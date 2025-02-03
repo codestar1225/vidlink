@@ -1,6 +1,7 @@
-import VideoDesktop from "@/app/(public)/videos/[videoid]/_components/desktop";
-import VideoMobile from "@/app/(public)/videos/[videoid]/_components/mobile";
+import dynamic from "next/dynamic";
 import { isMobile } from "react-device-detect";
+const VideoDesktop = dynamic(() => import("./_components/desktop"));
+const VideoMobile = dynamic(() => import("./_components/mobile"));
 
 const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
   const id = (await params).id;

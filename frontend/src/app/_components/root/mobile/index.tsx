@@ -1,7 +1,6 @@
 "use client";
 import Link from "next/link";
 import { basicBold } from "@/style/fonts/fonts";
-import { useTheme } from "next-themes";
 import Footer from "@/app/_components/layout/mobile/footer";
 import { useState } from "react";
 import Image from "next/image";
@@ -17,8 +16,8 @@ export default function HomeMobile() {
       <div className=" overflow-y-scroll h-full">
         <div className=" relative">
           <div className="h-screen w-screen">
-            {/* <Video src="/video/home/home.mp4" /> */}
-          <Video src="/video/home/home1.mp4" />
+            <Video src="/video/home/home.mp4" />
+          {/* <Video src="/video/home/home1.mp4" /> */}
           </div>
           <div className="absolute top-[332px] w-full flex justify-center items-centers">
             <div>

@@ -3,17 +3,18 @@ import FooterMobile from "@/app/_components/layout/mobile/footer";
 import NavItem from "./navItem";
 import AmountItem from "./amountItem";
 import { useState } from "react";
-import videos from "../../../../(public)/videos/_components/mobile/videos1.json";
+import videos from "@/app/(public)/videos/_components/mobile/videos1.json";
 import { signOut } from "next-auth/react";
 import { useAtom } from "jotai";
 import { tokenAtom } from "@/store";
 import Cookies from "js-cookie";
 import SocialLinks from "./socialLinks";
-import Videos from "./videos";
-import Cards from "./cards";
-import Likes from "./likes";
 import Link from "next/link";
+import Videos from "./videos";
+import dynamic from "next/dynamic";
 import AddPic from "./addPic";
+const Cards = dynamic(() => import("./cards"));
+const Likes = dynamic(() => import("./likes"));
 
 const ProfileMobile = () => {
   const [nav, setNav] = useState<string>("videos");
@@ -25,6 +26,7 @@ const ProfileMobile = () => {
     Cookies.remove("token");
     setToken("");
   };
+
   return (
     <>
       <main className="w-screen mt-[109px] ">

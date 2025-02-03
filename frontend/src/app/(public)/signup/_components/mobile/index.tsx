@@ -7,7 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { toast, ToastContainer } from "react-toastify";
 import { useEffect } from "react";
-import { getItem, removeItem, setItem } from "@/utils/localstorageUtils";
+import { getItem, removeItem, setItem } from "@/utils/localstorage";
 import { tokenAtom } from "@/store/token";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";

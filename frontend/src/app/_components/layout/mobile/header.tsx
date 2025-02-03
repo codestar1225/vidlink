@@ -2,29 +2,12 @@
 import Link from "next/link";
 import Item from "./Item";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { useAtom } from "jotai";
-import { tokenAtom } from "@/store";
-import useAuth from "@/hooks/useAuth";
+import useVerifyAuth from "@/hooks/useVerifyAuth";
 
 const HeaderMobile = () => {
   const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false);
-  const [isAuth, setIsAuth] = useState<boolean>(false);
-  const [token, setToken] = useAtom<string>(tokenAtom);
   const [isBlurred, setIsBlurred] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const router = useRouter();
-  const { verifyToken } = useAuth();
-
-  useEffect(() => {
-    const checkAuth = async () => {
-      setLoading(true);
-      const result = await verifyToken();
-      setIsAuth(result);
-      setLoading(false);
-    };
-    checkAuth();
-  }, [token, router]);
+  const { loading, isAuth } = useVerifyAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -54,7 +37,7 @@ const HeaderMobile = () => {
         <div className="flex gap-[9px] h-[32px] items-center">
           {isAuth ? (
             <>
-              <div className=''>
+              <div className="">
                 <Link href={"/message"}>
                   <img
                     className="size-[32px]"

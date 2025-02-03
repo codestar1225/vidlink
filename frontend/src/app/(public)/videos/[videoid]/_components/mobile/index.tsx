@@ -7,27 +7,14 @@ import RelatedVideo from "./relatedVideo";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { useAtom } from "jotai";
-import { tokenAtom } from "@/store";
-import useAuth from "@/hooks/useAuth";
 import SettingBar from "./settingBar";
 import VideoFrame from "./videoFrame";
 import HeaderTitle from "./headerTitle";
+import useVerifyAuth from "@/hooks/useVerifyAuth";
 
 const VideoMobile = ({ id }: { id: string }) => {
-  const [token] = useAtom<string>(tokenAtom);
-  const { verifyToken } = useAuth();
-  const [isAuth, setIsAuth] = useState<boolean>(false);
   const router = useRouter();
-
-  useEffect(() => {
-    const checkAuth = async () => {
-      const result = await verifyToken();
-      setIsAuth(result);
-    };
-    checkAuth();
-  }, [token, router]);
+  const { isAuth } = useVerifyAuth();
 
   const handleLike = () => {
     if (!isAuth) {

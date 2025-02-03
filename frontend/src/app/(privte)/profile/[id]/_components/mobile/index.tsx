@@ -1,28 +1,15 @@
 "use client";
 import FooterMobile from "@/app/_components/layout/mobile/footer";
-import { useEffect, useState } from "react";
 import videos from "@/app/(public)/videos/_components/mobile/videos1.json";
 import AmountItem from "../../../_components/mobile/amountItem";
 import Videos from "../../../_components/mobile/videos";
-import { tokenAtom } from "@/store";
-import { useAtom } from "jotai";
-import useAuth from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
 import SocialLinks from "./socialLinks";
+import useVerifyAuth from "@/hooks/useVerifyAuth";
 
 const ProfilesMobile = ({ id }: { id: string }) => {
-  const [isAuth, setIsAuth] = useState<boolean>(false);
-  const [token, setToken] = useAtom<string>(tokenAtom);
   const router = useRouter();
-  const { verifyToken } = useAuth();
-
-  useEffect(() => {
-    const checkAuth = async () => {
-      const result = await verifyToken();
-      setIsAuth(result);
-    };
-    checkAuth();
-  }, [token, router]);
+  const { isAuth } = useVerifyAuth();
 
   const handleFollow = () => {
     if (isAuth) {

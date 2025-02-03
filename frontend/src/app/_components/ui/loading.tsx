@@ -1,23 +1,9 @@
-const Loading = () => {
+export default function Loading() {
   return (
-    <div className="flex items-center justify-center h-screen">
-      <div className=" animate-spin">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="lucide lucide-loader-circle"
-        >
-          <path d="M21 12a9 9 0 1 1-6.219-8.56" />
-        </svg>
+    <>
+      <div className="h-[900px] w-screen flex justify-center items-center ">
+        <span className="border-[3px] size-[30px] border-l-black rounded-full animate-spin"></span>
       </div>
-    </div>
+    </>
   );
-};
-export default Loading;
+}

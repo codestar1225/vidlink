@@ -36,17 +36,17 @@ const AddPic: React.FC<Type> = ({ setIsOpen }) => {
         ref={menuRef}
         className=" absolute top-[30px] right-1/2 translate-x-1/2  flex flex-col justify-between bg-[#191919] text-[13px] font-semibold w-[227px] h-[104px] px-[15px] py-[10px] border-[1px] rounded-[9.1px]"
       >
-        <li className="flex items-center gap-[10px]">
-          <img src="/icon/profile/library.png" alt="" />
+        <li className=" flex items-center gap-[10px]">
+          <img className="size-[18px]" src="/icon/profile/library.png" alt="" />
           <label htmlFor="upload">CHOOSE FROM LIBRARY</label>
         </li>
         <input type="file" id="upload" className=" hidden" />
         <li className="flex items-center gap-[10px]">
-          <img src="/icon/profile/take.png" alt="" />
+          <img className="size-[18px]" src="/icon/profile/take.png" alt="" />
           <button onClick={capture}>TAKE A PHOTO</button>
         </li>
         <li className="text-[#EA003B] flex items-center gap-[10px]">
-          <img src="/icon/profile/remove.png" alt="" />
+          <img className="size-[18px]" src="/icon/profile/remove.png" alt="" />
           REMOVE PICTURE
         </li>
       </ul>

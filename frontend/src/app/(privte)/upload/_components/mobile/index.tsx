@@ -1,38 +1,42 @@
 "use client";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, Suspense, useState } from "react";
 import ProgressLine from "./upload/progressLine";
-import AddCards from "./addCards";
-import FooterMobile from "@/app/_components/layout/mobile/footer";
 import Image from "next/image";
+import { useVideoValidate } from "@/hooks/useVideoValidate";
+import dynamic from "next/dynamic";
 import Upload from "./upload";
-import Preview from "./preview";
+import Loading from "@/app/_components/ui/loading";
+const AddCards = dynamic(() => import("./addCards"));
+const Preview = dynamic(() => import("./preview"));
 
 const UploadMobile = () => {
-  const [fileName, setFileName] = useState<string>("");
   const [isUpload, setIsUpload] = useState<boolean>(false);
   const [isAdd, setIsAdd] = useState<boolean>(false);
+  const { error, fileName, validateVideo } = useVideoValidate();
 
   function handleUpload(e: ChangeEvent<any>) {
-    const fName = e.target.files[0].name.slice(0, 10);
-    setFileName(fName);
+    validateVideo(e);
   }
   return (
     <>
       <ProgressLine fileName={fileName} isUpload={isUpload} isAdd={isAdd} />
       {isUpload && fileName ? (
-        !isAdd ? (
-          <AddCards isAdd={isAdd} setIsAdd={setIsAdd} />
+        isAdd ? (
+          <Suspense fallback={<Loading />}>
+            <Preview setIsAdd={setIsAdd} />
+          </Suspense>
         ) : (
-          <Preview setIsAdd={setIsAdd} />
+          <Suspense fallback={<Loading />}>
+            <AddCards isAdd={isAdd} setIsAdd={setIsAdd} />
+          </Suspense>
         )
       ) : (
-        <>
-          <Upload
-            fileName={fileName}
-            setIsUpload={setIsUpload}
-            handleUpload={handleUpload}
-          />
-        </>
+        <Upload
+          fileName={fileName}
+          error={error}
+          setIsUpload={setIsUpload}
+          handleUpload={handleUpload}
+        />
       )}
     </>
   );

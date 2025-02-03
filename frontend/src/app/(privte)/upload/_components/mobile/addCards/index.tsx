@@ -1,5 +1,4 @@
 "use client";
-import ProgressLine from "../upload/progressLine";
 import images from "../image.json";
 import Customize from "./customize";
 import Cards from "./cards";
