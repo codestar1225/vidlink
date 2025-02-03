@@ -5,6 +5,6 @@ const VideoMobile = dynamic(() => import("./_components/mobile"));
 
 const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
   const id = (await params).id;
-  return <>{!isMobile ? <VideoMobile id={id} /> : <VideoDesktop id={id} />}</>;
+  return <>{!isMobile ? <VideoMobile /> : <VideoDesktop id={id} />}</>;
 };
 export default Page;

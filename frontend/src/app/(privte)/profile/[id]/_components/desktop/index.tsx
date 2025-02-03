@@ -1,8 +1,8 @@
-const ProfilesDesktop = () => {
-    return (
-      <>
-        <div>Welcome to Profiles</div>
-      </>
-    );
-  };
-  export default ProfilesDesktop
+const ProfilesDesktop = ({ id }: { id: string }) => {
+  return (
+    <>
+      <div>Welcome to Profiles.{id}</div>
+    </>
+  );
+};
+export default ProfilesDesktop;

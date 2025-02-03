@@ -11,7 +11,7 @@ import VideoFrame from "./videoFrame";
 import HeaderTitle from "./headerTitle";
 import useVerifyAuth from "@/hooks/useVerifyAuth";
 
-const VideoMobile = ({ id }: { id: string }) => {
+const VideoMobile = () => {
   const router = useRouter();
   const { isAuth } = useVerifyAuth();
 

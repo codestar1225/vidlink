@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import SocialLinks from "./socialLinks";
 import useVerifyAuth from "@/hooks/useVerifyAuth";
 
-const ProfilesMobile = ({ id }: { id: string }) => {
+const ProfilesMobile = () => {
   const router = useRouter();
   const { isAuth } = useVerifyAuth();
 

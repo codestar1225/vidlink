@@ -38,7 +38,9 @@ const SigninMobile = () => {
           });
         } else {
           // Authentication failed, handle error
-          toast.error(res.message, { autoClose: 2000 });
+          toast.error(res.message || "Something went wrong", {
+            autoClose: 2000,
+          });
         }
       }
     };

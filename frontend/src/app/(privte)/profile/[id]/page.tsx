@@ -5,6 +5,6 @@ const ProfilesDesktop = dynamic(() => import("./_components/desktop"));
 
 const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
   const id = (await params).id;
-  return <>{!isMobile ? <ProfilesMobile id={id} /> : <ProfilesDesktop />}</>;
+  return <>{!isMobile ? <ProfilesMobile  /> : <ProfilesDesktop id={id}/>}</>;
 };
 export default Page;
