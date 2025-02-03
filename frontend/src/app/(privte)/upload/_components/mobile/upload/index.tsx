@@ -4,7 +4,7 @@ import { ChangeEvent } from "react";
 interface Type {
   fileName: string;
   error: string;
-  handleUpload(value: ChangeEvent<any>): void;
+  handleUpload(value: ChangeEvent<HTMLInputElement>): void;
   setIsUpload(value: boolean): void;
 }
 const Upload: React.FC<Type> = ({
@@ -48,7 +48,11 @@ const Upload: React.FC<Type> = ({
             >
               {!fileName ? (
                 <>
-                  <img className="size-[50.39px]" src="/icon/upload/file.svg" alt="" />
+                  <img
+                    className="size-[50.39px]"
+                    src="/icon/upload/file.svg"
+                    alt=""
+                  />
                   <div className="border-[1.5px] border-white rounded-[3.2px] text-[14.91px] pt-[3.2px] pb-[1.3px] px-[2.13px] mb-[149px]">
                     BROWSE FILE
                   </div>

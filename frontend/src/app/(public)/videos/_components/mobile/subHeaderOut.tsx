@@ -1,6 +1,5 @@
 import { basicBold } from "@/style/fonts/fonts";
 
-
 const SubHeaderOut = () => {
   return (
     <>

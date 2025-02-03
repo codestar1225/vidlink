@@ -1,7 +1,6 @@
 "use client";
 import { ChangeEvent, Suspense, useState } from "react";
 import ProgressLine from "./upload/progressLine";
-import Image from "next/image";
 import { useVideoValidate } from "@/hooks/useVideoValidate";
 import dynamic from "next/dynamic";
 import Upload from "./upload";
@@ -14,7 +13,7 @@ const UploadMobile = () => {
   const [isAdd, setIsAdd] = useState<boolean>(false);
   const { error, fileName, validateVideo } = useVideoValidate();
 
-  function handleUpload(e: ChangeEvent<any>) {
+  function handleUpload(e: ChangeEvent<HTMLInputElement>) {
     validateVideo(e);
   }
   return (
@@ -27,7 +26,7 @@ const UploadMobile = () => {
           </Suspense>
         ) : (
           <Suspense fallback={<Loading />}>
-            <AddCards isAdd={isAdd} setIsAdd={setIsAdd} />
+            <AddCards setIsAdd={setIsAdd} />
           </Suspense>
         )
       ) : (

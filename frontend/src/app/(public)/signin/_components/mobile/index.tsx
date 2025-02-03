@@ -22,25 +22,29 @@ const SigninMobile = () => {
     const fetchSession = async () => {
       const session = await getSession();
       const isSignin = getItem("isSignin");
+
       if (session && isSignin) {
         removeItem("isSignin");
+
         const res = await signin(session.idToken);
-        if (res.status === 201 && res?.data?.token) {
-          // setItem("token", res?.data?.token);
-          Cookies.set("token", res?.data?.token, {
-            expires: 1,
-          });
-          setToken(res?.data?.token);
+
+        if ("token" in res) {
+          // Successfully authenticated
+          Cookies.set("token", res.token, { expires: 1 });
+          setToken(res.token);
           toast.success("Logged in successfully.", {
             autoClose: 2000,
             onClose: () => router.push("/videos"),
           });
+        } else {
+          // Authentication failed, handle error
+          toast.error(res.message, { autoClose: 2000 });
         }
       }
-      removeItem("isSignin");
     };
+
     fetchSession();
-  }, []);
+  }, [signin, router, setToken]);
 
   //google sign
   const handleSignin = async () => {

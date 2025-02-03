@@ -1,5 +1,5 @@
 "use client";
-import { Suspense, useState } from "react";
+import { useState } from "react";
 import GenderItem from "./genderItem";
 import InputItem from "./inputItem";
 import FooterMobile from "@/app/_components/layout/mobile/footer";

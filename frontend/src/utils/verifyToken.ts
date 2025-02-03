@@ -12,7 +12,7 @@ export const verifyToken = async () => {
   try {
     await jwtVerify(token, new TextEncoder().encode(jwtSecret));
     return true;
-  } catch (error) {
+  } catch {
     return false;
   }
 };

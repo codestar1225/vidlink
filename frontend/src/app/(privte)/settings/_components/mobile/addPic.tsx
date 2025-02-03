@@ -9,7 +9,7 @@ interface Type {
 const AddPic: React.FC<Type> = ({ setIsOpen }) => {
   const webcamRef = useRef<Webcam>(null);
   const menuRef = useRef<HTMLUListElement>(null);
-  const [photo, setPhoto] = useState<string | null>(null);
+  const [, setPhoto] = useState<string | null>(null);
 
   const capture = () => {
     const imageSrc = webcamRef.current?.getScreenshot();

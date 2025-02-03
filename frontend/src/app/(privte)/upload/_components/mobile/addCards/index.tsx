@@ -4,18 +4,16 @@ import Customize from "./customize";
 import Cards from "./cards";
 import FooterMobile from "@/app/_components/layout/mobile/footer";
 import { ChangeEvent, useState } from "react";
-import Image from "next/image";
 
 interface Type {
-  isAdd: boolean;
   setIsAdd(value: boolean): void;
 }
 
-const AddCards: React.FC<Type> = ({ isAdd, setIsAdd }) => {
+const AddCards: React.FC<Type> = ({ setIsAdd }) => {
   const [fileUrl, setFileUrl] = useState<string>("");
 
-  function handleUpload(e: ChangeEvent<any>) {
-    const file = e.target.files[0];
+  function handleUpload(e: ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
       reader.onload = () => {

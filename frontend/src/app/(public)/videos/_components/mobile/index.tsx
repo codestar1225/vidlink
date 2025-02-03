@@ -1,5 +1,5 @@
 "use client";
-import { Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import SubHeaderIn from "./subHeaderIn";
 import videos1 from "./videos1.json";
 import videos2 from "./videos2.json";
@@ -9,7 +9,6 @@ import Link from "next/link";
 import VideoItem from "./videoItem";
 import SubHeaderOut from "./subHeaderOut";
 import useVerifyAuth from "@/hooks/useVerifyAuth";
-import Loading from "@/app/_components/ui/loading";
 
 interface Videos {
   editor: string;

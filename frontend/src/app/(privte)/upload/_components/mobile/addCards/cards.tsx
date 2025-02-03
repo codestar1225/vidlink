@@ -2,7 +2,7 @@
 import { useState } from "react";
 import Card from "./card";
 import cards from "./cards.json";
-import CardIndependent from "./card_independent";
+import IndependentCard from "./independentCard";
 
 const Cards = () => {
   const [isEditing, setIsEditing] = useState<string>("LOCATION");
@@ -12,7 +12,7 @@ const Cards = () => {
       <div className="mx-[19.5] flex flex-col items-center gap-[25px] mt-[36px]">
         <h1 className="text-[10.5px] font-semibold">PREVIEW</h1>
         <div className="flex justify-center">
-          <CardIndependent isEditing={isEditing} />
+          <IndependentCard isEditing={isEditing} />
         </div>
       </div>
       <div className="mx-[11px]">

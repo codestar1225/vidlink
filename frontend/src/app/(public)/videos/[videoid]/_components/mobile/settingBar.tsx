@@ -13,7 +13,6 @@ interface Type {
 const SettingBar: React.FC<Type> = ({ isAuth,handleLike }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [hidden, setHidden] = useState<boolean>(false);
-  const router = useRouter();
 
   useEffect(() => {
     if (isAuth && isOpen && true) {

@@ -1,9 +1,8 @@
-import Image from "next/image";
 
 interface Type {
   isEditing: string;
 }
-const CardIndependent: React.FC<Type> = ({ isEditing }) => {
+const IndependentCard: React.FC<Type> = ({ isEditing }) => {
   return (
     <>
       <li className="border-blue border-[2px] text-black bg-white rounded-[6px] w-[122.41px] h-[94.5px] p-[5.9px] flex flex-col justify-between">
@@ -14,7 +13,10 @@ const CardIndependent: React.FC<Type> = ({ isEditing }) => {
           <h1 className="text-blue text-[13.86px] font-semibold">
             {isEditing}
           </h1>
-          <img src={`/icon/detail/card/${isEditing.toLowerCase()}2.svg`} alt="" />
+          <img
+            src={`/icon/detail/card/${isEditing.toLowerCase()}2.svg`}
+            alt=""
+          />
         </div>
         <div className="flex justify-between">
           <img src="/icon/detail/card/left2.svg" alt="" />
@@ -24,4 +26,4 @@ const CardIndependent: React.FC<Type> = ({ isEditing }) => {
     </>
   );
 };
-export default CardIndependent;
+export default IndependentCard;

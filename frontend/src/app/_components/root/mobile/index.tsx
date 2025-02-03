@@ -3,7 +3,6 @@ import Link from "next/link";
 import { basicBold } from "@/style/fonts/fonts";
 import Footer from "@/app/_components/layout/mobile/footer";
 import { useState } from "react";
-import Image from "next/image";
 import { Video } from "../../ui/video";
 
 export default function HomeMobile() {

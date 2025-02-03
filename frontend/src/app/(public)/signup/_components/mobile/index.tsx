@@ -2,10 +2,9 @@
 import Footer from "@/app/_components/layout/mobile/footer";
 import useAuth from "@/hooks/useAuth";
 import { useAtom } from "jotai";
-import { getSession, signIn, signOut, useSession } from "next-auth/react";
-import Image from "next/image";
+import { getSession, signIn } from "next-auth/react";
 import Link from "next/link";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import { useEffect } from "react";
 import { getItem, removeItem, setItem } from "@/utils/localstorage";
 import { tokenAtom } from "@/store/token";
@@ -22,28 +21,36 @@ const SignupMobile = () => {
     const fetchSession = async () => {
       const session = await getSession();
       const isSignup = getItem("isSignup");
+
       if (session && isSignup) {
         removeItem("isSignup");
+
         const res = await signup(session.idToken);
-        if (res.status === 201 && res?.data?.token) {
-          Cookies.set("token", res?.data?.token, { expires: 1 });
-          setToken(res?.data?.token);
+
+        if ("token" in res) {
+          // Successful signup
+          Cookies.set("token", res.token, { expires: 1 });
+          setToken(res.token);
           toast.success("Signed up successfully.", {
             autoClose: 2000,
             onClose: () => router.push("/videos"),
           });
         } else {
+          // User already signed up, handle error
           removeItem("token");
-          toast.error("You have already signed up. Please sign in.", {
-            autoClose: 2000,
-            onClose: () => router.push("/signin"),
-          });
+          toast.error(
+            res.message || "You have already signed up. Please sign in.",
+            {
+              autoClose: 2000,
+              onClose: () => router.push("/signin"),
+            }
+          );
         }
       }
-      removeItem("isSignup");
     };
+
     fetchSession();
-  }, []);
+  }, [signup, router, setToken]);
 
   //google sign
   const handleSignup = async () => {
