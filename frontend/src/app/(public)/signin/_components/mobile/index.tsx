@@ -74,7 +74,11 @@ const SigninMobile = () => {
               <h1 className="text-[16px]  font-semibold">
                 SIGN IN WITH GOOGLE
               </h1>
-              <img src="/icon/register/google.svg" alt="" />
+              <img
+                className="size-[32px]"
+                src="/icon/register/google.svg"
+                alt=""
+              />
             </button>
             <div className="flex gap-[10px] text-[13px] tracking-wide">
               <h1 className="text-gray-400">New to VIDLINK?</h1>

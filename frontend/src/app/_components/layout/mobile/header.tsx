@@ -69,7 +69,7 @@ const HeaderMobile = () => {
           onClick={() => setIsOpenMenu(false)}
           className={`${
             isBlurred ? "backdrop-blur-md bg-white/50 " : "bg-transparent"
-          } p-[3px] rounded-full ml-[7px]`}
+          } p-[3px] rounded-full ml-[7px] size-[32px]`}
         >
           <img src="/icon/layout/close.svg" alt="" />
         </button>

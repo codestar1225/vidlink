@@ -77,7 +77,11 @@ const SignupMobile = () => {
               className="flex items-center justify-center gap-[12.81px] bg-blue rounded-[12.81px] w-[309px] h-[48px]"
             >
               <h1 className="text-[16px] font-semibold">SIGN UP WITH GOOGLE</h1>
-              <img src="/icon/register/google.svg" alt="" />
+              <img
+                className="size-[32px]"
+                src="/icon/register/google.svg"
+                alt=""
+              />
             </button>
             <div className="flex gap-[10px] text-[13px] tracking-wide">
               <h1 className="text-gray-400">Already on VIDLINK?</h1>
