@@ -17,9 +17,9 @@ const register = async (req: Request, res: Response) => {
       idToken: idToken,
       audience: process.env.GOOGLE_CLIENT_ID,
     });
-
+    
     const payload = ticket.getPayload() as GoogleTokenPayload;
-
+    
     if (!payload || !payload.email) {
       throw new Error("Invalid token payload");
     }
@@ -44,7 +44,7 @@ const register = async (req: Request, res: Response) => {
   }
 };
 
-const login = async (req: Request, res: Response) => {
+const login = async (req: Request, res: Response) => {  
   try {
     const { idToken } = req.body;
     const ticket = await client.verifyIdToken({

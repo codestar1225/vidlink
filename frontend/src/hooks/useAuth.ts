@@ -1,6 +1,6 @@
 "use client";
 import { SIGNUP, SIGNIN } from "@/utils/constant";
-import axios, { AxiosResponse} from "axios";
+import axios, { AxiosResponse } from "axios";
 import { useState } from "react";
 
 // Define response types
@@ -22,15 +22,20 @@ const useAuth = () => {
   };
 
   // register
-  const signup = async (idToken: string | undefined): Promise<AuthSuccessResponse | AuthErrorResponse> => {
+  const signup = async (
+    idToken: string | undefined
+  ): Promise<AuthSuccessResponse | AuthErrorResponse> => {
     setLoading(true);
     try {
-      const res: AxiosResponse<AuthSuccessResponse | AuthErrorResponse> = await axios.post(SIGNUP, { idToken }, config);
+      const res: AxiosResponse<AuthSuccessResponse | AuthErrorResponse> =
+        await axios.post(SIGNUP, { idToken }, config);
       return res.data; // Return the response data
     } catch (error: unknown) {
       // Type the error to AxiosError and handle the error
       if (axios.isAxiosError(error)) {
-        return { message: error?.response?.data?.message || "Something went wrong" };
+        return {
+          message: error?.response?.data?.message || "Something went wrong",
+        };
       }
       return { message: "An unknown error occurred" };
     } finally {
@@ -39,16 +44,20 @@ const useAuth = () => {
   };
 
   // login
-  const signin = async (idToken: string | undefined): Promise<AuthSuccessResponse | AuthErrorResponse> => {
+  const signin = async (
+    idToken: string | undefined
+  ): Promise<AuthSuccessResponse | AuthErrorResponse> => {
     setLoading(true);
     try {
-      const res: AxiosResponse<AuthSuccessResponse | AuthErrorResponse> = await axios.post(SIGNIN, { idToken: idToken }, config);
-      console.log(res)
+      const res: AxiosResponse<AuthSuccessResponse | AuthErrorResponse> =
+        await axios.post(SIGNIN, { idToken: idToken }, config);
       return res.data; // Return the response data
     } catch (error: unknown) {
       // Type the error to AxiosError and handle the error
       if (axios.isAxiosError(error)) {
-        return { message: error?.response?.data?.message || "Something went wrong" };
+        return {
+          message: error?.response?.data?.message || "Something went wrong",
+        };
       }
       return { message: "An unknown error occurred" };
     } finally {
