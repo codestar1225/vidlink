@@ -7,9 +7,10 @@ import { ChangeEvent, useState } from "react";
 
 interface Type {
   setIsAdd(value: boolean): void;
+  videoSrc: string|null;
 }
 
-const AddCards: React.FC<Type> = ({ setIsAdd }) => {
+const AddCards: React.FC<Type> = ({ setIsAdd, videoSrc }) => {
   const [fileUrl, setFileUrl] = useState<string>("");
 
   function handleUpload(e: ChangeEvent<HTMLInputElement>) {
@@ -79,7 +80,7 @@ const AddCards: React.FC<Type> = ({ setIsAdd }) => {
             </div>
           </div>
         </div>
-        <Customize />
+        <Customize videoSrc={videoSrc}/>
         <Cards />
         <button
           onClick={() => setIsAdd(true)}

@@ -51,8 +51,8 @@ const SigninMobile = () => {
   //google sign
   const handleSignin = async () => {
     try {
-      setItem("isSignin", true);
       await signIn("google", { redirect: false });
+      setItem("isSignin", true);
     } catch (error) {
       console.error("Failed google signup", error);
     }

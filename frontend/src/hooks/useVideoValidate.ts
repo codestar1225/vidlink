@@ -1,8 +1,10 @@
+"use client";
 import { useState } from "react";
 
 export function useVideoValidate() {
   const [error, setError] = useState<string>("");
   const [fileName, setFileName] = useState<string>("");
+  const [videoSrc, setVideoSrc] = useState<string | null>(null);
 
   function validateVideo(e: React.ChangeEvent<HTMLInputElement>) {
     setError(""); // Reset error at the beginning
@@ -24,23 +26,30 @@ export function useVideoValidate() {
       return;
     }
 
-    // Check duration using a video element
+    // Revoke the old URL before setting a new one
+    if (videoSrc) {
+      URL.revokeObjectURL(videoSrc);
+    }
+
+    const newSrc = URL.createObjectURL(file);
+    setVideoSrc(newSrc);
+
     const video = document.createElement("video");
     video.preload = "metadata";
-    video.src = URL.createObjectURL(file);
+    video.src = newSrc;
 
     video.onloadedmetadata = () => {
-      URL.revokeObjectURL(video.src);
-
-      if (video.duration > 240) { // 4 minutes
+      if (video.duration > 240) {
         setError("Video duration exceeds 4 minutes limit.");
+        setVideoSrc(null);
+        URL.revokeObjectURL(newSrc);
         return;
       }
 
-      // If validation passes
       setFileName(file.name.slice(0, 10));
     };
   }
 
-  return { validateVideo, error, fileName };
+  return { validateVideo, error, fileName, videoSrc };
 }
+

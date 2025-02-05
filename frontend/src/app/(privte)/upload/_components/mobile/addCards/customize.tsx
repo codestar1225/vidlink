@@ -1,10 +1,24 @@
-const Customize = () => {
+"use client";
+import { useEffect } from "react";
+interface Type {
+  videoSrc: string | null;
+}
+const Customize: React.FC<Type> = ({ videoSrc }) => {
+  useEffect(() => {
+    return () => {
+      if (videoSrc) {
+        URL.revokeObjectURL(videoSrc);
+      }
+    };
+  }, []); // Run only on unmount
   return (
     <>
       <div className="h-[631px] mt-[56.5px] text-[10.5px] font-semibold mx-[19.5px]">
         <div className="flex flex-col items-center justify-between h-[38px]">
           <h1>ADD CARDS</h1>
-          <i className=" font-normal text-[8.5px]">VIDEO 4:28 = MAX 26 CARDS </i>
+          <i className=" font-normal text-[8.5px]">
+            VIDEO 4:28 = MAX 26 CARDS{" "}
+          </i>
           <i className="font-normal text-[8.5px]">MAX 1 CARD EVERY 10s</i>
         </div>
         <div className=" h-[59px] flex flex-col justify-between mt-[10.5px]">
@@ -69,16 +83,20 @@ const Customize = () => {
             />
           </div>
         </div>
-        <video
-          className="h-[280px] w-full object-cover mt-[20px] rounded-[6.1px] overflow-hidden"
-          playsInline
-          muted
-          preload="auto"
-          controls
-        >
-          <source src={`/video/home/home2.mp4`} type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
+        {videoSrc ? (
+          <video
+            className="h-[280px] w-full object-cover mt-[20px] rounded-[6.1px] overflow-hidden"
+            playsInline
+            muted
+            preload="auto"
+            controls
+          >
+            <source src={videoSrc} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        ) : (
+          <>No video file.</>
+        )}
       </div>
     </>
   );
