@@ -7,7 +7,7 @@ import { ChangeEvent, useState } from "react";
 
 interface Type {
   setIsAdd(value: boolean): void;
-  videoSrc: string|null;
+  videoSrc: string | null;
 }
 
 const AddCards: React.FC<Type> = ({ setIsAdd, videoSrc }) => {
@@ -23,9 +23,10 @@ const AddCards: React.FC<Type> = ({ setIsAdd, videoSrc }) => {
       reader.readAsDataURL(file);
     }
   }
+
   return (
     <>
-      <main className="w-screen">
+      <main className="">
         <div className="h-[280.51px] text-[9px] tracking-[2px] font-semibold mx-[19.5px] mt-[37px] flex flex-col justify-between">
           <h1 className="h-[9px] text-center">VIDEO SETTINGS</h1>
           <div className="h-[59px] flex flex-col justify-between">
@@ -80,7 +81,7 @@ const AddCards: React.FC<Type> = ({ setIsAdd, videoSrc }) => {
             </div>
           </div>
         </div>
-        <Customize videoSrc={videoSrc}/>
+        <Customize videoSrc={videoSrc} />
         <Cards />
         <button
           onClick={() => setIsAdd(true)}

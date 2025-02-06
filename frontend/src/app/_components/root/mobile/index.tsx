@@ -12,9 +12,9 @@ export default function HomeMobile() {
   };
   return (
     <>
-      <div className=" overflow-y-scroll h-full">
+      <div className=" overflow-y-scroll h-screen">
         <div className=" relative">
-          <div className="h-screen w-screen">
+          <div className="h-screen">
             <Video src="/video/home/home.mp4" />
           {/* <Video src="/video/home/home1.mp4" /> */}
           </div>
@@ -40,7 +40,7 @@ export default function HomeMobile() {
             </p>
           </div>
         </div>
-        <div className="flex flex-col items-center w-screen pt-[22px] px-[15.5px]">
+        <div className="flex flex-col items-center pt-[22px] px-[15.5px]">
           <h1
             className={`${basicBold.className} text-[94.5px] w-full text-center max-[393px]:text-[82px]  leading-[85.39px] pb-[28px]`}
           >
@@ -48,7 +48,7 @@ export default function HomeMobile() {
           </h1>
           <div className="flex justify-center items-center  border-white border-[2px] rounded-[9.42px] w-full h-[574px] relative overflow-hidden">
             {isPlay && (
-              <div className="h-[574px] w-screen">
+              <div className="h-[574px]">
                 <Video src="/video/home/home.mp4" />
               </div>
             )}

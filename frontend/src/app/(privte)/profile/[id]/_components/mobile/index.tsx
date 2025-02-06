@@ -20,7 +20,7 @@ const ProfilesMobile = () => {
   };
   return (
     <>
-      <main className="w-screen mt-[109px] ">
+      <main className="mt-[109px] ">
         <div className="">
           <img
             className="size-[146px] mt-[28px] mx-auto"

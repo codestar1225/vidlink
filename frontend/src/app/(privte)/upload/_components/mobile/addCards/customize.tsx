@@ -1,16 +1,47 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
+import lucideIcons from "@/../public/lucideIcon.json";
+import SetIcon from "./setIcon";
+import * as LucideIcons from "lucide-react";
+import useClickOutside from "@/hooks/useClickOutside";
+
 interface Type {
   videoSrc: string | null;
 }
+
 const Customize: React.FC<Type> = ({ videoSrc }) => {
+  const listRef = useRef<HTMLDivElement>(null);
+  const [link, setLink] = useState<string>("");
+  const [name, setName] = useState<string>("");
+  const [iconSearch, setIconSearch] = useState<string>("");
+  const [icon, setIcon] = useState<string>("");
+  const [start, setSart] = useState<string>("");
+
+  // Filter icons from the JSON based on the input (case insensitive)
+  const matchingIcons = lucideIcons
+    .filter(
+      (key) =>
+        iconSearch && key.toLowerCase().includes(iconSearch.toLowerCase())
+    )
+    .map((key) => key.charAt(0).toUpperCase() + key.slice(1));
+
+  const IconComponent = LucideIcons[
+    icon as keyof typeof LucideIcons
+  ] as React.ComponentType<React.SVGProps<SVGSVGElement>>;
+
+  // Close the menu if the click is outside
+
+  useClickOutside(listRef as React.RefObject<HTMLElement>, () =>
+    setIconSearch("")
+  );
+
+  //collection of data
+  const formData = new FormData();
   useEffect(() => {
-    return () => {
-      if (videoSrc) {
-        URL.revokeObjectURL(videoSrc);
-      }
-    };
-  }, []); // Run only on unmount
+    formData.append("link", link);
+    formData.append("name", name);
+    formData.append("icon", icon);
+  }, [link, icon, name, start]);
   return (
     <>
       <div className="h-[631px] mt-[56.5px] text-[10.5px] font-semibold mx-[19.5px]">
@@ -29,6 +60,8 @@ const Customize: React.FC<Type> = ({ videoSrc }) => {
             </button>
           </div>
           <input
+            value={link}
+            onChange={(e) => setLink(e.target.value)}
             type="text"
             placeholder="Text"
             className="h-[40px] text-[18px] font-normal w-full bg-[#1E1E1E] border-[2.72px] border-[#505050] rounded-[9px] placeholder:text-[10.5px] placeholder:text-[#505050] placeholder:font-semibold px-[9px]"
@@ -37,23 +70,41 @@ const Customize: React.FC<Type> = ({ videoSrc }) => {
         <div className=" h-[59px] flex flex-col justify-between mt-[15px]">
           <div>NAME</div>
           <input
+            value={name}
+            onChange={(e) => setName(e.target.value)}
             type="text"
             placeholder="Text"
             className="h-[40px] text-[18px] font-normal w-full bg-[#1E1E1E] border-[2.72px] border-[#505050] rounded-[9px] placeholder:text-[10.5px] placeholder:text-[#505050] placeholder:font-semibold px-[9px]"
           />
         </div>
-        <div className=" relative h-[59px] flex flex-col justify-between mt-[15px]">
+        <div
+          ref={listRef}
+          className=" relative h-[59px] flex flex-col justify-between mt-[15px]"
+        >
           <div>ICON</div>
           <input
+            value={iconSearch}
+            onChange={(e) => setIconSearch(e.target.value)}
             type="text"
             placeholder='"Location"'
-            className="h-[40px] text-[18px] font-normal w-full bg-[#1E1E1E] border-[2.72px] border-[#505050] rounded-[9px] placeholder:text-[10.5px] placeholder:text-[#505050] placeholder:font-semibold px-[9px] placeholder:italic"
+            className="h-[40px] text-[16px] font-normal w-full bg-[#1E1E1E] border-[2.72px] border-[#505050] rounded-[9px] placeholder:text-[10.5px] placeholder:text-[#505050] placeholder:font-semibold px-[9px] placeholder:italic"
           />
-          <img
-            className="bottom-[8.74px] right-[12.92px] absolute"
-            src="/icon/upload/image2.svg"
-            alt=""
-          />
+          <div className="bottom-[8.74px] right-[12.92px] size-[22.51px] flex absolute">
+            {icon ? (
+              <IconComponent />
+            ) : (
+              <img src="/icon/upload/image2.svg" alt="" />
+            )}
+          </div>
+          {iconSearch ? (
+            <SetIcon
+              matchingIcons={matchingIcons}
+              setIcon={setIcon}
+              setIconSearch={setIconSearch}
+            />
+          ) : (
+            <></>
+          )}
         </div>
         <div className="flex gap-[20px] items-center h-[60px] mt-[15px]">
           <div className="w-1/2 h-full flex flex-col justify-between">
@@ -64,6 +115,8 @@ const Customize: React.FC<Type> = ({ videoSrc }) => {
               </button>
             </div>
             <input
+              value={start}
+              onChange={(e) => setSart(e.target.value)}
               type="text"
               placeholder="Text"
               className="h-[40px] text-[18px] font-normal w-full bg-[#1E1E1E] border-[2.72px] border-[#505050] rounded-[9px] placeholder:text-[10.5px] placeholder:text-[#505050] placeholder:font-semibold px-[9px]"

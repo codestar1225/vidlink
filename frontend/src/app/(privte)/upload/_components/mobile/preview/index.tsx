@@ -10,7 +10,7 @@ const Preview:React.FC<Type> = ({setIsAdd}) => {
   const [isEditing, setIsEditing] = useState<string>("LOCATION");
   return (
     <>
-      <div className="mt-[69px] w-svw flex flex-col items-center">
+      <div className="mt-[69px] flex flex-col items-center">
         {/* title */}
         <div className="flex justify-between items-center px-[15px] w-full pb-[10px]">
           <h1 className="text-[14px] font-normal ">
@@ -27,7 +27,7 @@ const Preview:React.FC<Type> = ({setIsAdd}) => {
           </div>
         </div>
         {/* image */}
-        <div className="relative rounded-[7.36px] h-[225.42px] w-full overflow-hidden">
+        <div className="relative rounded-[7.36px] h-[225.42px] w-[400px] overflow-hidden">
           <img src="/image/upload/bg.png" alt="" className=" object-cover" />
           <div className=" absolute"></div>
         </div>
