@@ -1,32 +1,20 @@
 "use client";
+import useClickOutside from "@/hooks/useClickOutside";
 import Link from "next/link";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 
 interface Type {
   setIsOpen(value: boolean): void;
 }
 
 const LoginModal: React.FC<Type> = ({ setIsOpen }) => {
-  const menuRef = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
 
   // Close the menu if the click is outside
-  const handleClickOutside = (event: MouseEvent) => {
-    if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-      setIsOpen(false); // Close the menu
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-
-    // Cleanup the event listener when the component is unmounted
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+  useClickOutside(ref as React.RefObject<HTMLElement>, () => setIsOpen(false));
   return (
     <div
-      ref={menuRef}
+      ref={ref}
       className="bg-[#F2F2F2] leading-[14px] text-justify absolute top-0 right-0 h-[87.24px] rounded-[8.31px] w-[182px] px-[9.97px] py-[8.31px] font-normal flex flex-col justify-between"
     >
       <h1 className="text-black text-[11.63px]">

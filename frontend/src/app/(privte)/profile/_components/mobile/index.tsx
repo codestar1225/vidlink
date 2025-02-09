@@ -24,6 +24,7 @@ const ProfileMobile = () => {
   const handleSignOut = async () => {
     await signOut({ callbackUrl: "/signin" });
     Cookies.remove("token");
+    Cookies.remove("reqUrl");
     setToken("");
   };
 

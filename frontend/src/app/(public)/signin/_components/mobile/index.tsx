@@ -14,7 +14,7 @@ import { Video } from "@/app/_components/ui/video";
 
 const SigninMobile = () => {
   const [, setToken] = useAtom<string>(tokenAtom);
-  const { signin } = useAuth();
+  const { signin, loading } = useAuth();
   const router = useRouter();
 
   //cutstomized sign in
@@ -25,16 +25,16 @@ const SigninMobile = () => {
 
       if (session && isSignin) {
         removeItem("isSignin");
-
         const res = await signin(session.idToken);
-
         if ("token" in res) {
           // Successfully authenticated
           Cookies.set("token", res.token, { expires: 1 });
           setToken(res.token);
+          const reqUrl = Cookies.get("reqUrl");
+          Cookies.remove("reqUrl");
           toast.success("Logged in successfully.", {
             autoClose: 2000,
-            onClose: () => router.push("/videos"),
+            onClose: () => router.push(`${reqUrl ? `${reqUrl}` : "/"}`),
           });
         } else {
           // Authentication failed, handle error
@@ -46,10 +46,12 @@ const SigninMobile = () => {
     };
 
     fetchSession();
-  }, [signin, router, setToken]);
+  }, []);
 
   //google sign
   const handleSignin = async () => {
+    const isSignin = getItem("isSignin");
+    if (isSignin || loading) return;
     try {
       await signIn("google", { redirect: false });
       setItem("isSignin", true);
@@ -67,8 +69,8 @@ const SigninMobile = () => {
           <img className="h-[55.4px]" src="/icon/home/title.png" alt="" />
           <div className="flex flex-col items-center gap-[20px]">
             <button
-              type="submit"
               onClick={handleSignin}
+              type="submit"
               className="flex items-center justify-center gap-[12.81px] bg-blue rounded-[12.81px] w-[309px] h-[48px]"
             >
               <h1 className="text-[16px]  font-semibold">

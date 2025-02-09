@@ -3,21 +3,30 @@ import { useState } from "react";
 
 export function useVideoValidate() {
   const [error, setError] = useState<string>("");
-  const [fileName, setFileName] = useState<string>("");
+  const [file, setFile] = useState<File | null>(null);
   const [videoSrc, setVideoSrc] = useState<string | null>(null);
+  const [duration, setDuration] = useState<number>(0);
 
   function validateVideo(e: React.ChangeEvent<HTMLInputElement>) {
     setError(""); // Reset error at the beginning
-    setFileName("");
+    setFile(null);
 
     const file = e.target.files?.[0];
     if (!file) return;
 
-    const allowedFormats = ["video/mp4", "video/mov", "video/wmv", "video/flv", "video/avi"];
+    const allowedFormats = [
+      "video/mp4",
+      "video/mov",
+      "video/wmv",
+      "video/flv",
+      "video/avi",
+    ];
     const maxSize = 50 * 1024 * 1024; // 50MB
 
     if (!allowedFormats.includes(file.type)) {
-      setError("Invalid file format! Please upload MP4, MOV, WMV, FLV, or AVI.");
+      setError(
+        "Invalid file format! Please upload MP4, MOV, WMV, FLV, or AVI."
+      );
       return;
     }
 
@@ -45,11 +54,23 @@ export function useVideoValidate() {
         URL.revokeObjectURL(newSrc);
         return;
       }
-
-      setFileName(file.name.slice(0, 10));
+      setDuration(video.duration);
+      setFile(file);
     };
   }
+  // Cancel local video
+  const cancelVideo = () => {
+    setFile(null);
+    setVideoSrc("");
+    setError("");
+  };
 
-  return { validateVideo, error, fileName, videoSrc };
+  return {
+    validateVideo,
+    cancelVideo,
+    error,
+    uploadedFile: file,
+    videoSrc,
+    fileDuration: duration,
+  };
 }
-

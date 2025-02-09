@@ -1,21 +1,41 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import lucideIcons from "@/../public/lucideIcon.json";
 import SetIcon from "./setIcon";
 import * as LucideIcons from "lucide-react";
 import useClickOutside from "@/hooks/useClickOutside";
+import ReactPlayer from "react-player";
 
 interface Type {
-  videoSrc: string | null;
+  setLink(value: string): void;
+  setName(value: string): void;
+  setIcon(value: string): void;
+  setStart(value: number): void;
+  link: string;
+  name: string;
+  start: number;
+  icon: string;
+  isPreview: boolean;
+  duration: number;
+  videoLink: string | null;
 }
 
-const Customize: React.FC<Type> = ({ videoSrc }) => {
+const Customize: React.FC<Type> = ({
+  setLink,
+  setName,
+  setIcon,
+  setStart,
+  icon,
+  link,
+  name,
+  start,
+  duration,
+  videoLink,
+}) => {
   const listRef = useRef<HTMLDivElement>(null);
-  const [link, setLink] = useState<string>("");
-  const [name, setName] = useState<string>("");
+  const videoRef = useRef<ReactPlayer>(null);
   const [iconSearch, setIconSearch] = useState<string>("");
-  const [icon, setIcon] = useState<string>("");
-  const [start, setSart] = useState<string>("");
+  const maxTime = Number(process.env.NEXT_PUBLIC_MAX_TIME || 240);
 
   // Filter icons from the JSON based on the input (case insensitive)
   const matchingIcons = lucideIcons
@@ -23,32 +43,47 @@ const Customize: React.FC<Type> = ({ videoSrc }) => {
       (key) =>
         iconSearch && key.toLowerCase().includes(iconSearch.toLowerCase())
     )
-    .map((key) => key.charAt(0).toUpperCase() + key.slice(1));
+    .map((key) =>
+      key
+        .split("-")
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join("")
+    );
 
   const IconComponent = LucideIcons[
     icon as keyof typeof LucideIcons
   ] as React.ComponentType<React.SVGProps<SVGSVGElement>>;
 
   // Close the menu if the click is outside
-
   useClickOutside(listRef as React.RefObject<HTMLElement>, () =>
     setIconSearch("")
   );
 
-  //collection of data
-  const formData = new FormData();
-  useEffect(() => {
-    formData.append("link", link);
-    formData.append("name", name);
-    formData.append("icon", icon);
-  }, [link, icon, name, start]);
+  //video time capture
+  const onProgress = () => {
+    if (!videoRef.current) return;
+    let currentTime = Math.floor(videoRef.current.getCurrentTime());
+    if (currentTime > maxTime) {
+      videoRef.current?.seekTo(maxTime, "seconds");
+      videoRef.current?.getInternalPlayer().pause();
+      setStart(maxTime);
+      alert("You can't select any further. The maximum time is 4 minutes.");
+    } else {
+      setStart(currentTime);
+    }
+  };
+
   return (
     <>
-      <div className="h-[631px] mt-[56.5px] text-[10.5px] font-semibold mx-[19.5px]">
+      <div className="mt-[56.5px] text-[10.5px] font-semibold mx-[19.5px]">
         <div className="flex flex-col items-center justify-between h-[38px]">
           <h1>ADD CARDS</h1>
           <i className=" font-normal text-[8.5px]">
-            VIDEO 4:28 = MAX 26 CARDS{" "}
+            VIDEO {Math.floor(duration / 60)}:
+            {duration % 60 < 10
+              ? `0${Math.floor(duration % 60)}`
+              : Math.floor(duration % 60)}{" "}
+            = MAX {Math.floor(duration / 10)} CARDS
           </i>
           <i className="font-normal text-[8.5px]">MAX 1 CARD EVERY 10s</i>
         </div>
@@ -62,9 +97,9 @@ const Customize: React.FC<Type> = ({ videoSrc }) => {
           <input
             value={link}
             onChange={(e) => setLink(e.target.value)}
-            type="text"
+            type="url"
             placeholder="Text"
-            className="h-[40px] text-[18px] font-normal w-full bg-[#1E1E1E] border-[2.72px] border-[#505050] rounded-[9px] placeholder:text-[10.5px] placeholder:text-[#505050] placeholder:font-semibold px-[9px]"
+            className="h-[40px] text-[12px] font-normal w-full bg-[#1E1E1E] border-[2.72px] border-[#505050] rounded-[9px] placeholder:text-[10.5px] placeholder:text-[#505050] placeholder:font-semibold px-[9px]"
           />
         </div>
         <div className=" h-[59px] flex flex-col justify-between mt-[15px]">
@@ -74,7 +109,7 @@ const Customize: React.FC<Type> = ({ videoSrc }) => {
             onChange={(e) => setName(e.target.value)}
             type="text"
             placeholder="Text"
-            className="h-[40px] text-[18px] font-normal w-full bg-[#1E1E1E] border-[2.72px] border-[#505050] rounded-[9px] placeholder:text-[10.5px] placeholder:text-[#505050] placeholder:font-semibold px-[9px]"
+            className="h-[40px] text-[12px] font-normal w-full bg-[#1E1E1E] border-[2.72px] border-[#505050] rounded-[9px] placeholder:text-[10.5px] placeholder:text-[#505050] placeholder:font-semibold px-[9px]"
           />
         </div>
         <div
@@ -87,7 +122,7 @@ const Customize: React.FC<Type> = ({ videoSrc }) => {
             onChange={(e) => setIconSearch(e.target.value)}
             type="text"
             placeholder='"Location"'
-            className="h-[40px] text-[16px] font-normal w-full bg-[#1E1E1E] border-[2.72px] border-[#505050] rounded-[9px] placeholder:text-[10.5px] placeholder:text-[#505050] placeholder:font-semibold px-[9px] placeholder:italic"
+            className="h-[40px] text-[12px] font-normal w-full bg-[#1E1E1E] border-[2.72px] border-[#505050] rounded-[9px] placeholder:text-[10.5px] placeholder:text-[#505050] placeholder:font-semibold px-[9px] placeholder:italic"
           />
           <div className="bottom-[8.74px] right-[12.92px] size-[22.51px] flex absolute">
             {icon ? (
@@ -114,13 +149,10 @@ const Customize: React.FC<Type> = ({ videoSrc }) => {
                 <img src="/icon/upload/clock1.svg" alt="" />
               </button>
             </div>
-            <input
-              value={start}
-              onChange={(e) => setSart(e.target.value)}
-              type="text"
-              placeholder="Text"
-              className="h-[40px] text-[18px] font-normal w-full bg-[#1E1E1E] border-[2.72px] border-[#505050] rounded-[9px] placeholder:text-[10.5px] placeholder:text-[#505050] placeholder:font-semibold px-[9px]"
-            />
+            <div className="h-[40px] pt-1 text-[12px] font-normal w-full bg-[#1E1E1E] border-[2.72px] border-[#505050] rounded-[9px] flex items-center px-[9px]">
+              {Math.floor(start / 60)}:
+              {start % 60 < 10 ? `0${start % 60}` : start % 60}
+            </div>
           </div>
           <div className="w-1/2 h-full flex flex-col justify-between">
             <div className="flex items-center gap-[7px]">
@@ -136,20 +168,24 @@ const Customize: React.FC<Type> = ({ videoSrc }) => {
             />
           </div>
         </div>
-        {videoSrc ? (
-          <video
-            className="h-[280px] w-full object-cover mt-[20px] rounded-[6.1px] overflow-hidden"
-            playsInline
-            muted
-            preload="auto"
-            controls
-          >
-            <source src={videoSrc} type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
-        ) : (
-          <>No video file.</>
-        )}
+        <div className=" ">
+          {videoLink ? (
+            <div className="h-[280px] mt-[20px] rounded-[6.1px] overflow-hidden">
+              <ReactPlayer
+                ref={videoRef}
+                url={videoLink}
+                preload="auto"
+                controls
+                onProgress={onProgress}
+                progressInterval={100}
+                width="100%"
+                height="100%"
+              />
+            </div>
+          ) : (
+            <>No video file.</>
+          )}
+        </div>
       </div>
     </>
   );

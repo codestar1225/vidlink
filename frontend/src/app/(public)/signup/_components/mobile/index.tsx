@@ -14,7 +14,7 @@ import { Video } from "@/app/_components/ui/video";
 
 const SignupMobile = () => {
   const [, setToken] = useAtom<string>(tokenAtom);
-  const { signup } = useAuth();
+  const { signup, loading } = useAuth();
   const router = useRouter();
   //cutstomized sign up
   useEffect(() => {
@@ -24,16 +24,15 @@ const SignupMobile = () => {
 
       if (session && isSignup) {
         removeItem("isSignup");
-
         const res = await signup(session.idToken);
-
         if ("token" in res) {
           // Successful signup
           Cookies.set("token", res.token, { expires: 1 });
           setToken(res.token);
+          const reqUrl = Cookies.get("reqUrl");
           toast.success("Signed up successfully.", {
             autoClose: 2000,
-            onClose: () => router.push("/videos"),
+            onClose: () => router.push(`${reqUrl ? `/${reqUrl}` : "/"}`),
           });
         } else {
           // User already signed up, handle error
@@ -50,10 +49,12 @@ const SignupMobile = () => {
     };
 
     fetchSession();
-  }, [signup, router, setToken]);
+  }, []);
 
   //google sign
   const handleSignup = async () => {
+    const isSignin = getItem("isSignin");
+    if (isSignin || loading) return;
     try {
       await signIn("google", { redirect: false });
       setItem("isSignup", true);

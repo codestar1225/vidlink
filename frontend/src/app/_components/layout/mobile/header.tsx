@@ -95,14 +95,14 @@ const HeaderMobile = () => {
           ) : (
             <>
               <Link
-                href={"/signin"}
+                href={"/upload"}
                 onClick={() => setIsOpenMenu(false)}
                 className="border-[1.07px] h-[18.39px] text-[#303030] border-[#303030] font-semibold  rounded-[3.2px] text-[15px]  px-[2.13px] tracking-widest "
               >
                 UPLOAD
               </Link>
               <Link
-                href={"/signin"}
+                href={"/profile"}
                 onClick={() => setIsOpenMenu(false)}
                 className="border-[1.07px] h-[18.39px] text-[#303030] border-[#303030] font-semibold  rounded-[3.2px] text-[15px]  px-[2.13px] tracking-widest "
               >

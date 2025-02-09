@@ -5,7 +5,7 @@ const Cards = () => {
   return (
     <>
       <div className="flex justify-center">
-        <div className="text-[14px] font-normal flex flex-col gap-[15px] w-[379px] max-[401px]:w-[251px] mt-[48px]">
+        <div className="text-[14px] font-normal flex flex-col gap-[15px] w-[379.1px] max-[401px]:w-[251px] mt-[48px]">
           <h1>
             <span className=" text-blue font-semibold">WHERE SHE GOES </span> -
             BAD BUNNY

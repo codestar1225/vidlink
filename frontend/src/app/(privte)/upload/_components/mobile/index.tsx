@@ -1,49 +1,130 @@
 "use client";
-import { ChangeEvent, Suspense, useState } from "react";
-import ProgressLine from "./upload/progressLine";
+import { Suspense, useEffect, useState } from "react";
+import ProgressLine from "./progressLine";
 import { useVideoValidate } from "@/hooks/useVideoValidate";
 import dynamic from "next/dynamic";
 import Upload from "./upload";
 import Loading from "@/app/_components/ui/loading";
-// import useUpload from "@/hooks/useUpload";
+import { useAtom } from "jotai";
+import { cardAtom, CardType } from "@/store";
+import { confirmModal } from "@/utils/confirm";
+import useVideo from "@/hooks/useVideo";
 const AddCards = dynamic(() => import("./addCards"));
 const Preview = dynamic(() => import("./preview"));
 
 const UploadMobile = () => {
-  const [isUpload, setIsUpload] = useState<boolean>(false);
-  const [isAdd, setIsAdd] = useState<boolean>(false);
-  const { error, fileName, videoSrc, validateVideo } = useVideoValidate();
-  // const { uploadVideo, loading } = useUpload();
+  const [edit, setEdit] = useState<string>("upload");
+  const {
+    error,
+    videoSrc,
+    uploadedFile,
+    fileDuration,
+    validateVideo,
+    cancelVideo,
+  } = useVideoValidate();
+  const [videoLink, setVideoLink] = useState<string>("");
+  const [url, setUrl] = useState<string>("");
+  const [duration, setDuration] = useState<number>(0);
+  const [file, setFile] = useState<File | null>(null);
+  const [title, setTitle] = useState<string>("");
+  const [cards, setCards] = useAtom<CardType[]>(cardAtom);
+  const [editSignal, setEditSignal] = useState<boolean>(false);
+  const { publish, loading } = useVideo();
 
-  function handleUpload(e: ChangeEvent<HTMLInputElement>) {
-    validateVideo(e);
-  }
-  // const videoUp = (file: ChangeEvent<HTMLInputElement>) => {
-  //   const video = new FormData();
-  //   if (file) {
-  //   }
-  // };
+  // Detect the start of edit.
+  useEffect(() => {
+    setEditSignal(true);
+  }, [videoLink]);
+
+  const handlePublish = () => {
+    if (!videoLink || !file || !cards) {
+      return alert("Please fill all the contents.");
+    }
+    if (!editSignal) {
+      return alert("Nothing has changed.");
+    }
+    confirmModal("Are you sure you want to publish this video?", videoPublish);
+  };
+  const videoPublish = async () => {
+    const data = new FormData();
+    if (file) {
+      data.append("file", file);
+    } else {
+      data.append("videlLink", videoLink);
+    }
+    data.append("title", title);
+    data.append("cards", JSON.stringify(cards));
+    data.append("duration", duration.toString());
+    const res = await publish(data);
+    if (res.status === 200) {
+      setEditSignal(false);
+      if (
+        "cards" in res &&
+        "videoLink" in res &&
+        "duration" in res &&
+        "title" in res
+      ) {
+        setVideoLink(res.videoLink);
+        setDuration(res.duration);
+        setCards(res.cards);
+        setTitle(res.title);
+      } else {
+        return alert("Something went wrong.");
+      }
+    } else {
+      return alert(res.message);
+    }
+    console.log("upload success");
+  };
 
   return (
     <>
-      <ProgressLine fileName={fileName} isUpload={isUpload} isAdd={isAdd} />
-      {isUpload && fileName ? (
-        isAdd ? (
-          <Suspense fallback={<Loading />}>
-            <Preview setIsAdd={setIsAdd} />
-          </Suspense>
-        ) : (
-          <Suspense fallback={<Loading />}>
-            <AddCards setIsAdd={setIsAdd} videoSrc={videoSrc} />
-          </Suspense>
-        )
-      ) : (
+      <ProgressLine
+        setEdit={setEdit}
+        cancelVideo={cancelVideo}
+        setUrl={setUrl}
+        edit={edit}
+        url={url}
+        videoSrc={videoSrc}
+        videoLink={videoLink}
+        editSignal={editSignal}
+      />
+      {edit === "upload" ? (
         <Upload
-          fileName={fileName}
+          videoSrc={videoSrc}
           error={error}
-          setIsUpload={setIsUpload}
-          handleUpload={handleUpload}
+          url={url}
+          fileDuration={fileDuration}
+          file={file}
+          uploadedFile={uploadedFile}
+          validateVideo={validateVideo}
+          setVideoLink={setVideoLink}
+          setEdit={setEdit}
+          setUrl={setUrl}
+          cancelVideo={cancelVideo}
+          setDuration={setDuration}
+          setFile={setFile}
         />
+      ) : edit === "add" ? (
+        <Suspense fallback={<Loading />}>
+          <AddCards
+            setEdit={setEdit}
+            setEditSignal={setEditSignal}
+            setTitle={setTitle}
+            videoLink={videoLink}
+            duration={duration}
+            title={title}
+          />
+        </Suspense>
+      ) : (
+        <Suspense fallback={<Loading />}>
+          <Preview
+            setEdit={setEdit}
+            handlePublish={handlePublish}
+            videoLink={videoLink}
+            loading={loading}
+          />
+        </Suspense>
       )}
     </>
   );

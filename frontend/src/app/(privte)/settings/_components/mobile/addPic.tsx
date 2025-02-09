@@ -1,4 +1,5 @@
 "use client";
+import useClickOutside from "@/hooks/useClickOutside";
 import React, { useEffect, useRef, useState } from "react";
 import Webcam from "react-webcam";
 
@@ -16,21 +17,9 @@ const AddPic: React.FC<Type> = ({ setIsOpen }) => {
     setPhoto(imageSrc || null);
   };
 
-  // Close the menu if the click is outside
-  const handleClickOutside = (event: MouseEvent) => {
-    if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-      setIsOpen(false); // Close the menu
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-
-    // Cleanup the event listener when the component is unmounted
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+  useClickOutside(menuRef as React.RefObject<HTMLElement>, () =>
+    setIsOpen(false)
+  );
   return (
     <>
       <ul
