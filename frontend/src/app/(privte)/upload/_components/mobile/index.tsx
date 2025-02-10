@@ -123,6 +123,7 @@ const UploadMobile = () => {
             handlePublish={handlePublish}
             videoLink={videoLink}
             loading={loading}
+            editSignal={editSignal}
           />
         </Suspense>
       )}

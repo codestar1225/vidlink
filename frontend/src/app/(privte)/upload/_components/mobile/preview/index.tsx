@@ -14,12 +14,14 @@ interface Type {
   handlePublish(): void;
   videoLink: string;
   loading: boolean;
+  editSignal: boolean;
 }
 const Preview: React.FC<Type> = ({
   setEdit,
   handlePublish,
   videoLink,
   loading,
+  editSignal,
 }) => {
   const [cards] = useAtom<CardType[]>(cardAtom);
   const [fltCards, setFltCards] = useState<CardType[]>([]);
@@ -74,7 +76,7 @@ const Preview: React.FC<Type> = ({
           <ul className="flex flex-wrap justify-start content-start max-[401px]:justify-center gap-[6px] max-h-[391.7px] max-w-[380px]">
             {start !== -1 && no !== -1 ? (
               <Suspense fallback={<Loading />}>
-                <CardNext handleNext={handleNext} no={no} start={start}   />
+                <CardNext handleNext={handleNext} no={no} start={start} />
               </Suspense>
             ) : (
               <></>
@@ -103,6 +105,7 @@ const Preview: React.FC<Type> = ({
         setEdit={setEdit}
         handlePublish={handlePublish}
         loading={loading}
+        editSignal={editSignal}
       />
       <Footer isFixed={false} />
     </>
