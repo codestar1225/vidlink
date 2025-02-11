@@ -5,6 +5,6 @@ export interface CardType {
   icon: string;
   start: number;
   no: number;
-  isPreview: boolean;
+  isSaved: boolean;
 }
 export const cardAtom = atom<CardType[]>([]);

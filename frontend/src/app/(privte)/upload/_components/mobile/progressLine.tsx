@@ -58,9 +58,7 @@ const ProgressLine: React.FC<Type> = ({
         ></span>
         <span
           className={`${
-             !editSignal && edit === "preview"
-              ? "bg-blue "
-              : "bg-[#505050]"
+            !editSignal && edit === "preview" ? "bg-blue " : "bg-[#505050]"
           } w-[36px] h-[5px] rounded-full absolute bottom-[7px] right-0`}
         ></span>
         {/* Points */}
@@ -91,13 +89,33 @@ const ProgressLine: React.FC<Type> = ({
           } size-[20px] rounded-full border  absolute right-[26px] bottom-[0px]`}
         ></button>
         {/* title */}
-        <div className="text-[8px] font-semibold tracking-widest absolute left-[15px] bottom-[30px]">
+        <div
+          className={`${
+            url || videoSrc || videoLink ? "text-blue" : "text-white"
+          } text-[10px] font-semibold tracking-widest absolute left-[15px] bottom-[30px]`}
+        >
           UPLOAD
         </div>
-        <div className="text-[8px] text-[#505050] font-semibold tracking-widest absolute left-[50%] -translate-x-[50%] bottom-[30px]">
+        <div
+          className={`${
+            edit === "add"
+              ? "text-white"
+              : edit === "preview"
+              ? "text-blue"
+              : "text-[#505050]"
+          } text-[10px] text-[#505050] font-semibold tracking-widest absolute left-[50%] -translate-x-[50%] bottom-[30px]`}
+        >
           ADD CARDS
         </div>
-        <div className="text-[8px] text-[#505050] font-semibold tracking-widest absolute right-[15px] bottom-[30px]">
+        <div
+          className={`${
+            !editSignal && edit === "preview"
+              ? "text-blue "
+              : edit === "preview"
+              ? "text-white border-blue"
+              : "text-[#505050] "
+          } text-[10px] text-[#505050] font-semibold tracking-widest absolute right-[15px] bottom-[30px]`}
+        >
           PUBLISH
         </div>
       </div>

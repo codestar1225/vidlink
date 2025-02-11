@@ -1,4 +1,5 @@
 import * as LucideIcons from "lucide-react";
+import { useEffect } from "react";
 
 interface Type {
   setIsSelected(value: number): void;
@@ -8,9 +9,10 @@ interface Type {
   icon: string;
   no: number;
   index: number;
-  isPreview: boolean;
+  isSaved: boolean;
   link: string;
   signal: boolean;
+  currentCard: number;
 }
 const CardItem: React.FC<Type> = ({
   setIsSelected,
@@ -20,24 +22,28 @@ const CardItem: React.FC<Type> = ({
   icon,
   no,
   index,
-  isPreview,
+  isSaved,
   link,
   signal,
+  currentCard,
 }) => {
   const IconComponent = LucideIcons[
     icon as keyof typeof LucideIcons
   ] as React.ComponentType<React.SVGProps<SVGSVGElement>>;
 
   const handlePreview = () => {
-    setIsSelected(no);
+    setIsSelected(start);
     setSignal(!signal);
   };
+
   return (
     <>
       <li
         className={`${
-          index === 0 ? "bg-blue text-white" : "bg-white text-black"
-        } rounded-[6px] w-[122.41px] h-[94.5px] p-[5.9px] flex flex-col justify-between overflow-hidden`}
+          currentCard >= 0 && currentCard + 1 === no
+            ? "bg-blue text-white"
+            : "bg-white text-black"
+        } rounded-[6px] w-[122.41px] h-[94.5px] p-[5.9px] flex flex-col overflow-hidden`}
       >
         <button onClick={handlePreview}>
           <div className="text-[13.86px] font-semibold flex justify-between w-full items-center">
@@ -48,26 +54,26 @@ const CardItem: React.FC<Type> = ({
             </i>
           </div>
           <div
-            className={`flex flex-col items-center h-[38.4px] w-full pt-[8px] justify-between`}
+            className={`flex flex-col items-center h-[38.4px] w-full justify-between mt-[10px]`}
           >
             <h1 className={`text-[13.86px] font-semibold`}>
               {name.toUpperCase()}
             </h1>
-            <IconComponent className="size-[22.51px]" />
+            <IconComponent className="size-[18.29px]" />
           </div>
         </button>
         <div className="flex justify-between">
           <div className="size-[22.51px]">
-            {isPreview ? (
+            {isSaved ? (
               <img src="/icon/detail/card/left2Blue.png" alt="" />
-            ) : index === 0 ? (
+            ) : currentCard >= 0 && currentCard + 1 === no ? (
               <img src="/icon/detail/card/left2_white.png" alt="" />
             ) : (
               <img src="/icon/detail/card/left2.svg" alt="" />
             )}
           </div>
           <a href={link} target="blank" className="z-20">
-            {index === 0 ? (
+            {currentCard >= 0 && currentCard + 1 === no ? (
               <img src="/icon/detail/card/right2_white.png" alt="" />
             ) : (
               <img src="/icon/detail/card/right2.svg" alt="" />

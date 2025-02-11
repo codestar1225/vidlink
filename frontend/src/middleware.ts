@@ -1,9 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { jwtVerify } from "jose";
-import Cookies from "js-cookie";
 
 export async function middleware(req: NextRequest): Promise<NextResponse> {
-  const token = req.cookies.get("token")?.value?.trim();
+  const token = req.cookies.get("token")?.value?.trim() || "";
 
   if (!token || typeof token !== "string") {
     const res = NextResponse.redirect(new URL("/signin", req.url));
@@ -23,6 +22,8 @@ export async function middleware(req: NextRequest): Promise<NextResponse> {
     console.error("JWT Verification Error:", error);
     const res = NextResponse.redirect(new URL("/signin", req.url));
     res.cookies.set("reqUrl", req.url, { maxAge: 60 * 60 });
+    res.cookies.delete("token");
+    res.cookies.delete("user");
     return res;
   }
 }

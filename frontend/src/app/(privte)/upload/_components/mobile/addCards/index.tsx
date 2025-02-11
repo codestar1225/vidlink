@@ -7,6 +7,7 @@ import { useAtom } from "jotai";
 import { cardAtom, CardType } from "@/store";
 import Setting from "./setting";
 import { checkUrl } from "@/utils/checkUrl";
+import { confirmModal } from "@/utils/confirm";
 
 interface Type {
   setEdit(value: string): void;
@@ -27,12 +28,11 @@ const AddCards: React.FC<Type> = ({
 }) => {
   const [cards, setCards] = useAtom<CardType[]>(cardAtom);
   const [imgFile, setImgFile] = useState<string>("");
-
   const [link, setLink] = useState<string>("");
   const [name, setName] = useState<string>("");
   const [icon, setIcon] = useState<string>("");
   const [start, setSart] = useState<number>(0);
-  const [isPreview, setIsPreview] = useState<boolean>(false);
+  const [isSaved, setIsSaveed] = useState<boolean>(false);
 
   function handleUploadImg(e: ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
@@ -44,41 +44,31 @@ const AddCards: React.FC<Type> = ({
       reader.readAsDataURL(file);
     }
   }
+
   const addCard = () => {
-    if (cards.length >= Math.floor(duration / 10)) {
+    if (cards.length >= Math.floor(duration / 10) + 1 || cards.length >= 24) {
       return alert("Your cards exceed their maximum amount.");
     }
-    if (!checkUrl(link))
-      return alert("Invalid link. Please enter a valid link.");
+    // if (!checkUrl(link))
+    //   return alert("Invalid link. Please enter a valid link.");
     if (link && name && icon) {
       const newCard = {
         link,
         name,
         icon,
         start,
-        isPreview,
+        isSaved,
         no: cards.filter((key) => key.start < start).length + 1,
       };
       const alreadyOne = cards.findIndex((item) => item.start === start);
-      if (alreadyOne !== -1) {
-        cards[alreadyOne] = newCard;
+      if (alreadyOne === -1) {
+        addCards(newCard);
       } else {
-        setCards((cards) =>
-          [...cards, newCard]
-            .sort(function (a, b) {
-              return a.start - b.start;
-            })
-            .map((card) =>
-              card.start > start ? { ...card, no: card.no + 1 } : card
-            )
+        confirmModal(
+          "A card with the same start time already exists. Do you want to replace the existing card with this one?",
+          () => replaceCard(newCard)
         );
-        console.log(cards);
       }
-      setLink("");
-      setName("");
-      setIcon("");
-      setIsPreview(false);
-      setEditSignal(true);
     } else {
       alert(
         `Please enter the ${!link ? "Link " : " "}${!name ? "Name " : " "}${
@@ -86,6 +76,39 @@ const AddCards: React.FC<Type> = ({
         }.`
       );
     }
+  };
+
+  // replace existing card with new card
+  const replaceCard = (newCard: CardType) => {
+    setCards((prevCards) => {
+      const alreadyOne = cards.findIndex((item) => item.start === start);
+      const updatedCards = [...prevCards];
+      updatedCards[alreadyOne] = newCard;
+      return updatedCards;
+    });
+    setLink("");
+    setName("");
+    setIcon("");
+    setIsSaveed(false);
+    setEditSignal(true);
+  };
+
+  // add new card to existing cards.
+  const addCards = (newCard: CardType) => {
+    setCards((cards) =>
+      [...cards, newCard]
+        .sort(function (a, b) {
+          return a.start - b.start;
+        })
+        .map((card) =>
+          card.start > start ? { ...card, no: card.no + 1 } : card
+        )
+    );
+    setLink("");
+    setName("");
+    setIcon("");
+    setIsSaveed(false);
+    setEditSignal(true);
   };
 
   //Open the preview page
@@ -109,7 +132,7 @@ const AddCards: React.FC<Type> = ({
           setIcon={setIcon}
           setLink={setLink}
           setStart={setSart}
-          isPreview={isPreview}
+          isSaved={isSaved}
           icon={icon}
           name={name}
           link={link}
@@ -119,16 +142,16 @@ const AddCards: React.FC<Type> = ({
         />
         <Cards
           addCard={addCard}
-          setIsPreview={setIsPreview}
+          setIsSaveed={setIsSaveed}
           icon={icon}
           name={name}
           start={start}
           link={link}
-          isPreview={isPreview}
+          isSaved={isSaved}
         />
         <button
           onClick={handlePreviewPage}
-          className="w-[309px] h-[50px] text-[21.5px] font-semibold rounded-[16px] bg-blue mx-auto flex justify-center items-center mt-[57px] mb-[65px] tracking-wider"
+          className="w-[309px] h-[50px] text-[25px] font-semibold rounded-[16px] bg-blue mx-auto flex justify-center items-center mt-[57px] mb-[65px] tracking-wide"
         >
           PREVIEW & PUBLISH
         </button>

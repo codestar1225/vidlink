@@ -2,7 +2,7 @@
 import FooterMobile from "@/app/_components/layout/mobile/footer";
 import NavItem from "./navItem";
 import AmountItem from "./amountItem";
-import { useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import videos from "@/app/(public)/videos/_components/mobile/videos1.json";
 import { signOut } from "next-auth/react";
 import { useAtom } from "jotai";
@@ -13,18 +13,29 @@ import Link from "next/link";
 import Videos from "./videos";
 import dynamic from "next/dynamic";
 import AddPic from "./addPic";
-const Cards = dynamic(() => import("./cards"));
+import Loading from "@/app/_components/ui/loading";
+const Card = dynamic(() => import("./card"));
 const Likes = dynamic(() => import("./likes"));
 
 const ProfileMobile = () => {
   const [nav, setNav] = useState<string>("videos");
   const [, setToken] = useAtom(tokenAtom);
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [pic, setPic] = useState<string>("/icon/avatar/avatar.png");
+
+  useEffect(() => {
+    const user = Cookies.get("user");
+    if (user) {
+      const parsedUser = JSON.parse(user);
+      setPic(parsedUser.pic);
+    }
+  }, []);
 
   const handleSignOut = async () => {
     await signOut({ callbackUrl: "/signin" });
     Cookies.remove("token");
     Cookies.remove("reqUrl");
+    Cookies.remove("user");
     setToken("");
   };
 
@@ -33,11 +44,7 @@ const ProfileMobile = () => {
       <main className=" mt-[109px] ">
         <div className="">
           <div className="relative size-[146px] mx-auto ">
-            <img
-              className="size-[146px] mt-[28px]"
-              src="/image/profile/avatar.png"
-              alt=""
-            />
+            <img className="size-[146px] mt-[28px] rounded-full" src={pic} alt="" />
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="absolute top-[9px] size-[18px] right-[17px]"
@@ -107,9 +114,13 @@ const ProfileMobile = () => {
           {nav === "videos" ? (
             <Videos videos={videos} />
           ) : nav === "cards" ? (
-            <Cards />
+            <Suspense fallback={<Loading />}>
+              <Card />
+            </Suspense>
           ) : (
-            <Likes videos={videos} />
+            <Suspense fallback={<Loading />}>
+              <Likes videos={videos} />
+            </Suspense>
           )}
         </div>
       </main>

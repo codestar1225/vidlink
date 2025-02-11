@@ -1,15 +1,34 @@
 "use client";
 import Link from "next/link";
-import Item from "./Item";
-import { useEffect, useState } from "react";
+import Item from "./headerItem";
+import { useEffect, useRef, useState } from "react";
 import useVerifyAuth from "@/hooks/useVerifyAuth";
+import useClickOutside from "@/hooks/useClickOutside";
+import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
 
 const HeaderMobile = () => {
   const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false);
+  const [isAnimate, setIsAnimate] = useState<boolean>(false);
   const [isBlurred, setIsBlurred] = useState(false);
+  const [pic, setPic] = useState<string>("/icon/avatar/avatar.png");
+  const menuRef = useRef<HTMLHeadElement>(null);
+  const router = useRouter();
+
   const { loading, isAuth } = useVerifyAuth();
 
   useEffect(() => {
+    if (isAuth) {
+      const user = Cookies.get("user");
+      if (user) {
+        const parsedUser = JSON.parse(user);
+        setPic(parsedUser.pic);
+      }
+    }
+  }, [isAuth, router]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
     const handleScroll = () => {
       if (window.scrollY > 10) {
         setIsBlurred(true);
@@ -23,33 +42,40 @@ const HeaderMobile = () => {
     };
   }, []);
 
+  useClickOutside(menuRef as React.RefObject<HTMLElement>, () =>
+    setIsOpenMenu(false)
+  );
+
+  useEffect(() => {
+    isOpenMenu ? setIsAnimate(true) : setIsAnimate(false);
+  }, [isOpenMenu]);
+
   if (loading) return null;
   return !isOpenMenu ? (
+    //Closed header
     <header className="fixed z-10 top-0 left-0 w-screen">
       <div
         className={`${
           isBlurred ? "backdrop-blur-md bg-white/50" : "bg-transparent"
-        } flex justify-between items-center mt-[27px] bg-[red] mx-[29px] p-[3px] rounded-full`}
+        } flex justify-between items-center mt-[27px] bg-[red] mx-[30px] px-[3px] py-[3px] rounded-full`}
       >
-        <button onClick={() => setIsOpenMenu(true)}>
-          <img src="/icon/layout/menu.svg" alt="" />
+        <button onClick={() => setIsOpenMenu(true)} className="size-[32px]">
+          <img src="/icon/layout/menu.png" alt="" />
         </button>
         <div className="flex gap-[9px] h-[32px] items-center">
           {isAuth ? (
             <>
-              <div className="">
-                <Link href={"/message"}>
-                  <img
-                    className="size-[32px]"
-                    src="/icon/layout/alert.png"
-                    alt=""
-                  />
-                </Link>
-              </div>
+              <Link href={"/message"}>
+                <img
+                  className="size-[32px]"
+                  src="/icon/layout/alert.png"
+                  alt=""
+                />
+              </Link>
               <Link href={"/profile"}>
                 <img
-                  className="w-[33.95px] h-[33px]"
-                  src="/icon/layout/avatar.png"
+                  className="w-[33.95px] h-[33px] rounded-full"
+                  src={pic}
                   alt=""
                 />
               </Link>
@@ -63,7 +89,8 @@ const HeaderMobile = () => {
       </div>
     </header>
   ) : (
-    <header className="fixed z-10 top-0 left-0 w-screen">
+    // opened header
+    <header ref={menuRef} className={`fixed z-10 top-0 left-0 w-screen `}>
       <div className="pt-[30px] bg-transparent mx-[22px]">
         <button
           onClick={() => setIsOpenMenu(false)}
@@ -71,45 +98,38 @@ const HeaderMobile = () => {
             isBlurred ? "backdrop-blur-md bg-white/50 " : "bg-transparent"
           } p-[3px] rounded-full ml-[7px] size-[32px]`}
         >
-          <img src="/icon/layout/close.svg" alt="" />
+          <img src="/icon/layout/close.png" alt="" />
         </button>
         <nav
-          className={`mt-[4px] flex px-[10px] py-[8px] rounded-full justify-between
+          className={`${
+            isAnimate ? "scale-y-[1]" : "scale-y-[0]"
+          } transition-all duration-300 mt-[4px] flex px-[10px] py-[8px] rounded-full justify-between
            ${isBlurred ? "backdrop-blur-md bg-white/50" : "bg-transparent"}`}
         >
-          <Item url={"/"} name="HOME" setIsOpenMenu={setIsOpenMenu} />
-          <Item url={"/videos"} name="VIDEOS" setIsOpenMenu={setIsOpenMenu} />
-          {isAuth ? (
-            <>
-              <Item
-                url={"/upload"}
-                name="UPLOAD"
-                setIsOpenMenu={setIsOpenMenu}
-              />
-              <Item
-                url={"/profile"}
-                name="PROFILE"
-                setIsOpenMenu={setIsOpenMenu}
-              />
-            </>
-          ) : (
-            <>
-              <Link
-                href={"/upload"}
-                onClick={() => setIsOpenMenu(false)}
-                className="border-[1.07px] h-[18.39px] text-[#303030] border-[#303030] font-semibold  rounded-[3.2px] text-[15px]  px-[2.13px] tracking-widest "
-              >
-                UPLOAD
-              </Link>
-              <Link
-                href={"/profile"}
-                onClick={() => setIsOpenMenu(false)}
-                className="border-[1.07px] h-[18.39px] text-[#303030] border-[#303030] font-semibold  rounded-[3.2px] text-[15px]  px-[2.13px] tracking-widest "
-              >
-                PROFILE
-              </Link>
-            </>
-          )}
+          <Item
+            setIsOpenMenu={setIsOpenMenu}
+            url={"/"}
+            name="HOME"
+            isAuth={true}
+          />
+          <Item
+            setIsOpenMenu={setIsOpenMenu}
+            url={"/videos"}
+            name="VIDEOS"
+            isAuth={true}
+          />
+          <Item
+            setIsOpenMenu={setIsOpenMenu}
+            url={"/upload"}
+            name="UPLOAD"
+            isAuth={isAuth}
+          />
+          <Item
+            setIsOpenMenu={setIsOpenMenu}
+            url={"/profile"}
+            name="PROFILE"
+            isAuth={isAuth}
+          />
         </nav>
       </div>
     </header>

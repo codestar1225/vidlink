@@ -1,6 +1,5 @@
+import cards from "../cards.json";
 import Card from "./card";
-import cards from "@/app/(privte)/upload/_components/mobile/addCards/cards.json";
-
 const Cards = () => {
   return (
     <>

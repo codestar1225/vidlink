@@ -21,7 +21,7 @@ const ButtonItem: React.FC<Type> = ({
           onClick={handleNext}
           className={` ${
             videoSrc || url ? "bg-blue" : "bg-[#1E1E1E]"
-          } w-[282.81px] h-[50px] flex justify-center rounded-[20px] items-center gap-[10px] mx-auto mt-[88px] mb-[60px] font-semibold text-black text-[21px]`}
+          } w-[282.81px] h-[50px] flex justify-center rounded-[20px] items-center gap-[10px] mx-auto mt-[88px] mb-[60px] font-semibold text-black text-[25px]`}
         >
           {loading ? (
             <>
@@ -42,7 +42,7 @@ const ButtonItem: React.FC<Type> = ({
       ) : (
         <label
           htmlFor="upload"
-          className="bg-[#EA003B] w-[282.81px] h-[50px] flex justify-center rounded-[20px] items-center gap-[10px] mx-auto mt-[88px] mb-[60px] font-semibold text-black text-[21px]"
+          className="bg-[#EA003B] w-[282.81px] h-[50px] flex justify-center rounded-[20px] items-center gap-[10px] mx-auto mt-[88px] mb-[60px] font-semibold text-black text-[25px]"
         >
           RETRY
         </label>

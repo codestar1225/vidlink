@@ -24,7 +24,7 @@ const Setting: React.FC<Type> = ({
             onChange={(e) => setTitle(e.target.value)}
             type="text"
             placeholder="Text"
-            className="h-[40px] font-normal text-[18px] py-[15px] w-full bg-[#1E1E1E] border-[2.72px] border-[#505050] rounded-[9px] placeholder:text-[12px] placeholder:text-[#505050] placeholder:font-semibold px-[9px]"
+            className="h-[40px] font-normal text-[14px] py-[15px] w-full bg-[#1E1E1E] border-[2.72px] border-[#505050] rounded-[9px] placeholder:text-[12px] placeholder:text-[#505050] placeholder:font-semibold px-[9px]"
           />
         </div>
         <div className="h-[86.51px] flex flex-col justify-between">

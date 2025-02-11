@@ -56,6 +56,7 @@ const Upload: React.FC<Type> = ({
       setDuration(fileDuration);
       setFile(uploadedFile);
       setEdit("add");
+      setCards([]);
       // data.append("file", file);
       // data.append("duration", fileDuration.toString());
     } else if (url) {
@@ -68,6 +69,7 @@ const Upload: React.FC<Type> = ({
         setDuration(linkDuration);
         setVideoLink(url);
         setEdit("add");
+        setCards([]);
 
         // data.append("url", url);
         // data.append("duration", linkDuration.toString());
@@ -92,7 +94,6 @@ const Upload: React.FC<Type> = ({
     // });
     // setCards([]);
   };
-
 
   return (
     <>

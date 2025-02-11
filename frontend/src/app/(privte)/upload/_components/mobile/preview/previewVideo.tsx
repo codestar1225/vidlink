@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import ReactPlayer from "react-player";
 
 interface Type {
+  setCurrentTime(value: number): void;
   cards: CardType[];
   videoLink: string | null;
   isSelected: number;
@@ -11,38 +12,47 @@ interface Type {
 }
 
 const PreviewVideo: React.FC<Type> = ({
+  setCurrentTime,
   cards,
   videoLink,
   isSelected,
   signal,
 }) => {
   const videoRef = useRef<ReactPlayer>(null);
-  const [start, setStart] = useState<number>(0);
   const maxTime = Number(process.env.NEXT_PUBLIC_MAX_TIME || 240);
 
   useEffect(() => {
-    const displayCard = cards.find((card) => card.no === isSelected);
-    if (displayCard) {
-      videoRef.current?.seekTo(displayCard.start, "seconds");
-      videoRef.current?.getInternalPlayer().pause();
+    if (videoRef.current) {
+      videoRef.current.seekTo(isSelected, "seconds");
+      videoRef.current.getInternalPlayer()?.pause();
     }
   }, [isSelected, signal]);
 
   const onProgress = () => {
     if (!videoRef.current) return;
-    let current_time = Math.floor(videoRef.current.getCurrentTime());
-    if (current_time > maxTime) {
-      videoRef.current?.seekTo(0, "seconds");
-      setStart(0);
-      alert("You can't select any further. The maximum time is 4 minutes.");
+    let currentTime = Math.floor(videoRef.current.getCurrentTime());
+    if (currentTime > maxTime) {
+      // videoRef.current?.seekTo(0, "seconds");
+      // alert("You can't see any further. The maximum time is 4 minutes.");
     } else {
-      setStart(current_time);
+      setCurrentTime(currentTime);
+    }
+  };
+  const onSeek = () => {
+    if (!videoRef.current) return;
+    let currentTime = Math.floor(videoRef.current.getCurrentTime());
+    if (currentTime > maxTime) {
+      // videoRef.current?.seekTo(0, "seconds");
+      // alert("You can't select any further. The maximum time is 4 minutes.");
+    } else {
+      setCurrentTime(currentTime);
     }
   };
 
   return (
     <>
       {/* title */}
+      <h1 className="text-[9px] mb-[25px]">PREVIEW</h1>
       <div className="flex justify-between items-center px-[15px] w-full pb-[10px]">
         <h1 className="text-[14px] font-normal ">
           <span className="text-blue">WHERE SHE GOES</span>
@@ -65,13 +75,16 @@ const PreviewVideo: React.FC<Type> = ({
             preload="auto"
             controls
             onProgress={onProgress}
+            onSeek={onSeek}
             progressInterval={100}
             width="100%"
             height="100%"
           />
         </div>
       ) : (
-        <>No video file.</>
+        <div className="h-[225.42px] flex items-center justify-center">
+          No video file.
+        </div>
       )}
 
       {/* detail */}
@@ -80,14 +93,14 @@ const PreviewVideo: React.FC<Type> = ({
           <img src="/icon/detail/avatar.svg" alt="" />
           <div className="flex flex-col h-[38.3px] justify-between items-start">
             <div className="text-[12px] text-blue font-semibold ">USERNAME</div>
-            <div className="text-[8px] font-semibold border-[0.41px] rounded-[1.24px] px-[0.82px]">
+            {/* <div className="text-[8px] font-semibold border-[0.41px] rounded-[1.24px] px-[0.82px]">
               FOLLOW
-            </div>
+            </div> */}
           </div>
         </div>
-        <button className=" pl-[12px] pt-[4px]">
+        {/* <button className=" pl-[12px] pt-[4px]">
           <img src="/icon/detail/heart.svg" alt="" />
-        </button>
+        </button> */}
         <div className=" absolute right-[9.23px] top-[10.6px] flex gap-[12px]">
           <div className="flex flex-col items-center gap-[5px]">
             <h1 className="text-[8px] font-semibold">CARDS</h1>

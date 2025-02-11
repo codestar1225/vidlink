@@ -11,6 +11,7 @@ import { tokenAtom } from "@/store/token";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import { Video } from "@/app/_components/ui/video";
+import { User, userAtom } from "@/store";
 
 const SignupMobile = () => {
   const [, setToken] = useAtom<string>(tokenAtom);
@@ -29,10 +30,18 @@ const SignupMobile = () => {
           // Successful signup
           Cookies.set("token", res.token, { expires: 1 });
           setToken(res.token);
-          const reqUrl = Cookies.get("reqUrl");
+          // Assign the default user name and pic.
+          Cookies.set(
+            "user",
+            JSON.stringify({
+              name: "You",
+              pic: session.user?.image ?? "/icon/layout/avatar.png",
+            }),
+            { expires: 1 }
+          );
           toast.success("Signed up successfully.", {
             autoClose: 2000,
-            onClose: () => router.push(`${reqUrl ? `/${reqUrl}` : "/"}`),
+            onClose: () => router.replace("/"),
           });
         } else {
           // User already signed up, handle error
@@ -41,7 +50,7 @@ const SignupMobile = () => {
             res.message || "You have already signed up. Please sign in.",
             {
               autoClose: 2000,
-              onClose: () => router.push("/signin"),
+              onClose: () => router.replace("/signin"),
             }
           );
         }
@@ -67,7 +76,11 @@ const SignupMobile = () => {
     <>
       <main className="h-screen w-screen relative">
         <div className="h-full w-full">
-          <Video src="/video/home/home2.mp4" />
+          {process.env.NEXT_PUBLIC_PRODUCTION === "production" ? (
+            <Video src="https://s3-figma-videos-production-sig.figma.com/video/1393144935889806437/TEAM/9fe5/9459/-c108-493f-88a8-fcd10d3d4970?Expires=1740355200&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=hHgGoRtCZGaKElyVbPFg0ik8pDoucX1nTEg1DK2kHG2zgLsDgMbqYJ8YQqFGiR5mtCCGnLCUK6BdgBtM6j6JV8jwdDN87vEYJMMAmC4T~OjfoRgCc7XhVUR4eCXdlfm6SNAd7vmoGoh~4CZRgM8zGUnbJ2oCXYCOWKGbmWUYFjJl0lL7UR7NqhFsWmZuNVLbtDeLYJOb2mCWSMzUGa2l5G8LoiGIoGJCOxtvrcZYVS8O9uDWHVG8TloBTxWDgt1EWhzV65EY46Wa8nAQzkob3Z6EjKIx8dccF~iyIF2Vf4tvAiCkBrn2tQkUGH3z-8JQiQwakRCg641y60S-bX5DuA__" />
+          ) : (
+            <Video src="/video/home/home2.mp4" />
+          )}
         </div>
         <div className=" absolute top-[331px] left-0 right-0 flex flex-col gap-[40px] items-center">
           <img className="h-[55.4px]" src="/icon/home/title.png" alt="" />

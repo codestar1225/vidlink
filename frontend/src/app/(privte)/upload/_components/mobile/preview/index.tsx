@@ -25,48 +25,44 @@ const Preview: React.FC<Type> = ({
 }) => {
   const [cards] = useAtom<CardType[]>(cardAtom);
   const [fltCards, setFltCards] = useState<CardType[]>([]);
-  const [start, setStart] = useState<number>(-1);
-  const [no, setNo] = useState<number>(-1);
+  const [nextCard, setNextCard] = useState<{ start: number; no: number }>({
+    start: -1,
+    no: -1,
+  });
   const [isSelected, setIsSelected] = useState<number>(0);
   const [signal, setSignal] = useState<boolean>(false);
   const nextCardIndex = useRef<number>(0);
+  const [currentTime, setCurrentTime] = useState<number>(0);
+  const [currentCard, setCurrentCard] = useState<number>(-1);
+  const isFirstRender = useRef<boolean>(true);
 
+  // initializing the next cards when first mount
   useEffect(() => {
-    const filter = cards.filter((card) => card.isPreview).reverse();
-    const nextCard = cards.filter((card) => !card.isPreview)[0] ?? {
-      start: -1,
-      no: -1,
-    };
+    const filter = cards.slice(0, 1);
     setFltCards(filter);
-    setStart(nextCard.start);
-    setNo(nextCard.no);
+    const nextCard = cards[1] ?? { start: -1, no: -1 };
+    setNextCard({ start: nextCard.start, no: nextCard.no });
   }, []);
+
+  //The ordred display of card's blue color
+  useEffect(() => {
+    const index = cards.findLastIndex((card) => card.start <= currentTime);
+    setCurrentCard(index);
+  }, [currentTime]);
 
   const handleNext = () => {
     nextCardIndex.current += 1;
-    const filter = cards.filter((card) => card.isPreview).reverse();
-    const hiddenCards = cards.filter((card) => !card.isPreview).reverse();
-    const nextCard = cards.filter((card) => !card.isPreview)[
-      nextCardIndex.current
-    ] ?? {
-      start: -1,
-      no: -1,
-    };
-    setStart(nextCard.start);
-    setNo(nextCard.no);
-    setFltCards(() => [
-      ...hiddenCards.slice(
-        hiddenCards.length - nextCardIndex.current,
-        hiddenCards.length + 1
-      ),
-      ...filter,
-    ]);
+    const nextCard = cards[nextCardIndex.current + 1] ?? { start: -1, no: -1 };
+    setNextCard({ start: nextCard.start, no: nextCard.no });
+    setFltCards(cards.slice(0, nextCardIndex.current + 1).reverse());
+    setCurrentCard((prev) => prev + 1);
   };
 
   return (
     <>
-      <div className="mt-[69px] flex flex-col items-center">
+      <main className="mt-[37px] flex flex-col items-center">
         <PreviewVideo
+          setCurrentTime={setCurrentTime}
           cards={cards}
           videoLink={videoLink}
           isSelected={isSelected}
@@ -74,9 +70,13 @@ const Preview: React.FC<Type> = ({
         />
         <div className="flex justify-center  px-[10px]">
           <ul className="flex flex-wrap justify-start content-start max-[401px]:justify-center gap-[6px] max-h-[391.7px] max-w-[380px]">
-            {start !== -1 && no !== -1 ? (
+            {nextCard.start !== -1 && nextCard.no !== -1 ? (
               <Suspense fallback={<Loading />}>
-                <CardNext handleNext={handleNext} no={no} start={start} />
+                <CardNext
+                  handleNext={handleNext}
+                  no={nextCard.no}
+                  start={nextCard.start}
+                />
               </Suspense>
             ) : (
               <></>
@@ -90,23 +90,24 @@ const Preview: React.FC<Type> = ({
                   name={item.name}
                   icon={item.icon}
                   start={item.start}
-                  isPreview={item.isPreview}
+                  isSaved={item.isSaved}
                   link={item.link}
                   signal={signal}
                   no={item.no}
                   index={index}
+                  currentCard={currentCard}
                 />
               </Suspense>
             ))}
           </ul>
         </div>
-      </div>
-      <ButtonItem
-        setEdit={setEdit}
-        handlePublish={handlePublish}
-        loading={loading}
-        editSignal={editSignal}
-      />
+        <ButtonItem
+          setEdit={setEdit}
+          handlePublish={handlePublish}
+          loading={loading}
+          editSignal={editSignal}
+        />
+      </main>
       <Footer isFixed={false} />
     </>
   );

@@ -15,12 +15,12 @@ interface Type {
   name: string;
   start: number;
   icon: string;
-  isPreview: boolean;
+  isSaved: boolean;
   duration: number;
   videoLink: string | null;
 }
 
-const Customize: React.FC<Type> = ({
+const Index: React.FC<Type> = ({
   setLink,
   setName,
   setIcon,
@@ -67,6 +67,19 @@ const Customize: React.FC<Type> = ({
       videoRef.current?.seekTo(maxTime, "seconds");
       videoRef.current?.getInternalPlayer().pause();
       setStart(maxTime);
+      alert("You can't see any further. The maximum time is 4 minutes.");
+    } else {
+      setStart(currentTime);
+    }
+  };
+
+  const onSeek = () => {
+    if (!videoRef.current) return;
+    let currentTime = Math.floor(videoRef.current.getCurrentTime());
+    if (currentTime > maxTime) {
+      videoRef.current?.seekTo(maxTime, "seconds");
+      videoRef.current?.getInternalPlayer().pause();
+      setStart(maxTime);
       alert("You can't select any further. The maximum time is 4 minutes.");
     } else {
       setStart(currentTime);
@@ -75,19 +88,24 @@ const Customize: React.FC<Type> = ({
 
   return (
     <>
-      <div className="mt-[56.5px] text-[10.5px] font-semibold mx-[19.5px]">
+      <div className="mt-[56.5px] text-[12px] font-semibold mx-[19.5px]">
         <div className="flex flex-col items-center justify-between h-[38px]">
           <h1>ADD CARDS</h1>
-          <i className=" font-normal text-[8.5px]">
+          <i className=" font-normal text-[10px]">
             VIDEO {Math.floor(duration / 60)}:
             {duration % 60 < 10
               ? `0${Math.floor(duration % 60)}`
               : Math.floor(duration % 60)}{" "}
-            = MAX {Math.floor(duration / 10)} CARDS
+            = MAX {duration > 240 ? 24 : Math.floor(duration / 10) + 1} CARDS
           </i>
-          <i className="font-normal text-[8.5px]">MAX 1 CARD EVERY 10s</i>
+          <i className="font-normal text-[8.5px]">
+            {duration > 240
+              ? "Because the total time is limited to 4 minutes. "
+              : " "}
+            MAX 1 CARD EVERY 10s
+          </i>
         </div>
-        <div className=" h-[59px] flex flex-col justify-between mt-[10.5px]">
+        <div className=" h-[59px] flex flex-col justify-between mt-[12px]">
           <div className="flex items-center gap-[7px]">
             <div>LINK</div>
             <button>
@@ -177,17 +195,20 @@ const Customize: React.FC<Type> = ({
                 preload="auto"
                 controls
                 onProgress={onProgress}
+                onSeek={onSeek}
                 progressInterval={100}
                 width="100%"
                 height="100%"
               />
             </div>
           ) : (
-            <>No video file.</>
+            <div className="h-[280px] flex items-center justify-center">
+            No video file.
+          </div>
           )}
         </div>
       </div>
     </>
   );
 };
-export default Customize;
+export default Index;

@@ -4,16 +4,16 @@ interface Type {
   start: number;
   icon: string;
   no: number;
-  isPreview: boolean;
-  setIsPreview(value: boolean): void;
+  isSaved: boolean;
+  setIsSaveed(value: boolean): void;
 }
 const IndependentCard: React.FC<Type> = ({
   name,
   start,
   icon,
   no,
-  isPreview,
-  setIsPreview,
+  isSaved,
+  setIsSaveed,
 }) => {
   const IconComponent = LucideIcons[
     icon as keyof typeof LucideIcons
@@ -28,24 +28,26 @@ const IndependentCard: React.FC<Type> = ({
             {start % 60 < 10 ? `0${start % 60}` : start % 60})
           </i>
         </div>
-        <div className="flex flex-col items-center h-[38.4px] w-full pt-[8px] justify-between">
-          <h1 className="text-blue text-[13.86px] font-semibold">
-            {name.toUpperCase()}
-          </h1>
-          {icon ? <IconComponent className="22.51px" /> : <></>}
-        </div>
-        <div className="flex justify-between">
-          <button
-            onClick={() => setIsPreview(!isPreview)}
-            className="size-[22.51px]"
-          >
-            {isPreview ? (
-              <img src="/icon/detail/card/left2Blue.png" alt="" />
-            ) : (
-              <img src="/icon/detail/card/left2.svg" alt="" />
-            )}
-          </button>
-          <img src="/icon/detail/card/right2.svg" alt="" />
+        <div className="h-[60.91px]">
+          <div className="flex flex-col items-center h-[38.4px] w-full justify-between">
+            <h1 className="text-blue text-[13.86px] font-semibold">
+              {name.toUpperCase()}
+            </h1>
+            {icon ? <IconComponent className="size-[18.29px]" /> : <></>}
+          </div>
+          <div className="flex justify-between">
+            <button
+              onClick={() => setIsSaveed(!isSaved)}
+              className="size-[22.51px]"
+            >
+              {isSaved ? (
+                <img src="/icon/detail/card/left2Blue.png" alt="" />
+              ) : (
+                <img src="/icon/detail/card/left2.svg" alt="" />
+              )}
+            </button>
+            <img src="/icon/detail/card/right2.svg" alt="" />
+          </div>
         </div>
       </li>
     </>

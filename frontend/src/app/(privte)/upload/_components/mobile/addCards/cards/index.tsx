@@ -6,27 +6,27 @@ import { cardAtom, CardType } from "@/store";
 
 interface Type {
   addCard(): void;
-  setIsPreview(value: boolean): void;
+  setIsSaveed(value: boolean): void;
   name: string;
   start: number;
   icon: string;
-  isPreview: boolean;
+  isSaved: boolean;
   link: string;
 }
-const Cards: React.FC<Type> = ({
+const Index: React.FC<Type> = ({
   addCard,
-  setIsPreview,
+  setIsSaveed,
   name,
   start,
   icon,
-  isPreview,
+  isSaved,
   link,
 }) => {
   const [cards, setCards] = useAtom<CardType[]>(cardAtom);
   const handlePreview = (e: number) => {
     setCards((prevCards) =>
       prevCards.map((card) =>
-        card.no === e ? { ...card, isPreview: !card.isPreview } : card
+        card.no === e ? { ...card, isSaved: !card.isSaved } : card
       )
     );
   };
@@ -34,15 +34,15 @@ const Cards: React.FC<Type> = ({
   return (
     <>
       <div className="mx-[19.5] flex flex-col items-center gap-[25px] mt-[36px]">
-        <h1 className="text-[10.5px] font-semibold">PREVIEW</h1>
+        <h1 className="text-[12px] font-semibold">PREVIEW</h1>
         <div className="flex justify-center">
           <IndependentCard
             icon={icon}
             name={name}
             start={start}
             no={cards.length + 1}
-            isPreview={isPreview}
-            setIsPreview={setIsPreview}
+            isSaved={isSaved}
+            setIsSaveed={setIsSaveed}
           />
         </div>
       </div>
@@ -59,7 +59,7 @@ const Cards: React.FC<Type> = ({
         </button>
         <div className="flex flex-col items-center gap-[20px] mt-[62.9px]">
           {cards.length > 0 && (
-            <h1 className="text-[10.5px] font-semibold">LIST OF PROMPTS</h1>
+            <h1 className="text-[12px] font-semibold">LIST OF PROMPTS</h1>
           )}
           <ul className="flex flex-wrap justify-start max-[401px]:justify-center content-start gap-[6px] max-w-[380px]">
             {cards?.map((item, index) => (
@@ -70,7 +70,7 @@ const Cards: React.FC<Type> = ({
                 icon={item.icon}
                 start={item.start}
                 link={item.link}
-                isPreview={item.isPreview}
+                isSaved={item.isSaved}
                 no={item.no}
                 length={cards.length}
               />
@@ -81,4 +81,4 @@ const Cards: React.FC<Type> = ({
     </>
   );
 };
-export default Cards;
+export default Index;

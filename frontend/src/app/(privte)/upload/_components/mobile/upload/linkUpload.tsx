@@ -9,10 +9,9 @@ const LinkUpload: React.FC<Type> = ({ setUrl, url }) => {
     <>
       <div className="mx-[19.5px] h-[51px] flex flex-col justify-between mt-[29px] relative">
         <div className="flex items-center gap-[7px]">
-          <div className="text-[8px] font-semibold h-[7px] mb-[1.8px] ">
+          <div className="text-[9px] font-semibold h-[7px] mb-[1.8px] ">
             LINK
           </div>
-
           <button>
             <img src="/icon/upload/paste.svg" alt="" />
           </button>

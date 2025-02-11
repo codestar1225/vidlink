@@ -19,7 +19,7 @@ const handler = NextAuth({
         token.accessToken = account.access_token;
         token.idToken = account.id_token;
       }
-      console.log(token)
+      console.log(token);
       return token;
     },
     async session({ session, token }) {

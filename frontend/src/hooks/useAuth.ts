@@ -1,17 +1,11 @@
 "use client";
+import { AuthErrorResponse, AuthSuccessResponse } from "@/types/authApi";
 import { SIGNUP, SIGNIN } from "@/utils/constant";
 import axios, { AxiosResponse } from "axios";
 import { useState } from "react";
 
 // Define response types
-export type AuthSuccessResponse = {
-  message: string;
-  token: string;
-};
 
-export type AuthErrorResponse = {
-  message: string;
-};
 
 const useAuth = () => {
   const [loading, setLoading] = useState<boolean>(false);

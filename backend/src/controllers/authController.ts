@@ -59,7 +59,6 @@ const login = async (req: Request, res: Response) => {
     }
 
     const user = await authService.findUser(payload.email);
-
     if (user) {
       const token = jwt.sign(
         { userId: user._id },

@@ -1,7 +1,7 @@
 const Description = () => {
   return (
     <>
-      <div className="text-[9px] font-normal tracking-widest h-[67px] flex flex-col items-center mt-[34px] justify-between">
+      <div className="text-[10px] font-normal tracking-widest h-[67px] flex flex-col items-center mt-[34px] justify-between">
         <p>
           MAX FILE SIZE <span className="font-semibold">50MB</span>. MAX{" "}
           <span className="font-semibold">4 MINUTES FILE.</span>

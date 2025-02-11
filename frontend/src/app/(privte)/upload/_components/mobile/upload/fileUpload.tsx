@@ -27,7 +27,7 @@ const FileUpload: React.FC<Type> = ({
                   <div className="h-[50.39px] w-[50.39px] gap-[8px]">
                     <img src="/icon/upload/file.svg" alt="" />
                   </div>
-                  <div className="border-[1.5px] border-white rounded-[3.2px] text-[14.91px] pt-[3.2px] pb-[1.3px] px-[2.13px] ">
+                  <div className="border-[1.5px] h-[17.26px] flex items-center justify-center border-white rounded-[3.2px] text-[14.53px] font-semibold pt-[3.2px] pb-[1.3px] px-[2.13px] ">
                     BROWSE FILE
                   </div>
                 </>
