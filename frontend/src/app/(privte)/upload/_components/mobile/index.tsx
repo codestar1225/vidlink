@@ -37,7 +37,8 @@ const UploadMobile = () => {
   }, [videoLink]);
 
   const handlePublish = () => {
-    if (!videoLink || !file || !cards) {
+    console.log(videoLink,'videoLink')
+    if (cards.length < 1) {
       return alert("Please fill all the contents.");
     }
     if (!editSignal) {
@@ -50,29 +51,29 @@ const UploadMobile = () => {
     if (file) {
       data.append("file", file);
     } else {
-      data.append("videlLink", videoLink);
+      data.append("videoLink", videoLink);
     }
     data.append("title", title);
     data.append("cards", JSON.stringify(cards));
     data.append("duration", duration.toString());
     const res = await publish(data);
-    if (res.status === 200) {
+    if (res.status === 201) {
       setEditSignal(false);
-      if (
-        "cards" in res &&
-        "videoLink" in res &&
-        "duration" in res &&
-        "title" in res
-      ) {
-        setVideoLink(res.videoLink);
-        setDuration(res.duration);
-        setCards(res.cards);
-        setTitle(res.title);
-      } else {
-        return alert("Something went wrong.");
-      }
+      // if (
+      //   "cards" in res &&
+      //   "videoLink" in res &&
+      //   "duration" in res &&
+      //   "title" in res
+      // ) {
+      //   setVideoLink(res.videoLink);
+      //   setDuration(res.duration);
+      //   setCards(res.cards);
+      //   setTitle(res.title);
+      // } else {
+      //   return alert("Something went wrong.");
+      // }
     } else {
-      return alert(res.message);
+      alert(res.message);
     }
     console.log("upload success");
   };
@@ -95,7 +96,6 @@ const UploadMobile = () => {
           error={error}
           url={url}
           fileDuration={fileDuration}
-          file={file}
           uploadedFile={uploadedFile}
           validateVideo={validateVideo}
           setVideoLink={setVideoLink}

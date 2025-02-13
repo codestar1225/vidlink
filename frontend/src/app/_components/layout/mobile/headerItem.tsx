@@ -13,7 +13,7 @@ const HeaderItem: React.FC<Type> = ({ setIsOpenMenu, url, name, isAuth }) => {
       href={url}
       className={`${
         isAuth ? "text-white border-white" : "text-[#303030] border-[#303030]"
-      } border-[1.07px]  font-semibold  rounded-[3.2px] text-[17px] pt-[1px] pb-[1px]  px-[2.13px] tracking-wide flex items-center `}
+      } border-[1.07px]  font-semibold  rounded-[3.2px] text-[17px] pt-[1px]  px-[2.13px] tracking-wide flex items-center `}
     >
       <span>{name}</span>
     </Link>

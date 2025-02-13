@@ -9,15 +9,12 @@ import LinkUpload from "./linkUpload";
 import { useAtom } from "jotai";
 import { cardAtom, CardType } from "@/store";
 import useVideo from "@/hooks/useVideo";
-// import Cookies from "js-cookie";
-// import { useRouter } from "next/navigation";
 
 interface Type {
   videoSrc: string | null;
   error: string;
   url: string;
   fileDuration: number;
-  file: File | null;
   uploadedFile: File | null;
   validateVideo(value: ChangeEvent<HTMLInputElement>): void;
   setVideoLink(value: string): void;
@@ -32,7 +29,6 @@ const Upload: React.FC<Type> = ({
   error,
   url,
   fileDuration,
-  // file,
   uploadedFile,
   validateVideo,
   setVideoLink,
@@ -45,10 +41,8 @@ const Upload: React.FC<Type> = ({
   const videoRef = useRef<ReactPlayer>(null);
   const [, setCards] = useAtom<CardType[]>(cardAtom);
   const { loading } = useVideo();
-  // const router = useRouter();
 
   const handleNext = () => {
-    // const data = new FormData();
     if (videoSrc && url) {
       return alert("Please input one of them.");
     } else if (videoSrc && uploadedFile) {
@@ -56,9 +50,7 @@ const Upload: React.FC<Type> = ({
       setDuration(fileDuration);
       setFile(uploadedFile);
       setEdit("add");
-      setCards([]);
-      // data.append("file", file);
-      // data.append("duration", fileDuration.toString());
+      setCards([]);   
     } else if (url) {
       const linkDuration = videoRef.current?.getDuration();
       if (linkDuration === null || linkDuration === undefined) {
@@ -70,29 +62,10 @@ const Upload: React.FC<Type> = ({
         setVideoLink(url);
         setEdit("add");
         setCards([]);
-
-        // data.append("url", url);
-        // data.append("duration", linkDuration.toString());
       }
     } else {
       return alert("Please enter a file or a link.");
     }
-    // uploadVideo(data).then((res) => {
-    //   if (res.status === 200) {
-    //     if ("duration" in res && "videoLink" in res) {
-    //       setDuration(res.duration);
-    //       setVideoLink(res.videoLink);
-    //       setEdit("add");
-    //     } else {
-    //       return alert("Something went wrong.");
-    //     }
-    //   } else {
-    //     alert(res.message);
-    //     Cookies.remove("token");
-    //     return router.push("/signin");
-    //   }
-    // });
-    // setCards([]);
   };
 
   return (

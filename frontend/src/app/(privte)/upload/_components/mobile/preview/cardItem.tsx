@@ -40,7 +40,7 @@ const CardItem: React.FC<Type> = ({
     <>
       <li
         className={`${
-          currentCard >= 0 && currentCard + 1 === no
+          currentCard + 1 === no
             ? "bg-blue text-white"
             : "bg-white text-black"
         } rounded-[6px] w-[122.41px] h-[94.5px] p-[5.9px] flex flex-col overflow-hidden`}

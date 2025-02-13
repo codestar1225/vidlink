@@ -20,7 +20,8 @@ const PreviewVideo: React.FC<Type> = ({
 }) => {
   const videoRef = useRef<ReactPlayer>(null);
   const maxTime = Number(process.env.NEXT_PUBLIC_MAX_TIME || 240);
-
+  const [isReady, setIsReady] = useState<boolean>(false);
+  // got to the selected card start time
   useEffect(() => {
     if (videoRef.current) {
       videoRef.current.seekTo(isSelected, "seconds");
@@ -48,6 +49,11 @@ const PreviewVideo: React.FC<Type> = ({
       setCurrentTime(currentTime);
     }
   };
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.seekTo(cards[0].start, "seconds");
+    }
+  }, [isReady]);
 
   return (
     <>
@@ -76,6 +82,7 @@ const PreviewVideo: React.FC<Type> = ({
             controls
             onProgress={onProgress}
             onSeek={onSeek}
+            onReady={() => setIsReady(true)}
             progressInterval={100}
             width="100%"
             height="100%"

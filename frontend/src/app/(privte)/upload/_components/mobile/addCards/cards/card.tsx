@@ -1,7 +1,7 @@
 import * as LucideIcons from "lucide-react";
 
 interface Type {
-  handlePreview(value: number): void;
+  handleIsSaved(value: number): void;
   name: string;
   start: number;
   icon: string;
@@ -11,7 +11,7 @@ interface Type {
   isSaved: boolean;
 }
 const Card: React.FC<Type> = ({
-  handlePreview,
+  handleIsSaved,
   name,
   start,
   icon,
@@ -48,7 +48,7 @@ const Card: React.FC<Type> = ({
           </div>
           <div className="flex justify-between">
             <button
-              onClick={() => handlePreview(no)}
+              onClick={() => handleIsSaved(no)}
               className="size-[22.51px]"
             >
               {isSaved ? (

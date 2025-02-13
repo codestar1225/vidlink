@@ -143,6 +143,7 @@ const AddCards: React.FC<Type> = ({
         <Cards
           addCard={addCard}
           setIsSaveed={setIsSaveed}
+          setEditSignal={setEditSignal}
           icon={icon}
           name={name}
           start={start}

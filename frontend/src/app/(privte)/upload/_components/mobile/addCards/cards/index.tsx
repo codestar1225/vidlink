@@ -7,6 +7,7 @@ import { cardAtom, CardType } from "@/store";
 interface Type {
   addCard(): void;
   setIsSaveed(value: boolean): void;
+  setEditSignal(value: boolean): void;
   name: string;
   start: number;
   icon: string;
@@ -16,6 +17,7 @@ interface Type {
 const Index: React.FC<Type> = ({
   addCard,
   setIsSaveed,
+  setEditSignal,
   name,
   start,
   icon,
@@ -23,12 +25,13 @@ const Index: React.FC<Type> = ({
   link,
 }) => {
   const [cards, setCards] = useAtom<CardType[]>(cardAtom);
-  const handlePreview = (e: number) => {
+  const handleIsSaved = (e: number) => {
     setCards((prevCards) =>
       prevCards.map((card) =>
         card.no === e ? { ...card, isSaved: !card.isSaved } : card
       )
     );
+    setEditSignal(true);
   };
 
   return (
@@ -64,7 +67,7 @@ const Index: React.FC<Type> = ({
           <ul className="flex flex-wrap justify-start max-[401px]:justify-center content-start gap-[6px] max-w-[380px]">
             {cards?.map((item, index) => (
               <CardItem
-                handlePreview={handlePreview}
+                handleIsSaved={handleIsSaved}
                 key={index}
                 name={item.name}
                 icon={item.icon}

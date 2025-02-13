@@ -22,8 +22,8 @@ export async function middleware(req: NextRequest): Promise<NextResponse> {
     console.error("JWT Verification Error:", error);
     const res = NextResponse.redirect(new URL("/signin", req.url));
     res.cookies.set("reqUrl", req.url, { maxAge: 60 * 60 });
-    res.cookies.delete("token");
     res.cookies.delete("user");
+    res.cookies.delete("token");
     return res;
   }
 }

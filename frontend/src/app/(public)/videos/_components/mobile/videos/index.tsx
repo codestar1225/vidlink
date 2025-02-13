@@ -1,7 +1,7 @@
-import { Videos } from "..";
+import { Video } from "../../../page";
 import VideoItem from "./videoItem";
 interface Type {
-  videos: Videos[];
+  videos: Video[];
 }
 const Index: React.FC<Type> = ({ videos }) => {
   return (
@@ -9,11 +9,12 @@ const Index: React.FC<Type> = ({ videos }) => {
       <ul className=" gap-x-[11px] gap-y-[15px] flex flex-wrap justify-center items-start">
         {videos.map((item, index) => (
           <VideoItem
-            name={item.editor}
-            review={item.review}
-            src={item.src}
+            username={item.user.username}
+            review={item.totalView}
+            src={item.videoLink}
             no={index + 1}
             key={index}
+            videoId={item._id}
           />
         ))}
       </ul>

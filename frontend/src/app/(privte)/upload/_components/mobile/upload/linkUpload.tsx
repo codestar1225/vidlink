@@ -19,9 +19,9 @@ const LinkUpload: React.FC<Type> = ({ setUrl, url }) => {
         <input
           type="url"
           value={url}
-          onChange={(e) => setUrl(e.target.value)}
+          onChange={(e) => setUrl(e.target.value.trim())}
           placeholder="Paste link here"
-          className="h-[34px] w-full bg-[#1E1E1E] border-[2.72px] border-[#505050] rounded-[9px] placeholder:text-[10px] placeholder:text-[#505050] placeholder:font-semibold px-[9px]"
+          className="h-[34px] text-[12px] flex items-center w-full bg-[#1E1E1E] border-[2.72px] border-[#505050] rounded-[9px] placeholder:text-[11.33px] placeholder:text-[#505050] placeholder:font-semibold px-[9px]"
         />
         <span className="text-[9px] font-semibold absolute -bottom-[26px] left-[50%] -translate-x-[50%]">
           OR

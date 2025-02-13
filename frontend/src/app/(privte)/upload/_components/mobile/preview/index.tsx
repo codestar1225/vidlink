@@ -33,8 +33,7 @@ const Preview: React.FC<Type> = ({
   const [signal, setSignal] = useState<boolean>(false);
   const nextCardIndex = useRef<number>(0);
   const [currentTime, setCurrentTime] = useState<number>(0);
-  const [currentCard, setCurrentCard] = useState<number>(-1);
-  const isFirstRender = useRef<boolean>(true);
+  const [currentCard, setCurrentCard] = useState<number>(0);
 
   // initializing the next cards when first mount
   useEffect(() => {
@@ -56,6 +55,7 @@ const Preview: React.FC<Type> = ({
     setNextCard({ start: nextCard.start, no: nextCard.no });
     setFltCards(cards.slice(0, nextCardIndex.current + 1).reverse());
     setCurrentCard((prev) => prev + 1);
+    setIsSelected(cards[nextCardIndex.current].start);
   };
 
   return (

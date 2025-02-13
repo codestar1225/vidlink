@@ -30,15 +30,6 @@ const SigninMobile = () => {
           // Successfully authenticated and save token
           Cookies.set("token", res.token, { expires: 1 });
           setToken(res.token);
-          // Save the user name and pic
-          Cookies.set(
-            "user",
-            JSON.stringify({
-              name: res.name ?? "You",
-              pic: session.user?.image ?? "a",
-            }),
-            { expires: 1 }
-          );
           //check the there was request routing url
           const reqUrl = Cookies.get("reqUrl");
           Cookies.remove("reqUrl");
@@ -50,6 +41,7 @@ const SigninMobile = () => {
           // Authentication failed, handle error
           toast.error(res.message || "Something went wrong", {
             autoClose: 2000,
+            onClose: () => router.push("/signup"),
           });
         }
       }

@@ -29,9 +29,7 @@ connectDB();
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/video", videoRoutes);
-app.get('/about', (req, res) => {
-  res.send('about')
-})
+
 
 // Protected Route Example
 // app.get("/api/protected", authMiddleware, (req, res) => {

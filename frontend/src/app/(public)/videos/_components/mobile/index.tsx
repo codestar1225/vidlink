@@ -1,50 +1,68 @@
 "use client";
 import { Suspense, useEffect, useState } from "react";
-import SubHeaderIn from "./subHeaderIn";
-import videos1 from "./videos1.json";
-import videos2 from "./videos2.json";
-import { useRouter } from "next/navigation";
+import SubHeaderIn from "./subHeaders/subHeaderIn";
 import Footer from "@/app/_components/layout/mobile/footer";
 import Link from "next/link";
-import SubHeaderOut from "./subHeaderOut";
+import SubHeaderOut from "./subHeaders/subHeaderOut";
 import useVerifyAuth from "@/hooks/useVerifyAuth";
 import Loading from "@/app/_components/ui/loading";
 import dynamic from "next/dynamic";
+import { Video } from "../../page";
 const Videos = dynamic(() => import("./videos"));
-export interface Videos {
-  editor: string;
-  review: number;
-  src: string;
+
+interface Type {
+  followingVideos: Video[];
+  allVideos: Video[];
 }
-const VideosMobile = () => {
+
+const VideosMobile: React.FC<Type> = ({ followingVideos, allVideos }) => {
   const [nav, setNav] = useState<string>("you");
-  const [videos, setVideos] = useState<Videos[]>([]);
-  const router = useRouter();
+  const [videos, setVideos] = useState<Video[]>([]);
+  const [isSearch, setIsSearch] = useState<string>("");
 
   useEffect(() => {
     if (nav === "you") {
-      setVideos(videos1);
+      setVideos(allVideos);
     } else {
-      setVideos(videos2);
+      setVideos(followingVideos);
     }
-    router.refresh();
   }, [nav]);
+
+  useEffect(() => {
+    const key = isSearch.trim().toLowerCase();
+    const videosToFilter = nav === "you" ? allVideos : followingVideos;
+    const filteredVideos = videosToFilter.filter(
+      (video) =>
+        video.totalView.toString().toLowerCase().includes(key) ||
+        video.videoLink.toLowerCase().includes(key) ||
+        video.user.username.toLowerCase().includes(key)
+    );
+    setVideos(filteredVideos);
+  }, [isSearch, nav]);
 
   const { loading, isAuth } = useVerifyAuth();
 
+  if (loading) return <Loading />;
   return (
     <>
-      <main className="h-svh grid grid-col">
-        {loading ? (
-          <div className="h-[89.58px] mt-[103px]"></div>
-        ) : isAuth ? (
-          <SubHeaderIn nav={nav} setNav={setNav} />
+      <main className="">
+        {isAuth ? (
+          <SubHeaderIn
+            setNav={setNav}
+            setIsSearch={setIsSearch}
+            nav={nav}
+            isSearch={isSearch}
+          />
         ) : (
           <SubHeaderOut />
         )}
-        <div className="w-svw overflow-scroll">
+        <div className=" overflow-y-scroll fixed top-[202px] bottom-0">
           <Suspense fallback={<Loading />}>
-            <Videos videos={videos} />{" "}
+            {nav == "you" ? (
+              <Videos videos={videos} />
+            ) : (
+              <Videos videos={videos} />
+            )}
           </Suspense>
           <div className="w-svw flex justify-center">
             <Link

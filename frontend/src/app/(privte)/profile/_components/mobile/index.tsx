@@ -21,7 +21,7 @@ const ProfileMobile = () => {
   const [nav, setNav] = useState<string>("videos");
   const [, setToken] = useAtom(tokenAtom);
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [pic, setPic] = useState<string>("/icon/avatar/avatar.png");
+  const [pic, setPic] = useState<string>("/icon/layout/avatar.png");
 
   useEffect(() => {
     const user = Cookies.get("user");

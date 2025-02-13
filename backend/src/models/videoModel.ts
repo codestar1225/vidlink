@@ -1,26 +1,64 @@
-import mongoose, { Document, Schema } from 'mongoose';
+import mongoose, { Document, Schema, Model } from "mongoose";
+
+type Card = {
+  link: string;
+  name: string;
+  icon: string;
+  start: number;
+  no: number;
+  isSaved: boolean;
+};
 
 interface IVideo extends Document {
-  id: string;
-  name: string;
-  url: string;
-  dailyView: object;
-  monthlyView: object;
-  yearlyView: object;
-  totalView: Number;
+  userId:  mongoose.Schema.Types.ObjectId;
+  title: string;
+  videoLink: string;
+  duration: number;
+  cards: Card[];
+  viewers: string[];
+  followers: string[];
+  watchTime: number;
+  dailyView: Record<string, number>;
+  monthlyView: Record<string, number>;
+  yearlyView: Record<string, number>;
+  totalView: number;
 }
 
 const VideoSchema = new Schema<IVideo>(
   {
-    id: { type: String, required: true, unique: true },
-    name: { type: String, required: true },
-    url: { type: String },
-    dailyView: { type: Object },
-    monthlyView: { type: Object },
-    yearlyView: { type: Object },
-    totalView: { type: Number },
+    userId: { type:  mongoose.Schema.Types.ObjectId, required: true },
+    title: { type: String, required: true },
+    videoLink: { type: String, default: "" },
+    duration: { type: Number },
+    cards: [
+      {
+        link: { type: String },
+        name: { type: String },
+        icon: { type: String },
+        start: { type: Number },
+        no: { type: Number },
+        isSaved: { type: Boolean },
+      },
+    ],
+    viewers: { type: [String], default: [] },
+    followers: { type: [String], default: [] },
+    watchTime: { type: Number, default: 0 },
+    dailyView: { type: Object, default: {} },
+    monthlyView: { type: Object, default: {} },
+    yearlyView: { type: Object, default: {} },
+    totalView: { type: Number, default: 0 },
   },
   { timestamps: true }
 );
 
-export default mongoose.model<IVideo>('Video', VideoSchema);
+VideoSchema.virtual("user", {
+  ref: "User",
+  localField: "userId",
+  foreignField: "_id",
+  justOne: true, // Ensures a single object (not an array)
+  options: { select: "username" }, // Select only userName
+});
+
+const Video: Model<IVideo> = mongoose.model<IVideo>("Video", VideoSchema);
+
+export default Video;

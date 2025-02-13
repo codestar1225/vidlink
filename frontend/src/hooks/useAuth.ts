@@ -1,11 +1,10 @@
 "use client";
-import { AuthErrorResponse, AuthSuccessResponse } from "@/types/authApi";
+import { AuthErrorResponse, AuthSuccessResponse } from "@/types/authApiType";
 import { SIGNUP, SIGNIN } from "@/utils/constant";
 import axios, { AxiosResponse } from "axios";
 import { useState } from "react";
 
 // Define response types
-
 
 const useAuth = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -28,7 +27,11 @@ const useAuth = () => {
       // Type the error to AxiosError and handle the error
       if (axios.isAxiosError(error)) {
         return {
-          message: error?.response?.data?.message || "Something went wrong",
+          message:
+            error.response?.data?.message ===
+            "User already registered, please login"
+              ? "User already registered, please login"
+              : "Something went wrong",
         };
       }
       return { message: "An unknown error occurred" };
@@ -50,7 +53,11 @@ const useAuth = () => {
       // Type the error to AxiosError and handle the error
       if (axios.isAxiosError(error)) {
         return {
-          message: error?.response?.data?.message || "Something went wrong",
+          message:
+            error.response?.data?.message ===
+            "User doesn't exist, please sign up firstly"
+              ? "User doesn't exist, please sign up firstly"
+              : "Something went wrong",
         };
       }
       return { message: "An unknown error occurred" };

@@ -11,7 +11,7 @@ const HeaderMobile = () => {
   const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false);
   const [isAnimate, setIsAnimate] = useState<boolean>(false);
   const [isBlurred, setIsBlurred] = useState(false);
-  const [pic, setPic] = useState<string>("/icon/avatar/avatar.png");
+  const [pic, setPic] = useState<string>("/icon/layout/avatar.png");
   const menuRef = useRef<HTMLHeadElement>(null);
   const router = useRouter();
 
@@ -24,6 +24,8 @@ const HeaderMobile = () => {
         const parsedUser = JSON.parse(user);
         setPic(parsedUser.pic);
       }
+    } else {
+      Cookies.remove("user");
     }
   }, [isAuth, router]);
 

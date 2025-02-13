@@ -11,7 +11,6 @@ import { tokenAtom } from "@/store/token";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import { Video } from "@/app/_components/ui/video";
-import { User, userAtom } from "@/store";
 
 const SignupMobile = () => {
   const [, setToken] = useAtom<string>(tokenAtom);
@@ -30,15 +29,6 @@ const SignupMobile = () => {
           // Successful signup
           Cookies.set("token", res.token, { expires: 1 });
           setToken(res.token);
-          // Assign the default user name and pic.
-          Cookies.set(
-            "user",
-            JSON.stringify({
-              name: "You",
-              pic: session.user?.image ?? "/icon/layout/avatar.png",
-            }),
-            { expires: 1 }
-          );
           toast.success("Signed up successfully.", {
             autoClose: 2000,
             onClose: () => router.replace("/"),
