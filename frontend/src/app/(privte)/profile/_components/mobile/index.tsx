@@ -3,7 +3,7 @@ import FooterMobile from "@/app/_components/layout/mobile/footer";
 import NavItem from "./navItem";
 import AmountItem from "./amountItem";
 import { Suspense, useEffect, useState } from "react";
-import videos from "@/app/(public)/videos/_components/mobile/videos1.json";
+import videos from "./videos.json";
 import { signOut } from "next-auth/react";
 import { useAtom } from "jotai";
 import { tokenAtom } from "@/store";
@@ -44,7 +44,11 @@ const ProfileMobile = () => {
       <main className=" mt-[109px] ">
         <div className="">
           <div className="relative size-[146px] mx-auto ">
-            <img className="size-[146px] mt-[28px] rounded-full" src={pic} alt="" />
+            <img
+              className="size-[146px] mt-[28px] rounded-full"
+              src={pic}
+              alt=""
+            />
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="absolute top-[9px] size-[18px] right-[17px]"
@@ -111,8 +115,8 @@ const ProfileMobile = () => {
               />
             </div>
           </div>
-          {nav === "videos" ? (
-            <Videos videos={videos} />
+          {nav === "videos" ? (<></>
+            // <Videos videos={videos} />
           ) : nav === "cards" ? (
             <Suspense fallback={<Loading />}>
               <Card />

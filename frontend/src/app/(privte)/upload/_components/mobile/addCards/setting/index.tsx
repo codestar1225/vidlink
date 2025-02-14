@@ -1,5 +1,6 @@
 import { ChangeEvent } from "react";
-import images from "../image.json";
+import images from "../../image.json";
+import Thumbnail from "./thumbnail";
 
 interface Type {
   handleUploadImg(value: ChangeEvent<HTMLInputElement>): void;
@@ -7,7 +8,7 @@ interface Type {
   imgFile: string;
   title: string;
 }
-const Setting: React.FC<Type> = ({
+const Index: React.FC<Type> = ({
   handleUploadImg,
   setTitle,
   imgFile,
@@ -27,19 +28,7 @@ const Setting: React.FC<Type> = ({
             className="h-[40px] font-normal text-[14px] py-[15px] w-full bg-[#1E1E1E] border-[2.72px] border-[#505050] rounded-[9px] placeholder:text-[12px] placeholder:text-[#505050] placeholder:font-semibold px-[9px]"
           />
         </div>
-        <div className="h-[86.51px] flex flex-col justify-between">
-          <h1>THUMBNAIL</h1>
-          <div className="h-[62.51px] flex rounded-[13.6px] overflow-hidden">
-            {images.map((item, index) => (
-              <img
-                className="w-1/12 h-full object-cover"
-                src={item.src}
-                alt=""
-                key={index}
-              />
-            ))}
-          </div>
-        </div>
+        <Thumbnail images={images} />
         <div className="h-[81px] flex justify-between items-center">
           <div className="w-[110px] h-full flex flex-col justify-between items-center">
             <h1>PREVIEW FRAME</h1>
@@ -75,4 +64,4 @@ const Setting: React.FC<Type> = ({
     </>
   );
 };
-export default Setting;
+export default Index;

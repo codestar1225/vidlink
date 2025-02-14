@@ -18,7 +18,7 @@ export interface PublishError {
 type Video = {
   videoLink: string;
   totalView: number;
-  user: { _id: string; username: string };
+  user: { _id: string; userName: string };
   _id: string;
 };
 export interface GetVideosSuccess {
@@ -35,21 +35,23 @@ export interface GetVideosError {
 //get video detail
 type User = {
   userName: string;
-  likes: boolean;
-  videosAmount: number;
+  totalVideos: number;
+  like: boolean;
+  owner: boolean;
 };
 type VideoInfo = {
   title: string;
   videoLink: string;
-  videoId: number;
   duration: number;
+  userId: string;
+  cards: CardType[];
 };
 export interface GetVideoSuccess {
   userInfo: User;
   videoInfo: VideoInfo;
   cards: CardType[];
-  userVideos: { src: string; videoId: string }[];
-  relatedVideos: { src: string; videoId: string }[];
+  userVideos: { videoLink: string; _id: string }[];
+  relatedVideos: { videoLink: string; _id: string }[];
   message: string;
   status: number;
 }
@@ -58,6 +60,16 @@ export interface GetVideoError {
   status?: number;
 }
 
+// add like
+export interface AddLikeSuccess {
+  like: boolean;
+  message: string;
+  status: number;
+}
+export interface AddLikeError {
+  message: string;
+  status?: number;
+}
 // record views and watching time
 export interface RecordVideoSuccess {
   message: string;

@@ -6,11 +6,11 @@ interface Type {
   review: number;
   src: string;
 }
-const Videos = ({ videos }: { videos: Type[] }) => {
+const Videos = ({ video }: { video: Type[] }) => {
   return (
     <>
       <ul className="gap-x-[11px] gap-y-[15px] flex flex-wrap justify-center items-start h-[596.98px] overflow-hidden ">
-        {videos.slice(0, 18).map((item, index) => (
+        {video.slice(0, 18).map((item, index) => (
           <li
             className="w-[118.43px] h-[86.48px] rounded-[8.37px] overflow-hidden "
             key={index}

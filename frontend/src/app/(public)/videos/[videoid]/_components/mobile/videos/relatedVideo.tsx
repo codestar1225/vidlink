@@ -1,21 +1,22 @@
 import { Video } from "@/app/_components/ui/video";
-import videos from "../../../_components/mobile/videos1.json";
 import Link from "next/link";
-const UserVideo = () => {
+import { VideoType } from "../../../page";
+interface Type {
+  relatedVideos: VideoType[];
+}
+const RelatedVideo: React.FC<Type> = ({ relatedVideos }) => {
   return (
     <>
-      <div className=" px-[11px]">
-        <h1 className="text-[12px] pb-[11px]">
-          <span className="text-blue">MORE OF</span>&nbsp;- USERNAME
-        </h1>
+      <div className=" px-[11px] pt-[41.5px]">
+        <h1 className="text-[12px] pb-[11px]">RELATED VIDEOS</h1>
         <ul className=" overflow-hidden h-[189.5px] gap-x-[11px] gap-y-[15px] flex flex-wrap justify-center items-start">
-          {videos.map((item, index) => (
+          {relatedVideos.map((item, index) => (
             <li
               className="w-[118.43px] h-[86.48px] rounded-[8.37px] overflow-hidden "
               key={index}
             >
-              <Link href={`/videos/${index}`}>
-                <Video src={item.src} />
+              <Link href={`/videos/${item._id}`}>
+                <Video src={item.videoLink} />
               </Link>
             </li>
           ))}
@@ -24,4 +25,4 @@ const UserVideo = () => {
     </>
   );
 };
-export default UserVideo;
+export default RelatedVideo;

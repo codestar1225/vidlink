@@ -39,7 +39,7 @@ const subHeaderIn: React.FC<Type> = ({
         <input
           value={isSearch}
           onChange={(e) => setIsSearch(e.target.value)}
-          className="w-full h-[27px] rounded-[20px] border border-[#777777] outline-offset-1 px-[12px] py-[5.4px] mb-[20.5px] placeholder-[#5B5B5B]"
+          className="w-full h-[27px] text-[12px] rounded-[20px] border border-[#777777] outline-offset-1 px-[12px] py-[5.4px] mb-[20.5px] placeholder-[#5B5B5B]"
           type="search"
           placeholder="SEARCH..."
         />

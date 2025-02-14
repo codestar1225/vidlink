@@ -14,10 +14,9 @@ app.use(
   cors({
     origin: process.env.CORS_ORIGIN || "*", // You can specify allowed origins here
     methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
+    allowedHeaders: ["Content-Type", "Authorization", "x-video-id"],
   })
 );
-
 
 // Middleware
 app.use(express.json()); // Parse JSON requests
@@ -29,7 +28,6 @@ connectDB();
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/video", videoRoutes);
-
 
 // Protected Route Example
 // app.get("/api/protected", authMiddleware, (req, res) => {

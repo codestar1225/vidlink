@@ -1,5 +1,7 @@
 import {
+  ADDLIKE,
   GETMYVIDEOS,
+  GETVIDEO,
   GETVIDEOS,
   PUBLISHVIDEO,
   RECORDVIEW,
@@ -8,6 +10,8 @@ import axios, { AxiosResponse } from "axios";
 import { useState } from "react";
 import Cookies from "js-cookie";
 import {
+  AddLikeError,
+  AddLikeSuccess,
   GetMyVideosError,
   GetMyVideosSuccess,
   GetUserVideosError,
@@ -29,18 +33,23 @@ const useVideo = () => {
   const token = Cookies.get("token");
   const config = {
     headers: {
-      "content-type": "application/json",
+      "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
   };
-  const idConfig = (videoId: number, userName?: string) => ({
+  const idConfig = (videoId: string) => ({
     headers: {
-      "content-type": "application/json",
-      "x-access-token": token,
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
       "x-video-id": videoId,
-      ...(userName && { "x-username": userName }),
     },
   });
+  const multiConfig = {
+    headers: {
+      "Content-Type": "multipart/form-data",
+      Authorization: `Bearer ${token}`,
+    },
+  };
 
   //publish video
   const publish = async (
@@ -49,7 +58,7 @@ const useVideo = () => {
     setLoading(true);
     try {
       const res: AxiosResponse<PublishSuccess | PublishError> =
-        await axios.post(PUBLISHVIDEO, data, config);
+        await axios.post(PUBLISHVIDEO, data, multiConfig);
       return { ...res.data, status: res.status };
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
@@ -60,7 +69,7 @@ const useVideo = () => {
           Cookies.remove("token");
           return { message: "Your session was expired. Please log in again." };
         } else {
-          return { message: "Access denied. No token provided." };
+          return { message: error?.response?.data?.message };
         }
       }
       return { message: "An unknown error occurred" };
@@ -78,12 +87,8 @@ const useVideo = () => {
       return { ...res.data, status: res.status };
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
-        if (
-          error?.response?.data?.message === "Token is invalid or has expired!"
-        ) {
-          return { message: "Your session was expired. Please log in again." };
-        } else {
-          return { message: "Something went wrong" };
+        if (error?.response?.data?.message) {
+          return { message: error?.response?.data?.message };
         }
       }
       return { message: "An unknown error occurred" };
@@ -93,12 +98,35 @@ const useVideo = () => {
   };
   //fetch the video detail
   const getVideo = async (
-    videoId: number
+    videoId: string
   ): Promise<GetVideoSuccess | GetVideoError> => {
     setLoading(true);
     try {
       const res: AxiosResponse<GetVideoSuccess | GetVideoError> =
-        await axios.get(GETVIDEOS, idConfig(videoId));
+        await axios.get(GETVIDEO, idConfig(videoId));
+      return { ...res.data, status: res.status };
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        if (error?.response?.data?.message) {
+          return { message: error?.response?.data?.message };
+        }
+      }
+      return { message: "An unknown error occurred" };
+    } finally {
+      setLoading(false);
+    }
+  };
+  //record the number of vieo view
+  const addLike = async (
+    videoId: string
+  ): Promise<AddLikeSuccess | AddLikeError> => {
+    setLoading(true);
+    try {
+      const res: AxiosResponse<AddLikeSuccess | AddLikeError> = await axios.put(
+        ADDLIKE,
+        { videoId: videoId },
+        idConfig(videoId)
+      );
       return { ...res.data, status: res.status };
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
@@ -115,9 +143,8 @@ const useVideo = () => {
       setLoading(false);
     }
   };
-  //record the number of vieo view
   const recordVideo = async (
-    videoId: number,
+    videoId: string,
     time: number
   ): Promise<RecordVideoSuccess | RecordVideoError> => {
     setLoading(true);
@@ -167,13 +194,12 @@ const useVideo = () => {
   };
   //get my videos
   const getUserVideos = async (
-    videoId: number,
-    userName: string
+    videoId: string
   ): Promise<GetUserVideosSuccess | GetUserVideosError> => {
     setLoading(true);
     try {
       const res: AxiosResponse<GetUserVideosSuccess | GetUserVideosError> =
-        await axios.get(GETMYVIDEOS, idConfig(videoId, userName));
+        await axios.get(GETMYVIDEOS, idConfig(videoId));
       return { ...res.data, status: res.status };
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
@@ -194,6 +220,7 @@ const useVideo = () => {
   return {
     publish,
     getVideos,
+    addLike,
     getMyVideos,
     getUserVideos,
     getVideo,

@@ -10,13 +10,13 @@ type Card = {
 };
 
 interface IVideo extends Document {
-  userId:  mongoose.Schema.Types.ObjectId;
+  userId: mongoose.Schema.Types.ObjectId;
   title: string;
   videoLink: string;
   duration: number;
   cards: Card[];
-  viewers: string[];
-  followers: string[];
+  views: number;
+  likes: number;
   watchTime: number;
   dailyView: Record<string, number>;
   monthlyView: Record<string, number>;
@@ -26,10 +26,10 @@ interface IVideo extends Document {
 
 const VideoSchema = new Schema<IVideo>(
   {
-    userId: { type:  mongoose.Schema.Types.ObjectId, required: true },
+    userId: { type: mongoose.Schema.Types.ObjectId, required: true },
     title: { type: String, required: true },
-    videoLink: { type: String, default: "" },
-    duration: { type: Number },
+    duration: { type: Number, required: true },
+    videoLink: { type: String, required: true },
     cards: [
       {
         link: { type: String },
@@ -40,8 +40,8 @@ const VideoSchema = new Schema<IVideo>(
         isSaved: { type: Boolean },
       },
     ],
-    viewers: { type: [String], default: [] },
-    followers: { type: [String], default: [] },
+    views: { type: Number, default: 0 },
+    likes: { type: Number, default: 0 },   
     watchTime: { type: Number, default: 0 },
     dailyView: { type: Object, default: {} },
     monthlyView: { type: Object, default: {} },
@@ -56,7 +56,7 @@ VideoSchema.virtual("user", {
   localField: "userId",
   foreignField: "_id",
   justOne: true, // Ensures a single object (not an array)
-  options: { select: "username" }, // Select only userName
+  options: { select: "userName" }, // Select only userName
 });
 
 const Video: Model<IVideo> = mongoose.model<IVideo>("Video", VideoSchema);

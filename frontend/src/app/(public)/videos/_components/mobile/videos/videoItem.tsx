@@ -1,13 +1,13 @@
 import { Video } from "@/app/_components/ui/video";
 import Link from "next/link";
 interface Type {
-  username: string;
+  userName: string;
   review: number;
   src: string;
   no: number;
   videoId: string;
 }
-const VideoItem: React.FC<Type> = ({ username, review, src, no, videoId }) => {
+const VideoItem: React.FC<Type> = ({ userName, review, src, no, videoId }) => {
   return (
     <>
       <li className="h-[149.33px] w-[117.73px] flex flex-col items-center  justify-between">
@@ -24,7 +24,7 @@ const VideoItem: React.FC<Type> = ({ username, review, src, no, videoId }) => {
           <h1 className="text-[7.81px] font-semibold">VIDEO {no}</h1>
           <p className="text-[7.81px] text-[#7C889D] text-center flex flex-col">
             UPLOADED BY
-            <span>{username}</span>
+            <span>{userName}</span>
           </p>
           <div className="  flex flex-wrap items-center justify-center h-[7.81px] w-full gap-[1.67px]">
             <img src="/icon/videos/eye.svg" alt="" />

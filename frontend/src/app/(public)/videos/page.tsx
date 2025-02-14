@@ -11,7 +11,7 @@ const VideosDesktop = dynamic(() => import("./_components/desktop"));
 export type Video = {
   videoLink: string;
   totalView: number;
-  user: { _id: string; username: string };
+  user: { _id: string; userName: string };
   _id: string;
 };
 const Page = () => {

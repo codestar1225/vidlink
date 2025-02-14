@@ -1,7 +1,7 @@
-const VideoDesktop = ({ id }: { id: string }) => {
+const VideoDesktop = () => {
   return (
     <>
-      <div>Welcome to video desktop.{id}</div>
+      <div>Welcome to video desktop</div>
     </>
   );
 };

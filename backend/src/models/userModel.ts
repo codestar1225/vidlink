@@ -2,9 +2,9 @@ import mongoose, { Document, Model, Schema } from "mongoose";
 
 interface IUser extends Document {
   email: string;
-  username: string;
   name: String;
   picture: string;
+  userName: string;
   gender: string;
   bio: string;
   instagram: string;
@@ -12,21 +12,37 @@ interface IUser extends Document {
   youtube: string;
   linkedin: string;
   role: string;
+  totalVideos: number;
+  totlaCards: number;
+  totalSavedCards: number;
+  followingVideos: string[];
+  likeVideos: string[];
+  videoViews: number;
+  profileViews: number;
+  watchTime: number;
 }
 
 const UserSchema = new Schema<IUser>(
   {
     email: { type: String, required: true, unique: true },
-    username: { type: String, default: "YOURNAME" },
+    userName: { type: String, default: "YOURNAME" },
     name: { type: String, required: true },
     picture: { type: String, required: true },
     gender: { type: String, enum: ["male", "female"] },
-    bio: { type: String },
-    instagram: { type: String },
-    tiktok: { type: String },
-    youtube: { type: String },
-    linkedin: { type: String },
+    bio: { type: String, fdefault: "" },
+    instagram: { type: String, default: "" },
+    tiktok: { type: String, default: "" },
+    youtube: { type: String, default: "" },
+    linkedin: { type: String, default: "" },
     role: { type: String, enum: ["admin", "customer"] },
+    followingVideos: { type: [String], default: [] },
+    likeVideos: { type: [String], default: [] },
+    totalVideos: { type: Number, default: 0 },
+    totlaCards: { type: Number, default: 0 },
+    totalSavedCards: { type: Number, default: 0 },
+    videoViews: { type: Number, default: 0 },
+    profileViews: { type: Number, default: 0 },
+    watchTime: { type: Number, default: 0 },
   },
   { timestamps: true }
 );

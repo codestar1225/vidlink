@@ -27,7 +27,7 @@ const UploadMobile = () => {
   const [duration, setDuration] = useState<number>(0);
   const [file, setFile] = useState<File | null>(null);
   const [title, setTitle] = useState<string>("");
-  const [cards, setCards] = useAtom<CardType[]>(cardAtom);
+  const [cards] = useAtom<CardType[]>(cardAtom);
   const [editSignal, setEditSignal] = useState<boolean>(false);
   const { publish, loading } = useVideo();
 
@@ -37,7 +37,6 @@ const UploadMobile = () => {
   }, [videoLink]);
 
   const handlePublish = () => {
-    console.log(videoLink,'videoLink')
     if (cards.length < 1) {
       return alert("Please fill all the contents.");
     }
@@ -50,8 +49,11 @@ const UploadMobile = () => {
     const data = new FormData();
     if (file) {
       data.append("file", file);
-    } else {
+    } else if (videoLink) {
       data.append("videoLink", videoLink);
+    } else {
+      alert("Please provide either a file or a video link.");
+      return;
     }
     data.append("title", title);
     data.append("cards", JSON.stringify(cards));
@@ -74,6 +76,7 @@ const UploadMobile = () => {
       // }
     } else {
       alert(res.message);
+      return
     }
     console.log("upload success");
   };
@@ -104,6 +107,7 @@ const UploadMobile = () => {
           cancelVideo={cancelVideo}
           setDuration={setDuration}
           setFile={setFile}
+          setTitle={setTitle}
         />
       ) : edit === "add" ? (
         <Suspense fallback={<Loading />}>

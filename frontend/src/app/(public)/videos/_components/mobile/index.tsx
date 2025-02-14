@@ -35,7 +35,7 @@ const VideosMobile: React.FC<Type> = ({ followingVideos, allVideos }) => {
       (video) =>
         video.totalView.toString().toLowerCase().includes(key) ||
         video.videoLink.toLowerCase().includes(key) ||
-        video.user.username.toLowerCase().includes(key)
+        video.user.userName.toLowerCase().includes(key)
     );
     setVideos(filteredVideos);
   }, [isSearch, nav]);
@@ -56,7 +56,7 @@ const VideosMobile: React.FC<Type> = ({ followingVideos, allVideos }) => {
         ) : (
           <SubHeaderOut />
         )}
-        <div className=" overflow-y-scroll fixed top-[202px] bottom-0">
+        <div className={`${isAuth?"top-[202px]":"top-[249px]"}  overflow-y-scroll fixed  bottom-0`}>
           <Suspense fallback={<Loading />}>
             {nav == "you" ? (
               <Videos videos={videos} />

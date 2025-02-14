@@ -17,17 +17,17 @@ const HeaderMobile = () => {
 
   const { loading, isAuth } = useVerifyAuth();
 
-  useEffect(() => {
-    if (isAuth) {
-      const user = Cookies.get("user");
-      if (user) {
-        const parsedUser = JSON.parse(user);
-        setPic(parsedUser.pic);
-      }
-    } else {
-      Cookies.remove("user");
-    }
-  }, [isAuth, router]);
+  // useEffect(() => {
+  //   if (isAuth) {
+  //     const user = Cookies.get("user");
+  //     if (user) {
+  //       const parsedUser = JSON.parse(user);
+  //       setPic(parsedUser.pic);
+  //     }
+  //   } else {
+  //     Cookies.remove("user");
+  //   }
+  // }, [isAuth, router]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;

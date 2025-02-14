@@ -23,6 +23,7 @@ interface Type {
   cancelVideo(): void;
   setDuration(value: number): void;
   setFile(value: File): void;
+  setTitle(value: string): void;
 }
 const Upload: React.FC<Type> = ({
   videoSrc,
@@ -37,6 +38,7 @@ const Upload: React.FC<Type> = ({
   cancelVideo,
   setDuration,
   setFile,
+  setTitle,
 }) => {
   const videoRef = useRef<ReactPlayer>(null);
   const [, setCards] = useAtom<CardType[]>(cardAtom);
@@ -49,8 +51,6 @@ const Upload: React.FC<Type> = ({
       setVideoLink(videoSrc);
       setDuration(fileDuration);
       setFile(uploadedFile);
-      setEdit("add");
-      setCards([]);   
     } else if (url) {
       const linkDuration = videoRef.current?.getDuration();
       if (linkDuration === null || linkDuration === undefined) {
@@ -60,12 +60,13 @@ const Upload: React.FC<Type> = ({
       } else {
         setDuration(linkDuration);
         setVideoLink(url);
-        setEdit("add");
-        setCards([]);
       }
     } else {
       return alert("Please enter a file or a link.");
     }
+    setEdit("add");
+    setCards([]);
+    setTitle("");
   };
 
   return (

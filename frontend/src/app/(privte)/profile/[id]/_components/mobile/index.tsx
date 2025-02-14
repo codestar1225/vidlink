@@ -1,8 +1,8 @@
 "use client";
 import FooterMobile from "@/app/_components/layout/mobile/footer";
-import videos from "@/app/(public)/videos/_components/mobile/videos1.json";
+import video1 from "./videos1.json";
 import AmountItem from "../../../_components/mobile/amountItem";
-import Videos from "../../../_components/mobile/videos";
+import Videoo from "../../../_components/mobile/videos";
 import { useRouter } from "next/navigation";
 import SocialLinks from "./socialLinks";
 import useVerifyAuth from "@/hooks/useVerifyAuth";
@@ -66,7 +66,7 @@ const ProfilesMobile = () => {
               />
             </li>
           </ul>
-          <Videos videos={videos} />
+          {/* <Videoo video={video1} /> */}
         </div>
       </main>
       <FooterMobile isFixed={false} />

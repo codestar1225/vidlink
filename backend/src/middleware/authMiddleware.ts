@@ -24,7 +24,10 @@ const authMiddleware = expressAsyncHandler(
       req.userId = decoded.userId;
       next();
     } catch (error) {
-      if (req.method === "GET" && req.path === "/getvideos/") {
+      if (
+        (req.method === "GET" && req.path === "/getvideos/") ||
+        (req.method === "GET" && req.path === "/getvideo/")
+      ) {
         next();
         return;
       }

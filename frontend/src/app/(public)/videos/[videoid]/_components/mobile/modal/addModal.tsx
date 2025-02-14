@@ -2,7 +2,7 @@
 import { useRef } from "react";
 import LinkItem from "../input/linkItem";
 import InputItem from "../input/inputItem";
-import ModalCard from "../card/modalCard";
+import ModalCard from "./modalCard";
 import useClickOutside from "@/hooks/useClickOutside";
 
 interface Type {
