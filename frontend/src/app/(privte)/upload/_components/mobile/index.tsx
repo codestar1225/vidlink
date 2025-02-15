@@ -37,6 +37,7 @@ const UploadMobile = () => {
   }, [videoLink]);
 
   const handlePublish = () => {
+    if (loading) return;
     if (cards.length < 1) {
       return alert("Please fill all the contents.");
     }
@@ -76,7 +77,7 @@ const UploadMobile = () => {
       // }
     } else {
       alert(res.message);
-      return
+      return;
     }
     console.log("upload success");
   };

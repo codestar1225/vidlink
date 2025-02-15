@@ -3,7 +3,7 @@ import Video from "../models/videoModel";
 import expressAsyncHandler from "express-async-handler";
 import { CustomRequest } from "../middleware/authMiddleware";
 import User from "../models/userModel";
-import { S3Client } from "@aws-sdk/client-s3";
+import { S3Client, ObjectCannedACL } from "@aws-sdk/client-s3";
 import { Upload } from "@aws-sdk/lib-storage";
 
 const s3Client = new S3Client({
@@ -12,131 +12,57 @@ const s3Client = new S3Client({
     accessKeyId: process.env.AWS_ACCESS_KEY_ID as string,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY as string,
   },
+  logger: console, // Debugging
 });
 
 export interface CardType {
-  link: string;
-  name: string;
-  icon: string;
-  start: number;
-  no: number;
   isSaved: boolean;
 }
-//publish video
-// export const publishVideo = expressAsyncHandler(
-//   async (req: CustomRequest, res: Response) => {
-//     const { videoLink, duration, title, cards } = req.body;
-//     console.log("Request body:", req.body);
-//     console.log("Request file:", req.file);
-//     const file = req.file;
-//     let parsedCards: CardType[] = cards;
-//     if (typeof cards === "string") {
-//       parsedCards = JSON.parse(cards);
-//     }
-//     const savedCards = parsedCards.filter(
-//       (card: CardType) => card.isSaved === true
-//     );
-//     try {
-//       let finalVideoLink = videoLink; // default value from req.body if provided
-//       if (file) {
-//         const params = {
-//           Bucket: process.env.AWS_BUCKET_NAME as string,
-//           Key: `videos/${Date.now()}-${file.originalname}`,
-//           Body: file.buffer,
-//           ContentType: file.mimetype,
-//         };
 
-//         // Upload the file to S3
-//         const upload = new Upload({
-//           client: s3Client,
-//           params: params,
-//         });
-//         try {
-//           console.log("Starting S3 upload...");
-//           const s3Response = await upload.done();
-//           console.log("S3 upload successful:", s3Response);
-//           finalVideoLink = s3Response.Location; // Use the S3 URL as the video link
-//         } catch (error) {
-//           console.error("Error uploading to S3:", error);
-//           if (error instanceof Error) {
-//             console.error("Error message:", error.message);
-//             console.error("Error stack:", error.stack);
-//           }
-//           throw new Error("Failed to upload video to S3");
-//         }
-//       }
-//       const video = new Video({
-//         userId: req.userId,
-//         videoLink: finalVideoLink,
-//         duration: Number(duration),
-//         title,
-//         cards: parsedCards,
-//       });
-//       await video.save();
-//       await User.findByIdAndUpdate(req.userId, {
-//         $inc: {
-//           videos: 1,
-//           cards: parsedCards.length,
-//           savedCards: savedCards.length,
-//         },
-//       });
-//       res.status(201).json({ message: "Video created", video });
-//     } catch (error: any) {
-//       res.status(500).json({ message: error.message });
-//       console.log(error);
-//     }
-//   }
-// );
+// publish video and card
 export const publishVideo = expressAsyncHandler(
   async (req: CustomRequest, res: Response) => {
-    console.log("Request body:", req.body);
-    console.log("Request file:", req.file);
-
     const { videoLink, duration, title, cards } = req.body;
     const file = req.file;
-
     let parsedCards: CardType[];
     try {
       parsedCards = typeof cards === "string" ? JSON.parse(cards) : cards;
     } catch (error) {
-     res.status(400).json({ message: "Invalid cards data" });
-     return 
+      res.status(400).json({ message: "Invalid cards data" });
+      return;
     }
-
-    const savedCards = parsedCards.filter((card: CardType) => card.isSaved === true);
+    const savedCards = parsedCards.filter(
+      (card: CardType) => card.isSaved === true
+    );
 
     try {
       let finalVideoLink = videoLink;
-
       if (file) {
         const params = {
           Bucket: process.env.AWS_BUCKET_NAME as string,
           Key: `videos/${Date.now()}-${file.originalname}`,
           Body: file.buffer,
           ContentType: file.mimetype,
+          ACL: ObjectCannedACL.public_read,
         };
-
         console.log("Starting S3 upload...");
         const upload = new Upload({
           client: s3Client,
           params: params,
         });
-
         try {
           const s3Response = await upload.done();
-          console.log("S3 upload successful:", s3Response);
+          console.log("S3 upload successful");
           finalVideoLink = s3Response.Location;
         } catch (error) {
           console.error("Error uploading to S3:", error);
           throw new Error("Failed to upload video to S3");
         }
       }
-
       if (!finalVideoLink) {
-      res.status(400).json({ message: "Video link is required" });
-      return 
+        res.status(400).json({ message: "Video link is required" });
+        return;
       }
-
       const video = new Video({
         userId: req.userId,
         videoLink: finalVideoLink,
@@ -144,7 +70,6 @@ export const publishVideo = expressAsyncHandler(
         title,
         cards: parsedCards,
       });
-
       await video.save();
 
       await User.findByIdAndUpdate(req.userId, {
@@ -154,11 +79,13 @@ export const publishVideo = expressAsyncHandler(
           savedCards: savedCards.length,
         },
       });
-
       res.status(201).json({ message: "Video created", video });
     } catch (error: any) {
       console.error("Error in publishVideo:", error);
-      res.status(500).json({ message: error.message || "An error occurred while publishing the video" });
+      res.status(500).json({
+        message:
+          error.message || "An error occurred while publishing the video",
+      });
     }
   }
 );
