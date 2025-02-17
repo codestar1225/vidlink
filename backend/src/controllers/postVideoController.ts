@@ -1,0 +1,89 @@
+import { Response } from "express";
+import Video from "../models/videoModel";
+import expressAsyncHandler from "express-async-handler";
+import { CustomRequest } from "../middleware/authMiddleware";
+import User from "../models/userModel";
+import { S3Client, ObjectCannedACL } from "@aws-sdk/client-s3";
+import { Upload } from "@aws-sdk/lib-storage";
+
+const s3Client = new S3Client({
+  region: process.env.AWS_REGION,
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID as string,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY as string,
+  },
+  logger: console, // Debugging
+});
+
+export interface CardType {
+  isSaved: boolean;
+}
+
+// publish video and card
+export const publishVideo = expressAsyncHandler(
+  async (req: CustomRequest, res: Response) => {
+    const { videoLink, duration, title, cards } = req.body;
+    const file = req.file;
+    let parsedCards: CardType[];
+    try {
+      parsedCards = typeof cards === "string" ? JSON.parse(cards) : cards;
+    } catch (error) {
+      res.status(400).json({ message: "Invalid cards data" });
+      return;
+    }
+    const savedCards = parsedCards.filter(
+      (card: CardType) => card.isSaved === true
+    );
+    try {
+      let finalVideoLink = videoLink;
+      if (file) {
+        const params = {
+          Bucket: process.env.AWS_BUCKET_NAME as string,
+          Key: `videos/${Date.now()}-${file.originalname}`,
+          Body: file.buffer,
+          ContentType: file.mimetype,
+          ACL: ObjectCannedACL.public_read,
+        };
+        console.log("Starting S3 upload...");
+        const upload = new Upload({
+          client: s3Client,
+          params: params,
+        });
+        try {
+          const s3Response = await upload.done();
+          console.log("S3 upload successful");
+          finalVideoLink = s3Response.Location;
+        } catch (error) {
+          console.error("Error uploading to S3:", error);
+          throw new Error("Failed to upload video to S3");
+        }
+      }
+      if (!finalVideoLink) {
+        res.status(400).json({ message: "Video link is required" });
+        return;
+      }
+      const video = new Video({
+        userId: req.userId,
+        videoLink: finalVideoLink,
+        duration: Number(duration),
+        title,
+        cards: parsedCards,
+      });
+      await video.save();
+      await User.findByIdAndUpdate(req.userId, {
+        $inc: {
+          totalVideos: 1,
+          totalCards: parsedCards.length,
+          totalSavedCards: savedCards.length,
+        },
+      });
+      res.status(201).json({ message: "Video created", video });
+    } catch (error: any) {
+      console.error("Error in publishVideo:", error);
+      res.status(500).json({
+        message:
+          error.message || "An error occurred while publishing the video",
+      });
+    }
+  }
+);

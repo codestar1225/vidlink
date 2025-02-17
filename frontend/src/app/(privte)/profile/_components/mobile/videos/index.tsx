@@ -1,24 +1,29 @@
-import { Video } from "@/app/_components/ui/video";
 import Link from "next/link";
+import { VideoType } from "../../../page";
+import VideoItem from "./videoItem";
 
 interface Type {
-  editor: string;
-  review: number;
-  src: string;
+  myVideos: VideoType[];
+  totalVideos: number;
 }
-const Videos = ({ video }: { video: Type[] }) => {
+const Videos: React.FC<Type> = ({ myVideos, totalVideos }) => {
   return (
     <>
-      <ul className="gap-x-[11px] gap-y-[15px] flex flex-wrap justify-center items-start h-[596.98px] overflow-hidden ">
-        {video.slice(0, 18).map((item, index) => (
-          <li
-            className="w-[118.43px] h-[86.48px] rounded-[8.37px] overflow-hidden "
-            key={index}
-          >
-            <Link href={`/videos/${index}`}>
-              <Video src={item.src} />
-            </Link>
-          </li>
+      <div className="flex justify-between items-center text-[8px] mx-[11px] mt-[24px] mb-[14px] font-semibold tracking-wider">
+        <div className="flex gap-[7px] ">
+          <span>{totalVideos}&nbsp;VIDEOS</span>
+          <img className="size-[10px]" src="/icon/profile/video.png" alt="" />
+        </div>
+        <div className="flex gap-[7px]">
+          <span>NEWEST</span>
+          <img className="size-[10px]" src="/icon/profile/arrow.png" alt="" />
+        </div>
+      </div>
+      <ul className="gap-x-[11px] gap-y-[15px] flex flex-wrap justify-center items-start  ">
+        {myVideos?.slice(0, 18)?.map((item, index) => (
+          <Link href={`/videos/${item._id}`} key={index}>
+            <VideoItem videoLink={item.videoLink} />
+          </Link>
         ))}
       </ul>
     </>

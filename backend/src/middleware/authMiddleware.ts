@@ -13,7 +13,7 @@ const authMiddleware = expressAsyncHandler(
     next: NextFunction
   ): Promise<void> => {
     const token = req.header("Authorization")?.replace("Bearer ", "");
-    if (!token) {
+      if (!token) {
       res.status(401).json({ message: "Access denied. No token provided." });
       return;
     }
@@ -26,12 +26,13 @@ const authMiddleware = expressAsyncHandler(
     } catch (error) {
       if (
         (req.method === "GET" && req.path === "/getvideos/") ||
-        (req.method === "GET" && req.path === "/getvideo/")
+        (req.method === "GET" && req.path === "/getvideo/") ||
+        (req.method === "GET" && req.path === "/getuservideos/")
       ) {
         next();
         return;
       }
-      res.status(400).json({ message: "Token is invalid or has expired!" });
+      res.status(401).json({ message: "Token is invalid or has expired!" });
     }
   }
 );

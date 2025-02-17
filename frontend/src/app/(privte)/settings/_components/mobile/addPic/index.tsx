@@ -7,7 +7,7 @@ interface Type {
   setIsOpen(value: boolean): void;
 }
 
-const AddPic: React.FC<Type> = ({ setIsOpen }) => {
+const Index: React.FC<Type> = ({ setIsOpen }) => {
   const webcamRef = useRef<Webcam>(null);
   const menuRef = useRef<HTMLUListElement>(null);
   const [, setPhoto] = useState<string | null>(null);
@@ -47,4 +47,4 @@ const AddPic: React.FC<Type> = ({ setIsOpen }) => {
     </>
   );
 };
-export default AddPic;
+export default Index;

@@ -1,24 +1,18 @@
-import { Video } from "@/app/_components/ui/video";
 import Link from "next/link";
+import { VideoType } from "../../../page";
+import VideoItem from "../videos/videoItem";
 
 interface Type {
-  editor: string;
-  review: number;
-  src: string;
+  myLikesVideos: VideoType[];
 }
-const Likes = ({ videos }: { videos: Type[] }) => {
+const Likes: React.FC<Type> = ({ myLikesVideos }) => {
   return (
     <>
-      <ul className="overflow-hidden gap-[11px] flex flex-wrap justify-center items-start ">
-        {videos.slice(0, 12).map((item, index) => (
-          <li
-            className="w-[118.43px] h-[86.48px] rounded-[8.37px] overflow-hidden "
-            key={index}
-          >
-            <Link href={`/videos/${index}`}>
-              <Video src={item.src} />
-            </Link>
-          </li>
+      <ul className="overflow-hidden gap-[11px] flex flex-wrap justify-center items-start mt-[48px]">
+        {myLikesVideos?.slice(0, 12)?.map((item, index) => (
+          <Link key={index} href={`/videos/${item._id}`}>
+            <VideoItem videoLink={item.videoLink} />
+          </Link>
         ))}
       </ul>
     </>

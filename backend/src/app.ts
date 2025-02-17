@@ -14,7 +14,7 @@ app.use(
   cors({
     origin: process.env.CORS_ORIGIN || "*", // You can specify allowed origins here
     methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization", "x-video-id"],
+    allowedHeaders: ["Content-Type", "Authorization", "x-video-id", 'x-user-id'],
   })
 );
 

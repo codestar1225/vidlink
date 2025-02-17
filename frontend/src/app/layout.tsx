@@ -3,8 +3,9 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ThemeProvider from "@/provider/themeProvider";
 import JotaiProvider from "@/provider/jotaiProvider";
-import SessionProvide from "@/provider/sessionProvider";
+import SessionProvider from "@/provider/sessionProvider";
 import { ToastContainer } from "react-toastify";
+import HeaderProvider from "./_components/layout/common/headerProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -38,7 +39,9 @@ export default function RootLayout({
       >
         <JotaiProvider>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            <SessionProvide>{children}</SessionProvide>
+            <HeaderProvider>
+              <SessionProvider>{children}</SessionProvider>
+            </HeaderProvider>
           </ThemeProvider>
         </JotaiProvider>
         <ToastContainer />

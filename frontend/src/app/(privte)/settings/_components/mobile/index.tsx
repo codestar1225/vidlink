@@ -1,14 +1,24 @@
 "use client";
 import { useState } from "react";
-import GenderItem from "./genderItem";
 import InputItem from "./inputItem";
 import FooterMobile from "@/app/_components/layout/mobile/footer";
 import LinkItem from "./linkItem";
 import { useRouter } from "next/navigation";
 import AddPic from "./addPic";
+import GenderItem from "./genderItem";
+import { UserInfoType } from "../../page";
 
-const SettingsMobile = () => {
+interface Type {
+  userInfo: UserInfoType | null;
+}
+const SettingsMobile: React.FC<Type> = ({ userInfo }) => {
+  const [userName, setUserName] = useState<string>("");
   const [gender, setGender] = useState<string>("");
+  const [bio, setBio] = useState<string>("");
+  const [instagram, setInstagram] = useState<string>("");
+  const [tiktok, setTiktok] = useState<string>("");
+  const [youtube, setYoutube] = useState<string>("");
+  const [linkedin, setLinkedin] = useState<string>("");
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const router = useRouter();
 
@@ -19,7 +29,7 @@ const SettingsMobile = () => {
     <>
       <main className="mt-[128px]  w-screen px-[11.25px] tracking-wider">
         <div className="flex gap-[17.67px] ml-[19.75px] h-[74px]">
-          <img className="size-[74px]" src="/image/profile/avatar.png" alt="" />
+          <img className="size-[74px]" src={userInfo?.picture} alt="" />
           <div className=" relative mt-[28px] ">
             <button
               onClick={() => setIsOpen(!isOpen)}
@@ -34,9 +44,19 @@ const SettingsMobile = () => {
           <h1 className="text-[10.32px] font-semibold text-center">
             BASIC INFO
           </h1>
-          <InputItem name="username" holderName="Text" />
+          <InputItem
+            name="username"
+            holderName="Text"
+            setValue={setUserName}
+            value={userName}
+          />
           <GenderItem setGender={setGender} gender={gender} />
-          <InputItem name="bio" holderName="Text" />
+          <InputItem
+            name="bio"
+            holderName="Text"
+            setValue={setBio}
+            value={bio}
+          />
         </div>
         <div className="h-[314.15px] flex flex-col gap-[17.2px] mt-[32.1px] mb-[201px]">
           <h1 className="text-[10.32px] font-semibold  flex items-center gap-[8px] justify-center">

@@ -27,6 +27,9 @@ const SigninMobile = () => {
         removeItem("isSignin");
         const res = await signin(session.idToken);
         if ("token" in res) {
+          if ("user" in res) {
+            Cookies.set("user", JSON.stringify(res.user));
+          }
           // Successfully authenticated and save token
           Cookies.set("token", res.token, { expires: 1 });
           setToken(res.token);

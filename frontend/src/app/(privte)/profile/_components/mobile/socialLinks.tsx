@@ -1,17 +1,20 @@
 import Link from "next/link";
-
-const SocialLinks = () => {
+interface Type {
+  instagram: string;
+  tiktok: string;
+}
+const SocialLinks: React.FC<Type> = ({ instagram, tiktok }) => {
   return (
     <>
       <div className="flex gap-[14px] justify-center ">
-        <Link href={""}>
+        <Link href={instagram} target="blank">
           <img src="/icon/profile/instagram.png" alt="" />
         </Link>
-        <Link href={""}>
+        <Link href={tiktok} target="blank">
           <img src="/icon/profile/tiktok.png" alt="" />
         </Link>
       </div>
     </>
   );
 };
-export default SocialLinks
+export default SocialLinks;

@@ -1,134 +1,73 @@
 "use client";
 import FooterMobile from "@/app/_components/layout/mobile/footer";
 import NavItem from "./navItem";
-import AmountItem from "./amountItem";
-import { Suspense, useEffect, useState } from "react";
-import videos from "./videos.json";
-import { signOut } from "next-auth/react";
-import { useAtom } from "jotai";
-import { tokenAtom } from "@/store";
-import Cookies from "js-cookie";
+import { Suspense, useState } from "react";
 import SocialLinks from "./socialLinks";
 import Link from "next/link";
-import Videos from "./videos";
 import dynamic from "next/dynamic";
-import AddPic from "./addPic";
 import Loading from "@/app/_components/ui/loading";
+import { UserInfoType, VideoType } from "../../page";
+import Videos from "./videos";
+import UserInfo from "./userInfo";
 const Card = dynamic(() => import("./card"));
 const Likes = dynamic(() => import("./likes"));
 
-const ProfileMobile = () => {
+interface Type {
+  myVideos: VideoType[];
+  myLikesVideos: VideoType[];
+  userInfo: UserInfoType;
+}
+const ProfileMobile: React.FC<Type> = ({
+  myVideos,
+  myLikesVideos,
+  userInfo,
+}) => {
   const [nav, setNav] = useState<string>("videos");
-  const [, setToken] = useAtom(tokenAtom);
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [pic, setPic] = useState<string>("/icon/layout/avatar.png");
-
-  useEffect(() => {
-    const user = Cookies.get("user");
-    if (user) {
-      const parsedUser = JSON.parse(user);
-      setPic(parsedUser.pic);
-    }
-  }, []);
-
-  const handleSignOut = async () => {
-    await signOut({ callbackUrl: "/signin" });
-    Cookies.remove("token");
-    Cookies.remove("reqUrl");
-    Cookies.remove("user");
-    setToken("");
-  };
-
   return (
     <>
-      <main className=" mt-[109px] ">
-        <div className="">
-          <div className="relative size-[146px] mx-auto ">
-            <img
-              className="size-[146px] mt-[28px] rounded-full"
-              src={pic}
-              alt=""
+      <div className="flex flex-col justify-between min-h-screen">
+        <main className=" mt-[109px] ">
+          <div className="">
+            <UserInfo
+              picture={userInfo.picture}
+              totalVideos={userInfo.totalVideos}
+              totalCards={userInfo.totalCards}
+              followers={userInfo.followers}
             />
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="absolute top-[9px] size-[18px] right-[17px]"
+            <SocialLinks
+              instagram={userInfo.instagram}
+              tiktok={userInfo.tiktok}
+            />
+            <Link
+              href={"/upload"}
+              className="flex flex-col items-center gap-[7px] text-[10.5px] font-semibold mt-[44px]"
             >
-              <img src="/icon/profile/edit.png" alt="" />
-            </button>
-            {isOpen && <AddPic setIsOpen={setIsOpen} />}
+              <img src="/icon/profile/plus.png" alt="" />
+              <span>NEW VIDEO</span>
+            </Link>
           </div>
-          <div className="h-[147.04.67px] mx-[91px] mt-[28px] mb-[28px]">
-            <div className="flex justify-between mb-[21px]">
-              <AmountItem number={1860} label="FOLLOWING" />
-              <AmountItem number={2546} label="PROMPTS ADDED" />
-              <AmountItem number={227} label="VIDEOS" />
-            </div>
-            <div className="flex flex-col gap-[5.47px] ">
-              <button className="h-[28.88px] bg-blue rounded-[4.97px] flex items-center justify-center text-[10.5px] font-semibold">
-                DASHBOARD
-              </button>
-              <Link
-                href={"/settings"}
-                className="h-[28.88px] bg-[#7C889D] rounded-[4.97px] flex items-center justify-center text-[10.5px] font-semibold"
-              >
-                SETTINGS
-              </Link>
-              <button
-                onClick={handleSignOut}
-                className="h-[28.88px] bg-[#002355] rounded-[4.97px] flex items-center justify-center text-[10.5px] font-semibold"
-              >
-                LOG OUT
-              </button>
-            </div>
+          <div className="mx-[11px] mt-[45px] overflow-hidden mb-[71px]">
+            <nav className="flex justify-between relative">
+              <NavItem name="videos" nav={nav} setNav={setNav} />
+              <NavItem name="cards" nav={nav} setNav={setNav} />
+              <NavItem name="likes" nav={nav} setNav={setNav} />
+              <div className="border-[0.5px] absolute bottom-[1px] left-0 w-full -z-10"></div>
+            </nav>
+            {nav === "videos" ? (
+              <Videos myVideos={myVideos} totalVideos={userInfo.totalVideos} />
+            ) : nav === "cards" ? (
+              <Suspense fallback={<Loading />}>
+                <Card myVideos={myVideos} userName={userInfo.userName} />
+              </Suspense>
+            ) : (
+              <Suspense fallback={<Loading />}>
+                <Likes myLikesVideos={myLikesVideos} />
+              </Suspense>
+            )}
           </div>
-          <SocialLinks />
-          <Link
-            href={"/upload"}
-            className="flex flex-col items-center gap-[7px] text-[10.5px] font-semibold mt-[44px]"
-          >
-            <img src="/icon/profile/plus.png" alt="" />
-            <span>NEW VIDEO</span>
-          </Link>
-        </div>
-        <div className="mx-[11px] mt-[45px] h-[699px] overflow-hidden mb-[71px]">
-          <nav className="flex justify-between relative">
-            <NavItem name="videos" nav={nav} setNav={setNav} />
-            <NavItem name="cards" nav={nav} setNav={setNav} />
-            <NavItem name="likes" nav={nav} setNav={setNav} />
-            <div className="border-[0.5px] absolute bottom-[1px] left-0 w-full -z-10"></div>
-          </nav>
-          <div className="flex justify-between items-center text-[8px] font-semibold tracking-wider">
-            <div className="flex gap-[7px] mx-[11px] mt-[24px] mb-[14px]">
-              <span>227&nbsp;VIDEOS</span>
-              <img
-                className="size-[10px]"
-                src="/icon/profile/video.png"
-                alt=""
-              />
-            </div>
-            <div className="flex gap-[7px]">
-              <span>NEWEST</span>
-              <img
-                className="size-[10px]"
-                src="/icon/profile/arrow.png"
-                alt=""
-              />
-            </div>
-          </div>
-          {nav === "videos" ? (<></>
-            // <Videos videos={videos} />
-          ) : nav === "cards" ? (
-            <Suspense fallback={<Loading />}>
-              <Card />
-            </Suspense>
-          ) : (
-            <Suspense fallback={<Loading />}>
-              <Likes videos={videos} />
-            </Suspense>
-          )}
-        </div>
-      </main>
-      <FooterMobile isFixed={false} />
+        </main>
+        <FooterMobile isFixed={false} />
+      </div>
     </>
   );
 };

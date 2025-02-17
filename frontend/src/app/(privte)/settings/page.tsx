@@ -1,10 +1,36 @@
+"use client";
 import { isMobile } from "react-device-detect";
 import dynamic from "next/dynamic";
+import { useEffect, useState } from "react";
+import useVideo from "@/hooks/useVideo";
+import Loading from "@/app/_components/ui/loading";
 
 const SettingsMobile = dynamic(() => import("./_components/mobile"));
 const SettingsDesktop = dynamic(() => import("./_components/desktop"));
 
+export interface UserInfoType {
+  userName: string;
+  picture: string;
+  gender: string;
+  bio: string;
+  instagram: string;
+  tiktok: string;
+  youtube: string;
+  linkedin: string;
+}
 const Page = () => {
-  return <>{!isMobile ? <SettingsMobile /> : <SettingsDesktop />}</>;
+  const { loading, getUserInfo } = useVideo();
+  const [userInfo, setUserInfo] = useState<UserInfoType | null>(null);
+  useEffect(() => {
+    const fetchFunction = async () => {
+      const res = await getUserInfo();
+      if (res.status === 200 && "userInfo" in res) {
+        setUserInfo(res.userInfo);
+      }
+    };
+    fetchFunction();
+  }, []);
+  if (loading) return <Loading />;
+  return <>{isMobile ? <SettingsMobile userInfo={userInfo} /> : <SettingsDesktop />}</>;
 };
 export default Page;

@@ -7,7 +7,7 @@ const Index: React.FC<Type> = ({ videos }) => {
   return (
     <>
       <ul className=" gap-x-[11px] gap-y-[15px] flex flex-wrap justify-center items-start">
-        {videos.map((item, index) => (
+        {videos?.map((item, index) => (
           <VideoItem
             userName={item.user.userName}
             review={item.totalView}

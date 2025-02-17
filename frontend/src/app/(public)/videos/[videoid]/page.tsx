@@ -48,6 +48,7 @@ const Page = () => {
   });
   const [userVideos, setUserVideos] = useState<VideoType[]>([]);
   const [relatedVideos, setRelatedVideos] = useState<VideoType[]>([]);
+  const [followStatus, setFollowStatus] = useState<boolean>(false);
   useEffect(() => {
     if (!videoId) return;
     const fetchFunc = async () => {
@@ -63,6 +64,7 @@ const Page = () => {
         setVideoInfo(res.videoInfo);
         setUserVideos(res.userVideos);
         setRelatedVideos(res.relatedVideos);
+        setFollowStatus(res.followStatus)
       }
     };
     fetchFunc();
@@ -74,11 +76,13 @@ const Page = () => {
       {isMobile ? (
         <Suspense fallback={<Loading />}>
           <VideoMobile
+          setFollowStatus={setFollowStatus}
             userInfo={userInfo}
             videoInfo={videoInfo}
             userVideos={userVideos}
             relatedVideos={relatedVideos}
             videoId={videoId}
+            followStatus={followStatus}
           />
         </Suspense>
       ) : (

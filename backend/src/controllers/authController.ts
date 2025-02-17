@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { OAuth2Client } from "google-auth-library";
 import jwt from "jsonwebtoken";
 import authService from "../services/authService";
+import User from "../models/userModel";
 
 export type GoogleTokenPayload = {
   email: string;
@@ -17,9 +18,9 @@ const register = async (req: Request, res: Response) => {
       idToken: idToken,
       audience: process.env.GOOGLE_CLIENT_ID,
     });
-    
+
     const payload = ticket.getPayload() as GoogleTokenPayload;
-    
+
     if (!payload || !payload.email) {
       throw new Error("Invalid token payload");
     }
@@ -36,7 +37,11 @@ const register = async (req: Request, res: Response) => {
         process.env.JWT_SECRET as string,
         { expiresIn: "1h" }
       );
-      res.status(201).json({ message: "User created", token });
+      res.status(201).json({
+        message: "User created",
+        token,
+        user: { userName: user.userName, picture: user.picture },
+      });
     }
   } catch (error: any) {
     res.status(400).json({ message: error.message });
@@ -44,7 +49,7 @@ const register = async (req: Request, res: Response) => {
   }
 };
 
-const login = async (req: Request, res: Response) => {  
+const login = async (req: Request, res: Response) => {
   try {
     const { idToken } = req.body;
     const ticket = await client.verifyIdToken({
@@ -65,7 +70,12 @@ const login = async (req: Request, res: Response) => {
         process.env.JWT_SECRET as string,
         { expiresIn: "1h" }
       );
-      res.status(201).json({ message: "User Logged In", token });
+      const userInfo = await User.findOne({ email: payload.email })
+        .select("userName picture")
+        .lean();
+      res
+        .status(201)
+        .json({ message: "User Logged In", token, user: userInfo });
     } else
       res
         .status(400)

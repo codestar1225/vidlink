@@ -26,6 +26,9 @@ const SignupMobile = () => {
         removeItem("isSignup");
         const res = await signup(session.idToken);
         if ("token" in res) {
+          if ("user" in res) {
+            Cookies.set("user", JSON.stringify(res.user));
+          }
           // Successful signup
           Cookies.set("token", res.token, { expires: 1 });
           setToken(res.token);

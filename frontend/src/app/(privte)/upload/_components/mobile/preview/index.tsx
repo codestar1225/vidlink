@@ -60,55 +60,57 @@ const Preview: React.FC<Type> = ({
 
   return (
     <>
-      <main className="mt-[37px] flex flex-col items-center">
-        <PreviewVideo
-          setCurrentTime={setCurrentTime}
-          cards={cards}
-          videoLink={videoLink}
-          isSelected={isSelected}
-          signal={signal}
-        />
-        <div className="flex justify-center  px-[10px]">
-          <ul className="flex flex-wrap justify-start content-start max-[401px]:justify-center gap-[6px] max-h-[391.7px] max-w-[380px]">
-            {nextCard.start !== -1 && nextCard.no !== -1 ? (
-              <Suspense fallback={<Loading />}>
-                <CardNext
-                  handleNext={handleNext}
-                  no={nextCard.no}
-                  start={nextCard.start}
-                />
-              </Suspense>
-            ) : (
-              <></>
-            )}
-            {fltCards.map((item, index) => (
-              <Suspense key={index} fallback={<Loading />}>
-                <CardItem
-                  setIsSelected={setIsSelected}
-                  setSignal={setSignal}
-                  key={index}
-                  name={item.name}
-                  icon={item.icon}
-                  start={item.start}
-                  isSaved={item.isSaved}
-                  link={item.link}
-                  signal={signal}
-                  no={item.no}
-                  index={index}
-                  currentCard={currentCard}
-                />
-              </Suspense>
-            ))}
-          </ul>
-        </div>
-        <ButtonItem
-          setEdit={setEdit}
-          handlePublish={handlePublish}
-          loading={loading}
-          editSignal={editSignal}
-        />
-      </main>
-      <Footer isFixed={false} />
+      <div className="flex flex-col justify-between min-h-screen">
+        <main className="mt-[37px] flex flex-col items-center">
+          <PreviewVideo
+            setCurrentTime={setCurrentTime}
+            cards={cards}
+            videoLink={videoLink}
+            isSelected={isSelected}
+            signal={signal}
+          />
+          <div className="flex justify-center  px-[10px]">
+            <ul className="flex flex-wrap justify-start content-start max-[401px]:justify-center gap-[6px] max-h-[391.7px] max-w-[380px]">
+              {nextCard.start !== -1 && nextCard.no !== -1 ? (
+                <Suspense fallback={<Loading />}>
+                  <CardNext
+                    handleNext={handleNext}
+                    no={nextCard.no}
+                    start={nextCard.start}
+                  />
+                </Suspense>
+              ) : (
+                <></>
+              )}
+              {fltCards.map((item, index) => (
+                <Suspense key={index} fallback={<Loading />}>
+                  <CardItem
+                    setIsSelected={setIsSelected}
+                    setSignal={setSignal}
+                    key={index}
+                    name={item.name}
+                    icon={item.icon}
+                    start={item.start}
+                    isSaved={item.isSaved}
+                    link={item.link}
+                    signal={signal}
+                    no={item.no}
+                    index={index}
+                    currentCard={currentCard}
+                  />
+                </Suspense>
+              ))}
+            </ul>
+          </div>
+          <ButtonItem
+            setEdit={setEdit}
+            handlePublish={handlePublish}
+            loading={loading}
+            editSignal={editSignal}
+          />
+        </main>
+        <Footer isFixed={false} />
+      </div>
     </>
   );
 };

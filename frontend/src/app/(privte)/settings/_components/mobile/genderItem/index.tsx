@@ -7,7 +7,7 @@ interface Type {
   setGender(value: string): void;
   gender: string;
 }
-const GenderItem: React.FC<Type> = ({ setGender, gender }) => {
+const Index: React.FC<Type> = ({ setGender, gender }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   return (
     <>
@@ -53,4 +53,4 @@ const GenderItem: React.FC<Type> = ({ setGender, gender }) => {
     </>
   );
 };
-export default GenderItem;
+export default Index;

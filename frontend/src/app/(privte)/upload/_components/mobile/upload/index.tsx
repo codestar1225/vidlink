@@ -9,6 +9,8 @@ import LinkUpload from "./linkUpload";
 import { useAtom } from "jotai";
 import { cardAtom, CardType } from "@/store";
 import useVideo from "@/hooks/useVideo";
+import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
 
 interface Type {
   videoSrc: string | null;
@@ -43,8 +45,18 @@ const Upload: React.FC<Type> = ({
   const videoRef = useRef<ReactPlayer>(null);
   const [, setCards] = useAtom<CardType[]>(cardAtom);
   const { loading } = useVideo();
+  const router = useRouter();
 
   const handleNext = () => {
+    const user = Cookies.get("user");
+    if (user) {
+      const parsedUser = JSON.parse(user);
+      if (parsedUser.userName === "YOURNAME") {
+        alert("You must set a username before creating your first video.");
+        router.push("/settings");
+        return;
+      }
+    }
     if (videoSrc && url) {
       return alert("Please input one of them.");
     } else if (videoSrc && uploadedFile) {
@@ -75,7 +87,6 @@ const Upload: React.FC<Type> = ({
         ref={videoRef}
         preload="metadata"
         url={url}
-        // onError={handleError}
         style={{ display: "none" }}
       />
       <main className="">

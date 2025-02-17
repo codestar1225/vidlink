@@ -18,10 +18,10 @@ interface IVideo extends Document {
   views: number;
   likes: number;
   watchTime: number;
-  dailyView: Record<string, number>;
-  monthlyView: Record<string, number>;
-  yearlyView: Record<string, number>;
-  totalView: number;
+  // dailyView: Record<string, number>;
+  // monthlyView: Record<string, number>;
+  // yearlyView: Record<string, number>;
+  // totalView: number;
 }
 
 const VideoSchema = new Schema<IVideo>(
@@ -43,10 +43,10 @@ const VideoSchema = new Schema<IVideo>(
     views: { type: Number, default: 0 },
     likes: { type: Number, default: 0 },   
     watchTime: { type: Number, default: 0 },
-    dailyView: { type: Object, default: {} },
-    monthlyView: { type: Object, default: {} },
-    yearlyView: { type: Object, default: {} },
-    totalView: { type: Number, default: 0 },
+    // dailyView: { type: Object, default: {} },
+    // monthlyView: { type: Object, default: {} },
+    // yearlyView: { type: Object, default: {} },
+    // totalView: { type: Number, default: 0 },
   },
   { timestamps: true }
 );

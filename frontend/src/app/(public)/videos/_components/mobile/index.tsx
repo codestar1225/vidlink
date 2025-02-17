@@ -9,7 +9,7 @@ import Loading from "@/app/_components/ui/loading";
 import dynamic from "next/dynamic";
 import { Video } from "../../page";
 const Videos = dynamic(() => import("./videos"));
-
+// import Videos from './videos'
 interface Type {
   followingVideos: Video[];
   allVideos: Video[];
@@ -31,13 +31,15 @@ const VideosMobile: React.FC<Type> = ({ followingVideos, allVideos }) => {
   useEffect(() => {
     const key = isSearch.trim().toLowerCase();
     const videosToFilter = nav === "you" ? allVideos : followingVideos;
-    const filteredVideos = videosToFilter.filter(
-      (video) =>
-        video.totalView.toString().toLowerCase().includes(key) ||
-        video.videoLink.toLowerCase().includes(key) ||
-        video.user.userName.toLowerCase().includes(key)
-    );
-    setVideos(filteredVideos);
+    if (videosToFilter.length > 0) {
+      const filteredVideos = videosToFilter.filter(
+        (video) =>
+          video.totalView.toString().toLowerCase().includes(key) ||
+          // video.videoLink.toLowerCase().includes(key) ||
+          video.user.userName.toLowerCase().includes(key)
+      );
+      setVideos(filteredVideos);
+    }
   }, [isSearch, nav]);
 
   const { loading, isAuth } = useVerifyAuth();
@@ -54,26 +56,28 @@ const VideosMobile: React.FC<Type> = ({ followingVideos, allVideos }) => {
             isSearch={isSearch}
           />
         ) : (
-          <SubHeaderOut />
+          <SubHeaderOut setIsSearch={setIsSearch} isSearch={isSearch} />
         )}
-        <div className={`${isAuth?"top-[202px]":"top-[249px]"}  overflow-y-scroll fixed  bottom-0`}>
+        <div
+          className={`${
+            isAuth ? "top-[202px]" : "top-[249px]"
+          }  overflow-y-scroll fixed  bottom-0`}
+        >
           <Suspense fallback={<Loading />}>
-            {nav == "you" ? (
-              <Videos videos={videos} />
-            ) : (
-              <Videos videos={videos} />
-            )}
+            <Videos videos={videos} />
           </Suspense>
-          <div className="w-svw flex justify-center">
-            <Link
-              href={"/videos"}
-              className={`${
-                isAuth ? "bg-blue" : "bg-none"
-              } rounded-xl font-semibold text-[18px] py-[7px] px-[10px] mt-[59.62px] mb-[109.23px] tracking-widest`}
-            >
-              VIEW MORE
-            </Link>
-          </div>
+          {videos.length > 0 && (
+            <div className="w-svw flex justify-center">
+              <Link
+                href={"/videos"}
+                className={`${
+                  isAuth ? "bg-blue" : "bg-none"
+                } rounded-xl font-semibold text-[18px] py-[7px] px-[10px] mt-[59.62px] mb-[109.23px] tracking-widest`}
+              >
+                VIEW MORE
+              </Link>
+            </div>
+          )}
         </div>
         <Footer isFixed={true} />
       </main>

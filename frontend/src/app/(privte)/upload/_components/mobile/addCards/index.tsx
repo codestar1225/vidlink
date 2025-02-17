@@ -2,7 +2,7 @@
 import Customize from "./customize";
 import Cards from "./cards";
 import FooterMobile from "@/app/_components/layout/mobile/footer";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { useAtom } from "jotai";
 import { cardAtom, CardType } from "@/store";
 import Setting from "./setting";
@@ -49,8 +49,8 @@ const AddCards: React.FC<Type> = ({
     if (cards.length >= Math.floor(duration / 10) + 1 || cards.length >= 24) {
       return alert("Your cards exceed their maximum amount.");
     }
-    // if (!checkUrl(link))
-    //   return alert("Invalid link. Please enter a valid link.");
+    if (!checkUrl(link))
+      return alert("Invalid link. Please enter a valid link.");
     if (link && name && icon) {
       const newCard = {
         link,

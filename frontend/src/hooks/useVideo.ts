@@ -1,10 +1,12 @@
 import {
   ADDLIKE,
+  FOLLOWUSER,
   GETMYVIDEOS,
+  GETUSERINFO,
+  GETUSERVIDEOS,
   GETVIDEO,
   GETVIDEOS,
   PUBLISHVIDEO,
-  RECORDVIEW,
 } from "@/utils/constant";
 import axios, { AxiosResponse } from "axios";
 import { useState } from "react";
@@ -12,8 +14,12 @@ import Cookies from "js-cookie";
 import {
   AddLikeError,
   AddLikeSuccess,
+  FollowStatusError,
+  FollowStatusSccess,
   GetMyVideosError,
   GetMyVideosSuccess,
+  GetUserInfoError,
+  GetUserInfoSuccess,
   GetUserVideosError,
   GetUserVideosSuccess,
   GetVideoError,
@@ -22,8 +28,8 @@ import {
   GetVideoSuccess,
   PublishError,
   PublishSuccess,
-  RecordVideoError,
-  RecordVideoSuccess,
+  SetUserInfoError,
+  SetUserInfoSuccess,
 } from "@/types/videoApiType";
 import { useRouter } from "next/navigation";
 
@@ -37,11 +43,18 @@ const useVideo = () => {
       Authorization: `Bearer ${token}`,
     },
   };
-  const idConfig = (videoId: string) => ({
+  const videoIdConfig = (videoId: string) => ({
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
       "x-video-id": videoId,
+    },
+  });
+  const userIdConfig = (userId: string) => ({
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+      "x-user-id": userId,
     },
   });
   const multiConfig = {
@@ -103,7 +116,7 @@ const useVideo = () => {
     setLoading(true);
     try {
       const res: AxiosResponse<GetVideoSuccess | GetVideoError> =
-        await axios.get(GETVIDEO, idConfig(videoId));
+        await axios.get(GETVIDEO, videoIdConfig(videoId));
       return { ...res.data, status: res.status };
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
@@ -116,7 +129,8 @@ const useVideo = () => {
       setLoading(false);
     }
   };
-  //record the number of vieo view
+
+  //add like
   const addLike = async (
     videoId: string
   ): Promise<AddLikeSuccess | AddLikeError> => {
@@ -124,33 +138,9 @@ const useVideo = () => {
     try {
       const res: AxiosResponse<AddLikeSuccess | AddLikeError> = await axios.put(
         ADDLIKE,
-        { videoId: videoId },
-        idConfig(videoId)
+        {},
+        videoIdConfig(videoId)
       );
-      return { ...res.data, status: res.status };
-    } catch (error: unknown) {
-      if (axios.isAxiosError(error)) {
-        if (
-          error?.response?.data?.message === "Token is invalid or has expired!"
-        ) {
-          return { message: "Your session was expired. Please log in again." };
-        } else {
-          return { message: "Something went wrong" };
-        }
-      }
-      return { message: "An unknown error occurred" };
-    } finally {
-      setLoading(false);
-    }
-  };
-  const recordVideo = async (
-    videoId: string,
-    time: number
-  ): Promise<RecordVideoSuccess | RecordVideoError> => {
-    setLoading(true);
-    try {
-      const res: AxiosResponse<RecordVideoSuccess | RecordVideoError> =
-        await axios.put(RECORDVIEW, { videoId, time }, config);
       return { ...res.data, status: res.status };
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
@@ -192,16 +182,88 @@ const useVideo = () => {
       setLoading(false);
     }
   };
-  //get my videos
+  //get user videos
   const getUserVideos = async (
-    videoId: string
+    userId: string
   ): Promise<GetUserVideosSuccess | GetUserVideosError> => {
     setLoading(true);
     try {
       const res: AxiosResponse<GetUserVideosSuccess | GetUserVideosError> =
-        await axios.get(GETMYVIDEOS, idConfig(videoId));
+        await axios.get(GETUSERVIDEOS, userIdConfig(userId));
       return { ...res.data, status: res.status };
     } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        if (error?.response?.data?.message) {
+          return { message: error?.response?.data?.message };
+        }
+      }
+      return { message: "An unknown error occurred" };
+    } finally {
+      setLoading(false);
+    }
+  };
+  //follow the user
+  const followUser = async (
+    userId: string
+  ): Promise<FollowStatusSccess | FollowStatusError> => {
+    setLoading(true);
+    try {
+      const res: AxiosResponse<FollowStatusSccess | FollowStatusError> =
+        await axios.put(FOLLOWUSER, {}, userIdConfig(userId));
+      return { ...res.data, status: res.status };
+    } catch (error: unknown) {
+      console.log(error);
+      if (axios.isAxiosError(error)) {
+        if (
+          error?.response?.data?.message === "Token is invalid or has expired!"
+        ) {
+          return { message: "Your session was expired. Please log in again." };
+        } else {
+          return { message: "Something went wrong" };
+        }
+      }
+      return { message: "An unknown error occurred" };
+    } finally {
+      setLoading(false);
+    }
+  };
+  //get user info
+  const getUserInfo = async (): Promise<
+    GetUserInfoSuccess | GetUserInfoError
+  > => {
+    setLoading(true);
+    try {
+      const res: AxiosResponse<GetUserInfoSuccess | GetUserInfoError> =
+        await axios.get(GETUSERINFO, config);
+      return { ...res.data, status: res.status };
+    } catch (error: unknown) {
+      console.log(error);
+      if (axios.isAxiosError(error)) {
+        if (
+          error?.response?.data?.message === "Token is invalid or has expired!"
+        ) {
+          return { message: "Your session was expired. Please log in again." };
+        } else {
+          return { message: "Something went wrong" };
+        }
+      }
+      return { message: "An unknown error occurred" };
+    } finally {
+      setLoading(false);
+    }
+  };
+  //set user info
+
+  const setUserInfo = async (
+    userInfo: string
+  ): Promise<SetUserInfoSuccess | SetUserInfoError> => {
+    setLoading(true);
+    try {
+      const res: AxiosResponse<SetUserInfoSuccess | SetUserInfoError> =
+        await axios.put(GETUSERINFO, userInfo, config);
+      return { ...res.data, status: res.status };
+    } catch (error: unknown) {
+      console.log(error);
       if (axios.isAxiosError(error)) {
         if (
           error?.response?.data?.message === "Token is invalid or has expired!"
@@ -224,7 +286,9 @@ const useVideo = () => {
     getMyVideos,
     getUserVideos,
     getVideo,
-    recordVideo,
+    followUser,
+    getUserInfo,
+    setUserInfo,
     loading,
   };
 };

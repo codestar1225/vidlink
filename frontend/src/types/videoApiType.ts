@@ -52,6 +52,7 @@ export interface GetVideoSuccess {
   cards: CardType[];
   userVideos: { videoLink: string; _id: string }[];
   relatedVideos: { videoLink: string; _id: string }[];
+  followStatus: boolean;
   message: string;
   status: number;
 }
@@ -70,30 +71,30 @@ export interface AddLikeError {
   message: string;
   status?: number;
 }
-// record views and watching time
-export interface RecordVideoSuccess {
-  message: string;
-  status: number;
-}
-export interface RecordVideoError {
-  message: string;
-  status?: number;
-}
 
 //get my videos
 type UserInfo = {
-  followersAmount: number;
-  videosAmount: number;
-  cardsAmount: number;
+  _id: string;
+  userName: string;
+  picture: string;
+  followers: number;
+  totalVideos: number;
+  totalCards: number;
   instagram: string;
   tiktok: string;
   youtube: string;
   linkedin: string;
+  email?: string;
 };
 export interface GetMyVideosSuccess {
   userInfo: UserInfo;
-  videos: { src: string; videoId: string }[];
-  cards: CardType[];
+  myVideos: {
+    videoLink: string;
+    title: string;
+    _id: string;
+    cards: CardType[];
+  }[];
+  myLikesVideos: { videoLink: string; title: string; _id: string }[];
   status: number;
   message: string;
 }
@@ -103,14 +104,53 @@ export interface GetMyVideosError {
 }
 
 //get user's videos
-
 export interface GetUserVideosSuccess {
   userInfo: UserInfo;
-  videos: { src: string; videoId: string }[];
+  userVideos: { videoLink: string; _id: string }[];
+  followStatus: boolean;
   status: number;
   message: string;
 }
 export interface GetUserVideosError {
+  message: string;
+  status?: number;
+}
+//follow the user
+export interface FollowStatusSccess {
+  followStatus: boolean;
+  status: number;
+  message: string;
+}
+export interface FollowStatusError {
+  message: string;
+  status?: number;
+}
+
+//get user info
+export interface GetUserInfoSuccess {
+  userInfo: {
+    userName: string;
+    picture: string;
+    gender: string;
+    bio: string;
+    instagram: string;
+    tiktok: string;
+    youtube: string;
+    linkedin: string;
+  };
+  status: number;
+  message: string;
+}
+export interface GetUserInfoError {
+  message: string;
+  status?: number;
+}
+//set user info
+export interface SetUserInfoSuccess {
+  status: number;
+  message: string;
+}
+export interface SetUserInfoError {
   message: string;
   status?: number;
 }

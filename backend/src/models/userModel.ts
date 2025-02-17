@@ -13,9 +13,9 @@ interface IUser extends Document {
   linkedin: string;
   role: string;
   totalVideos: number;
-  totlaCards: number;
+  totalCards: number;
   totalSavedCards: number;
-  followingVideos: string[];
+  followers: string[];
   likeVideos: string[];
   videoViews: number;
   profileViews: number;
@@ -35,10 +35,10 @@ const UserSchema = new Schema<IUser>(
     youtube: { type: String, default: "" },
     linkedin: { type: String, default: "" },
     role: { type: String, enum: ["admin", "customer"] },
-    followingVideos: { type: [String], default: [] },
+    followers: { type: [String], default: [] },
     likeVideos: { type: [String], default: [] },
     totalVideos: { type: Number, default: 0 },
-    totlaCards: { type: Number, default: 0 },
+    totalCards: { type: Number, default: 0 },
     totalSavedCards: { type: Number, default: 0 },
     videoViews: { type: Number, default: 0 },
     profileViews: { type: Number, default: 0 },

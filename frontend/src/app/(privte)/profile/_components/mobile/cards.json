@@ -1,9 +1,0 @@
-[
-  { "name": "SONG", "src": "song2" },
-  { "name": "BANDANA", "src": "bandana2" },
-  { "name": "SUNGLASSES", "src": "sunglasses2" },
-  { "name": "CAR", "src": "car2" },
-  { "name": "JACKET", "src": "jacket2" },
-  { "name": "DATE", "src": "song" },
-  { "name": "LOCATION", "src": "location2" }
-]

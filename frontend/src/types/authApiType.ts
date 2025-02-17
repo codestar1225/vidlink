@@ -1,8 +1,7 @@
 export type AuthSuccessResponse = {
-  message: string;
   token: string;
-  name?: string;
-  pic?: string;
+  user: { picture: string; userName: string };
+  message: string;
 };
 
 export type AuthErrorResponse = {

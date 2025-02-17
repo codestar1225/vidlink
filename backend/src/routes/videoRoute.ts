@@ -1,12 +1,14 @@
 import express from "express";
 import authMiddleware from "../middleware/authMiddleware";
+import { publishVideo } from "../controllers/postVideoController";
+import multer from "multer";
 import {
-  addLike,
+  getMyVideos,
+  getUserVideos,
   getVideo,
   getVideos,
-  publishVideo,
-} from "../controllers/videoController";
-import multer from "multer";
+} from "../controllers/getVideoController";
+import { addLike, followUser } from "../controllers/putVideoController";
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
@@ -18,5 +20,8 @@ videoRoutes
 videoRoutes.route("/getvideos").get(authMiddleware, getVideos);
 videoRoutes.route("/getvideo").get(authMiddleware, getVideo);
 videoRoutes.route("/addlike").put(authMiddleware, addLike);
+videoRoutes.route("/getmyvideos").get(authMiddleware, getMyVideos);
+videoRoutes.route("/getuservideos").get(authMiddleware,getUserVideos);
+videoRoutes.route('/followuser').put(authMiddleware,followUser)
 
 export default videoRoutes;

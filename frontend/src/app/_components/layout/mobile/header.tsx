@@ -5,7 +5,8 @@ import { useEffect, useRef, useState } from "react";
 import useVerifyAuth from "@/hooks/useVerifyAuth";
 import useClickOutside from "@/hooks/useClickOutside";
 import Cookies from "js-cookie";
-import { useRouter } from "next/navigation";
+import { useAtom } from "jotai";
+import { tokenAtom } from "@/store";
 
 const HeaderMobile = () => {
   const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false);
@@ -13,21 +14,20 @@ const HeaderMobile = () => {
   const [isBlurred, setIsBlurred] = useState(false);
   const [pic, setPic] = useState<string>("/icon/layout/avatar.png");
   const menuRef = useRef<HTMLHeadElement>(null);
-  const router = useRouter();
-
+  const [token] = useAtom<string>(tokenAtom);
   const { loading, isAuth } = useVerifyAuth();
 
-  // useEffect(() => {
-  //   if (isAuth) {
-  //     const user = Cookies.get("user");
-  //     if (user) {
-  //       const parsedUser = JSON.parse(user);
-  //       setPic(parsedUser.pic);
-  //     }
-  //   } else {
-  //     Cookies.remove("user");
-  //   }
-  // }, [isAuth, router]);
+  useEffect(() => {
+    const user = Cookies.get("user");
+    if (user) {
+      try {
+        const parsedUser = JSON.parse(user);
+        setPic(parsedUser.picture);
+      } catch (error) {
+        console.error("Error parsing user cookie:", error);
+      }
+    }
+  }, [token]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -52,7 +52,7 @@ const HeaderMobile = () => {
     isOpenMenu ? setIsAnimate(true) : setIsAnimate(false);
   }, [isOpenMenu]);
 
-  if (loading) return null;
+  if (loading) return <></>;
   return !isOpenMenu ? (
     //Closed header
     <header className="fixed z-10 top-0 left-0 w-screen">
@@ -77,7 +77,7 @@ const HeaderMobile = () => {
               <Link href={"/profile"}>
                 <img
                   className="w-[33.95px] h-[33px] rounded-full"
-                  src={pic}
+                  src={pic ? pic : "/icon/layout/avatar.png"}
                   alt=""
                 />
               </Link>

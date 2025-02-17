@@ -19,7 +19,10 @@ const NavItem: React.FC<Type> = ({ nav, setNav, name }) => {
           onClick={() => setNav(name)}
           className="flex flex-col items-center justify-between h-[37px] w-[65.67px]"
         >
-          <img src={`/icon/profile/${name}.png`} alt="" />
+          <img
+            src={`/icon/profile/${nav === name ? `${name}Blue` : name}.png`}
+            alt=""
+          />
           <div className={nav === name ? "text-blue" : ""}>
             {name.toUpperCase()}
           </div>

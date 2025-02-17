@@ -1,0 +1,77 @@
+import AddPic from "./addPic";
+import AmountItem from "./amountItem";
+import Cookies from "js-cookie";
+import { useAtom } from "jotai";
+import { tokenAtom } from "@/store";
+import { signOut } from "next-auth/react";
+import { useState } from "react";
+import Link from "next/link";
+
+interface Type {
+  picture: string;
+  totalVideos: number;
+  totalCards: number;
+  followers: number;
+}
+const Index: React.FC<Type> = ({
+  picture,
+  totalVideos,
+  totalCards,
+  followers,
+}) => {
+  const [, setToken] = useAtom(tokenAtom);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const handleSignOut = async () => {
+    await signOut({ callbackUrl: "/signin" });
+    Cookies.remove("token");
+    Cookies.remove("reqUrl");
+    Cookies.remove("user");
+    setToken("");
+  };
+  return (
+    <>
+      <div className="relative size-[146px] mx-auto ">
+        {picture && (
+          <img
+            className="size-[146px] mt-[28px] rounded-full"
+            src={picture ? picture : "/icon/profile/avatar.png"}
+            alt=""
+            loading="lazy"
+          />
+        )}
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="absolute top-[9px] size-[18px] right-[17px]"
+        >
+          <img src="/icon/profile/edit.png" alt="" />
+        </button>
+        {isOpen && <AddPic setIsOpen={setIsOpen} />}
+      </div>
+      <div className="h-[147.04.67px] mx-[91px] mt-[28px] mb-[28px]">
+        <div className="flex justify-between mb-[21px]">
+          <AmountItem number={followers} label="FOLLOWING" />
+          <AmountItem number={totalCards} label="PROMPTS ADDED" />
+          <AmountItem number={totalVideos} label="VIDEOS" />
+        </div>
+        <div className="flex flex-col gap-[5.47px] ">
+          <button className="h-[28.88px] bg-blue rounded-[4.97px] flex items-center justify-center text-[10.5px] font-semibold">
+            DASHBOARD
+          </button>
+          <Link
+            href={"/settings"}
+            className="h-[28.88px] bg-[#7C889D] rounded-[4.97px] flex items-center justify-center text-[10.5px] font-semibold"
+          >
+            SETTINGS
+          </Link>
+          <button
+            onClick={handleSignOut}
+            className="h-[28.88px] bg-[#002355] rounded-[4.97px] flex items-center justify-center text-[10.5px] font-semibold"
+          >
+            LOG OUT
+          </button>
+        </div>
+      </div>
+    </>
+  );
+};
+export default Index;

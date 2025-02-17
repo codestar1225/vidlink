@@ -5,26 +5,33 @@ import ReportModal from "./modal/reportModal";
 import AddModal from "./modal/addModal";
 import LoginModal from "./modal/loginModal";
 import { UserInfo } from "../../page";
+import { useRouter } from "next/navigation";
+import useVideo from "@/hooks/useVideo";
 
 interface Type {
   handleLike(): void;
+  setFollowStatus(value: boolean): void;
   isAuth: boolean;
   userInfo: UserInfo;
   cards: number;
   like: boolean;
   userId: string;
+  followStatus: boolean;
 }
 const SettingBar: React.FC<Type> = ({
   handleLike,
+  setFollowStatus,
   isAuth,
   userInfo,
   cards,
   like,
   userId,
+  followStatus,
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [hidden, setHidden] = useState<boolean>(false);
-
+  const router = useRouter();
+  const { followUser } = useVideo();
   useEffect(() => {
     if (isAuth && isOpen && true) {
       const modal = setTimeout(() => {
@@ -40,6 +47,21 @@ const SettingBar: React.FC<Type> = ({
     }
     setIsOpen(!isOpen);
   };
+  const handleFollow = async () => {
+    if (followStatus) return;
+    if (userInfo.owner) {
+      return alert("You can't follow because you are an owner.");
+    }
+    if (isAuth) {
+      const res = await followUser(userId);
+      if (res.status === 200 && "followStatus" in res) {
+        setFollowStatus(res.followStatus);
+      }
+    } else {
+      alert("You must log in before the following.");
+      router.push("/signin");
+    }
+  };
   return (
     <>
       <div className="h-[72.58px] w-full relative flex items-center justify-center">
@@ -54,9 +76,13 @@ const SettingBar: React.FC<Type> = ({
             <div className="text-[8px] font-normal ">
               {userInfo.totalVideos || 0} VIDEOS
             </div>
-            <div className="text-[8px] font-semibold border-[0.41px] rounded-[1.24px] px-[0.82px]">
-              FOLLOW
-            </div>
+
+            <button
+              onClick={handleFollow}
+              className="text-[8px] font-semibold border-[0.41px] rounded-[1.24px] px-[0.82px]"
+            >
+              {followStatus ? "FOLLOWED" : "FOLLOW"}
+            </button>
           </div>
         </div>
         <button onClick={handleLike} className=" pl-[12px] pt-[4px]">
