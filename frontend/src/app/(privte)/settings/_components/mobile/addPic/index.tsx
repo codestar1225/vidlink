@@ -1,5 +1,6 @@
 "use client";
 import useClickOutside from "@/hooks/useClickOutside";
+import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
 import Webcam from "react-webcam";
 
@@ -33,7 +34,7 @@ const Index: React.FC<Type> = ({ setIsOpen }) => {
         <input type="file" id="upload" className=" hidden" />
         <li className="flex items-center gap-[10px]">
           <img className="size-[18px]" src="/icon/profile/take.png" alt="" />
-          <button onClick={capture}>TAKE A PHOTO</button>
+          <Link href={"/camera"}>TAKE A PHOTO</Link>
         </li>
         <li className="text-[#EA003B] flex items-center gap-[10px]">
           <img className="size-[18px]" src="/icon/profile/remove.png" alt="" />
