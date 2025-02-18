@@ -7,6 +7,7 @@ import useClickOutside from "@/hooks/useClickOutside";
 import Cookies from "js-cookie";
 import { useAtom } from "jotai";
 import { tokenAtom } from "@/store";
+import { useRouter } from "next/navigation";
 
 const HeaderMobile = () => {
   const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false);
@@ -16,6 +17,7 @@ const HeaderMobile = () => {
   const menuRef = useRef<HTMLHeadElement>(null);
   const [token] = useAtom<string>(tokenAtom);
   const { loading, isAuth } = useVerifyAuth();
+  const router = useRouter();
 
   useEffect(() => {
     const user = Cookies.get("user");
@@ -27,7 +29,7 @@ const HeaderMobile = () => {
         console.error("Error parsing user cookie:", error);
       }
     }
-  }, [token]);
+  }, [token, router]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;

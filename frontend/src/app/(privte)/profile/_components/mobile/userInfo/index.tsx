@@ -36,7 +36,6 @@ const Index: React.FC<Type> = ({
             className="size-[146px] mt-[28px] rounded-full"
             src={picture ? picture : "/icon/profile/avatar.png"}
             alt=""
-            loading="lazy"
           />
         )}
         <button

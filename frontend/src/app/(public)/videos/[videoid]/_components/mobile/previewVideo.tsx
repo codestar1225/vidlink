@@ -69,7 +69,7 @@ const PreviewVideo: React.FC<Type> = ({
       <div className="flex justify-between items-center px-[15px] w-full pb-[10px]">
         <h1 className="text-[14px] font-semibold ">
           <span className="text-blue">{title.toUpperCase()}</span>
-          &nbsp;- {userName}
+          &nbsp;- {userName.toUpperCase()}
         </h1>
         <div className="flex gap-[13px] items-center">
           <button onClick={handleLike}>

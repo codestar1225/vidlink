@@ -29,5 +29,5 @@ export async function middleware(req: NextRequest): Promise<NextResponse> {
 }
 
 export const config = {
-  matcher: ["/profile", "/upload/:path*"],
+  matcher: ["/profile", "/settings", "/upload/:path*"],
 };

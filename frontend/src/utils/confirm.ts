@@ -1,9 +1,6 @@
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import "@/style/css/react-confirm-alert.scss";
-const onCancel = () => {
-  return;
-};
 
 export const confirmModal = (
   message: string,

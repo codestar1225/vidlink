@@ -154,3 +154,24 @@ export interface SetUserInfoError {
   message: string;
   status?: number;
 }
+//check user name
+export interface CheckUserNameSuccess {
+  isAlreadyOne: boolean;
+  status: number;
+  message: string;
+}
+export interface CheckUserNameError {
+  message: string;
+  status?: number;
+}
+
+//get user name
+export interface GetUserNameSuccess {
+  userName: string;
+  status: number;
+  message: string;
+}
+export interface GetUserNameError {
+  message: string;
+  status?: number;
+}

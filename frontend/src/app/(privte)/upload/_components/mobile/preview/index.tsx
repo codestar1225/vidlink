@@ -15,6 +15,8 @@ interface Type {
   videoLink: string;
   loading: boolean;
   editSignal: boolean;
+  title: string;
+  userName: string;
 }
 const Preview: React.FC<Type> = ({
   setEdit,
@@ -22,6 +24,8 @@ const Preview: React.FC<Type> = ({
   videoLink,
   loading,
   editSignal,
+  title,
+  userName,
 }) => {
   const [cards] = useAtom<CardType[]>(cardAtom);
   const [fltCards, setFltCards] = useState<CardType[]>([]);
@@ -68,6 +72,8 @@ const Preview: React.FC<Type> = ({
             videoLink={videoLink}
             isSelected={isSelected}
             signal={signal}
+            userName={userName}
+            title={title}
           />
           <div className="flex justify-center  px-[10px]">
             <ul className="flex flex-wrap justify-start content-start max-[401px]:justify-center gap-[6px] max-h-[391.7px] max-w-[380px]">

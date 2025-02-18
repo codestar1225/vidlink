@@ -113,7 +113,7 @@ const Index: React.FC<Type> = ({
             </button>
           </div>
           <input
-            value={link}
+            value={link.trim()}
             onChange={(e) => setLink(e.target.value)}
             type="url"
             placeholder="Text"

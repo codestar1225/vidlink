@@ -87,3 +87,30 @@ export const publishVideo = expressAsyncHandler(
     }
   }
 );
+
+//check the user name
+export const checkUserName = expressAsyncHandler(
+  async (req: CustomRequest, res: Response) => {
+    const { userName } = req.body;
+    if (!userName) {
+      res.status(400).json({ message: "No user name provided." });
+      return;
+    }
+    try {
+      const isAlreadyName = await User.findOne({ userName: userName })
+        .select("_id")
+        .lean();
+      if (isAlreadyName && isAlreadyName._id != req.userId) {
+        res
+          .status(200)
+          .json({ message: "Username is already taken.", isAlreadyOne: true });
+        return;
+      }
+      res
+        .status(200)
+        .json({ message: "Username is available.", isAlreadyOne: false });
+    } catch (error: any) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+);

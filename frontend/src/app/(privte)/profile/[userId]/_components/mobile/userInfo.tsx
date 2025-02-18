@@ -44,7 +44,6 @@ const UserInfo: React.FC<Type> = ({
           className="size-[146px] mt-[28px] rounded-full mx-auto"
           src={picture ? picture : "/icon/profile/avatar.png"}
           alt=""
-          loading="lazy"
         />
       )}
       <div className="h-[147.04.67px] mx-[91px] mt-[28px] mb-[28.33px]">

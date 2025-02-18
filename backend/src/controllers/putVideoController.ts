@@ -26,16 +26,32 @@ export const addLike = expressAsyncHandler(
         userData.likeVideos &&
         userData.likeVideos.includes(videoId)
       ) {
-        await Video.findByIdAndUpdate(videoId, { $inc: { likes: -1 } });
-        await User.findByIdAndUpdate(req.userId, {
-          $pull: { likeVideos: videoId }, // Use $pull to remove an element from an array
-        });
+        await Video.findByIdAndUpdate(
+          videoId,
+          { $inc: { likes: -1 } },
+          { new: true, runValidators: true }
+        );
+        await User.findByIdAndUpdate(
+          req.userId,
+          {
+            $pull: { likeVideos: videoId }, // Use $pull to remove an element from an array
+          },
+          { new: true, runValidators: true }
+        );
         res.status(200).json({ message: "Like removed.", like: false });
       } else {
-        await Video.findByIdAndUpdate(videoId, { $inc: { likes: 1 } });
-        await User.findByIdAndUpdate(req.userId, {
-          $push: { likeVideos: videoId },
-        });
+        await Video.findByIdAndUpdate(
+          videoId,
+          { $inc: { likes: 1 } },
+          { new: true, runValidators: true }
+        );
+        await User.findByIdAndUpdate(
+          req.userId,
+          {
+            $addToSet: { likeVideos: videoId },
+          },
+          { new: true, runValidators: true }
+        );
         console.log("true");
         res.status(200).json({ message: "Like added.", like: true });
       }
@@ -74,12 +90,51 @@ export const followUser = expressAsyncHandler(
         res.status(400).json({ message: "you already followed." });
         return;
       }
-      await User.findByIdAndUpdate(targetUserId, {
-        $push: { followers: req.userId },
-      });
+      await User.findByIdAndUpdate(
+        targetUserId,
+        {
+          $addToSet: { followers: req.userId },
+        },
+        { new: true, runValidators: true }
+      );
       res
         .status(200)
         .json({ message: "followed the user.", followStatus: true });
+    } catch (error: any) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+);
+//set user info
+export const setUserInfo = expressAsyncHandler(
+  async (req: CustomRequest, res: Response) => {
+    const {
+      userName,
+      picture,
+      gender,
+      bio,
+      instagram,
+      tiktok,
+      youtube,
+      linkedin,
+    } = req.body;
+
+    try {
+      await User.findByIdAndUpdate(
+        req.userId,
+        {
+          userName,
+          picture,
+          gender,
+          bio,
+          instagram,
+          tiktok,
+          youtube,
+          linkedin,
+        },
+        { new: true, runValidators: true }
+      );
+      res.status(200).json({ message: "User info saved." });
     } catch (error: any) {
       res.status(500).json({ message: error.message });
     }

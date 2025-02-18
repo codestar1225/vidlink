@@ -8,7 +8,7 @@ const GenderBtn: React.FC<Type> = ({ name, setGender, setIsOpen }) => {
     <>
       <button
         onClick={() => {
-          setGender(name);
+          setGender(name.toLowerCase());
           setIsOpen(false);
         }}
         className="text-left"

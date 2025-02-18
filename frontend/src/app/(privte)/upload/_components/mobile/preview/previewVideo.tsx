@@ -9,6 +9,8 @@ interface Type {
   videoLink: string | null;
   isSelected: number;
   signal: boolean;
+  userName: string;
+  title: string;
 }
 
 const PreviewVideo: React.FC<Type> = ({
@@ -17,6 +19,8 @@ const PreviewVideo: React.FC<Type> = ({
   videoLink,
   isSelected,
   signal,
+  userName,
+  title,
 }) => {
   const videoRef = useRef<ReactPlayer>(null);
   const maxTime = Number(process.env.NEXT_PUBLIC_MAX_TIME || 240);
@@ -61,8 +65,8 @@ const PreviewVideo: React.FC<Type> = ({
       <h1 className="text-[9px] mb-[25px]">PREVIEW</h1>
       <div className="flex justify-between items-center px-[15px] w-full pb-[10px]">
         <h1 className="text-[14px] font-normal ">
-          <span className="text-blue">WHERE SHE GOES</span>
-          &nbsp;- BAD BUNNY
+          <span className="text-blue">{title.toUpperCase()}</span>
+          &nbsp;- {userName.toUpperCase()}
         </h1>
         <div className="flex gap-[13px] items-center">
           <button>
@@ -99,7 +103,9 @@ const PreviewVideo: React.FC<Type> = ({
         <div className="absolute top-[18.6px] left-[11px] flex gap-[10.3px] items-start">
           <img src="/icon/detail/avatar.svg" alt="" />
           <div className="flex flex-col h-[38.3px] justify-between items-start">
-            <div className="text-[12px] text-blue font-semibold ">USERNAME</div>
+            <div className="text-[12px] text-blue font-semibold ">
+              {userName.toUpperCase()}
+            </div>
             {/* <div className="text-[8px] font-semibold border-[0.41px] rounded-[1.24px] px-[0.82px]">
               FOLLOW
             </div> */}

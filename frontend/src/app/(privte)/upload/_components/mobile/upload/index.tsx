@@ -1,6 +1,6 @@
 "use client";
 import FooterMobile from "@/app/_components/layout/mobile/footer";
-import { ChangeEvent, useRef, useState } from "react";
+import { ChangeEvent, useRef } from "react";
 import ReactPlayer from "react-player";
 import Description from "./description";
 import FileUpload from "./fileUpload";
@@ -9,15 +9,9 @@ import LinkUpload from "./linkUpload";
 import { useAtom } from "jotai";
 import { cardAtom, CardType } from "@/store";
 import useVideo from "@/hooks/useVideo";
-import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 
 interface Type {
-  videoSrc: string | null;
-  error: string;
-  url: string;
-  fileDuration: number;
-  uploadedFile: File | null;
   validateVideo(value: ChangeEvent<HTMLInputElement>): void;
   setVideoLink(value: string): void;
   setEdit(value: string): void;
@@ -26,13 +20,14 @@ interface Type {
   setDuration(value: number): void;
   setFile(value: File): void;
   setTitle(value: string): void;
+  setUserName(value: string): void;
+  videoSrc: string | null;
+  error: string;
+  url: string;
+  fileDuration: number;
+  uploadedFile: File | null;
 }
 const Upload: React.FC<Type> = ({
-  videoSrc,
-  error,
-  url,
-  fileDuration,
-  uploadedFile,
   validateVideo,
   setVideoLink,
   setEdit,
@@ -41,21 +36,29 @@ const Upload: React.FC<Type> = ({
   setDuration,
   setFile,
   setTitle,
+  setUserName,
+  videoSrc,
+  error,
+  url,
+  fileDuration,
+  uploadedFile,
 }) => {
   const videoRef = useRef<ReactPlayer>(null);
   const [, setCards] = useAtom<CardType[]>(cardAtom);
-  const { loading } = useVideo();
+  const { getUserName, loading } = useVideo();
   const router = useRouter();
 
-  const handleNext = () => {
-    const user = Cookies.get("user");
-    if (user) {
-      const parsedUser = JSON.parse(user);
-      if (parsedUser.userName === "YOURNAME") {
+  const handleNext = async () => {
+    const res = await getUserName();
+    if (res.status === 200 && "userName" in res) {
+      if (res.userName.trim() === "") {
         alert("You must set a username before creating your first video.");
-        router.push("/settings");
-        return;
+        return router.push("/settings");
+      } else {
+        setUserName(res.userName);
       }
+    } else {
+      return alert(res.message);
     }
     if (videoSrc && url) {
       return alert("Please input one of them.");

@@ -15,12 +15,12 @@ const Preview = dynamic(() => import("./preview"));
 const UploadMobile = () => {
   const [edit, setEdit] = useState<string>("upload");
   const {
+    validateVideo,
+    cancelVideo,
     error,
     videoSrc,
     uploadedFile,
     fileDuration,
-    validateVideo,
-    cancelVideo,
   } = useVideoValidate();
   const [videoLink, setVideoLink] = useState<string>("");
   const [url, setUrl] = useState<string>("");
@@ -29,6 +29,7 @@ const UploadMobile = () => {
   const [title, setTitle] = useState<string>("");
   const [cards] = useAtom<CardType[]>(cardAtom);
   const [editSignal, setEditSignal] = useState<boolean>(false);
+  const [userName, setUserName] = useState<string>("");
   const { publish, loading } = useVideo();
 
   // Detect the start of edit.
@@ -41,9 +42,7 @@ const UploadMobile = () => {
     if (cards.length < 1) {
       return alert("Please fill all the contents.");
     }
-    if (!editSignal) {
-      return alert("Nothing has changed.");
-    }
+    if (!editSignal) return;
     confirmModal("Are you sure you want to publish this video?", videoPublish);
   };
   const videoPublish = async () => {
@@ -96,11 +95,6 @@ const UploadMobile = () => {
       />
       {edit === "upload" ? (
         <Upload
-          videoSrc={videoSrc}
-          error={error}
-          url={url}
-          fileDuration={fileDuration}
-          uploadedFile={uploadedFile}
           validateVideo={validateVideo}
           setVideoLink={setVideoLink}
           setEdit={setEdit}
@@ -109,6 +103,12 @@ const UploadMobile = () => {
           setDuration={setDuration}
           setFile={setFile}
           setTitle={setTitle}
+          setUserName={setUserName}
+          videoSrc={videoSrc}
+          error={error}
+          url={url}
+          fileDuration={fileDuration}
+          uploadedFile={uploadedFile}
         />
       ) : edit === "add" ? (
         <Suspense fallback={<Loading />}>
@@ -129,6 +129,8 @@ const UploadMobile = () => {
             videoLink={videoLink}
             loading={loading}
             editSignal={editSignal}
+            userName={userName}
+            title={title}
           />
         </Suspense>
       )}

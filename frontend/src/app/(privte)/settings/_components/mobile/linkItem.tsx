@@ -1,8 +1,10 @@
 interface Type {
+  setValue(value: string): void;
   name: string;
   holderName: string;
+  value: string;
 }
-const LinkItem: React.FC<Type> = ({ name, holderName }) => {
+const LinkItem: React.FC<Type> = ({ setValue, name, holderName, value }) => {
   return (
     <>
       <label className="w-full flex flex-col justify-between h-[54.01px]">
@@ -11,9 +13,11 @@ const LinkItem: React.FC<Type> = ({ name, holderName }) => {
           <img src={`/icon/settings/${name}.png`} alt="" />
         </span>
         <input
+          value={value.trim()}
+          onChange={(e) => setValue(e.target.value)}
           type="text"
           placeholder={holderName}
-          className="h-[38.98px] border-[#272727] bg-[#3E3E3E66] border-[3.12px] rounded-[10.41px] px-[11.47px] placeholder-[#4F4F4F] placeholder:text-[13px] placeholder:font-semibold "
+          className="h-[38.98px] text-[14px] pt-[1.5px] border-[#272727] bg-[#3E3E3E66] border-[3.12px] rounded-[10.41px] px-[11.47px] placeholder-[#4F4F4F] placeholder:text-[13px] placeholder:font-semibold "
         />
       </label>
     </>

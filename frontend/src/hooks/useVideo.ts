@@ -1,12 +1,15 @@
 import {
   ADDLIKE,
+  CHECKUSERNAME,
   FOLLOWUSER,
   GETMYVIDEOS,
   GETUSERINFO,
+  GETUSERNAME,
   GETUSERVIDEOS,
   GETVIDEO,
   GETVIDEOS,
   PUBLISHVIDEO,
+  SETUSERINFO,
 } from "@/utils/constant";
 import axios, { AxiosResponse } from "axios";
 import { useState } from "react";
@@ -14,12 +17,16 @@ import Cookies from "js-cookie";
 import {
   AddLikeError,
   AddLikeSuccess,
+  CheckUserNameError,
+  CheckUserNameSuccess,
   FollowStatusError,
   FollowStatusSccess,
   GetMyVideosError,
   GetMyVideosSuccess,
   GetUserInfoError,
   GetUserInfoSuccess,
+  GetUserNameError,
+  GetUserNameSuccess,
   GetUserVideosError,
   GetUserVideosSuccess,
   GetVideoError,
@@ -32,10 +39,13 @@ import {
   SetUserInfoSuccess,
 } from "@/types/videoApiType";
 import { useRouter } from "next/navigation";
+import { useAtom } from "jotai";
+import { tokenAtom } from "@/store";
 
 const useVideo = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
+  const [, setToken] = useAtom<string>(tokenAtom);
   const token = Cookies.get("token");
   const config = {
     headers: {
@@ -78,8 +88,10 @@ const useVideo = () => {
         if (
           error?.response?.data?.message === "Token is invalid or has expired!"
         ) {
+          setToken("");
           router.push("/signin");
           Cookies.remove("token");
+          Cookies.remove("user");
           return { message: "Your session was expired. Please log in again." };
         } else {
           return { message: error?.response?.data?.message };
@@ -147,6 +159,10 @@ const useVideo = () => {
         if (
           error?.response?.data?.message === "Token is invalid or has expired!"
         ) {
+          setToken("");
+          router.push("/signin");
+          Cookies.remove("token");
+          Cookies.remove("user");
           return { message: "Your session was expired. Please log in again." };
         } else {
           return { message: "Something went wrong" };
@@ -172,6 +188,10 @@ const useVideo = () => {
         if (
           error?.response?.data?.message === "Token is invalid or has expired!"
         ) {
+          setToken("");
+          router.push("/signin");
+          Cookies.remove("token");
+          Cookies.remove("user");
           return { message: "Your session was expired. Please log in again." };
         } else {
           return { message: "Something went wrong" };
@@ -217,6 +237,10 @@ const useVideo = () => {
         if (
           error?.response?.data?.message === "Token is invalid or has expired!"
         ) {
+          setToken("");
+          router.push("/signin");
+          Cookies.remove("token");
+          Cookies.remove("user");
           return { message: "Your session was expired. Please log in again." };
         } else {
           return { message: "Something went wrong" };
@@ -242,6 +266,10 @@ const useVideo = () => {
         if (
           error?.response?.data?.message === "Token is invalid or has expired!"
         ) {
+          setToken("");
+          router.push("/signin");
+          Cookies.remove("token");
+          Cookies.remove("user");
           return { message: "Your session was expired. Please log in again." };
         } else {
           return { message: "Something went wrong" };
@@ -252,15 +280,15 @@ const useVideo = () => {
       setLoading(false);
     }
   };
-  //set user info
 
+  //set user info
   const setUserInfo = async (
-    userInfo: string
+    userInfo: FormData
   ): Promise<SetUserInfoSuccess | SetUserInfoError> => {
     setLoading(true);
     try {
       const res: AxiosResponse<SetUserInfoSuccess | SetUserInfoError> =
-        await axios.put(GETUSERINFO, userInfo, config);
+        await axios.put(SETUSERINFO, userInfo, config);
       return { ...res.data, status: res.status };
     } catch (error: unknown) {
       console.log(error);
@@ -268,6 +296,68 @@ const useVideo = () => {
         if (
           error?.response?.data?.message === "Token is invalid or has expired!"
         ) {
+          setToken("");
+          router.push("/signin");
+          Cookies.remove("token");
+          Cookies.remove("user");
+          return { message: "Your session was expired. Please log in again." };
+        } else {
+          return { message: "Something went wrong" };
+        }
+      }
+      return { message: "An unknown error occurred" };
+    } finally {
+      setLoading(false);
+    }
+  };
+  //check user name
+  const checkUserName = async (
+    userName: string
+  ): Promise<CheckUserNameSuccess | CheckUserNameError> => {
+    setLoading(true);
+    try {
+      const res: AxiosResponse<CheckUserNameSuccess | CheckUserNameError> =
+        await axios.post(CHECKUSERNAME, { userName }, config);
+      return { ...res.data, status: res.status };
+    } catch (error: unknown) {
+      console.log(error);
+      if (axios.isAxiosError(error)) {
+        if (
+          error?.response?.data?.message === "Token is invalid or has expired!"
+        ) {
+          setToken("");
+          router.push("/signin");
+          Cookies.remove("token");
+          Cookies.remove("user");
+          return { message: "Your session was expired. Please log in again." };
+        } else {
+          return { message: "Something went wrong" };
+        }
+      }
+      return { message: "An unknown error occurred" };
+    } finally {
+      setLoading(false);
+    }
+  };
+  //check user name
+  const getUserName = async (): Promise<
+    GetUserNameSuccess | GetUserNameError
+  > => {
+    setLoading(true);
+    try {
+      const res: AxiosResponse<GetUserNameSuccess | GetUserNameError> =
+        await axios.get(GETUSERNAME, config);
+      return { ...res.data, status: res.status };
+    } catch (error: unknown) {
+      console.log(error);
+      if (axios.isAxiosError(error)) {
+        if (
+          error?.response?.data?.message === "Token is invalid or has expired!"
+        ) {
+          setToken("");
+          router.push("/signin");
+          Cookies.remove("token");
+          Cookies.remove("user");
           return { message: "Your session was expired. Please log in again." };
         } else {
           return { message: "Something went wrong" };
@@ -289,6 +379,8 @@ const useVideo = () => {
     followUser,
     getUserInfo,
     setUserInfo,
+    checkUserName,
+    getUserName,
     loading,
   };
 };

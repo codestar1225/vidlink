@@ -71,7 +71,7 @@ const SettingBar: React.FC<Type> = ({
           </Link>
           <div className="flex flex-col h-[38.3px] justify-between items-start">
             <div className="text-[12px] text-blue font-semibold ">
-              {userInfo.userName}
+              {userInfo.userName.toUpperCase()}
             </div>
             <div className="text-[8px] font-normal ">
               {userInfo.totalVideos || 0} VIDEOS

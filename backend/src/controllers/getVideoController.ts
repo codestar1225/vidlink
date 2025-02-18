@@ -122,6 +122,7 @@ export const getMyVideos = expressAsyncHandler(
     }
   }
 );
+
 // get the user videos
 export const getUserVideos = expressAsyncHandler(
   async (req: CustomRequest, res: Response) => {
@@ -150,6 +151,41 @@ export const getUserVideos = expressAsyncHandler(
         userInfo: { ...userInfo, followers: userInfo?.followers.length },
         followStatus,
       });
+    } catch (error: any) {
+      console.log("fllowing videos", error);
+      res.status(500).json({ message: error.message });
+    }
+  }
+);
+
+//get user info
+export const getUserInfo = expressAsyncHandler(
+  async (req: CustomRequest, res: Response) => {
+    try {
+      const userInfo = await User.findById(req.userId)
+        .select("userName picture gender bio instagram tiktok youtube linkedin")
+        .lean();
+      const checkingNames = await User.find({}).select("userName").lean();
+      res
+        .status(200)
+        .json({ message: "user info found.", userInfo, checkingNames });
+    } catch (error: any) {
+      console.log("fllowing videos", error);
+      res.status(500).json({ message: error.message });
+    }
+  }
+);
+
+//get user name
+export const getUserName = expressAsyncHandler(
+  async (req: CustomRequest, res: Response) => {
+    try {
+      const userName = await User.findById(req.userId)
+        .select("userName")
+        .lean();
+      res
+        .status(200)
+        .json({ message: "user info found.", userName: userName?.userName });
     } catch (error: any) {
       console.log("fllowing videos", error);
       res.status(500).json({ message: error.message });

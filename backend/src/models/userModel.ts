@@ -25,10 +25,10 @@ interface IUser extends Document {
 const UserSchema = new Schema<IUser>(
   {
     email: { type: String, required: true, unique: true },
-    userName: { type: String, default: "YOURNAME" },
+    userName: { type: String, default: "" },
     name: { type: String, required: true },
     picture: { type: String, required: true },
-    gender: { type: String, enum: ["male", "female"] },
+    gender: { type: String, enum: ["male", "female", "other", ""] },
     bio: { type: String, fdefault: "" },
     instagram: { type: String, default: "" },
     tiktok: { type: String, default: "" },
