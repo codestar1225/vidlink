@@ -6,11 +6,11 @@ import useVideo from "@/hooks/useVideo";
 interface Type {
   setFollowStatus(value: boolean): void;
   isAuth: boolean;
-  picture: string;
-  totalVideos: number;
-  totalCards: number;
-  followers: number;
-  userId: string;
+  picture?: string | null;
+  totalVideos?: number | null;
+  totalCards?: number | null;
+  followers?: number | null;
+  userId?: string | null;
   followStatus: boolean;
 }
 const UserInfo: React.FC<Type> = ({
@@ -27,7 +27,7 @@ const UserInfo: React.FC<Type> = ({
   const { followUser } = useVideo();
   const handleFollow = async () => {
     if (followStatus) return;
-    if (isAuth) {
+    if (isAuth && userId) {
       const res = await followUser(userId);
       if (res.status === 200 && "followStatus" in res) {
         setFollowStatus(res.followStatus);
@@ -48,9 +48,9 @@ const UserInfo: React.FC<Type> = ({
       )}
       <div className="h-[147.04.67px] mx-[91px] mt-[28px] mb-[28.33px]">
         <div className="flex justify-between mb-[21px]">
-          <AmountItem number={followers} label="FOLLOWING" />
-          <AmountItem number={totalCards} label="PROMPTS ADDED" />
-          <AmountItem number={totalVideos} label="VIDEOS" />
+          <AmountItem number={followers||0} label="FOLLOWING" />
+          <AmountItem number={totalCards||0} label="PROMPTS ADDED" />
+          <AmountItem number={totalVideos||0} label="VIDEOS" />
         </div>
         <div className="flex flex-col gap-[5.47px] ">
           <button
@@ -61,7 +61,8 @@ const UserInfo: React.FC<Type> = ({
           </button>
           {/* <button className="h-[28.88px] bg-[#002355] rounded-[4.97px] flex items-center justify-center text-[10.5px] font-semibold">
       SEND MESSAGE
-    </button> */}f
+    </button> */}
+          f
         </div>
       </div>
     </>

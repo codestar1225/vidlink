@@ -10,7 +10,7 @@ import UserInfo from "./userInfo";
 interface Type {
   setFollowStatus(value: boolean): void;
   userVideos: VideoType[];
-  userInfo: UserInfoType;
+  userInfo: UserInfoType | null;
   followStatus: boolean;
 }
 const ProfilesMobile: React.FC<Type> = ({
@@ -28,21 +28,21 @@ const ProfilesMobile: React.FC<Type> = ({
           <UserInfo
             setFollowStatus={setFollowStatus}
             isAuth={isAuth}
-            picture={userInfo.picture}
-            totalVideos={userInfo.totalVideos}
-            totalCards={userInfo.totalCards}
-            followers={userInfo.followers}
-            userId={userInfo._id}
+            picture={userInfo?.picture}
+            totalVideos={userInfo?.totalVideos}
+            totalCards={userInfo?.totalCards}
+            followers={userInfo?.followers}
+            userId={userInfo?._id}
             followStatus={followStatus}
           />
           <SocialLinks
             isAuth={isAuth}
-            instagram={userInfo.instagram}
-            tiktok={userInfo.tiktok}
-            email={userInfo.email}
+            instagram={userInfo?.instagram || ""}
+            tiktok={userInfo?.tiktok || ""}
+            email={userInfo?.email || ""}
           />
           <div className="mx-[11.5px] mt-[9px] mb-[76px]">
-            <Video myVideos={userVideos} totalVideos={userInfo.totalVideos} />
+            <Video myVideos={userVideos} totalVideos={userInfo?.totalVideos} />
           </div>
         </main>
         <FooterMobile isFixed={false} />

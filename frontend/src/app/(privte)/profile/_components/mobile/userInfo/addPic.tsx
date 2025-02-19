@@ -2,21 +2,15 @@
 import useClickOutside from "@/hooks/useClickOutside";
 import Link from "next/link";
 import React, { useRef, useState } from "react";
-import Webcam from "react-webcam";
 
 interface Type {
   setIsOpen(value: boolean): void;
 }
 
 const AddPic: React.FC<Type> = ({ setIsOpen }) => {
-  const webcamRef = useRef<Webcam>(null);
   const menuRef = useRef<HTMLUListElement>(null);
   const [, setPhoto] = useState<string | null>(null);
 
-  const capture = () => {
-    const imageSrc = webcamRef.current?.getScreenshot();
-    setPhoto(imageSrc || null);
-  };
   // Close the menu if the click is outside
   useClickOutside(menuRef as React.RefObject<HTMLElement>, () =>
     setIsOpen(false)
@@ -42,10 +36,6 @@ const AddPic: React.FC<Type> = ({ setIsOpen }) => {
           REMOVE PICTURE
         </li>
       </ul>
-      {/* <div> */}
-      <Webcam ref={webcamRef} screenshotFormat="image/png" />
-      {/* {photo && <img src={photo} alt="Captured" />} */}
-      {/* </div> */}
     </>
   );
 };

@@ -1,15 +1,17 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import Cropper from "react-easy-crop";
 import getCroppedImg from "@/utils/cropImage";
 
 interface CropperProps {
   imageSrc: string | null;
   onCropComplete: (croppedImage: Blob) => void;
+  setEdit(value: string): void;
 }
 
 export default function ImageCropper({
   imageSrc,
   onCropComplete,
+  setEdit,
 }: CropperProps) {
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState<number>(1);
@@ -21,6 +23,7 @@ export default function ImageCropper({
 
   const handleSave = async () => {
     console.log("completed");
+    setEdit("");
     if (!croppedAreaPixels || !imageSrc) return;
     const croppedBlob = await getCroppedImg(imageSrc, croppedAreaPixels);
     croppedBlob && onCropComplete(croppedBlob);
@@ -50,13 +53,20 @@ export default function ImageCropper({
         value={zoom}
         onChange={(e) => setZoom(Number(e.target.value))} // Correct event
       />
-      {/* <Slider value={zoom} min={1} max={3} step={0.1} onChange={(e, z) => setZoom(z as number)} /> */}
-      <button
-        onClick={handleSave}
-        className="bg-blue text-white text-[16px] font-semibold tracking-widest h-[40px] w-[100px] flex justify-center items-center rounded-full absolute bottom-[150px] left-1/2 -translate-x-1/2"
-      >
-        SAVE
-      </button>
+      <div className=" absolute bottom-[150px] left-1/2 -translate-x-1/2 text-[20px] flex gap-3">
+        <button
+          onClick={handleSave}
+          className="bg-blue text-white  font-semibold tracking-widest h-[40px] w-[120px] flex justify-center items-center rounded-full "
+        >
+          SAVE
+        </button>
+        <button
+          onClick={() => setEdit("camera")}
+          className="border-[3px] border-white text-white  font-semibold tracking-widest h-[40px] w-[120px] flex justify-center items-center rounded-full "
+        >
+          CANCEL
+        </button>
+      </div>
     </div>
   );
 }

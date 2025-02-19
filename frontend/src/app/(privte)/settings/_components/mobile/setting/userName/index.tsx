@@ -1,10 +1,9 @@
 import { useCallback, useEffect } from "react";
-import InputItem from "../inputItem";
+import InputItem from "../item/inputItem";
 import useVideo from "@/hooks/useVideo";
 
 interface Type {
   setUserName(value: string): void;
-  setIsRepeated(value: boolean): void;
   setCaution(value: string): void;
   setCheckingName(value: boolean): void;
   userName: string;
@@ -12,7 +11,6 @@ interface Type {
 
 const Index: React.FC<Type> = ({
   setUserName,
-  setIsRepeated,
   setCaution,
   setCheckingName,
   userName,
@@ -23,14 +21,13 @@ const Index: React.FC<Type> = ({
     async (userName: string) => {
       if (/[!@#$%^&*?><":;'`]/.test(userName)) {
         setCaution("You can't use special characters in your username.");
-        setIsRepeated(false);
         return;
       } else {
         setCaution("");
       }
       const res = await checkUserName(userName);
       if (res.status === 200 && "isAlreadyOne" in res) {
-        setIsRepeated(res.isAlreadyOne);
+        res.isAlreadyOne && setCaution("This username is already in use.");
       } else {
         alert(res.message);
         setCaution(res.message);
@@ -49,7 +46,6 @@ const Index: React.FC<Type> = ({
     }
     if (!userName) {
       setCaution("");
-      setIsRepeated(false);
     }
   }, [userName]);
 

@@ -2,7 +2,7 @@ import Card from "./card";
 import { VideoType } from "../../../page";
 interface Type {
   myVideos: VideoType[];
-  userName: string;
+  userName?: string | null;
 }
 const Cards: React.FC<Type> = ({ myVideos, userName }) => {
   return (
@@ -15,7 +15,7 @@ const Cards: React.FC<Type> = ({ myVideos, userName }) => {
                 <span className=" text-blue font-semibold ">
                   {item.title && item.title.toUpperCase()}
                 </span>{" "}
-                - {userName}
+                - {userName || ""}
               </h1>
               <ul className="flex flex-wrap justify-start gap-x-[5.9px] gap-y-[7.24px] mt-[13px]">
                 {item.cards?.slice(0, 5)?.map((item, index) => (

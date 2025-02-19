@@ -30,18 +30,7 @@ export type VideoType = {
 
 const Page = () => {
   const { loading, getMyVideos } = useVideo();
-  const [userInfo, setUserInfo] = useState<UserInfoType>({
-    _id: "",
-    userName: "",
-    picture: "",
-    followers: 0,
-    totalVideos: 0,
-    totalCards: 0,
-    instagram: "",
-    tiktok: "",
-    youtube: "",
-    linkedin: "",
-  });
+  const [userInfo, setUserInfo] = useState<UserInfoType | null>(null);
   const [myVideos, setMyVideos] = useState<VideoType[]>([]);
   const [myLikesVideos, setMyLikesVideos] = useState<VideoType[]>([]);
   useLayoutEffect(() => {

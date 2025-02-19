@@ -20,20 +20,9 @@ const Page = () => {
     ? params.userId[0]
     : params.userId;
   const [userVideos, setUserVideos] = useState<VideoType[]>([]);
-  const [userInfo, setUserInfo] = useState<UserInfoType>({
-    _id: "",
-    userName: "",
-    picture: "",
-    followers: 0,
-    totalVideos: 0,
-    totalCards: 0,
-    instagram: "",
-    tiktok: "",
-    youtube: "",
-    linkedin: "",
-    email: "",
-  });
+  const [userInfo, setUserInfo] = useState<UserInfoType | null>(null);
   const [followStatus, setFollowStatus] = useState<boolean>(false);
+
   useLayoutEffect(() => {
     if (!userId) return;
     const fetchVideos = async () => {

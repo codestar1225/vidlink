@@ -1,26 +1,21 @@
 "use client";
 import useClickOutside from "@/hooks/useClickOutside";
-import Link from "next/link";
-import React, { useEffect, useRef, useState } from "react";
-import Webcam from "react-webcam";
+import React, { useRef } from "react";
 
 interface Type {
-  setIsOpen(value: boolean): void;
+   setEdit(value: string): void;
 }
 
-const Index: React.FC<Type> = ({ setIsOpen }) => {
-  const webcamRef = useRef<Webcam>(null);
+const Modal: React.FC<Type> = ({ setEdit }) => {
   const menuRef = useRef<HTMLUListElement>(null);
-  const [, setPhoto] = useState<string | null>(null);
-
-  const capture = () => {
-    const imageSrc = webcamRef.current?.getScreenshot();
-    setPhoto(imageSrc || null);
-  };
 
   useClickOutside(menuRef as React.RefObject<HTMLElement>, () =>
-    setIsOpen(false)
+    setEdit("")
   );
+
+  const handleOpenCamera = () => {
+    setEdit("camera");
+  };
   return (
     <>
       <ul
@@ -34,18 +29,14 @@ const Index: React.FC<Type> = ({ setIsOpen }) => {
         <input type="file" id="upload" className=" hidden" />
         <li className="flex items-center gap-[10px]">
           <img className="size-[18px]" src="/icon/profile/take.png" alt="" />
-          <Link href={"/camera"}>TAKE A PHOTO</Link>
+          <button onClick={handleOpenCamera}>TAKE A PHOTO</button>
         </li>
         <li className="text-[#EA003B] flex items-center gap-[10px]">
           <img className="size-[18px]" src="/icon/profile/remove.png" alt="" />
           REMOVE PICTURE
         </li>
       </ul>
-      {/* <div> */}
-      {/* <Webcam ref={webcamRef} screenshotFormat="image/png" /> */}
-      {/* {photo && <img src={photo} alt="Captured" />} */}
-      {/* </div> */}
     </>
   );
 };
-export default Index;
+export default Modal;

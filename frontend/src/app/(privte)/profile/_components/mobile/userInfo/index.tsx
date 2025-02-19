@@ -8,10 +8,10 @@ import { useState } from "react";
 import Link from "next/link";
 
 interface Type {
-  picture: string;
-  totalVideos: number;
-  totalCards: number;
-  followers: number;
+  picture?: string | null;
+  totalVideos?: number | null;
+  totalCards?: number | null;
+  followers?: number | null;
 }
 const Index: React.FC<Type> = ({
   picture,
@@ -48,9 +48,9 @@ const Index: React.FC<Type> = ({
       </div>
       <div className="h-[147.04.67px] mx-[91px] mt-[28px] mb-[28px]">
         <div className="flex justify-between mb-[21px]">
-          <AmountItem number={followers} label="FOLLOWING" />
-          <AmountItem number={totalCards} label="PROMPTS ADDED" />
-          <AmountItem number={totalVideos} label="VIDEOS" />
+          <AmountItem number={followers||0} label="FOLLOWING" />
+          <AmountItem number={totalCards||0} label="PROMPTS ADDED" />
+          <AmountItem number={totalVideos||0} label="VIDEOS" />
         </div>
         <div className="flex flex-col gap-[5.47px] ">
           <button className="h-[28.88px] bg-blue rounded-[4.97px] flex items-center justify-center text-[10.5px] font-semibold">

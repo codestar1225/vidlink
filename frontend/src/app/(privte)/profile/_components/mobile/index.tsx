@@ -15,7 +15,7 @@ const Likes = dynamic(() => import("./likes"));
 interface Type {
   myVideos: VideoType[];
   myLikesVideos: VideoType[];
-  userInfo: UserInfoType;
+  userInfo: UserInfoType | null;
 }
 const ProfileMobile: React.FC<Type> = ({
   myVideos,
@@ -29,14 +29,14 @@ const ProfileMobile: React.FC<Type> = ({
         <main className=" mt-[109px] ">
           <div className="">
             <UserInfo
-              picture={userInfo.picture}
-              totalVideos={userInfo.totalVideos}
-              totalCards={userInfo.totalCards}
-              followers={userInfo.followers}
+              picture={userInfo?.picture}
+              totalVideos={userInfo?.totalVideos}
+              totalCards={userInfo?.totalCards}
+              followers={userInfo?.followers}
             />
             <SocialLinks
-              instagram={userInfo.instagram}
-              tiktok={userInfo.tiktok}
+              instagram={userInfo?.instagram}
+              tiktok={userInfo?.tiktok}
             />
             <Link
               href={"/upload"}
@@ -54,10 +54,10 @@ const ProfileMobile: React.FC<Type> = ({
               <div className="border-[0.5px] absolute bottom-[1px] left-0 w-full -z-10"></div>
             </nav>
             {nav === "videos" ? (
-              <Videos myVideos={myVideos} totalVideos={userInfo.totalVideos} />
+              <Videos myVideos={myVideos} totalVideos={userInfo?.totalVideos} />
             ) : nav === "cards" ? (
               <Suspense fallback={<Loading />}>
-                <Card myVideos={myVideos} userName={userInfo.userName} />
+                <Card myVideos={myVideos} userName={userInfo?.userName} />
               </Suspense>
             ) : (
               <Suspense fallback={<Loading />}>

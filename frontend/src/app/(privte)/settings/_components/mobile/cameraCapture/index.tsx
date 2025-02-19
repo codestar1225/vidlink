@@ -1,8 +1,11 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import ImageCropper from "./cropper";
+import { CircleDot, LogOut, SwitchCamera } from "lucide-react";
 
-const CameraCapture = () => {
+interface Type {
+  setEdit(value: string): void;
+}
+const CameraCapture: React.FC<Type> = ({ setEdit }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
@@ -57,10 +60,9 @@ const CameraCapture = () => {
       // Convert to Base64
       const base64Image = canvasRef.current.toDataURL("image/png");
       setImage(base64Image);
-
+      setEdit("process");
       // Convert Base64 to Blob
       const blob = await fetch(base64Image).then((res) => res.blob());
-
       // Create FormData and send to backend
       const formData = new FormData();
       formData.append("file", blob, "photo.png");
@@ -75,63 +77,44 @@ const CameraCapture = () => {
     startCamera(newFacingMode);
   };
 
-  const handleConfirm = (imgBlob: any) => {
-    setImage("");
-  };
   useEffect(() => {
-    startCamera("environment");
+    if (isClient && videoRef.current && navigator?.mediaDevices) {
+      startCamera("environment");
+    }
   }, []);
-  return !image ? (
-    <div className="h-screen relative w-screen">
-      {isClient ? (
-        <>
-          <video
-            ref={videoRef}
-            autoPlay
-            playsInline
-            className="h-full w-full object-cover"
-          ></video>
-          <div className="flex flex-col items-center gap-3 absolute bottom-5 left-1/2 -translate-x-1/2">
-            <button
-              onClick={() => startCamera("environment")}
-              className="bg-blue w-[200px] text-white px-4 py-2 rounded"
-            >
-              Start Back Camera
-            </button>
-            <button
-              onClick={toggleCamera}
-              className="bg-yellow-500 w-[200px] text-white px-4 py-2 rounded"
-            >
-              Switch Camera
-            </button>
-            <button
-              onClick={capturePhoto}
-              className="bg-green-500 w-[200px] text-white px-4 py-2 rounded"
-            >
-              Capture Photo
-            </button>
-          </div>
-          <canvas
-            ref={canvasRef}
-            width="2400"
-            height="1480"
-            className="hidden"
-          />
-          {/* {image && (
-            <img
-              src={image}
-              alt="Captured"
-              className="w-full h-auto rounded-lg"
-            />
-          )} */}
-        </>
-      ) : (
-        <p>Camera not supported or loading...</p>
-      )}
-    </div>
-  ) : (
+  return (
     <>
-      <ImageCropper imageSrc={image} onCropComplete={handleConfirm} />
+      <div className="h-screen relative w-screen">
+        {isClient ? (
+          <>
+            <video
+              ref={videoRef}
+              autoPlay
+              playsInline
+              className="h-full w-full object-cover"
+            ></video>
+            <div className="flex items-center gap-5 absolute bottom-[70px] left-1/2 -translate-x-1/2">
+              <button onClick={toggleCamera}>
+                <SwitchCamera className="size-9" />
+              </button>
+              <button onClick={capturePhoto}>
+                <CircleDot className="size-14 text-blue" />
+              </button>
+              <button onClick={() => setEdit("")}>
+                <LogOut className="size-9" />
+              </button>
+            </div>
+            <canvas
+              ref={canvasRef}
+              width="2400"
+              height="1480"
+              className="hidden"
+            />
+          </>
+        ) : (
+          <p>Camera not supported or loading...</p>
+        )}
+      </div>
     </>
   );
 };
