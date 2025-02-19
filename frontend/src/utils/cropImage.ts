@@ -1,30 +1,63 @@
-import { createImage } from "./createImage";
+import { createImage } from "@/utils/createImage";
 
-export default async function getCroppedImg(imageSrc: string, cropArea: any) {
+export default async function getCroppedImg(
+  imageSrc: string,
+  crop: any,
+  rotation: number = 0
+): Promise<Blob | null> {
   const image = await createImage(imageSrc);
   const canvas = document.createElement("canvas");
   const ctx = canvas.getContext("2d");
 
-  if (!ctx) return null;
+  if (!ctx) {
+    console.error("Failed to get 2D context");
+    return null;
+  }
 
-  canvas.width = cropArea.width;
-  canvas.height = cropArea.height;
+  const radian = (rotation * Math.PI) / 180; // Convert degrees to radians
 
-  ctx.drawImage(
-    image,
-    cropArea.x,
-    cropArea.y,
-    cropArea.width,
-    cropArea.height,
+  // Set canvas size to match the rotated image bounds
+  const safeWidth =
+    Math.abs(image.width * Math.cos(radian)) + Math.abs(image.height * Math.sin(radian));
+  const safeHeight =
+    Math.abs(image.width * Math.sin(radian)) + Math.abs(image.height * Math.cos(radian));
+
+  canvas.width = safeWidth;
+  canvas.height = safeHeight;
+
+  // Move the origin to the center for rotation
+  ctx.translate(safeWidth / 2, safeHeight / 2);
+  ctx.rotate(radian);
+  ctx.drawImage(image, -image.width / 2, -image.height / 2);
+
+  // Create a new canvas to store the final cropped image
+  const croppedCanvas = document.createElement("canvas");
+  const croppedCtx = croppedCanvas.getContext("2d");
+
+  if (!croppedCtx) {
+    console.error("Failed to get 2D context for cropped canvas");
+    return null;
+  }
+
+  croppedCanvas.width = crop.width;
+  croppedCanvas.height = crop.height;
+
+  // Extract the correct cropped portion from the rotated image
+  croppedCtx.drawImage(
+    canvas,
+    crop.x,
+    crop.y,
+    crop.width,
+    crop.height,
     0,
     0,
-    cropArea.width,
-    cropArea.height
+    crop.width,
+    crop.height
   );
 
-  return new Promise<Blob>((resolve) => {
-    canvas.toBlob((blob) => {
-      if (blob) resolve(blob);
-    }, "image/png");
+  return new Promise<Blob | null>((resolve) => {
+    croppedCanvas.toBlob((blob) => {
+      resolve(blob);
+    }, "image/jpeg");
   });
 }

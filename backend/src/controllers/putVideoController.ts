@@ -3,6 +3,8 @@ import { CustomRequest } from "../middleware/authMiddleware";
 import { Response } from "express";
 import User from "../models/userModel";
 import Video from "../models/videoModel";
+import { ObjectCannedACL, S3Client } from "@aws-sdk/client-s3";
+import { Upload } from "@aws-sdk/lib-storage";
 
 //add like
 export const addLike = expressAsyncHandler(
@@ -66,8 +68,6 @@ export const followUser = expressAsyncHandler(
   async (req: CustomRequest, res: Response) => {
     const targetUserId = req.header("x-user-id");
     const currentUserId = req.userId;
-
-    console.log(targetUserId, currentUserId);
     if (!targetUserId) {
       res.status(400).json({ message: "No userId provided." });
       return;
@@ -106,20 +106,44 @@ export const followUser = expressAsyncHandler(
   }
 );
 //set user info
+const s3Client = new S3Client({
+  region: process.env.AWS_REGION,
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID as string,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY as string,
+  },
+  logger: console, // Debugging
+});
 export const setUserInfo = expressAsyncHandler(
   async (req: CustomRequest, res: Response) => {
-    const {
-      userName,
-      picture,
-      gender,
-      bio,
-      instagram,
-      tiktok,
-      youtube,
-      linkedin,
-    } = req.body;
-
+    const { userName, gender, bio, instagram, tiktok, youtube, linkedin } =
+      req.body;
+    const file = req.file;
     try {
+      let picture = undefined;
+      if (file) {
+        const params = {
+          Bucket: process.env.AWS_BUCKET_NAME as string,
+          Key: `avatar/${Date.now()}-${file.originalname}`,
+          Body: file.buffer,
+          ContentType: file.mimetype,
+          ACL: ObjectCannedACL.public_read,
+        };
+        console.log("Starting S3 upload...");
+        const upload = new Upload({
+          client: s3Client,
+          params: params,
+        });
+        try {
+          const s3Response = await upload.done();
+          console.log("S3 upload successful");
+          picture = s3Response.Location;
+        } catch (error) {
+          console.error("Error uploading to S3:", error);
+          throw new Error("Failed to upload video to S3");
+        }
+      }
+
       await User.findByIdAndUpdate(
         req.userId,
         {

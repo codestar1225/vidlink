@@ -4,23 +4,28 @@ import { CircleDot, LogOut, SwitchCamera } from "lucide-react";
 
 interface Type {
   setEdit(value: string): void;
+  setImgBase64(value: string): void;
+  picture: string;
 }
-const CameraCapture: React.FC<Type> = ({ setEdit }) => {
+
+const CameraCapture: React.FC<Type> = ({
+  setEdit,
+  setImgBase64,
+}) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
-  const [image, setImage] = useState<string | null>(null);
   const [isFrontCamera, setIsFrontCamera] = useState(false);
   const [isClient, setIsClient] = useState(false);
 
-  // Ensure the component runs only in the browser
+  // Ensure component runs only in the browser
   useEffect(() => {
     setIsClient(typeof window !== "undefined" && !!navigator?.mediaDevices);
   }, []);
 
   const startCamera = async (facingMode: "user" | "environment") => {
     if (!isClient || !navigator?.mediaDevices) {
-      console.error("Camera API is not supported in this environment.");
+      console.error("Camera API is not supported.");
       return;
     }
 
@@ -46,28 +51,20 @@ const CameraCapture: React.FC<Type> = ({ setEdit }) => {
 
   const capturePhoto = async () => {
     if (!videoRef.current || !canvasRef.current) return;
-    const context = canvasRef.current.getContext("2d");
+    const video = videoRef.current;
+    const canvas = canvasRef.current;
+    const context = canvas.getContext("2d");
+
     if (context) {
-      canvasRef.current.width = videoRef.current.videoWidth;
-      canvasRef.current.height = videoRef.current.videoHeight;
-      context.drawImage(
-        videoRef.current,
-        0,
-        0,
-        canvasRef.current.width,
-        canvasRef.current.height
-      );
+      // Match canvas size to video resolution
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
       // Convert to Base64
-      const base64Image = canvasRef.current.toDataURL("image/png");
-      setImage(base64Image);
+      const base64Image = canvas.toDataURL("image/png");
+      setImgBase64(base64Image);
       setEdit("process");
-      // Convert Base64 to Blob
-      const blob = await fetch(base64Image).then((res) => res.blob());
-      // Create FormData and send to backend
-      const formData = new FormData();
-      formData.append("file", blob, "photo.png");
-      console.log(formData.get("file"), "formdata");
-      console.log(blob, "blob");
     }
   };
 
@@ -77,45 +74,47 @@ const CameraCapture: React.FC<Type> = ({ setEdit }) => {
     startCamera(newFacingMode);
   };
 
+  // Start camera when the component mounts
   useEffect(() => {
-    if (isClient && videoRef.current && navigator?.mediaDevices) {
+    if (isClient) {
       startCamera("environment");
     }
-  }, []);
+    return () => {
+      // Cleanup: Stop camera when the component unmounts
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach((track) => track.stop());
+      }
+    };
+  }, [isClient]);
+
   return (
-    <>
-      <div className="h-screen relative w-screen">
-        {isClient ? (
-          <>
-            <video
-              ref={videoRef}
-              autoPlay
-              playsInline
-              className="h-full w-full object-cover"
-            ></video>
-            <div className="flex items-center gap-5 absolute bottom-[70px] left-1/2 -translate-x-1/2">
-              <button onClick={toggleCamera}>
-                <SwitchCamera className="size-9" />
-              </button>
-              <button onClick={capturePhoto}>
-                <CircleDot className="size-14 text-blue" />
-              </button>
-              <button onClick={() => setEdit("")}>
-                <LogOut className="size-9" />
-              </button>
-            </div>
-            <canvas
-              ref={canvasRef}
-              width="2400"
-              height="1480"
-              className="hidden"
-            />
-          </>
-        ) : (
-          <p>Camera not supported or loading...</p>
-        )}
-      </div>
-    </>
+    <div className="h-screen relative w-screen ">
+      {isClient ? (
+        <>
+          <video
+            ref={videoRef}
+            autoPlay
+            playsInline
+            muted
+            className="h-[100vh] w-full object-cover"
+          ></video>
+          <div className="flex items-center  rounded-full px-5 py-1 gap-5 absolute bottom-[70px] left-1/2 -translate-x-1/2">
+            <button onClick={toggleCamera}>
+              <SwitchCamera className="size-7" />
+            </button>
+            <button onClick={capturePhoto}>
+              <CircleDot className="size-14 text-blue" />
+            </button>
+            <button onClick={() => setEdit("")}>
+              <LogOut className="size-7" />
+            </button>
+          </div>
+          <canvas ref={canvasRef} className="hidden" />
+        </>
+      ) : (
+        <></>
+      )}
+    </div>
   );
 };
 

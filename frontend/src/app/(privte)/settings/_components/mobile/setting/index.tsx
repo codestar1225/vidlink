@@ -4,18 +4,26 @@ import LinkItem from "./item/linkItem";
 import SaveBtn from "./item/saveBtn";
 import GenderItem from "./gender";
 import UserName from "./userName";
-import UserPic from "./editPic";
 import { useEffect, useState } from "react";
 import useVideo from "@/hooks/useVideo";
 import { validateSocialMediaUrl } from "@/utils/validateUrl";
 import { UserInfoType } from "../../../page";
+import EditPic from "./editPic";
 
 interface Type {
   setEdit(value: string): void;
   edit: string;
   userInfo: UserInfoType | null;
+  imgFile: File | null;
+  imgUrl: string;
 }
-const Index: React.FC<Type> = ({ setEdit, edit, userInfo }) => {
+const Index: React.FC<Type> = ({
+  setEdit,
+  edit,
+  userInfo,
+  imgFile,
+  imgUrl,
+}) => {
   const { setUserInfo, loading } = useVideo();
   const [userName, setUserName] = useState<string>(userInfo?.userName || "");
   const [gender, setGender] = useState<string>(userInfo?.gender || "");
@@ -39,6 +47,9 @@ const Index: React.FC<Type> = ({ setEdit, edit, userInfo }) => {
       return;
     }
     const userInfo = new FormData();
+    if (imgFile) {
+      userInfo.append("file", imgFile);
+    }
     userInfo.append("userName", userName);
     userInfo.append("gender", gender);
     userInfo.append("bio", bio);
@@ -46,6 +57,7 @@ const Index: React.FC<Type> = ({ setEdit, edit, userInfo }) => {
     userInfo.append("tiktok", tiktok);
     userInfo.append("youtube", youtube);
     userInfo.append("linkedin", linkedin);
+    console.log(userInfo.get('picture'))
     const res = await setUserInfo(userInfo);
     if (res.status === 200) {
       setIsSaved(true);
@@ -61,7 +73,7 @@ const Index: React.FC<Type> = ({ setEdit, edit, userInfo }) => {
   return (
     <>
       <main className="mt-[128px]  w-screen px-[11.25px] tracking-wider">
-        <UserPic setEdit={setEdit} edit={edit} picture={userInfo?.picture} />
+        <EditPic setEdit={setEdit} edit={edit} picture={imgUrl} />
         <div className="mt-[21px] flex flex-col gap-[17.2px] justify-between">
           <h1 className="text-[10.32px] font-semibold text-center">
             BASIC INFO

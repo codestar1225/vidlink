@@ -288,7 +288,7 @@ const useVideo = () => {
     setLoading(true);
     try {
       const res: AxiosResponse<SetUserInfoSuccess | SetUserInfoError> =
-        await axios.put(SETUSERINFO, userInfo, config);
+        await axios.put(SETUSERINFO, userInfo, multiConfig);
       return { ...res.data, status: res.status };
     } catch (error: unknown) {
       console.log(error);

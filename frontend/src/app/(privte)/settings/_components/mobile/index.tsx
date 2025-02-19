@@ -1,31 +1,52 @@
 "use client";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import FooterMobile from "@/app/_components/layout/mobile/footer";
 import { UserInfoType } from "../../page";
-import CameraCapture from "./cameraCapture";
-import ImageCropper from "./imageCrop";
 import Setting from "./setting";
-
+import dynamic from "next/dynamic";
+import Loading from "@/app/_components/ui/loading";
+const CameraCapture = dynamic(() => import("./cameraCapture"));
+const ImageCropper = dynamic(() => import("./imageCrop"));
 interface Type {
   userInfo: UserInfoType | null;
 }
 
 const SettingsMobile: React.FC<Type> = ({ userInfo }) => {
   const [edit, setEdit] = useState<string>("");
+  const [imgFile, setImgFile] = useState<File | null>(null);
+  const [imgBase64, setImgBase64] = useState<string>("");
+  const [imgUrl, setImgUrl] = useState<string>(userInfo?.picture || "");
+
+  console.log(imgFile)
   return (
     <>
       {edit === "" || edit === "modal" ? (
-        <Setting setEdit={setEdit} edit={edit} userInfo={userInfo} />
-      ) : edit === "camera" ? (
-        <CameraCapture setEdit={setEdit} />
-      ) : (
-        <ImageCropper
-          imageSrc={""}
-          onCropComplete={() => {}}
+        <Setting
           setEdit={setEdit}
+          edit={edit}
+          userInfo={userInfo}
+          imgFile={imgFile}
+          imgUrl={imgUrl}
         />
+      ) : edit === "camera" ? (
+        <Suspense fallback={<Loading />}>
+          <CameraCapture
+            setEdit={setEdit}
+            setImgBase64={setImgBase64}
+            picture={userInfo?.picture || ""}
+          />
+        </Suspense>
+      ) : (
+        <Suspense fallback={<Loading />}>
+          <ImageCropper
+            setEdit={setEdit}
+            setImgFile={setImgFile}
+            setImgUrl={setImgUrl}
+            imgBase64={imgBase64}
+          />
+        </Suspense>
       )}
-      <FooterMobile isFixed={edit ? true : false} />
+      <FooterMobile isFixed={!edit || edit === "modal" ? false : true} />
     </>
   );
 };
