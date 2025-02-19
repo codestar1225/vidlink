@@ -104,36 +104,6 @@ const PreviewVideo: React.FC<Type> = ({
           No video file.
         </div>
       )}
-
-      {/* detail */}
-      {/* <div className="h-[72.58px] w-full relative flex items-center justify-center">
-        <div className="absolute top-[18.6px] left-[11px] flex gap-[10.3px] items-start">
-          <img src="/icon/detail/avatar.svg" alt="" />
-          <div className="flex flex-col h-[38.3px] justify-between items-start">
-            <div className="text-[12px] text-blue font-semibold ">USERNAME</div>
-            <div className="text-[8px] font-semibold border-[0.41px] rounded-[1.24px] px-[0.82px]">
-              FOLLOW
-            </div>
-          </div>
-        </div>
-        <button className=" pl-[12px] pt-[4px]">
-          <img src="/icon/detail/whiteHeart.png" alt="" />
-        </button>
-        <div className=" absolute right-[9.23px] top-[10.6px] flex gap-[12px]">
-          <div className="flex flex-col items-center gap-[5px]">
-            <h1 className="text-[8px] font-semibold">CARDS</h1>
-            <button className="border-[1.43px] w-[43px] h-[34px] rounded-[4.76px] text-center">
-              {cards.length < 10 ? `0${cards.length}` : cards.length}
-            </button>
-          </div>
-          <div className="flex flex-col items-center gap-[5px]">
-            <h1 className="text-[8px] font-semibold">SUGGEST</h1>
-            <button className="border-[1.43px] w-[43px] h-[34px] rounded-[4.76px] flex justify-center items-center">
-              <img src="/icon/detail/card/plus.svg" alt="" />
-            </button>
-          </div>
-        </div>
-      </div> */}
     </>
   );
 };

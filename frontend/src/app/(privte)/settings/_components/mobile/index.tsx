@@ -17,12 +17,14 @@ const SettingsMobile: React.FC<Type> = ({ userInfo }) => {
   const [imgBase64, setImgBase64] = useState<string>("");
   const [imgUrl, setImgUrl] = useState<string>(userInfo?.picture || "");
 
-  console.log(imgFile)
   return (
     <>
       {edit === "" || edit === "modal" ? (
         <Setting
           setEdit={setEdit}
+          setImgUrl={setImgUrl}
+          setImgBase64={setImgBase64}
+          setImgFile={setImgFile}
           edit={edit}
           userInfo={userInfo}
           imgFile={imgFile}

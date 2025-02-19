@@ -2,16 +2,28 @@ import Modal from "./modal";
 
 interface Type {
   setEdit(value: string): void;
+  setImgUrl(value: string): void;
+  setImgFile(value: File): void;
+  setImgBase64(value: string): void;
   picture?: string | null;
+  imgUrl: string;
   edit: string;
 }
-const Index: React.FC<Type> = ({ setEdit, picture ,edit}) => {
+const Index: React.FC<Type> = ({
+  setEdit,
+  setImgUrl,
+  setImgFile,
+  setImgBase64,
+  picture,
+  imgUrl,
+  edit,
+}) => {
   return (
     <>
       <div className="flex gap-[17.67px] ml-[19.75px] h-[74px]">
         <img
           className="size-[74px] rounded-full"
-          src={picture || "/image/profile/avatar.png"}
+          src={imgUrl || "/image/profile/avatar.png"}
           alt=""
         />
         <div className=" relative mt-[28px] ">
@@ -21,7 +33,15 @@ const Index: React.FC<Type> = ({ setEdit, picture ,edit}) => {
           >
             EDIT PICTURE
           </button>
-          {edit==="modal" && <Modal setEdit={setEdit} />}
+          {edit === "modal" && (
+            <Modal
+              setEdit={setEdit}
+              setImgUrl={setImgUrl}
+              setImgFile={setImgFile}
+              setImgBase64={setImgBase64}
+              picture={picture || ""}
+            />
+          )}
         </div>
       </div>
     </>

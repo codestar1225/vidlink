@@ -1,4 +1,3 @@
-import AddPic from "./addPic";
 import AmountItem from "./amountItem";
 import Cookies from "js-cookie";
 import { useAtom } from "jotai";
@@ -6,6 +5,7 @@ import { tokenAtom } from "@/store";
 import { signOut } from "next-auth/react";
 import { useState } from "react";
 import Link from "next/link";
+import EditPic from "./editPic";
 
 interface Type {
   picture?: string | null;
@@ -44,13 +44,13 @@ const Index: React.FC<Type> = ({
         >
           <img src="/icon/profile/edit.png" alt="" />
         </button>
-        {isOpen && <AddPic setIsOpen={setIsOpen} />}
+        {/* {isOpen && <EditPic setIsOpen={setIsOpen} />} */}
       </div>
       <div className="h-[147.04.67px] mx-[91px] mt-[28px] mb-[28px]">
         <div className="flex justify-between mb-[21px]">
-          <AmountItem number={followers||0} label="FOLLOWING" />
-          <AmountItem number={totalCards||0} label="PROMPTS ADDED" />
-          <AmountItem number={totalVideos||0} label="VIDEOS" />
+          <AmountItem number={followers || 0} label="FOLLOWING" />
+          <AmountItem number={totalCards || 0} label="PROMPTS ADDED" />
+          <AmountItem number={totalVideos || 0} label="VIDEOS" />
         </div>
         <div className="flex flex-col gap-[5.47px] ">
           <button className="h-[28.88px] bg-blue rounded-[4.97px] flex items-center justify-center text-[10.5px] font-semibold">

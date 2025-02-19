@@ -4,13 +4,15 @@ import { VideoType } from "../../../page";
 
 interface Type {
   userVideos: VideoType[];
+  userName: string;
 }
-const UserVideo:React.FC<Type> = ({userVideos}) => {
+const UserVideo: React.FC<Type> = ({ userVideos, userName }) => {
   return (
     <>
       <div className=" px-[11px]">
         <h1 className="text-[12px] pb-[11px]">
-          <span className="text-blue">MORE OF</span>&nbsp;- USERNAME
+          <span className="text-blue">MORE OF</span>&nbsp;-{" "}
+          {userName.toUpperCase()}
         </h1>
         <ul className=" overflow-hidden h-[189.5px] gap-x-[11px] gap-y-[15px] flex flex-wrap justify-center items-start">
           {userVideos.map((item, index) => (

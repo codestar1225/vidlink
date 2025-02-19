@@ -108,7 +108,7 @@ export default function ImageCropper({
           </button>
           <button
             onClick={() => {
-              setEdit("camera");
+              setEdit("");
             }}
             className="border-[3px] border-white text-white font-semibold tracking-widest h-[40px] w-[120px] flex justify-center items-center rounded-full"
           >

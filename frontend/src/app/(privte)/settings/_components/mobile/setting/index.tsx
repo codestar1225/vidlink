@@ -12,6 +12,9 @@ import EditPic from "./editPic";
 
 interface Type {
   setEdit(value: string): void;
+  setImgUrl(value: string): void;
+  setImgBase64(value: string): void;
+  setImgFile(value: File | null): void;
   edit: string;
   userInfo: UserInfoType | null;
   imgFile: File | null;
@@ -19,6 +22,9 @@ interface Type {
 }
 const Index: React.FC<Type> = ({
   setEdit,
+  setImgUrl,
+  setImgBase64,
+  setImgFile,
   edit,
   userInfo,
   imgFile,
@@ -57,7 +63,7 @@ const Index: React.FC<Type> = ({
     userInfo.append("tiktok", tiktok);
     userInfo.append("youtube", youtube);
     userInfo.append("linkedin", linkedin);
-    console.log(userInfo.get('picture'))
+    console.log(userInfo.get("picture"));
     const res = await setUserInfo(userInfo);
     if (res.status === 200) {
       setIsSaved(true);
@@ -73,7 +79,15 @@ const Index: React.FC<Type> = ({
   return (
     <>
       <main className="mt-[128px]  w-screen px-[11.25px] tracking-wider">
-        <EditPic setEdit={setEdit} edit={edit} picture={imgUrl} />
+        <EditPic
+          setEdit={setEdit}
+          setImgUrl={setImgUrl}
+          setImgFile={setImgFile}
+          setImgBase64={setImgBase64}
+          edit={edit}
+          picture={userInfo?.picture}
+          imgUrl={imgUrl}
+        />
         <div className="mt-[21px] flex flex-col gap-[17.2px] justify-between">
           <h1 className="text-[10.32px] font-semibold text-center">
             BASIC INFO

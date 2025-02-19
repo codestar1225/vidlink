@@ -31,7 +31,7 @@ const VideoMobile: React.FC<Type> = ({
   userVideos,
   relatedVideos,
   videoId,
-  followStatus
+  followStatus,
 }) => {
   const { addLike } = useVideo();
   const [like, setLike] = useState<boolean>(userInfo.like);
@@ -82,7 +82,7 @@ const VideoMobile: React.FC<Type> = ({
       return alert("You can't do this because you are an owner.");
     }
     if (!isAuth) {
-      alert("You must log in before the adding Likes.")
+      alert("You must log in before the adding Likes.");
       return router.push("/signin");
     } else {
       if (!videoId) return;
@@ -118,7 +118,6 @@ const VideoMobile: React.FC<Type> = ({
             like={like}
             userId={videoInfo.userId}
             followStatus={followStatus}
-
           />
           <div className="flex justify-center  px-[10px]">
             <ul className="flex flex-wrap justify-start content-start max-[401px]:justify-center gap-[6px] max-h-[391.7px] max-w-[380px]">
@@ -154,7 +153,7 @@ const VideoMobile: React.FC<Type> = ({
             </ul>
           </div>
         </div>
-        <UserVideo userVideos={userVideos} />
+        <UserVideo userVideos={userVideos} userName={userInfo.userName} />
         <RelatedVideo relatedVideos={relatedVideos} />
         <div className="w-svw flex justify-center">
           <Link

@@ -37,11 +37,20 @@ const AddCards: React.FC<Type> = ({
   function handleUploadImg(e: ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        setImgFile(reader.result as string); // Base64 URL of the image
-      };
-      reader.readAsDataURL(file);
+      const allowedTypes = [
+        "image/png",
+        "image/jpeg",
+        "image/jpg",
+        "image/gif",
+        "image/webp",
+        "image/svg+xml",
+        "image/bmp",
+      ];
+      if (!allowedTypes.includes(file.type)) {
+        return alert("Invalid file type. Please upload an image.");
+      }
+      const imgUrl = URL.createObjectURL(file);
+      setImgFile(imgUrl);
     }
   }
 
@@ -49,31 +58,31 @@ const AddCards: React.FC<Type> = ({
     if (cards.length >= Math.floor(duration / 10) + 1 || cards.length >= 24) {
       return alert("Your cards exceed their maximum amount.");
     }
-    if (!checkUrl(link))
-      return alert("Invalid link. Please enter a valid link.");
-    if (link && name && icon) {
-      const newCard = {
-        link,
-        name,
-        icon,
-        start,
-        isSaved,
-        no: cards.filter((key) => key.start < start).length + 1,
-      };
-      const alreadyOne = cards.findIndex((item) => item.start === start);
-      if (alreadyOne === -1) {
-        addCards(newCard);
-      } else {
-        confirmModal(
-          "A card with the same start time already exists. Do you want to replace the existing card with this one?",
-          () => replaceCard(newCard)
-        );
-      }
-    } else {
-      alert(
+    if (!link || !name || !icon) {
+      return alert(
         `Please enter the ${!link ? "Link " : " "}${!name ? "Name " : " "}${
           !icon ? "Icon" : ""
         }.`
+      );
+    }
+    if (!checkUrl(link))
+      return alert("Invalid link. Please enter a valid link.");
+    
+    const newCard = {
+      link,
+      name,
+      icon,
+      start,
+      isSaved,
+      no: cards.filter((key) => key.start < start).length + 1,
+    };
+    const alreadyOne = cards.findIndex((item) => item.start === start);
+    if (alreadyOne === -1) {
+      addCards(newCard);
+    } else {
+      confirmModal(
+        "A card with the same start time already exists. Do you want to replace the existing card with this one?",
+        () => replaceCard(newCard)
       );
     }
   };
