@@ -48,9 +48,9 @@ const UserInfo: React.FC<Type> = ({
       )}
       <div className="h-[147.04.67px] mx-[91px] mt-[28px] mb-[28.33px]">
         <div className="flex justify-between mb-[21px]">
-          <AmountItem number={followers||0} label="FOLLOWING" />
-          <AmountItem number={totalCards||0} label="PROMPTS ADDED" />
-          <AmountItem number={totalVideos||0} label="VIDEOS" />
+          <AmountItem number={followers || 0} label="FOLLOWING" />
+          <AmountItem number={totalCards || 0} label="PROMPTS ADDED" />
+          <AmountItem number={totalVideos || 0} label="VIDEOS" />
         </div>
         <div className="flex flex-col gap-[5.47px] ">
           <button
@@ -62,7 +62,6 @@ const UserInfo: React.FC<Type> = ({
           {/* <button className="h-[28.88px] bg-[#002355] rounded-[4.97px] flex items-center justify-center text-[10.5px] font-semibold">
       SEND MESSAGE
     </button> */}
-          f
         </div>
       </div>
     </>

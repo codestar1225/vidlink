@@ -17,7 +17,7 @@ export interface PublishError {
 //get videos
 type Video = {
   videoLink: string;
-  totalView: number;
+  views: number;
   user: { _id: string; userName: string };
   _id: string;
 };
@@ -39,12 +39,21 @@ type User = {
   like: boolean;
   owner: boolean;
 };
+interface CardT {
+  _id: string;
+  link: string;
+  name: string;
+  icon: string;
+  start: number;
+  no: number;
+  isSaved: boolean;
+}
 type VideoInfo = {
   title: string;
   videoLink: string;
   duration: number;
   userId: string;
-  cards: CardType[];
+  cards: CardT[];
 };
 export interface GetVideoSuccess {
   userInfo: User;
@@ -92,7 +101,7 @@ export interface GetMyVideosSuccess {
     videoLink: string;
     title: string;
     _id: string;
-    cards: CardType[];
+    cards: CardT[];
   }[];
   myLikesVideos: { videoLink: string; title: string; _id: string }[];
   status: number;
@@ -172,6 +181,16 @@ export interface GetUserNameSuccess {
   message: string;
 }
 export interface GetUserNameError {
+  message: string;
+  status?: number;
+}
+//save card
+export interface SaveCardSuccess {
+  saved: boolean;
+  status: number;
+  message: string;
+}
+export interface SaveCardError {
   message: string;
   status?: number;
 }

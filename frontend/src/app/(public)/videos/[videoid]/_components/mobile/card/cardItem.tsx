@@ -1,5 +1,7 @@
+"use client";
+import useVideo from "@/hooks/useVideo";
 import * as LucideIcons from "lucide-react";
-import { useEffect } from "react";
+import { useState } from "react";
 
 interface Type {
   setIsSelected(value: number): void;
@@ -13,6 +15,8 @@ interface Type {
   link: string;
   signal: boolean;
   currentCard: number;
+  cardId: string;
+  isAuth: boolean;
 }
 const CardItem: React.FC<Type> = ({
   setIsSelected,
@@ -21,12 +25,15 @@ const CardItem: React.FC<Type> = ({
   start,
   icon,
   no,
-  // index,
   isSaved,
   link,
   signal,
   currentCard,
+  cardId,
+  isAuth,
 }) => {
+  const { saveCard, loading } = useVideo();
+  const [saved, setSaved] = useState<boolean>(isSaved);
   const IconComponent = LucideIcons[
     icon as keyof typeof LucideIcons
   ] as React.ComponentType<React.SVGProps<SVGSVGElement>>;
@@ -35,14 +42,26 @@ const CardItem: React.FC<Type> = ({
     setIsSelected(start);
     setSignal(!signal);
   };
-
+  //save card
+  const handleSavingCard = async () => {
+    if (!isAuth) {
+      alert("You must log in before the saving card.");
+      return;
+    } else {
+      if (loading) return;
+      const res = await saveCard(cardId);
+      if (res.status === 200 && "saved" in res) {
+        setSaved(res.saved);
+      } else {
+        alert(res.message);
+      }
+    }
+  };
   return (
     <>
       <li
         className={`${
-          currentCard + 1 === no
-            ? "bg-blue text-white"
-            : "bg-white text-black"
+          currentCard + 1 === no ? "bg-blue text-white" : "bg-white text-black"
         } rounded-[6px] w-[122.41px] h-[94.5px] p-[5.9px] flex flex-col overflow-hidden`}
       >
         <button onClick={handlePreview}>
@@ -63,15 +82,15 @@ const CardItem: React.FC<Type> = ({
           </div>
         </button>
         <div className="flex justify-between">
-          <div className="size-[22.51px]">
-            {isSaved ? (
+          <button onClick={handleSavingCard} className="size-[22.51px]">
+            {saved ? (
               <img src="/icon/detail/card/left2Blue.png" alt="" />
             ) : currentCard >= 0 && currentCard + 1 === no ? (
               <img src="/icon/detail/card/left2_white.png" alt="" />
             ) : (
               <img src="/icon/detail/card/left2.svg" alt="" />
             )}
-          </div>
+          </button>
           <a href={link} target="blank" className="z-20">
             {currentCard >= 0 && currentCard + 1 === no ? (
               <img src="/icon/detail/card/right2_white.png" alt="" />

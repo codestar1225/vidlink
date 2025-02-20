@@ -2,6 +2,10 @@ import * as LucideIcons from "lucide-react";
 
 interface Type {
   handleIsSaved(value: number): void;
+  setName(value: string): void;
+  setIcon(value: string): void;
+  setLink(value: string): void;
+  setStart(value: number): void;
   name: string;
   start: number;
   icon: string;
@@ -12,6 +16,10 @@ interface Type {
 }
 const Card: React.FC<Type> = ({
   handleIsSaved,
+  setName,
+  setIcon,
+  setLink,
+  setStart,
   name,
   start,
   icon,
@@ -23,6 +31,13 @@ const Card: React.FC<Type> = ({
   const IconComponent = LucideIcons[
     icon as keyof typeof LucideIcons
   ] as React.ComponentType<React.SVGProps<SVGSVGElement>>;
+
+  const handleInit = () => {
+    setName(name);
+    setIcon(icon);
+    setLink(link);
+    setStart(start);
+  };
   return (
     <>
       <li
@@ -30,22 +45,26 @@ const Card: React.FC<Type> = ({
           no === length ? "border-blue text-blue" : "border-none text-black"
         } border-[2px] text-black bg-white rounded-[6px] w-[122.41px] h-[94.5px] p-[5.9px] flex flex-col justify-between overflow-hidden`}
       >
-        <div className="text-[13.86px] font-semibold flex justify-between w-full items-center">
-          <span className="text-black">{no < 10 ? `0${no}` : no}</span>{" "}
-          <i className="font-normal">
-            ({Math.floor(start / 60)}:
-            {start % 60 < 10 ? `0${start % 60}` : start % 60})
-          </i>
-        </div>
-        <div className="h-[60.91px]">
-          <div
-            className={`flex flex-col items-center h-[38.4px] w-full justify-between`}
-          >
-            <h1 className={`text-[13.84px] font-semibold`}>
-              {name.toUpperCase()}
-            </h1>
-            <IconComponent className="size-[18.29px]" />
+        <button onClick={handleInit}>
+          <div className="text-[13.86px] font-semibold flex justify-between w-full items-center">
+            <span className="text-black">{no < 10 ? `0${no}` : no}</span>{" "}
+            <i className="font-normal">
+              ({Math.floor(start / 60)}:
+              {start % 60 < 10 ? `0${start % 60}` : start % 60})
+            </i>
           </div>
+        </button>
+        <div className="h-[60.91px]">
+          <button onClick={handleInit}>
+            <div
+              className={`flex flex-col items-center h-[38.4px] w-full justify-between`}
+            >
+              <h1 className={`text-[13.84px] font-semibold`}>
+                {name.toUpperCase()}
+              </h1>
+              <IconComponent className="size-[18.29px]" />
+            </div>
+          </button>
           <div className="flex justify-between">
             <button
               onClick={() => handleIsSaved(no)}

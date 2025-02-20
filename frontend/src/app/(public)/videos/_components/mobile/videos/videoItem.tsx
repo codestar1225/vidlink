@@ -2,12 +2,12 @@ import Link from "next/link";
 import ReactPlayer from "react-player";
 interface Type {
   userName: string;
-  review: number;
+  views: number;
   src: string;
   no: number;
   videoId: string;
 }
-const VideoItem: React.FC<Type> = ({ userName, review, src, no, videoId }) => {
+const VideoItem: React.FC<Type> = ({ userName, views, src, no, videoId }) => {
   return (
     <>
       <li className="h-[149.33px] w-[117.73px] flex flex-col items-center  justify-between">
@@ -35,7 +35,7 @@ const VideoItem: React.FC<Type> = ({ userName, review, src, no, videoId }) => {
           </p>
           <div className="flex flex-wrap items-center justify-center h-[7.81px] w-full gap-[1.67px]">
             <img className="size-[7.81px]" src="/icon/videos/eye.svg" alt="" />
-            <p className=" text-[6.7px]  text-[#7C889D] flex items-center pt-[1px]">{review}</p>
+            <p className=" text-[6.7px]  text-[#7C889D] flex items-center pt-[1px]">{views}</p>
           </div>
         </div>
       </li>

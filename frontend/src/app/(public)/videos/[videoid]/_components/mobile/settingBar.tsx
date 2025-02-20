@@ -59,7 +59,6 @@ const SettingBar: React.FC<Type> = ({
       }
     } else {
       alert("You must log in before the following.");
-      router.push("/signin");
     }
   };
   return (

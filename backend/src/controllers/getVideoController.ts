@@ -3,13 +3,14 @@ import { CustomRequest } from "../middleware/authMiddleware";
 import Video from "../models/videoModel";
 import { Request, Response } from "express";
 import User from "../models/userModel";
+import { ICard } from "../models/cardModel";
 
 //get videos
 export const getVideos = expressAsyncHandler(
   async (req: CustomRequest, res: Response) => {
     try {
       const allVideos = await Video.find({})
-        .select("videoLink totalView userId _id")
+        .select("videoLink views userId _id")
         .populate("user")
         .lean();
       if (!req.userId) {
@@ -22,7 +23,7 @@ export const getVideos = expressAsyncHandler(
         const followingVideos = await Video.find({
           userId: { $in: following?.followers },
         })
-          .select("videoLink totalView userId _id")
+          .select("videoLink views userId _id")
           .populate("user")
           .lean();
         res.status(200).json({
@@ -47,7 +48,8 @@ export const getVideo = expressAsyncHandler(
     }
     try {
       const videoInfo = await Video.findById(videoId)
-        .select("userId title videoLink duration cards")
+        .select("userId title videoLink duration")
+        .populate<{ cards: ICard[] }>("cards")
         .lean();
       if (!videoInfo) {
         res.status(404).json({ message: "Video not found." });
@@ -76,7 +78,16 @@ export const getVideo = expressAsyncHandler(
         if (userInfo?.followers) {
           followStatus = userInfo?.followers.includes(req.userId);
         }
+        if (videoInfo?.cards) {
+          videoInfo.cards.forEach((card: ICard) => {
+            card.isSaved = card.savers.includes(req.userId || "");
+            card.savers = [];
+          });
+        }
       }
+      videoInfo.cards.forEach((card: ICard, index) => {
+        card.no = index + 1;
+      });
       await Video.findByIdAndUpdate(videoId, { $inc: { views: 1 } });
       await User.findByIdAndUpdate(userInfo?._id, { $inc: { videoViews: 1 } });
       res.status(200).json({
@@ -97,13 +108,15 @@ export const getMyVideos = expressAsyncHandler(
   async (req: CustomRequest, res: Response) => {
     try {
       const myVideos = await Video.find({ userId: req.userId })
-        .select("videoLink cards title")
+        .select("videoLink title")
+        .populate("cards")
         .lean();
       const likes = await User.findById(req.userId).select("likeVideos").lean();
       const myLikesVideos = await Video.find({
         _id: { $in: likes?.likeVideos },
       })
         .select("videoLink cards title")
+        .populate("cards")
         .lean();
       const userInfo = await User.findById(req.userId)
         .select(

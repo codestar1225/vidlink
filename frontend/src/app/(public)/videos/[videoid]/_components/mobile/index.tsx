@@ -7,10 +7,9 @@ import { useRouter } from "next/navigation";
 import SettingBar from "./settingBar";
 import useVerifyAuth from "@/hooks/useVerifyAuth";
 import CardNext from "@/app/_components/ui/cardNext";
-import { UserInfo, VideoInfo, VideoType } from "../../page";
+import { CardT, UserInfo, VideoInfo, VideoType } from "../../page";
 import { Suspense, useEffect, useRef, useState } from "react";
 import PreviewVideo from "./previewVideo";
-import { CardType } from "@/store";
 import Loading from "@/app/_components/ui/loading";
 import CardItem from "./card/cardItem";
 import useVideo from "@/hooks/useVideo";
@@ -38,7 +37,7 @@ const VideoMobile: React.FC<Type> = ({
   const router = useRouter();
   const { isAuth } = useVerifyAuth();
 
-  const [fltCards, setFltCards] = useState<CardType[]>([]);
+  const [fltCards, setFltCards] = useState<CardT[]>([]);
   const [nextCard, setNextCard] = useState<{ start: number; no: number }>({
     start: -1,
     no: -1,
@@ -83,7 +82,7 @@ const VideoMobile: React.FC<Type> = ({
     }
     if (!isAuth) {
       alert("You must log in before the adding Likes.");
-      return router.push("/signin");
+      return;
     } else {
       if (!videoId) return;
       const res = await addLike(videoId);
@@ -147,6 +146,8 @@ const VideoMobile: React.FC<Type> = ({
                     no={item.no}
                     index={index}
                     currentCard={currentCard}
+                    cardId={item._id}
+                    isAuth={isAuth}
                   />
                 </Suspense>
               ))}

@@ -1,7 +1,6 @@
 "use client";
 import Loading from "@/app/_components/ui/loading";
 import useVideo from "@/hooks/useVideo";
-import { CardType } from "@/store";
 import dynamic from "next/dynamic";
 import { useParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
@@ -15,12 +14,21 @@ export interface UserInfo {
   like: boolean;
   owner: boolean;
 }
+export interface CardT {
+  _id: string;
+  link: string;
+  name: string;
+  icon: string;
+  start: number;
+  no: number;
+  isSaved: boolean;
+}
 export interface VideoInfo {
   title: string;
   videoLink: string;
   duration: number;
   userId: string;
-  cards: CardType[];
+  cards: CardT[];
 }
 export interface VideoType {
   videoLink: string;
@@ -64,19 +72,19 @@ const Page = () => {
         setVideoInfo(res.videoInfo);
         setUserVideos(res.userVideos);
         setRelatedVideos(res.relatedVideos);
-        setFollowStatus(res.followStatus)
+        setFollowStatus(res.followStatus);
       }
     };
     fetchFunc();
   }, []);
-  if (loading) return <Loading />;
+   if (loading || videoInfo.cards.length < 1) return <Loading />;
   if (!videoInfo.videoLink) return <></>;
   return (
     <>
       {isMobile ? (
         <Suspense fallback={<Loading />}>
           <VideoMobile
-          setFollowStatus={setFollowStatus}
+            setFollowStatus={setFollowStatus}
             userInfo={userInfo}
             videoInfo={videoInfo}
             userVideos={userVideos}

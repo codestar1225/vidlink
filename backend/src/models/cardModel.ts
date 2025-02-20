@@ -1,7 +1,7 @@
 import mongoose, { Document, Schema, Model } from "mongoose";
 
-interface ICard extends Document {
-  userId: mongoose.Schema.Types.ObjectId;
+export interface ICard extends Document {
+  videoId: mongoose.Schema.Types.ObjectId;
   title: string;
   link: string;
   name: string;
@@ -9,11 +9,12 @@ interface ICard extends Document {
   start: number;
   no: number;
   isSaved: boolean;
+  savers: string[];
 }
 
 const CardSchema = new Schema<ICard>(
   {
-    userId: { type: mongoose.Schema.Types.ObjectId, required: true },
+    videoId: { type: mongoose.Schema.Types.ObjectId, required: true },
     title: { type: String, required: true },
     link: { type: String, default: "" },
     name: { type: String, default: "" },
@@ -21,6 +22,7 @@ const CardSchema = new Schema<ICard>(
     start: { type: Number, default: 0 },
     no: { type: Number, default: 0 },
     isSaved: { type: Boolean, default: false },
+    savers: { type: [String], default: [] },
   },
   { timestamps: true }
 );

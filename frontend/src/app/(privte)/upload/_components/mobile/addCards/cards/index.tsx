@@ -8,6 +8,10 @@ interface Type {
   addCard(): void;
   setIsSaveed(value: boolean): void;
   setEditSignal(value: boolean): void;
+  setName(value: string): void;
+  setIcon(value: string): void;
+  setLink(value: string): void;
+  setStart(value: number): void;
   name: string;
   start: number;
   icon: string;
@@ -18,6 +22,10 @@ const Index: React.FC<Type> = ({
   addCard,
   setIsSaveed,
   setEditSignal,
+  setName,
+  setIcon,
+  setLink,
+  setStart,
   name,
   start,
   icon,
@@ -68,6 +76,10 @@ const Index: React.FC<Type> = ({
             {cards?.map((item, index) => (
               <CardItem
                 handleIsSaved={handleIsSaved}
+                setName={setName}
+                setIcon={setIcon}
+                setLink={setLink}
+                setStart={setStart}
                 key={index}
                 name={item.name}
                 icon={item.icon}

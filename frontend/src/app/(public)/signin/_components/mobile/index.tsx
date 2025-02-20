@@ -38,7 +38,7 @@ const SigninMobile = () => {
           Cookies.remove("reqUrl");
           toast.success("Logged in successfully.", {
             autoClose: 2000,
-            onClose: () => router.replace(`${reqUrl ? `${reqUrl}` : "/"}`),
+            onClose: () => router.push(`${reqUrl ? `${reqUrl}` : "/"}`),
           });
         } else {
           // Authentication failed, handle error

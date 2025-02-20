@@ -86,6 +86,15 @@ const Index: React.FC<Type> = ({
     }
   };
 
+  //auto paste
+  const handleAutoPaste = async () => {
+    try {
+      const text = await navigator.clipboard.readText();
+      setLink(text); // Automatically paste clipboard content into input
+    } catch (error) {
+      console.error("Failed to read clipboard:", error);
+    }
+  };
   return (
     <>
       <div className="mt-[56.5px] text-[12px] font-semibold mx-[19.5px]">
@@ -108,12 +117,12 @@ const Index: React.FC<Type> = ({
         <div className=" h-[59px] flex flex-col justify-between mt-[12px]">
           <div className="flex items-center gap-[7px]">
             <div>LINK</div>
-            <button>
+            <button onClick={handleAutoPaste}>
               <img src="/icon/upload/paste.svg" alt="" />
             </button>
           </div>
           <input
-            value={link.trim()}
+            value={link.trim().toLowerCase()}
             onChange={(e) => setLink(e.target.value)}
             type="url"
             placeholder="Text"

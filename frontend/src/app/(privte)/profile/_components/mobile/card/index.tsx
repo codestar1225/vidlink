@@ -13,12 +13,12 @@ const Cards: React.FC<Type> = ({ myVideos, userName }) => {
             <div key={index}>
               <h1>
                 <span className=" text-blue font-semibold ">
-                  {item.title && item.title.toUpperCase()}
+                  {item.title && item.title?.toUpperCase()}
                 </span>{" "}
-                - {userName || ""}
+                - {userName?.toUpperCase() || ""}
               </h1>
               <ul className="flex flex-wrap justify-start gap-x-[5.9px] gap-y-[7.24px] mt-[13px]">
-                {item.cards?.slice(0, 5)?.map((item, index) => (
+                {item.cards?.map((item, index) => (
                   <Card
                     name={item.name}
                     link={item.link}

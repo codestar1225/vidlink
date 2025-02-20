@@ -1,7 +1,7 @@
 "use client";
+import { CardT } from "@/app/(public)/videos/[videoid]/page";
 import Loading from "@/app/_components/ui/loading";
 import useVideo from "@/hooks/useVideo";
-import { CardType } from "@/store";
 import dynamic from "next/dynamic";
 import { Suspense, useLayoutEffect, useState } from "react";
 import { isMobile } from "react-device-detect";
@@ -21,11 +21,12 @@ export type UserInfoType = {
   linkedin: string;
   email?: string;
 };
+
 export type VideoType = {
   videoLink: string;
   _id: string;
   title?: string;
-  cards?: CardType[];
+  cards?: CardT[];
 };
 
 const Page = () => {

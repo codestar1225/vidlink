@@ -48,7 +48,12 @@ const Index: React.FC<Type> = ({
     const isTiktok = validateSocialMediaUrl("tiktok", tiktok);
     const isYoutube = validateSocialMediaUrl("youtube", youtube);
     const isLinkedin = validateSocialMediaUrl("linkedin", linkedin);
-    if (!isInstagram || !isTiktok || !isYoutube || !isLinkedin) {
+    if (
+      (instagram && !isInstagram) ||
+      (tiktok && !isTiktok) ||
+      (youtube && !isYoutube) ||
+      (linkedin && !isLinkedin)
+    ) {
       alert("Please enter the valid links.");
       return;
     }

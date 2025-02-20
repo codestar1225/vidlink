@@ -10,7 +10,7 @@ const Index: React.FC<Type> = ({ videos }) => {
         {videos?.map((item, index) => (
           <VideoItem
             userName={item.user.userName}
-            review={item.totalView}
+            views={item.views}
             src={item.videoLink}
             no={index + 1}
             key={index}

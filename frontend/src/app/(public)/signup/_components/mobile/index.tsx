@@ -34,7 +34,7 @@ const SignupMobile = () => {
           setToken(res.token);
           toast.success("Signed up successfully.", {
             autoClose: 2000,
-            onClose: () => router.replace("/"),
+            onClose: () => router.push("/"),
           });
         } else {
           // User already signed up, handle error
@@ -43,7 +43,7 @@ const SignupMobile = () => {
             res.message || "You have already signed up. Please sign in.",
             {
               autoClose: 2000,
-              onClose: () => router.replace("/signin"),
+              onClose: () => router.push("/signin"),
             }
           );
         }
