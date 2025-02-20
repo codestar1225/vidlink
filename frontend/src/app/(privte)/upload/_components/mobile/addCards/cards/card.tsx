@@ -55,7 +55,7 @@ const Card: React.FC<Type> = ({
           </div>
         </button>
         <div className="h-[60.91px]">
-          <button onClick={handleInit}>
+          <button className="w-full" onClick={handleInit}>
             <div
               className={`flex flex-col items-center h-[38.4px] w-full justify-between`}
             >

@@ -1,10 +1,9 @@
 import expressAsyncHandler from "express-async-handler";
 import { CustomRequest } from "../middleware/authMiddleware";
-import { Response } from "express";
+import { Request, Response } from "express";
 import User from "../models/userModel";
 import Video from "../models/videoModel";
-import { ObjectCannedACL, S3Client } from "@aws-sdk/client-s3";
-import { Upload } from "@aws-sdk/lib-storage";
+import Card from "../models/cardModel";
 
 //add like
 export const addLike = expressAsyncHandler(
@@ -16,7 +15,7 @@ export const addLike = expressAsyncHandler(
     }
     try {
       const videoInfo = await Video.findById(videoId).select("userId").lean();
-      if (req.userId === videoInfo?.userId) {
+      if (req.userId === videoInfo?.userId?.toString()) {
         res.status(400).json({ message: "you can't add yourself." });
         return;
       }
@@ -106,3 +105,77 @@ export const followUser = expressAsyncHandler(
   }
 );
 
+//save card
+export const saveCard = expressAsyncHandler(
+  async (req: CustomRequest, res: Response) => {
+    const { cardId } = req.body;
+    if (!cardId) {
+      res.status(400).json({ message: "No provided card Id." });
+      return;
+    }
+    if (!req.userId) {
+      res.status(400).json({ message: "No provided user Id." });
+      return;
+    }
+    try {
+      const card = await Card.findById(cardId).select("savers userId").lean();
+      if (!card) {
+        res.status(404).json({ message: "Card not found." });
+        return;
+      }
+      //increasing the clicks of card in terms of not user.
+      if (req.userId !== card?.userId?.toString()) {
+        await Card.findByIdAndUpdate(cardId, { $inc: { clicks: 1 } });
+      }
+      if (card.savers.includes(req.userId)) {
+        await Card.findByIdAndUpdate(cardId, {
+          $pull: { savers: req.userId },
+        });
+        if (req.userId === card?.userId?.toString()) {
+          await User.findByIdAndUpdate(req.userId, {
+            $inc: { totalSavedCards: -1 },
+          });
+        }
+        res.status(200).json({
+          message: "Unsaved card.",
+          saved: false,
+        });
+      } else {
+        await Card.findByIdAndUpdate(cardId, {
+          $addToSet: { savers: req.userId },
+        });
+        if (req.userId === card?.userId?.toString()) {
+          await User.findByIdAndUpdate(req.userId, {
+            $inc: { totalSavedCards: 1 },
+          });
+        }
+        res.status(200).json({
+          message: "Saved card.",
+          saved: true,
+        });
+      }
+    } catch (error: any) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+);
+
+// increase the card clicks.
+export const increaseClicks = expressAsyncHandler(
+  async (req: Request, res: Response) => {
+    const { cardId } = req.body;
+    if (!cardId) {
+      res.status(400).json({ message: "No provided card Id." });
+    }
+    try {
+      const card = await Card.findByIdAndUpdate(
+        cardId,
+        { $inc: { clicks: 1 } },
+        { new: true }
+      );
+      res.status(200).json({ message: "Clicks increased." });
+    } catch (error: any) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+);

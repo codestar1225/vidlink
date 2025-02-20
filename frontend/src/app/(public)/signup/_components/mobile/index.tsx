@@ -21,7 +21,6 @@ const SignupMobile = () => {
     const fetchSession = async () => {
       const session = await getSession();
       const isSignup = getItem("isSignup");
-
       if (session && isSignup) {
         removeItem("isSignup");
         const res = await signup(session.idToken);

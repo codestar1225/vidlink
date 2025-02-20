@@ -6,7 +6,6 @@ import User from "../models/userModel";
 import { S3Client, ObjectCannedACL } from "@aws-sdk/client-s3";
 import { Upload } from "@aws-sdk/lib-storage";
 import Card from "../models/cardModel";
-import mongoose from "mongoose";
 
 const s3Client = new S3Client({
   region: process.env.AWS_REGION,
@@ -24,6 +23,10 @@ export interface CardType {
 // publish video and card
 export const publishVideo = expressAsyncHandler(
   async (req: CustomRequest, res: Response) => {
+    if (!req.userId) {
+      res.status(400).json({ message: "No provided user Id." });
+      return;
+    }
     const { videoLink, duration, title, cards } = req.body;
     const file = req.file;
     let parsedCards: CardType[];
@@ -70,12 +73,13 @@ export const publishVideo = expressAsyncHandler(
         duration: Number(duration),
         title,
       });
-      await video.save(); 
+      await video.save();
       await Promise.all(
         parsedCards.map((card: any) =>
           Card.create({
             ...card,
             videoId: video._id,
+            userId: req.userId,
             title: video.title,
             savers: card.isSaved ? [req.userId] : [],
             isSaved: false,
@@ -173,46 +177,6 @@ export const setUserInfo = expressAsyncHandler(
         { new: true, runValidators: true }
       );
       res.status(200).json({ message: "User info saved." });
-    } catch (error: any) {
-      res.status(500).json({ message: error.message });
-    }
-  }
-);
-
-export const saveCard = expressAsyncHandler(
-  async (req: CustomRequest, res: Response) => {
-    const { cardId } = req.body;
-    if (!cardId) {
-      res.status(400).json({ message: "No provided card Id." });
-      return;
-    }
-    if (!req.userId) {
-      res.status(400).json({ message: "No provided user Id." });
-      return;
-    }
-    try {
-      const card = await Card.findById(cardId).select("savers").lean();
-      if (!card) {
-        res.status(404).json({ message: "Card not found." });
-        return;
-      }
-      if (card.savers.includes(req.userId)) {
-        await Card.findByIdAndUpdate(cardId, {
-          $pull: { savers: req.userId },
-        });
-        res.status(200).json({
-          message: "Unsaved card.",
-          saved: false,
-        });
-      } else {
-        await Card.findByIdAndUpdate(cardId, {
-          $addToSet: { savers: req.userId },
-        });
-        res.status(200).json({
-          message: "Saved card.",
-          saved: true,
-        });
-      }
     } catch (error: any) {
       res.status(500).json({ message: error.message });
     }

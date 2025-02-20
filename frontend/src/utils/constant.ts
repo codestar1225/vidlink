@@ -16,3 +16,4 @@ export const SETUSERINFO = `${BASE_URL}/api/video/setuserinfo/`; // set user inf
 export const CHECKUSERNAME = `${BASE_URL}/api/video/checkusername/`; // check username api endpoint
 export const GETUSERNAME = `${BASE_URL}/api/video/getusername/`; // get username api endpoint
 export const SAVECARD = `${BASE_URL}/api/video/savecard/`; // save card api endpoint
+export const INCREASECLICKS = `${BASE_URL}/api/video/increaseclicks/`; // increase card clicks api endpoint

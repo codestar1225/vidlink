@@ -1,9 +1,9 @@
 import expressAsyncHandler from "express-async-handler";
 import { CustomRequest } from "../middleware/authMiddleware";
 import Video from "../models/videoModel";
-import { Request, Response } from "express";
+import { Response } from "express";
 import User from "../models/userModel";
-import { ICard } from "../models/cardModel";
+import Card, { ICard } from "../models/cardModel";
 
 //get videos
 export const getVideos = expressAsyncHandler(
@@ -109,14 +109,32 @@ export const getMyVideos = expressAsyncHandler(
     try {
       const myVideos = await Video.find({ userId: req.userId })
         .select("videoLink title")
-        .populate("cards")
+        .populate<{ cards: ICard[] }>("cards")
         .lean();
+
+      // myVideos.forEach((video) => {
+      //   if (video.cards) {
+      //     video.cards.forEach((card: ICard) => {
+      //       card.isSaved = card.savers.includes(req.userId || "");
+      //       card.savers = [];
+      //     });
+      //   }
+      // });
+      // const cardsArray = myVideos.map((video) => ({
+      //   cards: video.cards || [], // Ensure it always has an array
+      // }));
+      
+      // const cards = await Card.find({ userId: req.userId });
+      // console.log(JSON.stringify(cards, null, 2));
+      // cards.forEach((card: ICard) => {
+      //   card.isSaved = card.savers.includes(req.userId || "");
+      //   card.savers = [];
+      // });
       const likes = await User.findById(req.userId).select("likeVideos").lean();
       const myLikesVideos = await Video.find({
         _id: { $in: likes?.likeVideos },
       })
         .select("videoLink cards title")
-        .populate("cards")
         .lean();
       const userInfo = await User.findById(req.userId)
         .select(

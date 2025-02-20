@@ -194,3 +194,12 @@ export interface SaveCardError {
   message: string;
   status?: number;
 }
+//increase card clicks
+export interface IncreaseClicksSuccess {
+  status: number;
+  message: string;
+}
+export interface IncreaseClicksError {
+  message: string;
+  status?: number;
+}

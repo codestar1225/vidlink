@@ -42,7 +42,6 @@ VideoSchema.virtual("cards", {
   ref: "Card",
   localField: "_id",
   foreignField: "videoId",
-  // options: { select: "-savers" }, // Select only userName
 });
 
 const Video: Model<IVideo> = mongoose.model<IVideo>("Video", VideoSchema);

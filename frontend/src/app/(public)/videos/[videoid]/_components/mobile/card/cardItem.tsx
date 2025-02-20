@@ -1,6 +1,7 @@
 "use client";
 import useVideo from "@/hooks/useVideo";
 import * as LucideIcons from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 interface Type {
@@ -32,8 +33,10 @@ const CardItem: React.FC<Type> = ({
   cardId,
   isAuth,
 }) => {
-  const { saveCard, loading } = useVideo();
+  const { saveCard, increaseClicks, loading } = useVideo();
   const [saved, setSaved] = useState<boolean>(isSaved);
+  const router = useRouter();
+
   const IconComponent = LucideIcons[
     icon as keyof typeof LucideIcons
   ] as React.ComponentType<React.SVGProps<SVGSVGElement>>;
@@ -55,6 +58,14 @@ const CardItem: React.FC<Type> = ({
       } else {
         alert(res.message);
       }
+    }
+  };
+  // visite the Link
+  const handleVisit = async () => {
+    window.open(link, "_blank", "noopener,noreferrer");
+    const res = await increaseClicks(cardId);
+    if (res.status !== 200) {
+      alert(res.message);
     }
   };
   return (
@@ -91,13 +102,13 @@ const CardItem: React.FC<Type> = ({
               <img src="/icon/detail/card/left2.svg" alt="" />
             )}
           </button>
-          <a href={link} target="blank" className="z-20">
+          <button onClick={handleVisit} className="z-20">
             {currentCard >= 0 && currentCard + 1 === no ? (
               <img src="/icon/detail/card/right2_white.png" alt="" />
             ) : (
               <img src="/icon/detail/card/right2.svg" alt="" />
             )}
-          </a>
+          </button>
         </div>
       </li>
     </>

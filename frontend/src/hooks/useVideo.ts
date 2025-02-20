@@ -8,6 +8,7 @@ import {
   GETUSERVIDEOS,
   GETVIDEO,
   GETVIDEOS,
+  INCREASECLICKS,
   PUBLISHVIDEO,
   SAVECARD,
   SETUSERINFO,
@@ -34,6 +35,8 @@ import {
   GetVideosError,
   GetVideosSuccess,
   GetVideoSuccess,
+  IncreaseClicksError,
+  IncreaseClicksSuccess,
   PublishError,
   PublishSuccess,
   SaveCardError,
@@ -378,7 +381,7 @@ const useVideo = () => {
     setLoading(true);
     try {
       const res: AxiosResponse<SaveCardSuccess | SaveCardError> =
-        await axios.post(SAVECARD, { cardId }, config);
+        await axios.put(SAVECARD, { cardId }, config);
       return { ...res.data, status: res.status };
     } catch (error: unknown) {
       console.log(error);
@@ -392,6 +395,26 @@ const useVideo = () => {
           router.push("/signin");
           return { message: "Your session was expired. Please log in again." };
         } else {
+          return { message: "Something went wrong" };
+        }
+      }
+      return { message: "An unknown error occurred" };
+    } finally {
+      setLoading(false);
+    }
+  };
+  //increase card clicks
+  const increaseClicks = async (
+    cardId: string
+  ): Promise<IncreaseClicksSuccess | IncreaseClicksError> => {
+    setLoading(true);
+    try {
+      const res: AxiosResponse<IncreaseClicksSuccess | IncreaseClicksError> =
+        await axios.put(INCREASECLICKS, { cardId });
+      return { ...res.data, status: res.status };
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        if (error?.response?.data?.message) {
           return { message: "Something went wrong" };
         }
       }
@@ -414,6 +437,7 @@ const useVideo = () => {
     checkUserName,
     getUserName,
     saveCard,
+    increaseClicks,
     loading,
   };
 };
