@@ -1,34 +1,43 @@
 "use client";
+import useVideo from "@/hooks/useVideo";
 import { CardType } from "@/store";
 import { useEffect, useRef, useState } from "react";
 import ReactPlayer from "react-player";
+import { useBeforeUnload } from "react-use";
 
 interface Type {
   setCurrentTime(value: number): void;
+  handleLike(): void;
   cards: CardType[];
   videoLink: string | null;
   isSelected: number;
   signal: boolean;
-  handleLike(): void;
   title: string;
   userName: string;
   like: boolean;
+  videoId: string;
 }
 
 const PreviewVideo: React.FC<Type> = ({
   setCurrentTime,
+  handleLike,
   cards,
   videoLink,
   isSelected,
   signal,
-  handleLike,
   title,
   userName,
   like,
+  videoId,
 }) => {
+  const { watchTime } = useVideo();
   const videoRef = useRef<ReactPlayer>(null);
   const maxTime = Number(process.env.NEXT_PUBLIC_MAX_TIME || 240);
   const [isReady, setIsReady] = useState<boolean>(false);
+  const [watchingTime, setWatchingTime] = useState<number>(0);
+  const [lastTime, setLastTime] = useState<number>(0);
+  const [isSeeking, setIsSeeking] = useState<boolean>(false);
+
   // got to the selected card start time
   useEffect(() => {
     if (videoRef.current) {
@@ -36,32 +45,56 @@ const PreviewVideo: React.FC<Type> = ({
       videoRef.current.getInternalPlayer()?.pause();
     }
   }, [isSelected, signal]);
-
-  const onProgress = () => {
-    if (!videoRef.current) return;
-    let currentTime = Math.floor(videoRef.current.getCurrentTime());
-    if (currentTime > maxTime) {
-      // videoRef.current?.seekTo(0, "seconds");
-      // alert("You can't see any further. The maximum time is 4 minutes.");
-    } else {
-      setCurrentTime(currentTime);
-    }
-  };
-  const onSeek = () => {
-    if (!videoRef.current) return;
-    let currentTime = Math.floor(videoRef.current.getCurrentTime());
-    if (currentTime > maxTime) {
-      // videoRef.current?.seekTo(0, "seconds");
-      // alert("You can't select any further. The maximum time is 4 minutes.");
-    } else {
-      setCurrentTime(currentTime);
-    }
-  };
   useEffect(() => {
     if (videoRef.current) {
       videoRef.current.seekTo(cards[0].start, "seconds");
     }
   }, [isReady]);
+
+  const onProgress = () => {
+    if (!videoRef.current || isSeeking) return;
+    const currentTime = Math.floor(videoRef.current.getCurrentTime());
+    if (currentTime <= maxTime) {
+      //measuring the watching time.
+      if (currentTime > lastTime) {
+        setWatchingTime((prev) => prev + (currentTime - lastTime));
+      }
+      setLastTime(currentTime);
+      setCurrentTime(currentTime);
+    }
+  };
+  const onSeek = () => {
+    if (!videoRef.current) return;
+    const currentTime = Math.floor(videoRef.current.getCurrentTime());
+    if (currentTime > maxTime) {
+      // videoRef.current?.seekTo(0, "seconds");
+      // alert("You can't select any further. The maximum time is 4 minutes.");
+    } else {
+      setIsSeeking(true);
+      setLastTime(currentTime);
+      setCurrentTime(currentTime);
+    }
+  };
+  const onSeekEnd = () => {
+    setIsSeeking(false);
+  };
+
+   const handleWatchTime = () => {
+    if (!videoId || !watchingTime) return;
+    watchTime(watchingTime, videoId); // ✅ Your required function
+  };
+  // Detects when the user tries to close, refresh, or navigate away
+  useBeforeUnload(() => {
+    handleWatchTime();
+    setWatchingTime(0);
+    return true;
+  });
+  useEffect(() => {
+    return () => {
+      // Ensures the function runs when the component unmounts
+      handleWatchTime();
+    };
+  }, []);
 
   return (
     <>
@@ -97,6 +130,8 @@ const PreviewVideo: React.FC<Type> = ({
             progressInterval={100}
             width="100%"
             height="100%"
+            onPause={onSeekEnd} // ✅ Detects when seeking stops
+            onPlay={onSeekEnd} // ✅ Also resets when the user starts playing again
           />
         </div>
       ) : (

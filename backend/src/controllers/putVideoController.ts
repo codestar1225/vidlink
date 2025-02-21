@@ -53,7 +53,6 @@ export const addLike = expressAsyncHandler(
           },
           { new: true, runValidators: true }
         );
-        console.log("true");
         res.status(200).json({ message: "Like added.", like: true });
       }
     } catch (error: any) {
@@ -174,6 +173,30 @@ export const increaseClicks = expressAsyncHandler(
         { new: true }
       );
       res.status(200).json({ message: "Clicks increased." });
+    } catch (error: any) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+);
+// increase the card clicks.
+export const watchTime = expressAsyncHandler(
+  async (req: Request, res: Response) => {
+    const { watchTime, videoId } = req.body;
+    if (!watchTime) {
+      res.status(400).json({ message: "No provided watch time." });
+    }
+    if (!videoId) {
+      res.status(400).json({ message: "No provided videoId." });
+    }
+    try {
+      await Video.findByIdAndUpdate(videoId, {
+        $inc: { watchTime: watchTime },
+      });
+      const user = await Video.findById(videoId).select("userId").lean();
+      await User.findByIdAndUpdate(user?.userId, {
+        $inc: { watchTime: watchTime },
+      });
+      console.log('watchtime success',watchTime)
     } catch (error: any) {
       res.status(500).json({ message: error.message });
     }

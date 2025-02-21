@@ -99,14 +99,15 @@ const VideoMobile: React.FC<Type> = ({
         <div className="min-h-screen  pt-[110px] pb-[50px] flex flex-col items-center">
           <PreviewVideo
             setCurrentTime={setCurrentTime}
+            handleLike={handleLike}
             cards={videoInfo.cards}
             videoLink={videoInfo.videoLink}
             isSelected={isSelected}
             signal={signal}
-            handleLike={handleLike}
             title={videoInfo.title}
             userName={userInfo.userName}
             like={like}
+            videoId={videoId || ""}
           />
           <SettingBar
             handleLike={handleLike}

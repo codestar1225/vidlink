@@ -1,7 +1,6 @@
 "use client";
 import useVideo from "@/hooks/useVideo";
 import * as LucideIcons from "lucide-react";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 interface Type {
@@ -35,7 +34,6 @@ const CardItem: React.FC<Type> = ({
 }) => {
   const { saveCard, increaseClicks, loading } = useVideo();
   const [saved, setSaved] = useState<boolean>(isSaved);
-  const router = useRouter();
 
   const IconComponent = LucideIcons[
     icon as keyof typeof LucideIcons
@@ -45,6 +43,7 @@ const CardItem: React.FC<Type> = ({
     setIsSelected(start);
     setSignal(!signal);
   };
+
   //save card
   const handleSavingCard = async () => {
     if (!isAuth) {

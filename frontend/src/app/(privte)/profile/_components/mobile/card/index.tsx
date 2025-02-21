@@ -26,6 +26,7 @@ const Cards: React.FC<Type> = ({ myVideos, userName }) => {
                     isSaved={item.isSaved}
                     start={item.start}
                     no={index + 1}
+                    _id={item._id}
                     key={index}
                   />
                 ))}

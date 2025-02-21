@@ -203,3 +203,12 @@ export interface IncreaseClicksError {
   message: string;
   status?: number;
 }
+//watch time record
+export interface WatchTimeSuccess {
+  status: number;
+  message: string;
+}
+export interface WatchTimeError {
+  message: string;
+  status?: number;
+}

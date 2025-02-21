@@ -12,6 +12,7 @@ import {
   PUBLISHVIDEO,
   SAVECARD,
   SETUSERINFO,
+  WATCHTIME,
 } from "@/utils/constant";
 import axios, { AxiosResponse } from "axios";
 import { useState } from "react";
@@ -43,6 +44,8 @@ import {
   SaveCardSuccess,
   SetUserInfoError,
   SetUserInfoSuccess,
+  WatchTimeError,
+  WatchTimeSuccess,
 } from "@/types/videoApiType";
 import { useRouter } from "next/navigation";
 import { useAtom } from "jotai";
@@ -423,6 +426,26 @@ const useVideo = () => {
       setLoading(false);
     }
   };
+  const watchTime = async (
+    watchTime: number,
+    videoId: string
+  ): Promise<WatchTimeSuccess | WatchTimeError> => {
+    setLoading(true);
+    try {
+      const res: AxiosResponse<WatchTimeSuccess | WatchTimeError> =
+        await axios.put(WATCHTIME, { watchTime, videoId });
+      return { ...res.data, status: res.status };
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        if (error?.response?.data?.message) {
+          return { message: "Something went wrong" };
+        }
+      }
+      return { message: "An unknown error occurred" };
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return {
     publish,
@@ -438,6 +461,7 @@ const useVideo = () => {
     getUserName,
     saveCard,
     increaseClicks,
+    watchTime,
     loading,
   };
 };

@@ -6,6 +6,7 @@ import JotaiProvider from "@/provider/jotaiProvider";
 import SessionProvider from "@/provider/sessionProvider";
 import { ToastContainer } from "react-toastify";
 import HeaderProvider from "./_components/layout/common/headerProvider";
+import WatchTimeProvider from "@/provider/watchTimeProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -40,7 +41,9 @@ export default function RootLayout({
         <JotaiProvider>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <HeaderProvider>
-              <SessionProvider>{children}</SessionProvider>
+              <SessionProvider>
+                <WatchTimeProvider>{children}</WatchTimeProvider>
+              </SessionProvider>
             </HeaderProvider>
           </ThemeProvider>
         </JotaiProvider>

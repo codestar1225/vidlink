@@ -5,6 +5,15 @@ interface Type {
   url: string;
 }
 const LinkUpload: React.FC<Type> = ({ setUrl, url }) => {
+  //auto paste
+  const handleAutoPaste = async () => {
+    try {
+      const text = await navigator.clipboard.readText();
+      setUrl(text);
+    } catch (error) {
+      console.error("Failed to read clipboard:", error);
+    }
+  };
   return (
     <>
       <div className="mx-[19.5px] h-[51px] flex flex-col justify-between mt-[29px] relative">
@@ -12,7 +21,7 @@ const LinkUpload: React.FC<Type> = ({ setUrl, url }) => {
           <div className="text-[9px] font-semibold h-[7px] mb-[1.8px] ">
             LINK
           </div>
-          <button>
+          <button onClick={handleAutoPaste}>
             <img src="/icon/upload/paste.svg" alt="" />
           </button>
         </div>

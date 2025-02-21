@@ -1,13 +1,37 @@
-import { CardType } from "@/store";
+"use state";
+import { CardT } from "@/app/(public)/videos/[videoid]/page";
+import useVideo from "@/hooks/useVideo";
 import * as LucideIcons from "lucide-react";
+import { useState } from "react";
 
-interface Type extends CardType {
+interface Type extends CardT {
   no: number;
 }
-const Card: React.FC<Type> = ({ name, link, icon, isSaved, start, no }) => {
+const Card: React.FC<Type> = ({
+  name,
+  link,
+  icon,
+  isSaved,
+  start,
+  no,
+  _id,
+}) => {
+  const { saveCard, loading } = useVideo();
+  const [saved, setSaved] = useState<boolean>(isSaved);
+
   const IconComponent = LucideIcons[
     icon as keyof typeof LucideIcons
   ] as React.ComponentType<React.SVGProps<SVGSVGElement>>;
+
+  const handleSavingCard = async () => {
+    if (loading) return;
+    const res = await saveCard(_id);
+    if (res.status === 200 && "saved" in res) {
+      setSaved(res.saved);
+    } else {
+      alert(res.message);
+    }
+  };
   return (
     <>
       <li
@@ -31,13 +55,13 @@ const Card: React.FC<Type> = ({ name, link, icon, isSaved, start, no }) => {
           </div>
         </a>
         <div className="flex justify-between">
-          <div className="size-[22.51px]">
-            {isSaved ? (
+          <button onClick={handleSavingCard} className="size-[22.51px]">
+            {saved ? (
               <img src="/icon/detail/card/left2Blue.png" alt="" />
             ) : (
               <img src="/icon/detail/card/left2.svg" alt="" />
             )}
-          </div>
+          </button>
           <a href={link} target="blank" className="z-20">
             <img src="/icon/detail/card/right2.svg" alt="" />
           </a>
