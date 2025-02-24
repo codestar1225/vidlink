@@ -1,11 +1,11 @@
 import { Response } from "express";
-import Video from "../models/videoModel";
+import Video from "../../models/videoModel";
 import expressAsyncHandler from "express-async-handler";
-import { CustomRequest } from "../middleware/authMiddleware";
-import User from "../models/userModel";
+import { CustomRequest } from "../../middleware/authMiddleware";
+import User from "../../models/userModel";
 import { S3Client, ObjectCannedACL } from "@aws-sdk/client-s3";
 import { Upload } from "@aws-sdk/lib-storage";
-import Card from "../models/cardModel";
+import Card from "../../models/cardModel";
 
 const s3Client = new S3Client({
   region: process.env.AWS_REGION,
@@ -72,6 +72,7 @@ export const publishVideo = expressAsyncHandler(
         videoLink: finalVideoLink,
         duration: Number(duration),
         title,
+        card: parsedCards.length,
       });
       await video.save();
       await Promise.all(
@@ -82,6 +83,7 @@ export const publishVideo = expressAsyncHandler(
             userId: req.userId,
             title: video.title,
             savers: card.isSaved ? [req.userId] : [],
+            saved: savedCards.length,
             isSaved: false,
           })
         )
@@ -90,7 +92,7 @@ export const publishVideo = expressAsyncHandler(
         $inc: {
           totalVideos: 1,
           totalCards: parsedCards.length,
-          totalSavedCards: savedCards.length,
+          savedCardsCreator: savedCards.length,
         },
       });
       res.status(201).json({ message: "Video created", video });

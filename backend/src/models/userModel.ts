@@ -14,9 +14,13 @@ interface IUser extends Document {
   role: string;
   totalVideos: number;
   totalCards: number;
-  totalSavedCards: number;
+  cardsClicksViewer: number;
+  cardsClicksCreator: number;
+  savedCardsViewer: number;
+  savedCardsCreator: number;
   followers: string[];
-  likeVideos: string[];
+  likeVideosViewer: string[];
+  likeVideosCreator: number;
   videoViews: number;
   profileViews: number;
   watchTime: number;
@@ -36,10 +40,14 @@ const UserSchema = new Schema<IUser>(
     linkedin: { type: String, default: "" },
     role: { type: String, enum: ["admin", "customer"] },
     followers: { type: [String], default: [] },
-    likeVideos: { type: [String], default: [] },
+    likeVideosViewer: { type: [String], default: [] },
+    likeVideosCreator: { type: Number, default: 0 },
     totalVideos: { type: Number, default: 0 },
     totalCards: { type: Number, default: 0 },
-    totalSavedCards: { type: Number, default: 0 },
+    cardsClicksViewer: { type: Number, default: 0 },
+    cardsClicksCreator: { type: Number, default: 0 },
+    savedCardsViewer: { type: Number, default: 0 },
+    savedCardsCreator: { type: Number, default: 0 },
     videoViews: { type: Number, default: 0 },
     profileViews: { type: Number, default: 0 },
     watchTime: { type: Number, default: 0 },

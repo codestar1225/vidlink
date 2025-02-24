@@ -1,9 +1,9 @@
 import expressAsyncHandler from "express-async-handler";
-import { CustomRequest } from "../middleware/authMiddleware";
-import Video from "../models/videoModel";
+import { CustomRequest } from "../../middleware/authMiddleware";
+import Video from "../../models/videoModel";
 import { Response } from "express";
-import User from "../models/userModel";
-import { ICard } from "../models/cardModel";
+import User from "../../models/userModel";
+import { ICard } from "../../models/cardModel";
 
 //get videos
 export const getVideos = expressAsyncHandler(
@@ -33,7 +33,7 @@ export const getVideos = expressAsyncHandler(
         });
       }
     } catch (error: any) {
-      console.log("fllowing videos", error);
+      console.log("getVideos", error);
       res.status(500).json({ message: error.message });
     }
   }
@@ -56,7 +56,7 @@ export const getVideo = expressAsyncHandler(
         return;
       }
       const userInfo = await User.findById(videoInfo.userId)
-        .select("totalVideos userName likeVideos followers")
+        .select("totalVideos userName likeVideosViewer followers")
         .lean();
       const userVideos = await Video.find({ userId: videoInfo.userId })
         .select("videoLink _id")
@@ -67,10 +67,10 @@ export const getVideo = expressAsyncHandler(
       let followStatus = false;
       if (req.userId) {
         const user = await User.findById(req.userId)
-          .select("likeVideos")
+          .select("likeVideosViewer")
           .lean();
-        if (user && user.likeVideos) {
-          like = user.likeVideos.includes(videoId);
+        if (user && user.likeVideosViewer) {
+          like = user.likeVideosViewer.includes(videoId);
         }
         if (videoInfo.userId.toString() === req.userId) {
           owner = true;
@@ -93,12 +93,13 @@ export const getVideo = expressAsyncHandler(
       res.status(200).json({
         message: "Video found",
         videoInfo,
-        userInfo: { ...userInfo, like, likeVideos: [], owner, followers: [] },
+        userInfo: { ...userInfo, like, likeVideosViewer: [], owner, followers: [] },
         userVideos,
         relatedVideos,
         followStatus,
       });
     } catch (error: any) {
+      console.error('getVideo',error)
       res.status(500).json({ message: error.message });
     }
   }
@@ -130,9 +131,9 @@ export const getMyVideos = expressAsyncHandler(
       //   card.isSaved = card.savers.includes(req.userId || "");
       //   card.savers = [];
       // });
-      const likes = await User.findById(req.userId).select("likeVideos").lean();
+      const likes = await User.findById(req.userId).select("likeVideosViewer").lean();
       const myLikesVideos = await Video.find({
-        _id: { $in: likes?.likeVideos },
+        _id: { $in: likes?.likeVideosViewer },
       })
         .select("videoLink cards title")
         .lean();
@@ -148,7 +149,7 @@ export const getMyVideos = expressAsyncHandler(
         userInfo: { ...userInfo, followers: userInfo?.followers.length },
       });
     } catch (error: any) {
-      console.log("fllowing videos", error);
+      console.log("getMyVideos", error);
       res.status(500).json({ message: error.message });
     }
   }
@@ -183,7 +184,7 @@ export const getUserVideos = expressAsyncHandler(
         followStatus,
       });
     } catch (error: any) {
-      console.log("fllowing videos", error);
+      console.log("getUserVideos", error);
       res.status(500).json({ message: error.message });
     }
   }
@@ -201,7 +202,7 @@ export const getUserInfo = expressAsyncHandler(
         .status(200)
         .json({ message: "user info found.", userInfo, checkingNames });
     } catch (error: any) {
-      console.log("fllowing videos", error);
+      console.log("getUserInfo", error);
       res.status(500).json({ message: error.message });
     }
   }
@@ -218,7 +219,7 @@ export const getUserName = expressAsyncHandler(
         .status(200)
         .json({ message: "user info found.", userName: userName?.userName });
     } catch (error: any) {
-      console.log("fllowing videos", error);
+      console.log("getUserName", error);
       res.status(500).json({ message: error.message });
     }
   }

@@ -4,7 +4,7 @@ import {
   checkUserName,
   publishVideo,
   setUserInfo,
-} from "../controllers/postVideoController";
+} from "../controllers/videoControllers/postVideoController";
 import multer from "multer";
 import {
   getMyVideos,
@@ -13,14 +13,14 @@ import {
   getUserVideos,
   getVideo,
   getVideos,
-} from "../controllers/getVideoController";
+} from "../controllers/videoControllers/getVideoController";
 import {
   addLike,
   followUser,
   increaseClicks,
   saveCard,
   watchTime,
-} from "../controllers/putVideoController";
+} from "../controllers/videoControllers/putVideoController";
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
@@ -43,7 +43,7 @@ videoRoutes.route("/checkusername").post(authMiddleware, checkUserName);
 videoRoutes.route("/getusername").get(authMiddleware, getUserName);
 videoRoutes.route("/getusername").get(authMiddleware, getUserName);
 videoRoutes.route("/savecard").put(authMiddleware, saveCard);
-videoRoutes.route("/increaseclicks").put(increaseClicks);
+videoRoutes.route("/increaseclicks").put(authMiddleware, increaseClicks);
 videoRoutes.route("/watchtime").put(watchTime);
 
 export default videoRoutes;

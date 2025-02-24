@@ -37,10 +37,10 @@ const Cards = () => {
                   <Image
                     width={7.77}
                     height={7.77}
-                    src="/icon/dashboard/views.png"
+                    src="/icon/dashboard/click.png"
                     alt=""
                   />
-                  <i>VIEWS</i>
+                  <i>CLICKS</i>
                 </div>
               </th>
               <th className="w-[14%]">
@@ -48,10 +48,10 @@ const Cards = () => {
                   <Image
                     width={7.77}
                     height={7.77}
-                    src="/icon/dashboard/likes.png"
+                    src="/icon/dashboard/save.png"
                     alt=""
                   />
-                  <i>LIKES</i>
+                  <i>SAVED</i>
                 </div>
               </th>
               <th className="w-[14%] ">
@@ -59,10 +59,10 @@ const Cards = () => {
                   <Image
                     width={7.77}
                     height={7.77}
-                    src="/icon/dashboard/cards.png"
+                    src="/icon/dashboard/link.png"
                     alt=""
                   />
-                  <i>CARDS</i>
+                  <i>LINK</i>
                 </div>
               </th>
             </tr>
@@ -75,7 +75,7 @@ const Cards = () => {
                   <Image
                     width={7.77}
                     height={7.77}
-                    src="/icon/dashboard/views.png"
+                    src="/icon/dashboard/click.png"
                     alt=""
                   />
                   85.5K
@@ -86,7 +86,7 @@ const Cards = () => {
                   <Image
                     width={7.77}
                     height={7.77}
-                    src="/icon/dashboard/likes.png"
+                    src="/icon/dashboard/save.png"
                     alt=""
                   />
                   2696
@@ -97,7 +97,7 @@ const Cards = () => {
                   <Image
                     width={7.77}
                     height={7.77}
-                    src="/icon/dashboard/cards.png"
+                    src="/icon/dashboard/link.png"
                     alt=""
                   />
                   2334

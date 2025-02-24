@@ -1,9 +1,9 @@
 import expressAsyncHandler from "express-async-handler";
-import { CustomRequest } from "../middleware/authMiddleware";
+import { CustomRequest } from "../../middleware/authMiddleware";
 import { Request, Response } from "express";
-import User from "../models/userModel";
-import Video from "../models/videoModel";
-import Card from "../models/cardModel";
+import User from "../../models/userModel";
+import Video from "../../models/videoModel";
+import Card from "../../models/cardModel";
 
 //add like
 export const addLike = expressAsyncHandler(
@@ -20,14 +20,14 @@ export const addLike = expressAsyncHandler(
         return;
       }
       const userData = await User.findById(req.userId)
-        .select("likeVideos")
+        .select("likeVideosViewer")
         .lean();
       if (
         userData &&
-        userData.likeVideos &&
-        userData.likeVideos.includes(videoId)
+        userData.likeVideosViewer &&
+        userData.likeVideosViewer.includes(videoId)
       ) {
-        await Video.findByIdAndUpdate(
+        const video = await Video.findByIdAndUpdate(
           videoId,
           { $inc: { likes: -1 } },
           { new: true, runValidators: true }
@@ -35,13 +35,16 @@ export const addLike = expressAsyncHandler(
         await User.findByIdAndUpdate(
           req.userId,
           {
-            $pull: { likeVideos: videoId }, // Use $pull to remove an element from an array
+            $pull: { likeVideosViewer: videoId }, // Use $pull to remove an element from an array
           },
           { new: true, runValidators: true }
         );
+        await User.findByIdAndUpdate(video?.userId, {
+          $inc: { likeVideosCreator: -1 },
+        });
         res.status(200).json({ message: "Like removed.", like: false });
       } else {
-        await Video.findByIdAndUpdate(
+        const video = await Video.findByIdAndUpdate(
           videoId,
           { $inc: { likes: 1 } },
           { new: true, runValidators: true }
@@ -49,10 +52,13 @@ export const addLike = expressAsyncHandler(
         await User.findByIdAndUpdate(
           req.userId,
           {
-            $addToSet: { likeVideos: videoId },
+            $addToSet: { likeVideosViewer: videoId },
           },
           { new: true, runValidators: true }
         );
+        await User.findByIdAndUpdate(video?.userId, {
+          $inc: { likeVideosCreator: 1 },
+        });
         res.status(200).json({ message: "Like added.", like: true });
       }
     } catch (error: any) {
@@ -125,14 +131,25 @@ export const saveCard = expressAsyncHandler(
       //increasing the clicks of card in terms of not user.
       if (req.userId !== card?.userId?.toString()) {
         await Card.findByIdAndUpdate(cardId, { $inc: { clicks: 1 } });
+        await User.findByIdAndUpdate(req.userId, {
+          $inc: { cardsClicksViewer: 1 },
+        });
+        await User.findByIdAndUpdate(card?.userId, {
+          $inc: { cardsClicksCreator: 1 },
+        });
       }
       if (card.savers.includes(req.userId)) {
         await Card.findByIdAndUpdate(cardId, {
           $pull: { savers: req.userId },
+          $inc: { saved: -1 },
         });
         if (req.userId === card?.userId?.toString()) {
           await User.findByIdAndUpdate(req.userId, {
-            $inc: { totalSavedCards: -1 },
+            $inc: { savedCardsCreator: -1 },
+          });
+        } else {
+          await User.findByIdAndUpdate(req.userId, {
+            $inc: { savedCardsViewer: -1 },
           });
         }
         res.status(200).json({
@@ -142,10 +159,15 @@ export const saveCard = expressAsyncHandler(
       } else {
         await Card.findByIdAndUpdate(cardId, {
           $addToSet: { savers: req.userId },
+          $inc: { saved: 1 },
         });
         if (req.userId === card?.userId?.toString()) {
           await User.findByIdAndUpdate(req.userId, {
-            $inc: { totalSavedCards: 1 },
+            $inc: { savedCardsCreator: 1 },
+          });
+        } else {
+          await User.findByIdAndUpdate(req.userId, {
+            $inc: { savedCardsViewer: 1 },
           });
         }
         res.status(200).json({
@@ -161,18 +183,23 @@ export const saveCard = expressAsyncHandler(
 
 // increase the card clicks.
 export const increaseClicks = expressAsyncHandler(
-  async (req: Request, res: Response) => {
+  async (req: CustomRequest, res: Response) => {
     const { cardId } = req.body;
     if (!cardId) {
       res.status(400).json({ message: "No provided card Id." });
     }
     try {
-      const card = await Card.findByIdAndUpdate(
-        cardId,
-        { $inc: { clicks: 1 } },
-        { new: true }
-      );
-      res.status(200).json({ message: "Clicks increased." });
+      const card = await Card.findById(cardId).select("userId").lean();
+      if (req.userId && req.userId !== card?.userId.toString()) {
+        await Card.findByIdAndUpdate(cardId, { $inc: { clicks: 1 } });
+        await User.findByIdAndUpdate(req.userId, {
+          $inc: { cardsClicksViewer: 1 },
+        });
+        await User.findByIdAndUpdate(card?.userId, {
+          $inc: { cardsClicksCreator: 1 },
+        });
+        res.status(200).json({ message: "Clicks increased." });
+      }
     } catch (error: any) {
       res.status(500).json({ message: error.message });
     }
