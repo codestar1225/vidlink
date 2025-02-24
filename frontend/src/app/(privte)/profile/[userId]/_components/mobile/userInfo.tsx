@@ -41,7 +41,7 @@ const UserInfo: React.FC<Type> = ({
     <>
       {picture && (
         <img
-          className="size-[146px] mt-[28px] rounded-full mx-auto"
+          className="size-[146px] rounded-full mx-auto"
           src={picture ? picture : "/icon/profile/avatar.png"}
           alt=""
         />

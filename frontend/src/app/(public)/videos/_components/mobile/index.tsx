@@ -35,7 +35,8 @@ const VideosMobile: React.FC<Type> = ({ followingVideos, allVideos }) => {
       const filteredVideos = videosToFilter.filter(
         (video) =>
           video?.views?.toString().toLowerCase().includes(key) ||
-          // video.videoLink.toLowerCase().includes(key) ||
+          video?.videoLink?.toLowerCase().includes(key) ||
+          video?.title?.toLowerCase().includes(key) ||
           video?.user?.userName?.toLowerCase().includes(key)
       );
       setVideos(filteredVideos);

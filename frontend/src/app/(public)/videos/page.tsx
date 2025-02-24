@@ -10,6 +10,7 @@ const VideosMobile = dynamic(() => import("./_components/mobile"));
 export type Video = {
   videoLink: string;
   views: number;
+  title: string;
   user: { _id: string; userName: string };
   _id: string;
 };

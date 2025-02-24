@@ -21,6 +21,7 @@ const VideoItem: React.FC<Type> = ({ userName, views, src, no, videoId }) => {
                 loop
                 width="100%"
                 height="100%"
+                progressInterval={1000}
               />
             </Link>
           ) : (
@@ -35,7 +36,9 @@ const VideoItem: React.FC<Type> = ({ userName, views, src, no, videoId }) => {
           </p>
           <div className="flex flex-wrap items-center justify-center h-[7.81px] w-full gap-[1.67px]">
             <img className="size-[7.81px]" src="/icon/videos/eye.svg" alt="" />
-            <p className=" text-[6.7px]  text-[#7C889D] flex items-center pt-[1px]">{views}</p>
+            <p className=" text-[6.7px]  text-[#7C889D] flex items-center pt-[1px]">
+              {views >= 10000 ? `${views / 10}K+` : views}
+            </p>
           </div>
         </div>
       </li>

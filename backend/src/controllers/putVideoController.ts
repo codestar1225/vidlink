@@ -178,7 +178,7 @@ export const increaseClicks = expressAsyncHandler(
     }
   }
 );
-// increase the card clicks.
+// record the video watch time
 export const watchTime = expressAsyncHandler(
   async (req: Request, res: Response) => {
     const { watchTime, videoId } = req.body;
@@ -196,7 +196,7 @@ export const watchTime = expressAsyncHandler(
       await User.findByIdAndUpdate(user?.userId, {
         $inc: { watchTime: watchTime },
       });
-      console.log('watchtime success',watchTime)
+      // console.log("watchtime success", watchTime);
     } catch (error: any) {
       res.status(500).json({ message: error.message });
     }

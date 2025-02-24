@@ -3,9 +3,8 @@ import Cookies from "js-cookie";
 import { useAtom } from "jotai";
 import { tokenAtom } from "@/store";
 import { signOut } from "next-auth/react";
-import { useState } from "react";
 import Link from "next/link";
-import EditPic from "./editPic";
+// import EditPic from "./editPic";
 
 interface Type {
   picture?: string | null;
@@ -20,7 +19,7 @@ const Index: React.FC<Type> = ({
   followers,
 }) => {
   const [, setToken] = useAtom(tokenAtom);
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  // const [isOpen, setIsOpen] = useState<boolean>(false);
   const handleSignOut = async () => {
     await signOut({ callbackUrl: "/signin" });
     Cookies.remove("token");
@@ -33,17 +32,20 @@ const Index: React.FC<Type> = ({
       <div className="relative size-[146px] mx-auto ">
         {picture && (
           <img
-            className="size-[146px] mt-[28px] rounded-full"
+            width={146}
+            height={146}
+            className="size-[146px] rounded-full"
             src={picture ? picture : "/icon/profile/avatar.png"}
             alt=""
           />
         )}
-        <button
-          onClick={() => setIsOpen(!isOpen)}
+        <a
+          href="/settings"
+          // onClick={() => setIsOpen(!isOpen)}
           className="absolute top-[9px] size-[18px] right-[17px]"
         >
           <img src="/icon/profile/edit.png" alt="" />
-        </button>
+        </a>
         {/* {isOpen && <EditPic setIsOpen={setIsOpen} />} */}
       </div>
       <div className="h-[147.04.67px] mx-[91px] mt-[28px] mb-[28px]">
@@ -53,9 +55,12 @@ const Index: React.FC<Type> = ({
           <AmountItem number={totalVideos || 0} label="VIDEOS" />
         </div>
         <div className="flex flex-col gap-[5.47px] ">
-          <button className="h-[28.88px] bg-blue rounded-[4.97px] flex items-center justify-center text-[10.5px] font-semibold">
+          <Link
+            href={"/dashboard"}
+            className="h-[28.88px] bg-blue rounded-[4.97px] flex items-center justify-center text-[10.5px] font-semibold"
+          >
             DASHBOARD
-          </button>
+          </Link>
           <Link
             href={"/settings"}
             className="h-[28.88px] bg-[#7C889D] rounded-[4.97px] flex items-center justify-center text-[10.5px] font-semibold"

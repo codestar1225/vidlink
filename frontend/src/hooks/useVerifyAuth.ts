@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useAtom } from "jotai";
-import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { tokenAtom } from "@/store";
 import { verifyToken } from "@/utils/verifyToken";
 
@@ -8,7 +8,7 @@ const useVerifyAuth = () => {
   const [isAuth, setIsAuth] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
   const [token] = useAtom<string>(tokenAtom);
-  const router = useRouter();
+  const pathName = usePathname();
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -18,7 +18,7 @@ const useVerifyAuth = () => {
       setLoading(false);
     };
     checkAuth();
-  }, [token, router]);
+  }, [token, pathName]);
 
   return { isAuth, loading };
 };

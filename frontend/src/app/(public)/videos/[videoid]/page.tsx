@@ -1,6 +1,8 @@
 "use client";
 import Loading from "@/app/_components/ui/loading";
 import useVideo from "@/hooks/useVideo";
+import { videoIdAtom } from "@/store";
+import { useAtom } from "jotai";
 import dynamic from "next/dynamic";
 import { useParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
@@ -57,6 +59,7 @@ const Page = () => {
   const [userVideos, setUserVideos] = useState<VideoType[]>([]);
   const [relatedVideos, setRelatedVideos] = useState<VideoType[]>([]);
   const [followStatus, setFollowStatus] = useState<boolean>(false);
+  const [, setVideoId] = useAtom<string>(videoIdAtom);
   useEffect(() => {
     if (!videoId) return;
     const fetchFunc = async () => {
@@ -73,11 +76,12 @@ const Page = () => {
         setUserVideos(res.userVideos);
         setRelatedVideos(res.relatedVideos);
         setFollowStatus(res.followStatus);
+        setVideoId(videoId);
       }
     };
     fetchFunc();
   }, []);
-   if (loading || videoInfo.cards.length < 1) return <Loading />;
+  if (loading || videoInfo.cards.length < 1) return <Loading />;
   if (!videoInfo.videoLink) return <></>;
   return (
     <>

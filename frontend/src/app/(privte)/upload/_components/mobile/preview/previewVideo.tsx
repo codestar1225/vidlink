@@ -5,6 +5,7 @@ import ReactPlayer from "react-player";
 
 interface Type {
   setCurrentTime(value: number): void;
+  setEdit(value: string): void;
   cards: CardType[];
   videoLink: string | null;
   isSelected: number;
@@ -15,6 +16,7 @@ interface Type {
 
 const PreviewVideo: React.FC<Type> = ({
   setCurrentTime,
+  setEdit,
   cards,
   videoLink,
   isSelected,
@@ -37,8 +39,9 @@ const PreviewVideo: React.FC<Type> = ({
     if (!videoRef.current) return;
     let currentTime = Math.floor(videoRef.current.getCurrentTime());
     if (currentTime > maxTime) {
-      // videoRef.current?.seekTo(0, "seconds");
-      // alert("You can't see any further. The maximum time is 4 minutes.");
+      videoRef.current?.seekTo(0, "seconds");
+      videoRef.current.getInternalPlayer()?.pause();
+      alert("You can't see any further. The maximum time is 4 minutes.");
     } else {
       setCurrentTime(currentTime);
     }
@@ -47,8 +50,9 @@ const PreviewVideo: React.FC<Type> = ({
     if (!videoRef.current) return;
     let currentTime = Math.floor(videoRef.current.getCurrentTime());
     if (currentTime > maxTime) {
-      // videoRef.current?.seekTo(0, "seconds");
-      // alert("You can't select any further. The maximum time is 4 minutes.");
+      videoRef.current?.seekTo(0, "seconds");
+      videoRef.current.getInternalPlayer()?.pause();
+      alert("You can't select any further. The maximum time is 4 minutes.");
     } else {
       setCurrentTime(currentTime);
     }
@@ -100,21 +104,7 @@ const PreviewVideo: React.FC<Type> = ({
 
       {/* detail */}
       <div className="h-[72.58px] w-full relative flex items-center justify-center">
-        <div className="absolute top-[18.6px] left-[11px] flex gap-[10.3px] items-start">
-          <img src="/icon/detail/avatar.svg" alt="" />
-          <div className="flex flex-col h-[38.3px] justify-between items-start">
-            <div className="text-[12px] text-blue font-semibold ">
-              {userName.toUpperCase()}
-            </div>
-            {/* <div className="text-[8px] font-semibold border-[0.41px] rounded-[1.24px] px-[0.82px]">
-              FOLLOW
-            </div> */}
-          </div>
-        </div>
-        {/* <button className=" pl-[12px] pt-[4px]">
-          <img src="/icon/detail/whiteHeart.png" alt="" />
-        </button> */}
-        <div className=" absolute right-[9.23px] top-[10.6px] flex gap-[12px]">
+        <div className=" absolute left-[11px] top-[10.6px] flex gap-[12px]">
           <div className="flex flex-col items-center gap-[5px]">
             <h1 className="text-[8px] font-semibold">CARDS</h1>
             <button className="border-[1.43px] w-[43px] h-[34px] rounded-[4.76px] text-center">
@@ -123,7 +113,10 @@ const PreviewVideo: React.FC<Type> = ({
           </div>
           <div className="flex flex-col items-center gap-[5px]">
             <h1 className="text-[8px] font-semibold">SUGGEST</h1>
-            <button className="border-[1.43px] w-[43px] h-[34px] rounded-[4.76px] flex justify-center items-center">
+            <button
+              onClick={() => setEdit("add")}
+              className="border-[1.43px] w-[43px] h-[34px] rounded-[4.76px] flex justify-center items-center"
+            >
               <img src="/icon/detail/card/plus.svg" alt="" />
             </button>
           </div>

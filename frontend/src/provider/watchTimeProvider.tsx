@@ -1,19 +1,22 @@
+"use client";
 import useVideo from "@/hooks/useVideo";
-import { watchTimeAtom } from "@/store";
+import { videoIdAtom, watchTimeAtom } from "@/store";
 import { useAtom } from "jotai";
-import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 
 // 'use client'
 const WatchTimeProvider = ({ children }: { children: React.ReactNode }) => {
   const { watchTime } = useVideo();
+  const pathname = usePathname();
   const [watchingTime, setWatchingTime] = useAtom<number>(watchTimeAtom);
-  const router = useRouter();
+  const [videoId] = useAtom<string>(videoIdAtom);
   useEffect(() => {
-    if (watchingTime > 0) {
-      watchTime(watchingTime, "ddddd");
+    if (watchingTime > 0 && videoId) {
+      watchTime(watchingTime, videoId);
+      setWatchingTime(0);
     }
-  }, [router]);
+  }, [pathname]);
   return <>{children}</>;
 };
-export default WatchTimeProvider
+export default WatchTimeProvider;

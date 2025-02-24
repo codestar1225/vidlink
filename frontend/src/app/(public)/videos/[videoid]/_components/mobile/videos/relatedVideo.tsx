@@ -1,6 +1,7 @@
 import { Video } from "@/app/_components/ui/video";
 import Link from "next/link";
 import { VideoType } from "../../../page";
+import ReactPlayer from "react-player";
 interface Type {
   relatedVideos: VideoType[];
 }
@@ -15,9 +16,23 @@ const RelatedVideo: React.FC<Type> = ({ relatedVideos }) => {
               className="w-[118.43px] h-[86.48px] rounded-[8.37px] overflow-hidden "
               key={index}
             >
-              <Link href={`/videos/${item._id}`}>
-                <Video src={item.videoLink} />
-              </Link>
+              <div className="w-full bg-[#27272798] h-[86.48px] rounded-[8.37px] overflow-hidden relative">
+                {item.videoLink !== "" ? (
+                  <Link href={`/videos/${item._id}`} className="w-full h-full">
+                    <ReactPlayer
+                      url={item.videoLink}
+                      playing
+                      muted
+                      loop
+                      width="100%"
+                      height="100%"
+                      progressInterval={1000}
+                    />
+                  </Link>
+                ) : (
+                  <></>
+                )}
+              </div>
             </li>
           ))}
         </ul>

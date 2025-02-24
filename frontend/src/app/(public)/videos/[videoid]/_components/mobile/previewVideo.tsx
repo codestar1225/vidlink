@@ -1,6 +1,8 @@
 "use client";
 import useVideo from "@/hooks/useVideo";
-import { CardType } from "@/store";
+import { CardType, watchTimeAtom } from "@/store";
+import { useAtom } from "jotai";
+import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import ReactPlayer from "react-player";
 import { useBeforeUnload } from "react-use";
@@ -34,10 +36,10 @@ const PreviewVideo: React.FC<Type> = ({
   const videoRef = useRef<ReactPlayer>(null);
   const maxTime = Number(process.env.NEXT_PUBLIC_MAX_TIME || 240);
   const [isReady, setIsReady] = useState<boolean>(false);
-  const [watchingTime, setWatchingTime] = useState<number>(0);
+  const [watchingTime, setWatchingTime] = useAtom<number>(watchTimeAtom);
   const [lastTime, setLastTime] = useState<number>(0);
   const [isSeeking, setIsSeeking] = useState<boolean>(false);
-
+  const router = useRouter();
   // got to the selected card start time
   useEffect(() => {
     if (videoRef.current) {
@@ -45,22 +47,30 @@ const PreviewVideo: React.FC<Type> = ({
       videoRef.current.getInternalPlayer()?.pause();
     }
   }, [isSelected, signal]);
+  // go to the first card start time.
   useEffect(() => {
     if (videoRef.current) {
       videoRef.current.seekTo(cards[0].start, "seconds");
+      setWatchingTime(0);
+      setLastTime(cards[0].start);
     }
+    router.refresh();
   }, [isReady]);
 
   const onProgress = () => {
-    if (!videoRef.current || isSeeking) return;
+    if (!videoRef.current) return;
     const currentTime = Math.floor(videoRef.current.getCurrentTime());
-    if (currentTime <= maxTime) {
+    if (currentTime < maxTime) {
       //measuring the watching time.
-      if (currentTime > lastTime) {
+      if (currentTime > lastTime && !isSeeking) {
         setWatchingTime((prev) => prev + (currentTime - lastTime));
       }
       setLastTime(currentTime);
       setCurrentTime(currentTime);
+    } else {
+      videoRef.current?.seekTo(0, "seconds");
+      videoRef.current.getInternalPlayer()?.pause();
+      alert("You can't see any further. The maximum time is 4 minutes.");
     }
   };
   const onSeek = () => {
@@ -68,18 +78,19 @@ const PreviewVideo: React.FC<Type> = ({
     const currentTime = Math.floor(videoRef.current.getCurrentTime());
     if (currentTime > maxTime) {
       // videoRef.current?.seekTo(0, "seconds");
-      // alert("You can't select any further. The maximum time is 4 minutes.");
+      videoRef.current.getInternalPlayer().pause();
+      alert("You can't select any further. The maximum time is 4 minutes.");
     } else {
-      setIsSeeking(true);
       setLastTime(currentTime);
       setCurrentTime(currentTime);
+      watchingTime && setIsSeeking(true);
     }
   };
   const onSeekEnd = () => {
     setIsSeeking(false);
   };
 
-   const handleWatchTime = () => {
+  const handleWatchTime = () => {
     if (!videoId || !watchingTime) return;
     watchTime(watchingTime, videoId); // ✅ Your required function
   };
@@ -89,12 +100,6 @@ const PreviewVideo: React.FC<Type> = ({
     setWatchingTime(0);
     return true;
   });
-  useEffect(() => {
-    return () => {
-      // Ensures the function runs when the component unmounts
-      handleWatchTime();
-    };
-  }, []);
 
   return (
     <>

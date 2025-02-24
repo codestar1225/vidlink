@@ -3,14 +3,14 @@ import { CustomRequest } from "../middleware/authMiddleware";
 import Video from "../models/videoModel";
 import { Response } from "express";
 import User from "../models/userModel";
-import Card, { ICard } from "../models/cardModel";
+import { ICard } from "../models/cardModel";
 
 //get videos
 export const getVideos = expressAsyncHandler(
   async (req: CustomRequest, res: Response) => {
     try {
       const allVideos = await Video.find({})
-        .select("videoLink views userId _id")
+        .select("videoLink views title userId _id")
         .populate("user")
         .lean();
       if (!req.userId) {
@@ -23,7 +23,7 @@ export const getVideos = expressAsyncHandler(
         const followingVideos = await Video.find({
           userId: { $in: following?.followers },
         })
-          .select("videoLink views userId _id")
+          .select("videoLink views title userId _id")
           .populate("user")
           .lean();
         res.status(200).json({
@@ -123,7 +123,7 @@ export const getMyVideos = expressAsyncHandler(
       // const cardsArray = myVideos.map((video) => ({
       //   cards: video.cards || [], // Ensure it always has an array
       // }));
-      
+
       // const cards = await Card.find({ userId: req.userId });
       // console.log(JSON.stringify(cards, null, 2));
       // cards.forEach((card: ICard) => {

@@ -22,6 +22,8 @@ const Index: React.FC<Type> = ({
     <>
       <div className="flex gap-[17.67px] ml-[19.75px] h-[74px]">
         <img
+          width={74}
+          height={74}
           className="size-[74px] rounded-full"
           src={imgUrl || "/image/profile/avatar.png"}
           alt=""

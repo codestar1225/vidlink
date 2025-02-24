@@ -68,6 +68,7 @@ const Preview: React.FC<Type> = ({
         <main className="mt-[37px] flex flex-col items-center">
           <PreviewVideo
             setCurrentTime={setCurrentTime}
+            setEdit={setEdit}
             cards={cards}
             videoLink={videoLink}
             isSelected={isSelected}
