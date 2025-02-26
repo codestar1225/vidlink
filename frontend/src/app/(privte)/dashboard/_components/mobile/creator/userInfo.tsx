@@ -1,12 +1,7 @@
-import { useAtom } from "jotai";
-import { tokenAtom } from "@/store";
-
 interface Type {
   picture?: string | null;
 }
 const UserInfo: React.FC<Type> = ({ picture }) => {
-  const [, setToken] = useAtom(tokenAtom);
-
   return (
     <>
       <div className="font-semibold flex flex-col items-center w-full px-[39px] gap-[39px]">

@@ -36,9 +36,6 @@ export const publishVideo = expressAsyncHandler(
       res.status(400).json({ message: "Invalid cards data" });
       return;
     }
-    const savedCards = parsedCards.filter(
-      (card: CardType) => card.isSaved === true
-    );
     try {
       let finalVideoLink = videoLink;
       if (file) {

@@ -105,16 +105,24 @@ const PreviewVideo: React.FC<Type> = ({
     <>
       {/* title */}
       <div className="flex justify-between items-center px-[15px] w-full pb-[10px]">
-        <h1 className="text-[14px] font-semibold ">
+        <h1 className="text-[14px] font-semibold w-[85%] ">
           <span className="text-blue">{title.toUpperCase()}</span>
           &nbsp;- {userName.toUpperCase()}
         </h1>
         <div className="flex gap-[13px] items-center">
           <button onClick={handleLike}>
             {like ? (
-              <img src="/icon/detail/blueHeart.png" alt="" />
+              <img
+                className="size-[20px]"
+                src="/icon/detail/blueHeart.png"
+                alt=""
+              />
             ) : (
-              <img src="/icon/detail/whiteHeart.png" alt="" />
+              <img
+                className="size-[20px]"
+                src="/icon/detail/whiteHeart.png"
+                alt=""
+              />
             )}
           </button>
           <button>

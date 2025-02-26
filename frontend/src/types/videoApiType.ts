@@ -157,6 +157,7 @@ export interface GetUserInfoError {
 }
 //set user info
 export interface SetUserInfoSuccess {
+  user: { picture: string; userName: string };
   status: number;
   message: string;
 }

@@ -13,7 +13,7 @@ import Cookies from "js-cookie";
 import { Video } from "@/app/_components/ui/video";
 
 const SigninMobile = () => {
-  const [, setToken] = useAtom<string>(tokenAtom);
+  const [token, setToken] = useAtom<boolean>(tokenAtom);
   const { signin, loading } = useAuth();
   const router = useRouter();
 
@@ -32,7 +32,7 @@ const SigninMobile = () => {
           }
           // Successfully authenticated and save token
           Cookies.set("token", res.token, { expires: 1 });
-          setToken(res.token);
+          setToken(!token);
           //check the there was request routing url
           const reqUrl = Cookies.get("reqUrl");
           Cookies.remove("reqUrl");
@@ -55,8 +55,8 @@ const SigninMobile = () => {
 
   //google sign
   const handleSignin = async () => {
-    const isSignin = getItem("isSignin");
-    if (isSignin || loading) return;
+    // const isSignin = getItem("isSignin");
+    if (loading) return;
     try {
       await signIn("google", { redirect: false });
       setItem("isSignin", true);

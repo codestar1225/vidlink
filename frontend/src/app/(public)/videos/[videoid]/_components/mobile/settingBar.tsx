@@ -77,8 +77,8 @@ const SettingBar: React.FC<Type> = ({
             <button
               onClick={handleFollow}
               className={`${
-                followStatus ? "bg-blue" : "bg-background"
-              } text-[8px] font-semibold border-[0.41px] rounded-[1.24px] px-[0.82px]`}
+                followStatus ? "bg-blue border-none" : "bg-background border-[0.41px]"
+              } text-[8px] font-semibold  rounded-[1.24px] px-[2px] h-[10.5px] leading-none`}
             >
               {followStatus ? "FOLLOWED" : "FOLLOW"}
             </button>

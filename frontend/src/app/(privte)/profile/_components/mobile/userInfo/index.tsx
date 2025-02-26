@@ -18,14 +18,12 @@ const Index: React.FC<Type> = ({
   totalCards,
   followers,
 }) => {
-  const [, setToken] = useAtom(tokenAtom);
   // const [isOpen, setIsOpen] = useState<boolean>(false);
   const handleSignOut = async () => {
     await signOut({ callbackUrl: "/signin" });
     Cookies.remove("token");
     Cookies.remove("reqUrl");
     Cookies.remove("user");
-    setToken("");
   };
   return (
     <>

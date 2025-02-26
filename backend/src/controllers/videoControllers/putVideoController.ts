@@ -153,9 +153,9 @@ export const saveCard = expressAsyncHandler(
         res.status(404).json({ message: "Card not found." });
         return;
       }
-      //increasing the clicks of card in terms of not user.
+      // increasing the clicks of card in terms of not user.
       if (req.userId !== card?.userId?.toString()) {
-        Promise.all([
+        await Promise.all([
           Card.updateOne({ _id: cardId }, { $inc: { clicks: 1 } }),
           User.updateOne(
             { _id: req.userId },
@@ -163,9 +163,12 @@ export const saveCard = expressAsyncHandler(
               $addToSet: { cardsClicksViewer: new Date() },
             }
           ),
-          User.updateOne(card?.userId, {
-            $addToSet: { cardsClicksCreator: new Date() },
-          }),
+          User.updateOne(
+            { _id: card?.userId },
+            {
+              $addToSet: { cardsClicksCreator: new Date() },
+            }
+          ),
         ]);
       }
       if (card?.savers.some((key) => key.userId === req.userId)) {
@@ -251,6 +254,7 @@ export const saveCard = expressAsyncHandler(
         });
       }
     } catch (error: any) {
+      console.log(error);
       res.status(500).json({ message: error.message });
     }
   }
@@ -278,7 +282,7 @@ export const increaseClicks = expressAsyncHandler(
             User.updateOne(
               { _id: card?.userId },
               {
-                $inc: { cardsClicksCreator: new Date() },
+                $addToSet: { cardsClicksCreator: new Date() },
               }
             ),
           ]);
@@ -289,26 +293,30 @@ export const increaseClicks = expressAsyncHandler(
           await User.updateOne(
             { _id: card?.userId },
             {
-              $inc: { cardsClicksCreator: new Date() },
+              $addToSet: { cardsClicksCreator: new Date() },
             }
           ),
         ]);
       }
       res.status(200).json({ message: "Clicks increased." });
     } catch (error: any) {
+      console.log(error);
       res.status(500).json({ message: error.message });
     }
   }
 );
 // record the video watch time
 export const watchTime = expressAsyncHandler(
-  async (req: Request, res: Response) => {
+  async (req: CustomRequest, res: Response) => {
     const { watchTime, videoId } = req.body;
     if (!watchTime) {
       res.status(400).json({ message: "No provided watch time." });
     }
     if (!videoId) {
       res.status(400).json({ message: "No provided videoId." });
+    }
+    if (req.userId) {
+      return;
     }
     try {
       await Video.updateOne(

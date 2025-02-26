@@ -133,11 +133,10 @@ const VideoMobile: React.FC<Type> = ({
                 <></>
               )}
               {fltCards.map((item, index) => (
-                <Suspense key={index} fallback={<Loading />}>
+                <Suspense key={item._id} fallback={<Loading />}>
                   <CardItem
                     setIsSelected={setIsSelected}
                     setSignal={setSignal}
-                    key={index}
                     name={item.name}
                     icon={item.icon}
                     start={item.start}

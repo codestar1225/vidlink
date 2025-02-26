@@ -9,6 +9,10 @@ import useVideo from "@/hooks/useVideo";
 import { validateSocialMediaUrl } from "@/utils/validateUrl";
 import { UserInfoType } from "../../../page";
 import EditPic from "./editPic";
+import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
+import { useAtom } from "jotai";
+import { tokenAtom } from "@/store";
 
 interface Type {
   setEdit(value: string): void;
@@ -41,6 +45,8 @@ const Index: React.FC<Type> = ({
   const [isSaved, setIsSaved] = useState<boolean>(true);
   const [caution, setCaution] = useState<string>("");
   const [checkingName, setCheckingName] = useState<boolean>(false);
+  const router = useRouter();
+  const [token, setToken] = useAtom<boolean>(tokenAtom);
 
   const handleSave = async () => {
     if (caution || isSaved || loading || checkingName) return;
@@ -71,7 +77,18 @@ const Index: React.FC<Type> = ({
     console.log(userInfo.get("picture"));
     const res = await setUserInfo(userInfo);
     if (res.status === 200) {
+      if ("user" in res) {
+        Cookies.set("user", JSON.stringify(res.user));
+        setToken(!token);
+      }
       setIsSaved(true);
+      const isUploadUrl = Cookies.get("isUploadUrl");
+      if (isUploadUrl && JSON.parse(isUploadUrl)) {
+        Cookies.remove("isUploadUrl");
+        setTimeout(() => {
+          router.push("/upload");
+        }, 1000);
+      }
     } else {
       alert(res.message);
     }

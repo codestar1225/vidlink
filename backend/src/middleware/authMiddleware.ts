@@ -28,7 +28,8 @@ const authMiddleware = expressAsyncHandler(
         (req.method === "GET" && req.path === "/getvideos/") ||
         (req.method === "GET" && req.path === "/getvideo/") ||
         (req.method === "GET" && req.path === "/getuservideos/") ||
-        (req.method === "PUT" && req.path === "/increaseclicks/")
+        (req.method === "PUT" && req.path === "/increaseclicks/") ||
+        (req.method === "PUT" && req.path === "/watchtime/")
       ) {
         next();
         return;

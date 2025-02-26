@@ -44,6 +44,6 @@ videoRoutes.route("/getusername").get(authMiddleware, getUserName);
 videoRoutes.route("/getusername").get(authMiddleware, getUserName);
 videoRoutes.route("/savecard").put(authMiddleware, saveCard);
 videoRoutes.route("/increaseclicks").put(authMiddleware, increaseClicks);
-videoRoutes.route("/watchtime").put(watchTime);
+videoRoutes.route("/watchtime").put(authMiddleware, watchTime);
 
 export default videoRoutes;

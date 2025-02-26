@@ -10,6 +10,7 @@ import { useAtom } from "jotai";
 import { cardAtom, CardType } from "@/store";
 import useVideo from "@/hooks/useVideo";
 import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
 
 interface Type {
   validateVideo(value: ChangeEvent<HTMLInputElement>): void;
@@ -53,6 +54,7 @@ const Upload: React.FC<Type> = ({
     if (res.status === 200 && "userName" in res) {
       if (res.userName.trim() === "") {
         alert("You must set a username before creating your first video.");
+        Cookies.set("isUploadUrl", JSON.stringify(true), { expires: 1 });
         return router.push("/settings");
       } else {
         setUserName(res.userName);

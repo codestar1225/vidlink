@@ -15,19 +15,15 @@ const HeaderMobile = () => {
   const [isBlurred, setIsBlurred] = useState(false);
   const [pic, setPic] = useState<string>("/icon/layout/avatar.png");
   const menuRef = useRef<HTMLHeadElement>(null);
-  const [token] = useAtom<string>(tokenAtom);
+  const [token] = useAtom<boolean>(tokenAtom);
   const { loading, isAuth } = useVerifyAuth();
   const pathName = usePathname();
 
   useEffect(() => {
     const user = Cookies.get("user");
     if (user) {
-      try {
-        const parsedUser = JSON.parse(user);
-        setPic(parsedUser.picture);
-      } catch (error) {
-        console.error("Error parsing user cookie:", error);
-      }
+      const parsedUser = JSON.parse(user);
+      setPic(parsedUser.picture);
     }
   }, [token, pathName]);
 

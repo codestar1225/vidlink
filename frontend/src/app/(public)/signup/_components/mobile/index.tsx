@@ -13,7 +13,7 @@ import Cookies from "js-cookie";
 import { Video } from "@/app/_components/ui/video";
 
 const SignupMobile = () => {
-  const [, setToken] = useAtom<string>(tokenAtom);
+  const [token, setToken] = useAtom<boolean>(tokenAtom);
   const { signup, loading } = useAuth();
   const router = useRouter();
   //cutstomized sign up
@@ -30,7 +30,7 @@ const SignupMobile = () => {
           }
           // Successful signup
           Cookies.set("token", res.token, { expires: 1 });
-          setToken(res.token);
+          setToken(!token);
           toast.success("Signed up successfully.", {
             autoClose: 2000,
             onClose: () => router.push("/"),
@@ -54,8 +54,8 @@ const SignupMobile = () => {
 
   //google sign
   const handleSignup = async () => {
-    const isSignin = getItem("isSignin");
-    if (isSignin || loading) return;
+    // const isSignin = getItem("isSignin");
+    if (loading) return;
     try {
       await signIn("google", { redirect: false });
       setItem("isSignup", true);

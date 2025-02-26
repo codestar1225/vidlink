@@ -82,7 +82,7 @@ const Table: React.FC<Type> = ({ videos }) => {
             {videos?.map((item, index) => (
               <tr key={index} className="border-b-[0.5px] h-[19.8px]">
                 <td>{item?.title.toUpperCase() || ""}</td>
-                <td className="w-[14%]">
+                <td className="w-[13%]">
                   <div className="flex gap-[5.23px] items-center justify-center">
                     <Image
                       width={7.77}
@@ -93,7 +93,7 @@ const Table: React.FC<Type> = ({ videos }) => {
                     {item?.views || 0}
                   </div>
                 </td>
-                <td className="w-[14%]">
+                <td className="w-[13%]">
                   <div className="flex gap-[5.23px] items-center justify-center">
                     <Image
                       width={7.77}
@@ -104,7 +104,7 @@ const Table: React.FC<Type> = ({ videos }) => {
                     {item?.likes || 0}
                   </div>
                 </td>
-                <td className="w-[14%]">
+                <td className="w-[13%]">
                   <div className="flex gap-[5.23px] items-center justify-center">
                     <Image
                       width={7.77}
@@ -115,7 +115,7 @@ const Table: React.FC<Type> = ({ videos }) => {
                     {item?.card || 0}
                   </div>
                 </td>
-                <td className="w-[14%]">
+                <td className="w-[13%]">
                   <div className="flex gap-[5.23px] items-center justify-center">
                     <Clock className="size-[7.77px]" />
                     {item?.watchTime < 60

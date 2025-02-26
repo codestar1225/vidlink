@@ -60,7 +60,6 @@ import { tokenAtom } from "@/store";
 const useVideo = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
-  const [, setToken] = useAtom<string>(tokenAtom);
   const token = Cookies.get("token");
   const config = {
     headers: {
@@ -109,7 +108,6 @@ const useVideo = () => {
         if (
           error?.response?.data?.message === "Token is invalid or has expired!"
         ) {
-          setToken("");
           Cookies.remove("token");
           Cookies.remove("user");
           router.push("/signin");
@@ -180,7 +178,6 @@ const useVideo = () => {
         if (
           error?.response?.data?.message === "Token is invalid or has expired!"
         ) {
-          setToken("");
           Cookies.remove("token");
           Cookies.remove("user");
           router.push("/signin");
@@ -209,7 +206,6 @@ const useVideo = () => {
         if (
           error?.response?.data?.message === "Token is invalid or has expired!"
         ) {
-          setToken("");
           Cookies.remove("token");
           Cookies.remove("user");
           router.push("/signin");
@@ -257,7 +253,6 @@ const useVideo = () => {
         if (
           error?.response?.data?.message === "Token is invalid or has expired!"
         ) {
-          setToken("");
           Cookies.remove("token");
           Cookies.remove("user");
           router.push("/signin");
@@ -285,7 +280,6 @@ const useVideo = () => {
         if (
           error?.response?.data?.message === "Token is invalid or has expired!"
         ) {
-          setToken("");
           Cookies.remove("token");
           Cookies.remove("user");
           router.push("/signin");
@@ -314,7 +308,6 @@ const useVideo = () => {
         if (
           error?.response?.data?.message === "Token is invalid or has expired!"
         ) {
-          setToken("");
           Cookies.remove("token");
           Cookies.remove("user");
           router.push("/signin");
@@ -342,7 +335,6 @@ const useVideo = () => {
         if (
           error?.response?.data?.message === "Token is invalid or has expired!"
         ) {
-          setToken("");
           Cookies.remove("token");
           Cookies.remove("user");
           router.push("/signin");
@@ -370,7 +362,6 @@ const useVideo = () => {
         if (
           error?.response?.data?.message === "Token is invalid or has expired!"
         ) {
-          setToken("");
           Cookies.remove("token");
           Cookies.remove("user");
           router.push("/signin");
@@ -398,7 +389,6 @@ const useVideo = () => {
         if (
           error?.response?.data?.message === "Token is invalid or has expired!"
         ) {
-          setToken("");
           Cookies.remove("token");
           Cookies.remove("user");
           router.push("/signin");
@@ -419,7 +409,7 @@ const useVideo = () => {
     setLoading(true);
     try {
       const res: AxiosResponse<IncreaseClicksSuccess | IncreaseClicksError> =
-        await axios.put(INCREASECLICKS, { cardId });
+        await axios.put(INCREASECLICKS, { cardId }, config);
       return { ...res.data, status: res.status };
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
@@ -440,7 +430,7 @@ const useVideo = () => {
     setLoading(true);
     try {
       const res: AxiosResponse<WatchTimeSuccess | WatchTimeError> =
-        await axios.put(WATCHTIME, { watchTime, videoId });
+        await axios.put(WATCHTIME, { watchTime, videoId }, config);
       return { ...res.data, status: res.status };
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
@@ -468,7 +458,6 @@ const useVideo = () => {
         if (
           error?.response?.data?.message === "Token is invalid or has expired!"
         ) {
-          setToken("");
           Cookies.remove("token");
           Cookies.remove("user");
           router.push("/signin");
@@ -496,7 +485,6 @@ const useVideo = () => {
         if (
           error?.response?.data?.message === "Token is invalid or has expired!"
         ) {
-          setToken("");
           Cookies.remove("token");
           Cookies.remove("user");
           router.push("/signin");

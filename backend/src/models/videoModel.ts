@@ -36,6 +36,7 @@ VideoSchema.virtual("cards", {
   ref: "Card",
   localField: "_id",
   foreignField: "videoId",
+  options: { sort: { no: 1 } },
 });
 
 const Video: Model<IVideo> = mongoose.model<IVideo>("Video", VideoSchema);
