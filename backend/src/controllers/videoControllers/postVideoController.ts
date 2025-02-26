@@ -178,7 +178,9 @@ export const setUserInfo = expressAsyncHandler(
         },
         { runValidators: true }
       );
-      res.status(200).json({ message: "User info saved." });
+      res
+        .status(200)
+        .json({ message: "User info saved.", user: { userName, picture } });
     } catch (error: any) {
       res.status(500).json({ message: error.message });
     }

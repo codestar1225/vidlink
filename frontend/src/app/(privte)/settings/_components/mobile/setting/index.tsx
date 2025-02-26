@@ -74,7 +74,6 @@ const Index: React.FC<Type> = ({
     userInfo.append("tiktok", tiktok);
     userInfo.append("youtube", youtube);
     userInfo.append("linkedin", linkedin);
-    console.log(userInfo.get("picture"));
     const res = await setUserInfo(userInfo);
     if (res.status === 200) {
       if ("user" in res) {
