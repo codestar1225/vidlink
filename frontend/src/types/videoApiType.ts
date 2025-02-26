@@ -213,3 +213,48 @@ export interface WatchTimeError {
   message: string;
   status?: number;
 }
+//get data as a creator
+export interface GetDataCreatorSuccess {
+  userInfo: {
+    picture: string;
+    gainedFollowers: number;
+    lostFollowers: number;
+    cardsClicks: number;
+    savedCards: number;
+  };
+  videos: {
+    views: number;
+    likes: number;
+    card: number;
+    title: string;
+    watchTime: number;
+  }[];
+  cards: {
+    title: string;
+    name: string;
+    clicks: number;
+    saved: number;
+    link: string;
+    no: number;
+  }[];
+  status: number;
+  message: string;
+}
+export interface GetDataCreatorError {
+  message: string;
+  status?: number;
+}
+//get data as a viewer
+export interface GetDataViewerSuccess {
+  userInfo: {
+    likeVideos: number;
+    cardsClicks: number;
+    savedCards: number;
+  };
+  status: number;
+  message: string;
+}
+export interface GetDataViewerError {
+  message: string;
+  status?: number;
+}

@@ -5,7 +5,6 @@ import ReportModal from "./modal/reportModal";
 import AddModal from "./modal/addModal";
 import LoginModal from "./modal/loginModal";
 import { UserInfo } from "../../page";
-import { useRouter } from "next/navigation";
 import useVideo from "@/hooks/useVideo";
 
 interface Type {
@@ -30,8 +29,7 @@ const SettingBar: React.FC<Type> = ({
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [hidden, setHidden] = useState<boolean>(false);
-  const router = useRouter();
-  const { followUser } = useVideo();
+  const { followUser, loading } = useVideo();
   useEffect(() => {
     if (isAuth && isOpen && true) {
       const modal = setTimeout(() => {
@@ -42,13 +40,13 @@ const SettingBar: React.FC<Type> = ({
   }, [isOpen, isAuth]);
 
   const handleSuggest = () => {
+    if (loading) return;
     if (userInfo.owner) {
       return alert("You can't do this because you are an owner.");
     }
     setIsOpen(!isOpen);
   };
   const handleFollow = async () => {
-    if (followStatus) return;
     if (userInfo.owner) {
       return alert("You can't follow because you are an owner.");
     }
@@ -78,7 +76,9 @@ const SettingBar: React.FC<Type> = ({
 
             <button
               onClick={handleFollow}
-              className="text-[8px] font-semibold border-[0.41px] rounded-[1.24px] px-[0.82px]"
+              className={`${
+                followStatus ? "bg-blue" : "bg-background"
+              } text-[8px] font-semibold border-[0.41px] rounded-[1.24px] px-[0.82px]`}
             >
               {followStatus ? "FOLLOWED" : "FOLLOW"}
             </button>

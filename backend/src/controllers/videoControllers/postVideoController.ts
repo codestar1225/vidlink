@@ -82,19 +82,22 @@ export const publishVideo = expressAsyncHandler(
             videoId: video._id,
             userId: req.userId,
             title: video.title,
-            savers: card.isSaved ? [req.userId] : [],
-            saved: savedCards.length,
+            savers: card.isSaved
+              ? [{ time: new Date(), userId: req.userId }]
+              : [],
             isSaved: false,
           })
         )
       );
-      await User.findByIdAndUpdate(req.userId, {
-        $inc: {
-          totalVideos: 1,
-          totalCards: parsedCards.length,
-          savedCardsCreator: savedCards.length,
-        },
-      });
+      await User.updateOne(
+        { _id: req.userId },
+        {
+          $inc: {
+            totalVideos: 1,
+            totalCards: parsedCards.length,
+          },
+        }
+      );
       res.status(201).json({ message: "Video created", video });
     } catch (error: any) {
       console.error("Error in publishVideo:", error);
@@ -164,8 +167,8 @@ export const setUserInfo = expressAsyncHandler(
         }
       }
 
-      await User.findByIdAndUpdate(
-        req.userId,
+      await User.updateOne(
+        { _id: req.userId },
         {
           userName,
           picture,
@@ -176,7 +179,7 @@ export const setUserInfo = expressAsyncHandler(
           youtube,
           linkedin,
         },
-        { new: true, runValidators: true }
+        { runValidators: true }
       );
       res.status(200).json({ message: "User info saved." });
     } catch (error: any) {

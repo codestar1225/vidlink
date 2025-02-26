@@ -1,6 +1,6 @@
 "use client";
 import FooterMobile from "@/app/_components/layout/mobile/footer";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import UserInfo from "./creator/userInfo";
 import Filter from "./creator/filter";
 import Videos from "./creator/videos";
@@ -8,15 +8,66 @@ import Cards from "./creator/cards";
 import Total from "./creator/total";
 import BtnGroup from "./btnGroup";
 import Viewer from "./viewer";
+import { CardType, UserInfoType, VideoType } from "../../page";
+import useVideo from "@/hooks/useVideo";
 
-const DashboardMobile = () => {
+interface Type {
+  setUserInfo(value: UserInfoType | null): void;
+  setVideos(value: VideoType[]): void;
+  setCards(value: CardType[]): void;
+  userInfo: UserInfoType | null;
+  videos: VideoType[];
+  cards: CardType[];
+}
+export interface UserInfoViewerType {
+  likeVideos: number;
+  cardsClicks: number;
+  savedCards: number;
+}
+const DashboardMobile: React.FC<Type> = ({
+  setUserInfo,
+  setVideos,
+  setCards,
+  userInfo,
+  videos,
+  cards,
+}) => {
+  const { getDataCreator, getDataViewer } = useVideo();
   const [user, setUser] = useState<string>("creator");
-  const [period, setPeriod] = useState<number>(1);
+  const [period, setPeriod] = useState<string>("year");
+  const [userInfoViewer, setUserInfoViewer] =
+    useState<UserInfoViewerType | null>(null);
+  useEffect(() => {
+    (async () => {
+      if (user === "creator") {
+        const res = await getDataCreator(period);
+        if (
+          res.status === 200 &&
+          "userInfo" in res &&
+          "videos" in res &&
+          "cards" in res
+        ) {
+          setUserInfo(res.userInfo);
+          setVideos(res.videos);
+          setCards(res.cards);
+        } else {
+          alert(res.message);
+        }
+      } else {
+        const res = await getDataViewer(period);
+        if (res.status === 200 && "userInfo" in res) {
+          setUserInfoViewer(res.userInfo);
+        } else {
+          alert(res.message);
+        }
+      }
+    })();
+  }, [period, user]);
   return (
     <>
       <div className="min-h-screen flex flex-col justify-between">
         <main className="mt-[109px] px-[20px]">
-          <UserInfo />
+          <UserInfo picture={userInfo?.picture} />
           <Filter
             setUser={setUser}
             setPeriod={setPeriod}
@@ -25,12 +76,12 @@ const DashboardMobile = () => {
           />
           {user === "creator" ? (
             <>
-              <Videos />
-              <Cards />
-              <Total />
+              <Videos videos={videos} />
+              <Cards cards={cards} />
+              <Total userInfo={userInfo} cards={cards} />
             </>
           ) : (
-            <Viewer />
+            <Viewer userInfo={userInfoViewer} />
           )}
           <BtnGroup name="yearly" />
         </main>

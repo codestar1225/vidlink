@@ -10,7 +10,7 @@ export interface ICard extends Document {
   start: number;
   no: number;
   isSaved: boolean;
-  savers: string[];
+  savers:  { time: Date; userId: string }[]
   clicks: number;
   saved:number
 }
@@ -26,7 +26,15 @@ const CardSchema = new Schema<ICard>(
     start: { type: Number, default: 0 },
     no: { type: Number, default: 0 },
     isSaved: { type: Boolean, default: false },
-    savers: { type: [String], default: [] },
+    savers: {
+      type: [
+        {
+          time: { type: Date },
+          userId: { type: String, required: true },
+        },
+      ],
+      default: [],
+    },
     clicks: { type: Number, default: 0 },
     saved: { type: Number, default: 0 },
   },

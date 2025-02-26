@@ -14,14 +14,14 @@ interface IUser extends Document {
   role: string;
   totalVideos: number;
   totalCards: number;
-  cardsClicksViewer: number;
-  cardsClicksCreator: number;
-  savedCardsViewer: number;
-  savedCardsCreator: number;
-  followers: string[];
-  likeVideosViewer: string[];
-  likeVideosCreator: number;
-  videoViews: number;
+  followers: { time: Date; create: boolean; userId: string }[];
+  likeVideosViewer: { time: Date; videoId: string }[];
+  likeVideosCreator: { time: Date; userId: string }[];
+  cardsClicksCreator: Date[];
+  cardsClicksViewer: Date[];
+  savedCardsCreator: { time: Date; userId: string }[];
+  savedCardsViewer: { time: Date; userId: string }[];
+  videoViews: Date[];
   profileViews: number;
   watchTime: number;
 }
@@ -39,16 +39,59 @@ const UserSchema = new Schema<IUser>(
     youtube: { type: String, default: "" },
     linkedin: { type: String, default: "" },
     role: { type: String, enum: ["admin", "customer"] },
-    followers: { type: [String], default: [] },
-    likeVideosViewer: { type: [String], default: [] },
-    likeVideosCreator: { type: Number, default: 0 },
+    followers: {
+      type: [
+        {
+          time: { type: Date },
+          create: { type: Boolean },
+          userId: { type: String, required: true },
+        },
+      ],
+      default: [],
+    },
     totalVideos: { type: Number, default: 0 },
     totalCards: { type: Number, default: 0 },
-    cardsClicksViewer: { type: Number, default: 0 },
-    cardsClicksCreator: { type: Number, default: 0 },
-    savedCardsViewer: { type: Number, default: 0 },
-    savedCardsCreator: { type: Number, default: 0 },
-    videoViews: { type: Number, default: 0 },
+    likeVideosViewer: {
+      type: [
+        {
+          time: { type: Date, required: true },
+          videoId: { type: String, required: true },
+        },
+      ],
+      default: [],
+    },
+    likeVideosCreator: {
+      type: [
+        {
+          time: { type: Date, required: true },
+          videoId: { type: String, required: true },
+          userId: { type: String, required: true },
+        },
+      ],
+      default: [],
+    },
+    cardsClicksCreator: { type: [Date], default: [] },
+    cardsClicksViewer: { type: [Date], default: [] },
+    savedCardsCreator: {
+      type: [
+        {
+          time: { type: Date, required: true },
+          cardId: { type: String, required: true },
+          userId: { type: String, required: true },
+        },
+      ],
+      default: [],
+    },
+    savedCardsViewer: {
+      type: [
+        {
+          time: { type: Date },
+          cardId: { type: String, required: true },
+        },
+      ],
+      default: [],
+    },
+    videoViews: { type: [Date], default: [] },
     profileViews: { type: Number, default: 0 },
     watchTime: { type: Number, default: 0 },
   },

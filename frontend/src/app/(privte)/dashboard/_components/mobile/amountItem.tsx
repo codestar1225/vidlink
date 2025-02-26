@@ -14,11 +14,15 @@ const AmountItem: React.FC<Type> = ({ name, src, value }) => {
             src={`/icon/dashboard/${src}.png`}
             alt=""
           />
-          <span>
-            {Math.floor(value / 1000)}
-            {Math.floor((value % 1000) / 10)}
-            {(value % 1000) % 10}
-          </span>
+          {value ? (
+            <span>
+              {Math.floor(value / 1000)}
+              {Math.floor((value % 1000) / 10)}
+              {(value % 1000) % 10}
+            </span>
+          ) : (
+            "000"
+          )}
         </div>
       </div>
     </>

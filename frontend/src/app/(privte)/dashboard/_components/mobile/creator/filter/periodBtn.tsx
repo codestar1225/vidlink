@@ -1,14 +1,15 @@
 interface Type {
-  setFilter(value: number): void;
+  setFilter(value: string): void;
   name: string;
-  filter: number;
+  period: string;
+  filter: string;
 }
-const PeriodBtn: React.FC<Type> = ({ setFilter, name, filter }) => {
+const PeriodBtn: React.FC<Type> = ({ setFilter, name, period, filter }) => {
   return (
     <button
-      onClick={() => setFilter(Number(name.charAt(0)))}
+      onClick={() => setFilter(filter)}
       className={`${
-        name.startsWith(filter.toString())
+        period === filter
           ? "text-white bg-blue"
           : "text-background bg-[#191919]"
       } h-[34px] flex justify-center items-center rounded-[7px] tracking-wider w-full pt-[1px] font-bold text-[14px]`}

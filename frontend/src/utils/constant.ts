@@ -18,3 +18,5 @@ export const GETUSERNAME = `${BASE_URL}/api/video/getusername/`; // get username
 export const SAVECARD = `${BASE_URL}/api/video/savecard/`; // save card api endpoint
 export const INCREASECLICKS = `${BASE_URL}/api/video/increaseclicks/`; // increase card clicks api endpoint
 export const WATCHTIME = `${BASE_URL}/api/video/watchtime/`; // watch time record api endpoint
+export const GETDATACREATOR = `${BASE_URL}/api/data/getdatacreator/`; // get data as a creator api endpoint
+export const GETDATAVIEWER = `${BASE_URL}/api/data/getdataviewer/`; // get data as a viewer api endpoint

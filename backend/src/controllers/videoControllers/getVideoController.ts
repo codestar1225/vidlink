@@ -20,8 +20,10 @@ export const getVideos = expressAsyncHandler(
         const following = await User.findById(req.userId)
           .select("followers")
           .lean();
+        const followingUserIds =
+          following?.followers?.map((follower) => follower.userId) || [];
         const followingVideos = await Video.find({
-          userId: { $in: following?.followers },
+          userId: { $in: followingUserIds },
         })
           .select("videoLink views title userId _id")
           .populate("user")
@@ -38,6 +40,7 @@ export const getVideos = expressAsyncHandler(
     }
   }
 );
+
 //get video detail
 export const getVideo = expressAsyncHandler(
   async (req: CustomRequest, res: Response) => {
@@ -56,7 +59,7 @@ export const getVideo = expressAsyncHandler(
         return;
       }
       const userInfo = await User.findById(videoInfo.userId)
-        .select("totalVideos userName likeVideosViewer followers")
+        .select("totalVideos userName followers")
         .lean();
       const userVideos = await Video.find({ userId: videoInfo.userId })
         .select("videoLink _id")
@@ -70,36 +73,52 @@ export const getVideo = expressAsyncHandler(
           .select("likeVideosViewer")
           .lean();
         if (user && user.likeVideosViewer) {
-          like = user.likeVideosViewer.includes(videoId);
+          like = user.likeVideosViewer.some((key) => key.videoId === videoId);
         }
         if (videoInfo.userId.toString() === req.userId) {
           owner = true;
         }
         if (userInfo?.followers) {
-          followStatus = userInfo?.followers.includes(req.userId);
+          followStatus = userInfo?.followers.some(
+            (key) => key.userId === req.userId && key.create
+          );
         }
         if (videoInfo?.cards) {
           videoInfo.cards.forEach((card: ICard) => {
-            card.isSaved = card.savers.includes(req.userId || "");
+            card.isSaved = card.savers.some((key) => key.userId === req.userId);
             card.savers = [];
           });
         }
+        if (req.userId !== videoInfo.userId.toString()) {
+          await User.updateOne(
+            { _id: userInfo?._id },
+            {
+              $addToSet: { videoViews: new Date() },
+            }
+          );
+        }
+      } else {
+        await User.updateOne(
+          { _id: userInfo?._id },
+          {
+            $addToSet: { videoViews: new Date() },
+          }
+        );
       }
+      await Video.updateOne({ _id: videoId }, { $inc: { views: 1 } });
       videoInfo.cards.forEach((card: ICard, index) => {
         card.no = index + 1;
       });
-      await Video.findByIdAndUpdate(videoId, { $inc: { views: 1 } });
-      await User.findByIdAndUpdate(userInfo?._id, { $inc: { videoViews: 1 } });
       res.status(200).json({
         message: "Video found",
         videoInfo,
-        userInfo: { ...userInfo, like, likeVideosViewer: [], owner, followers: [] },
+        userInfo: { ...userInfo, like, owner, followers: [] },
         userVideos,
         relatedVideos,
         followStatus,
       });
     } catch (error: any) {
-      console.error('getVideo',error)
+      console.error("getVideo", error);
       res.status(500).json({ message: error.message });
     }
   }
@@ -131,9 +150,13 @@ export const getMyVideos = expressAsyncHandler(
       //   card.isSaved = card.savers.includes(req.userId || "");
       //   card.savers = [];
       // });
-      const likes = await User.findById(req.userId).select("likeVideosViewer").lean();
+      const likes = await User.findById(req.userId)
+        .select("likeVideosViewer")
+        .lean();
+      const likeVideosIds =
+        likes?.likeVideosViewer?.map((key) => key.videoId) || [];
       const myLikesVideos = await Video.find({
-        _id: { $in: likes?.likeVideosViewer },
+        _id: { $in: likeVideosIds },
       })
         .select("videoLink cards title")
         .lean();
@@ -142,11 +165,14 @@ export const getMyVideos = expressAsyncHandler(
           "totalVideos totalCards followers tiktok youtube linkedin instagram userName picture"
         )
         .lean();
+      const followingNumber = userInfo?.followers.filter(
+        (key) => key.create
+      ).length;
       res.status(200).json({
         message: "my videos found",
         myVideos,
         myLikesVideos,
-        userInfo: { ...userInfo, followers: userInfo?.followers.length },
+        userInfo: { ...userInfo, followers: followingNumber },
       });
     } catch (error: any) {
       console.log("getMyVideos", error);
@@ -175,12 +201,17 @@ export const getUserVideos = expressAsyncHandler(
       await User.findByIdAndUpdate(userId, { $inc: { profileViews: 1 } });
       let followStatus = false;
       if (req.userId && userInfo?.followers) {
-        followStatus = userInfo?.followers.includes(req.userId);
+        followStatus = userInfo?.followers.some(
+          (key) => key.userId === req.userId
+        );
       }
+      const followingNumber = userInfo?.followers.filter(
+        (key) => key.create
+      ).length;
       res.status(200).json({
         message: "my videos found",
         userVideos,
-        userInfo: { ...userInfo, followers: userInfo?.followers.length },
+        userInfo: { ...userInfo, followers: followingNumber },
         followStatus,
       });
     } catch (error: any) {

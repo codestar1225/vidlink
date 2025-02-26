@@ -1,8 +1,13 @@
 "use client";
 import Image from "next/image";
 import { useState } from "react";
+import { CardType } from "../../../page";
+import Link from "next/link";
 
-const Cards = () => {
+interface Type {
+  cards: CardType[];
+}
+const Cards: React.FC<Type> = ({ cards }) => {
   const [isOpen, setIsOpen] = useState<boolean>(true);
 
   return (
@@ -26,11 +31,14 @@ const Cards = () => {
             alt=""
           />
         </button>
-        <table className="font-semibold">
+        <table className="font-semibold w-full">
           <thead className="text-[8px]">
-            <tr className="border-b-[0.5px] h-[31px]">
-              <th className="text-left">
-                <i>VIDEO</i>
+            <tr className="border-b-[0.5px] tracking-wider h-[31px]">
+              <th>
+                <div className="flex items-center justify-start gap-[35%]">
+                  <i className="font-bold">(#CARD)</i>
+                  <i className="font-normal">VIDEO</i>
+                </div>
               </th>
               <th className="w-[14%]">
                 <div className="flex gap-[5.23px] items-center justify-center">
@@ -68,78 +76,54 @@ const Cards = () => {
             </tr>
           </thead>
           <tbody className="text-[10px]">
-            <tr className="border-b-[0.5px] h-[19.8px]">
-              <td>WHERE SHE GOES</td>
-              <td className="w-[14%]">
-                <div className="flex gap-[5.23px] items-center justify-center">
-                  <Image
-                    width={7.77}
-                    height={7.77}
-                    src="/icon/dashboard/click.png"
-                    alt=""
-                  />
-                  85.5K
-                </div>
-              </td>
-              <td className="w-[14%]">
-                <div className="flex gap-[5.23px] items-center justify-center">
-                  <Image
-                    width={7.77}
-                    height={7.77}
-                    src="/icon/dashboard/save.png"
-                    alt=""
-                  />
-                  2696
-                </div>
-              </td>
-              <td className="w-[14%]">
-                <div className="flex gap-[5.23px] items-center justify-center">
-                  <Image
-                    width={7.77}
-                    height={7.77}
-                    src="/icon/dashboard/link.png"
-                    alt=""
-                  />
-                  2334
-                </div>
-              </td>
-            </tr>
-            <tr className="border-b-[0.5px] h-[19.8px]">
-              <td>WHERE SHE GOES</td>
-              <td className="w-[14%]">
-                <div className="flex gap-[5.23px] items-center justify-center">
-                  <Image
-                    width={7.77}
-                    height={7.77}
-                    src="/icon/dashboard/views.png"
-                    alt=""
-                  />
-                  85.5K
-                </div>
-              </td>
-              <td className="w-[14%]">
-                <div className="flex gap-[5.23px] items-center justify-center">
-                  <Image
-                    width={7.77}
-                    height={7.77}
-                    src="/icon/dashboard/likes.png"
-                    alt=""
-                  />
-                  2696
-                </div>
-              </td>
-              <td className="w-[14%]">
-                <div className="flex gap-[5.23px] items-center justify-center">
-                  <Image
-                    width={7.77}
-                    height={7.77}
-                    src="/icon/dashboard/cards.png"
-                    alt=""
-                  />
-                  2334
-                </div>
-              </td>
-            </tr>
+            {cards?.map((item, index) => (
+              <tr key={index} className="border-b-[0.5px] h-[19.8px]">
+                <td className="font-normal tracking-wider">
+                  <span className="font-bold">
+                    (#{(item?.no > 9 ? item?.no : `0${item?.no}`) || 0}&nbsp;
+                    {item?.name || ""})
+                  </span>
+                  &nbsp;{item.title.toUpperCase()}
+                </td>
+                <td className="w-[14%]">
+                  <div className="flex gap-[5.23px] items-center justify-center">
+                    <Image
+                      width={7.77}
+                      height={7.77}
+                      src="/icon/dashboard/click.png"
+                      alt=""
+                    />
+                    {item?.clicks || 0}
+                  </div>
+                </td>
+                <td className="w-[14%]">
+                  <div className="flex gap-[5.23px] items-center justify-center">
+                    <Image
+                      width={7.77}
+                      height={7.77}
+                      src="/icon/dashboard/save.png"
+                      alt=""
+                    />
+                    {item?.saved || 0}
+                  </div>
+                </td>
+                <td className="w-[14%]">
+                  <Link
+                    href={item?.link || ""}
+                    target="_blank"
+                    className="flex gap-[5.23px] items-center justify-center"
+                  >
+                    <Image
+                      width={7.77}
+                      height={7.77}
+                      src="/icon/dashboard/link.png"
+                      alt=""
+                    />
+                    VISIT
+                  </Link>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>

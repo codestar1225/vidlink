@@ -2,6 +2,8 @@ import {
   ADDLIKE,
   CHECKUSERNAME,
   FOLLOWUSER,
+  GETDATACREATOR,
+  GETDATAVIEWER,
   GETMYVIDEOS,
   GETUSERINFO,
   GETUSERNAME,
@@ -24,6 +26,10 @@ import {
   CheckUserNameSuccess,
   FollowStatusError,
   FollowStatusSccess,
+  GetDataCreatorError,
+  GetDataCreatorSuccess,
+  GetDataViewerError,
+  GetDataViewerSuccess,
   GetMyVideosError,
   GetMyVideosSuccess,
   GetUserInfoError,
@@ -82,7 +88,13 @@ const useVideo = () => {
       Authorization: `Bearer ${token}`,
     },
   };
-
+  const getDataConfig = (duration: string) => ({
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+      "x-duration": duration,
+    },
+  });
   //publish video
   const publish = async (
     data: FormData
@@ -241,7 +253,6 @@ const useVideo = () => {
         await axios.put(FOLLOWUSER, {}, userIdConfig(userId));
       return { ...res.data, status: res.status };
     } catch (error: unknown) {
-      console.log(error);
       if (axios.isAxiosError(error)) {
         if (
           error?.response?.data?.message === "Token is invalid or has expired!"
@@ -270,7 +281,6 @@ const useVideo = () => {
         await axios.get(GETUSERINFO, config);
       return { ...res.data, status: res.status };
     } catch (error: unknown) {
-      console.log(error);
       if (axios.isAxiosError(error)) {
         if (
           error?.response?.data?.message === "Token is invalid or has expired!"
@@ -300,7 +310,6 @@ const useVideo = () => {
         await axios.post(SETUSERINFO, userInfo, multiConfig);
       return { ...res.data, status: res.status };
     } catch (error: unknown) {
-      console.log(error);
       if (axios.isAxiosError(error)) {
         if (
           error?.response?.data?.message === "Token is invalid or has expired!"
@@ -329,7 +338,6 @@ const useVideo = () => {
         await axios.post(CHECKUSERNAME, { userName }, config);
       return { ...res.data, status: res.status };
     } catch (error: unknown) {
-      console.log(error);
       if (axios.isAxiosError(error)) {
         if (
           error?.response?.data?.message === "Token is invalid or has expired!"
@@ -358,7 +366,6 @@ const useVideo = () => {
         await axios.get(GETUSERNAME, config);
       return { ...res.data, status: res.status };
     } catch (error: unknown) {
-      console.log(error);
       if (axios.isAxiosError(error)) {
         if (
           error?.response?.data?.message === "Token is invalid or has expired!"
@@ -387,7 +394,6 @@ const useVideo = () => {
         await axios.put(SAVECARD, { cardId }, config);
       return { ...res.data, status: res.status };
     } catch (error: unknown) {
-      console.log(error);
       if (axios.isAxiosError(error)) {
         if (
           error?.response?.data?.message === "Token is invalid or has expired!"
@@ -426,6 +432,7 @@ const useVideo = () => {
       setLoading(false);
     }
   };
+  //record watch time
   const watchTime = async (
     watchTime: number,
     videoId: string
@@ -438,6 +445,63 @@ const useVideo = () => {
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
         if (error?.response?.data?.message) {
+          return { message: "Something went wrong" };
+        }
+      }
+      return { message: "An unknown error occurred" };
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  //get data as a creator
+  const getDataCreator = async (
+    duration: string
+  ): Promise<GetDataCreatorSuccess | GetDataCreatorError> => {
+    setLoading(true);
+    try {
+      const res: AxiosResponse<GetDataCreatorSuccess | GetDataCreatorError> =
+        await axios.get(GETDATACREATOR, getDataConfig(duration));
+      return { ...res.data, status: res.status };
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        if (
+          error?.response?.data?.message === "Token is invalid or has expired!"
+        ) {
+          setToken("");
+          Cookies.remove("token");
+          Cookies.remove("user");
+          router.push("/signin");
+          return { message: "Your session was expired. Please log in again." };
+        } else {
+          return { message: "Something went wrong" };
+        }
+      }
+      return { message: "An unknown error occurred" };
+    } finally {
+      setLoading(false);
+    }
+  };
+  //get data as a viewer
+  const getDataViewer = async (
+    duration: string
+  ): Promise<GetDataViewerSuccess | GetDataViewerError> => {
+    setLoading(true);
+    try {
+      const res: AxiosResponse<GetDataViewerSuccess | GetDataViewerError> =
+        await axios.get(GETDATAVIEWER, getDataConfig(duration));
+      return { ...res.data, status: res.status };
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        if (
+          error?.response?.data?.message === "Token is invalid or has expired!"
+        ) {
+          setToken("");
+          Cookies.remove("token");
+          Cookies.remove("user");
+          router.push("/signin");
+          return { message: "Your session was expired. Please log in again." };
+        } else {
           return { message: "Something went wrong" };
         }
       }
@@ -462,6 +526,8 @@ const useVideo = () => {
     saveCard,
     increaseClicks,
     watchTime,
+    getDataCreator,
+    getDataViewer,
     loading,
   };
 };

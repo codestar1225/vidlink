@@ -1,8 +1,13 @@
 "use client";
+import { VideoType } from "@/app/(privte)/dashboard/page";
+import { Clock } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 
-const Table = () => {
+interface Type {
+  videos: VideoType[];
+}
+const Table: React.FC<Type> = ({ videos }) => {
   const [isOpen, setIsOpen] = useState<boolean>(true);
 
   return (
@@ -26,7 +31,7 @@ const Table = () => {
             alt=""
           />
         </button>
-        <table className="font-semibold">
+        <table className="font-semibold w-full">
           <thead className="text-[8px]">
             <tr className="border-b-[0.5px] h-[31px]">
               <th className="text-left">
@@ -65,81 +70,73 @@ const Table = () => {
                   <i>CARDS</i>
                 </div>
               </th>
+              <th className="w-[14%] ">
+                <div className="flex gap-[5.23px] items-center justify-center">
+                  <Clock className="size-[7.77px]" />
+                  <i>WATCH&nbsp;TIME</i>
+                </div>
+              </th>
             </tr>
           </thead>
           <tbody className="text-[10px]">
-            <tr className="border-b-[0.5px] h-[19.8px]">
-              <td>WHERE SHE GOES</td>
-              <td className="w-[14%]">
-                <div className="flex gap-[5.23px] items-center justify-center">
-                  <Image
-                    width={7.77}
-                    height={7.77}
-                    src="/icon/dashboard/views.png"
-                    alt=""
-                  />
-                  85.5K
-                </div>
-              </td>
-              <td className="w-[14%]">
-                <div className="flex gap-[5.23px] items-center justify-center">
-                  <Image
-                    width={7.77}
-                    height={7.77}
-                    src="/icon/dashboard/likes.png"
-                    alt=""
-                  />
-                  2696
-                </div>
-              </td>
-              <td className="w-[14%]">
-                <div className="flex gap-[5.23px] items-center justify-center">
-                  <Image
-                    width={7.77}
-                    height={7.77}
-                    src="/icon/dashboard/cards.png"
-                    alt=""
-                  />
-                  2334
-                </div>
-              </td>
-            </tr>
-            <tr className="border-b-[0.5px] h-[19.8px]">
-              <td>WHERE SHE GOES</td>
-              <td className="w-[14%]">
-                <div className="flex gap-[5.23px] items-center justify-center">
-                  <Image
-                    width={7.77}
-                    height={7.77}
-                    src="/icon/dashboard/views.png"
-                    alt=""
-                  />
-                  85.5K
-                </div>
-              </td>
-              <td className="w-[14%]">
-                <div className="flex gap-[5.23px] items-center justify-center">
-                  <Image
-                    width={7.77}
-                    height={7.77}
-                    src="/icon/dashboard/likes.png"
-                    alt=""
-                  />
-                  2696
-                </div>
-              </td>
-              <td className="w-[14%]">
-                <div className="flex gap-[5.23px] items-center justify-center">
-                  <Image
-                    width={7.77}
-                    height={7.77}
-                    src="/icon/dashboard/cards.png"
-                    alt=""
-                  />
-                  2334
-                </div>
-              </td>
-            </tr>
+            {videos?.map((item, index) => (
+              <tr key={index} className="border-b-[0.5px] h-[19.8px]">
+                <td>{item?.title.toUpperCase() || ""}</td>
+                <td className="w-[14%]">
+                  <div className="flex gap-[5.23px] items-center justify-center">
+                    <Image
+                      width={7.77}
+                      height={7.77}
+                      src="/icon/dashboard/views.png"
+                      alt=""
+                    />
+                    {item?.views || 0}
+                  </div>
+                </td>
+                <td className="w-[14%]">
+                  <div className="flex gap-[5.23px] items-center justify-center">
+                    <Image
+                      width={7.77}
+                      height={7.77}
+                      src="/icon/dashboard/likes.png"
+                      alt=""
+                    />
+                    {item?.likes || 0}
+                  </div>
+                </td>
+                <td className="w-[14%]">
+                  <div className="flex gap-[5.23px] items-center justify-center">
+                    <Image
+                      width={7.77}
+                      height={7.77}
+                      src="/icon/dashboard/cards.png"
+                      alt=""
+                    />
+                    {item?.card || 0}
+                  </div>
+                </td>
+                <td className="w-[14%]">
+                  <div className="flex gap-[5.23px] items-center justify-center">
+                    <Clock className="size-[7.77px]" />
+                    {item?.watchTime < 60
+                      ? `${item?.watchTime < 10 ? 0 : ""}${Math.floor(
+                          item?.watchTime
+                        )}s`
+                      : item?.watchTime < 3600
+                      ? `${
+                          Math.floor(item?.watchTime / 60) < 10 ? 0 : ""
+                        }${Math.floor(item?.watchTime / 60)}m ${Math.floor(
+                          item?.watchTime % 60
+                        )}s`
+                      : `${
+                          Math.floor(item?.watchTime / 3600) < 10 ? 0 : ""
+                        }${Math.floor(item?.watchTime / 3600)}h ${Math.floor(
+                          (item?.watchTime % 3660) / 60
+                        )}m` || 0}
+                  </div>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>

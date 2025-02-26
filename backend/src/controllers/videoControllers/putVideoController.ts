@@ -13,6 +13,10 @@ export const addLike = expressAsyncHandler(
       res.status(400).json({ message: "No videoId provided." });
       return;
     }
+    if (!req.userId) {
+      res.status(400).json({ message: "No videoId userId." });
+      return;
+    }
     try {
       const videoInfo = await Video.findById(videoId).select("userId").lean();
       if (req.userId === videoInfo?.userId?.toString()) {
@@ -22,43 +26,43 @@ export const addLike = expressAsyncHandler(
       const userData = await User.findById(req.userId)
         .select("likeVideosViewer")
         .lean();
-      if (
-        userData &&
-        userData.likeVideosViewer &&
-        userData.likeVideosViewer.includes(videoId)
-      ) {
-        const video = await Video.findByIdAndUpdate(
-          videoId,
-          { $inc: { likes: -1 } },
-          { new: true, runValidators: true }
-        );
-        await User.findByIdAndUpdate(
-          req.userId,
-          {
-            $pull: { likeVideosViewer: videoId }, // Use $pull to remove an element from an array
-          },
-          { new: true, runValidators: true }
-        );
-        await User.findByIdAndUpdate(video?.userId, {
-          $inc: { likeVideosCreator: -1 },
-        });
+      if (userData?.likeVideosViewer?.some((key) => key.videoId === videoId)) {
+        await Promise.all([
+          Video.updateOne({ _id: videoId }, { $inc: { likes: -1 } }),
+          User.updateOne(
+            { _id: videoInfo?.userId },
+            {
+              $pull: {
+                likeVideosCreator: { userId: req.userId, videoId },
+              },
+            }
+          ),
+          User.updateOne(
+            { _id: req.userId },
+            { $pull: { likeVideosViewer: { videoId } } }
+          ),
+        ]);
         res.status(200).json({ message: "Like removed.", like: false });
       } else {
-        const video = await Video.findByIdAndUpdate(
-          videoId,
-          { $inc: { likes: 1 } },
-          { new: true, runValidators: true }
-        );
-        await User.findByIdAndUpdate(
-          req.userId,
-          {
-            $addToSet: { likeVideosViewer: videoId },
-          },
-          { new: true, runValidators: true }
-        );
-        await User.findByIdAndUpdate(video?.userId, {
-          $inc: { likeVideosCreator: 1 },
-        });
+        await Promise.all([
+          Video.updateOne({ _id: videoId }, { $inc: { likes: 1 } }),
+          User.updateOne(
+            { _id: videoInfo?.userId },
+            {
+              $addToSet: {
+                likeVideosCreator: {
+                  time: new Date(),
+                  videoId,
+                  userId: req.userId,
+                },
+              },
+            }
+          ),
+          User.updateOne(
+            { _id: req.userId },
+            { $addToSet: { likeVideosViewer: { time: new Date(), videoId } } }
+          ),
+        ]);
         res.status(200).json({ message: "Like added.", like: true });
       }
     } catch (error: any) {
@@ -86,24 +90,45 @@ export const followUser = expressAsyncHandler(
     }
     try {
       const userData = await User.findById(targetUserId).select("followers");
-      if (
-        userData &&
-        userData.followers &&
-        userData.followers.includes(req.userId)
-      ) {
-        res.status(400).json({ message: "you already followed." });
-        return;
-      }
-      await User.findByIdAndUpdate(
-        targetUserId,
-        {
-          $addToSet: { followers: req.userId },
-        },
-        { new: true, runValidators: true }
+      const follower = userData?.followers?.find(
+        (follower) => follower.userId === req.userId
       );
-      res
-        .status(200)
-        .json({ message: "followed the user.", followStatus: true });
+      if (follower) {
+        await User.updateOne(
+          { _id: targetUserId },
+          {
+            $set: {
+              "followers.$[elem].time": new Date(),
+              "followers.$[elem].create": !follower.create,
+            },
+          },
+          {
+            runValidators: true,
+            arrayFilters: [{ "elem.userId": req.userId }], // ✅ Update only the matched follower
+          }
+        );
+        res.status(200).json({
+          message: follower.create
+            ? "Unfollowed the user."
+            : "Followed the user.",
+          followStatus: !follower.create,
+        });
+      } else {
+        // forllow firstly.
+        await User.updateOne(
+          { _id: targetUserId },
+          {
+            $addToSet: {
+              followers: { time: new Date(), create: true, userId: req.userId },
+            },
+          },
+          { runValidators: true }
+        );
+
+        res
+          .status(200)
+          .json({ message: "Followed the user.", followStatus: true });
+      }
     } catch (error: any) {
       res.status(500).json({ message: error.message });
     }
@@ -130,45 +155,95 @@ export const saveCard = expressAsyncHandler(
       }
       //increasing the clicks of card in terms of not user.
       if (req.userId !== card?.userId?.toString()) {
-        await Card.findByIdAndUpdate(cardId, { $inc: { clicks: 1 } });
-        await User.findByIdAndUpdate(req.userId, {
-          $inc: { cardsClicksViewer: 1 },
-        });
-        await User.findByIdAndUpdate(card?.userId, {
-          $inc: { cardsClicksCreator: 1 },
-        });
+        Promise.all([
+          Card.updateOne({ _id: cardId }, { $inc: { clicks: 1 } }),
+          User.updateOne(
+            { _id: req.userId },
+            {
+              $addToSet: { cardsClicksViewer: new Date() },
+            }
+          ),
+          User.updateOne(card?.userId, {
+            $addToSet: { cardsClicksCreator: new Date() },
+          }),
+        ]);
       }
-      if (card.savers.includes(req.userId)) {
-        await Card.findByIdAndUpdate(cardId, {
-          $pull: { savers: req.userId },
-          $inc: { saved: -1 },
-        });
+      if (card?.savers.some((key) => key.userId === req.userId)) {
         if (req.userId === card?.userId?.toString()) {
-          await User.findByIdAndUpdate(req.userId, {
-            $inc: { savedCardsCreator: -1 },
-          });
+          await Card.updateOne(
+            { _id: cardId },
+            {
+              $pull: { savers: { userId: req.userId } },
+            }
+          );
         } else {
-          await User.findByIdAndUpdate(req.userId, {
-            $inc: { savedCardsViewer: -1 },
-          });
+          await Promise.all([
+            Card.updateOne(
+              { _id: cardId },
+              {
+                $pull: { savers: { userId: req.userId } },
+                $inc: { saved: -1 },
+              }
+            ),
+            User.updateOne(
+              { _id: req.userId },
+              {
+                $pull: { savedCardsViewer: { cardId: cardId } },
+              }
+            ),
+            User.updateOne(
+              { _id: card.userId },
+              {
+                $pull: {
+                  savedCardsCreator: { userId: req.userId, cardId: cardId },
+                },
+              }
+            ),
+          ]);
         }
         res.status(200).json({
           message: "Unsaved card.",
           saved: false,
         });
       } else {
-        await Card.findByIdAndUpdate(cardId, {
-          $addToSet: { savers: req.userId },
-          $inc: { saved: 1 },
-        });
+        const saveEntry = { time: new Date(), userId: req.userId };
         if (req.userId === card?.userId?.toString()) {
-          await User.findByIdAndUpdate(req.userId, {
-            $inc: { savedCardsCreator: 1 },
-          });
+          await Card.updateOne(
+            { _id: cardId },
+            {
+              $addToSet: { savers: saveEntry },
+            }
+          );
         } else {
-          await User.findByIdAndUpdate(req.userId, {
-            $inc: { savedCardsViewer: 1 },
-          });
+          await Promise.all([
+            Card.updateOne(
+              { _id: cardId },
+              {
+                $addToSet: { savers: saveEntry },
+                $inc: { saved: 1 },
+              }
+            ),
+            User.updateOne(
+              { _id: req.userId },
+              {
+                $addToSet: {
+                  savedCardsViewer: { time: new Date(), cardId },
+                },
+              }
+            ),
+            User.updateOne(
+              { _id: card.userId },
+              {
+                $addToSet: {
+                  savedCardsCreator: {
+                    time: new Date(),
+                    cardId,
+                    userId: req.userId,
+                  },
+                },
+              }
+            ),
+          ]);
         }
         res.status(200).json({
           message: "Saved card.",
@@ -190,16 +265,36 @@ export const increaseClicks = expressAsyncHandler(
     }
     try {
       const card = await Card.findById(cardId).select("userId").lean();
-      if (req.userId && req.userId !== card?.userId.toString()) {
-        await Card.findByIdAndUpdate(cardId, { $inc: { clicks: 1 } });
-        await User.findByIdAndUpdate(req.userId, {
-          $inc: { cardsClicksViewer: 1 },
-        });
-        await User.findByIdAndUpdate(card?.userId, {
-          $inc: { cardsClicksCreator: 1 },
-        });
-        res.status(200).json({ message: "Clicks increased." });
+      if (req.userId) {
+        if (req.userId !== card?.userId.toString()) {
+          await Promise.all([
+            Card.updateOne({ _id: cardId }, { $inc: { clicks: 1 } }),
+            User.updateOne(
+              { _id: req.userId },
+              {
+                $addToSet: { cardsClicksViewer: new Date() },
+              }
+            ),
+            User.updateOne(
+              { _id: card?.userId },
+              {
+                $inc: { cardsClicksCreator: new Date() },
+              }
+            ),
+          ]);
+        }
+      } else {
+        await Promise.all([
+          await Card.updateOne({ _id: cardId }, { $inc: { clicks: 1 } }),
+          await User.updateOne(
+            { _id: card?.userId },
+            {
+              $inc: { cardsClicksCreator: new Date() },
+            }
+          ),
+        ]);
       }
+      res.status(200).json({ message: "Clicks increased." });
     } catch (error: any) {
       res.status(500).json({ message: error.message });
     }
@@ -216,13 +311,19 @@ export const watchTime = expressAsyncHandler(
       res.status(400).json({ message: "No provided videoId." });
     }
     try {
-      await Video.findByIdAndUpdate(videoId, {
-        $inc: { watchTime: watchTime },
-      });
+      await Video.updateOne(
+        { _id: videoId },
+        {
+          $inc: { watchTime: Math.floor(watchTime) },
+        }
+      );
       const user = await Video.findById(videoId).select("userId").lean();
-      await User.findByIdAndUpdate(user?.userId, {
-        $inc: { watchTime: watchTime },
-      });
+      await User.updateOne(
+        { _id: user?.userId },
+        {
+          $inc: { watchTime: Math.floor(watchTime) },
+        }
+      );
       // console.log("watchtime success", watchTime);
     } catch (error: any) {
       res.status(500).json({ message: error.message });

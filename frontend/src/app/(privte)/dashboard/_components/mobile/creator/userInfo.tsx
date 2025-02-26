@@ -3,28 +3,26 @@ import { tokenAtom } from "@/store";
 
 interface Type {
   picture?: string | null;
-  totalVideos?: number | null;
-  totalCards?: number | null;
-  followers?: number | null;
 }
-const UserInfo: React.FC<Type> = ({
-  picture,
-  totalVideos,
-  totalCards,
-  followers,
-}) => {
+const UserInfo: React.FC<Type> = ({ picture }) => {
   const [, setToken] = useAtom(tokenAtom);
 
   return (
     <>
       <div className="font-semibold flex flex-col items-center w-full px-[39px] gap-[39px]">
-        <img
-          width={146}
-          height={146}
-          className="size-[146px] rounded-full"
-          src={"/icon/profile/avatar.png"}
-          alt=""
-        />
+        <div className="size-[146px]">
+          {picture ? (
+            <img
+              width={146}
+              height={146}
+              className="size-[146px] rounded-full"
+              src={picture}
+              alt=""
+            />
+          ) : (
+            <></>
+          )}
+        </div>
         <div className="text-[13.55px] w-full flex gap-[10px] items-center mx-[38px] justify-between">
           <span className={`text-blue`}>LVL&nbsp;49</span>
           <div className="relative w-full h-[9.23px] rounded-full bg-[#3C4450]">
