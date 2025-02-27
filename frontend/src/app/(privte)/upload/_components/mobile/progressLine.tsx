@@ -49,24 +49,24 @@ const ProgressLine: React.FC<Type> = ({
         <span
           className={`${
             edit === "add" || edit === "preview" ? "bg-blue" : "bg-transparent"
-          } h-[5px] rounded-full absolute bottom-[7px] left-[36px] right-1/2`}
+          } h-[5px] rounded-full absolute bottom-[7px] left-[36px] right-1/2 duration-1000`}
         ></span>
         <span
           className={`${
             edit === "preview" ? "bg-blue" : "bg-transparent"
-          } bg-blue h-[5px] rounded-full absolute bottom-[7px] right-[36px] left-1/2`}
+          } bg-blue h-[5px] rounded-full absolute bottom-[7px] right-[36px] left-1/2 duration-1000`}
         ></span>
         <span
           className={`${
             !editSignal && edit === "preview" ? "bg-blue " : "bg-[#505050]"
-          } w-[36px] h-[5px] rounded-full absolute bottom-[7px] right-0`}
+          } w-[36px] h-[5px] rounded-full absolute bottom-[7px] right-0 duration-1000`}
         ></span>
         {/* Points */}
         <button
           onClick={handleStartPoint}
           className={`${
             url || videoSrc || videoLink ? "bg-blue" : "bg-white"
-          } size-[20px] rounded-full  border border-blue absolute left-[26px] -bottom-[0.5px]`}
+          } size-[20px] rounded-full  border border-blue absolute left-[26px] -bottom-[0.5px] duration-1000`}
         ></button>
         <button
           onClick={handleMiddlePoint}
@@ -76,7 +76,7 @@ const ProgressLine: React.FC<Type> = ({
               : edit === "preview"
               ? "bg-blue border-blue"
               : "bg-[#505050] border-none"
-          } size-[20px] rounded-full border border-blue absolute left-[50%] bottom-[0px] -translate-x-[50%]`}
+          } size-[20px] rounded-full border border-blue absolute left-[50%] bottom-[0px] -translate-x-[50%] duration-1000`}
         ></button>
         <button
           onClick={handleEndPoint}
@@ -86,13 +86,13 @@ const ProgressLine: React.FC<Type> = ({
               : edit === "preview"
               ? "bg-white border-blue"
               : "bg-[#505050] border-none"
-          } size-[20px] rounded-full border  absolute right-[26px] bottom-[0px]`}
+          } size-[20px] rounded-full border  absolute right-[26px] bottom-[0px] duration-1000`}
         ></button>
         {/* title */}
         <div
           className={`${
             url || videoSrc || videoLink ? "text-blue" : "text-white"
-          } text-[10px] font-semibold tracking-widest absolute left-[15px] bottom-[30px]`}
+          } text-[10px] font-semibold tracking-widest absolute left-[15px] bottom-[30px] duration-1000`}
         >
           UPLOAD
         </div>
@@ -103,7 +103,7 @@ const ProgressLine: React.FC<Type> = ({
               : edit === "preview"
               ? "text-blue"
               : "text-[#505050]"
-          } text-[10px] text-[#505050] font-semibold tracking-widest absolute left-[50%] -translate-x-[50%] bottom-[30px]`}
+          } text-[10px] text-[#505050] font-semibold tracking-widest absolute left-[50%] -translate-x-[50%] bottom-[30px] duration-1000`}
         >
           ADD CARDS
         </div>
@@ -114,7 +114,7 @@ const ProgressLine: React.FC<Type> = ({
               : edit === "preview"
               ? "text-white border-blue"
               : "text-[#505050] "
-          } text-[10px] text-[#505050] font-semibold tracking-widest absolute right-[15px] bottom-[30px]`}
+          } text-[10px] text-[#505050] font-semibold tracking-widest absolute right-[15px] bottom-[30px] duration-1000`}
         >
           PUBLISH
         </div>

@@ -42,7 +42,10 @@ const ProfilesMobile: React.FC<Type> = ({
             email={userInfo?.email || ""}
           />
           <div className="mx-[11.5px] mt-[9px] mb-[76px]">
-            <Video myVideos={userVideos} totalVideos={userInfo?.totalVideos} />
+            <Video
+              myVideos={userVideos?.slice()?.reverse()}
+              totalVideos={userInfo?.totalVideos}
+            />
           </div>
         </main>
         <FooterMobile isFixed={false} />

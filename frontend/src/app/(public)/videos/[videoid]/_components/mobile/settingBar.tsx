@@ -64,7 +64,15 @@ const SettingBar: React.FC<Type> = ({
       <div className="h-[72.58px] w-full relative flex items-center justify-center">
         <div className="absolute top-[18.6px] left-[11px] flex gap-[10.3px] items-start">
           <Link href={`/profile/${userInfo.owner ? "" : userId.trim()}`}>
-            <img src="/icon/detail/avatar.svg" alt="" />
+            {userInfo.picture ? (
+              <img
+                className="size-[35px] rounded-full"
+                src={userInfo.picture}
+                alt=""
+              />
+            ) : (
+              <span className="size-[35px]"></span>
+            )}
           </Link>
           <div className="flex flex-col h-[38.3px] justify-between items-start">
             <div className="text-[12px] text-blue font-semibold ">
@@ -77,7 +85,9 @@ const SettingBar: React.FC<Type> = ({
             <button
               onClick={handleFollow}
               className={`${
-                followStatus ? "bg-blue border-none" : "bg-background border-[0.41px]"
+                followStatus
+                  ? "bg-blue border-none"
+                  : "bg-background border-[0.41px]"
               } text-[8px] font-semibold  rounded-[1.24px] px-[2px] h-[10.5px] leading-none`}
             >
               {followStatus ? "FOLLOWED" : "FOLLOW"}

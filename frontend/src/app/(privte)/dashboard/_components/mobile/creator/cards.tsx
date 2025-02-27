@@ -76,8 +76,8 @@ const Cards: React.FC<Type> = ({ cards }) => {
             </tr>
           </thead>
           <tbody className="text-[10px]">
-            {cards?.map((item, index) => (
-              <tr key={index} className="border-b-[0.5px] h-[19.8px]">
+            {cards?.map((item) => (
+              <tr key={item.no} className="border-b-[0.5px] h-[19.8px]">
                 <td className="font-normal tracking-wider">
                   <span className="font-bold">
                     (#{(item?.no > 9 ? item?.no : `0${item?.no}`) || 0}&nbsp;

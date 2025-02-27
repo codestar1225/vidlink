@@ -6,7 +6,7 @@ interface Type {
 const SubHeaderOut: React.FC<Type> = ({ setIsSearch, isSearch }) => {
   return (
     <>
-      <header className="mt-[121px] flex flex-col items-center gap-[16px] mx-[22px]">
+      <header className="fixed top-0 left-0 right-0 pt-[110px] flex flex-col items-center gap-[16px] px-[22px] bg-background z-[1]">
         <h1 className={`${basicBold.className} text-[48px]`}>ALL VIDEOS</h1>
         <i className="text-[10px] font-normal">
           Log in to view the content from the people you follow.

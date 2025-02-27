@@ -59,7 +59,7 @@ export const getVideo = expressAsyncHandler(
         return;
       }
       const userInfo = await User.findById(videoInfo.userId)
-        .select("totalVideos userName followers")
+        .select("totalVideos userName followers picture")
         .lean();
       const userVideos = await Video.find({ userId: videoInfo.userId })
         .select("videoLink _id")

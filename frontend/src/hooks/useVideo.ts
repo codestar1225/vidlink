@@ -16,9 +16,6 @@ import {
   SETUSERINFO,
   WATCHTIME,
 } from "@/utils/constant";
-import axios, { AxiosResponse } from "axios";
-import { useState } from "react";
-import Cookies from "js-cookie";
 import {
   AddLikeError,
   AddLikeSuccess,
@@ -54,8 +51,9 @@ import {
   WatchTimeSuccess,
 } from "@/types/videoApiType";
 import { useRouter } from "next/navigation";
-import { useAtom } from "jotai";
-import { tokenAtom } from "@/store";
+import axios, { AxiosResponse } from "axios";
+import { useState } from "react";
+import Cookies from "js-cookie";
 
 const useVideo = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -122,7 +120,7 @@ const useVideo = () => {
     }
   };
 
-  //fetch the videos data
+  //fetch the videos
   const getVideos = async (): Promise<GetVideosSuccess | GetVideosError> => {
     setLoading(true);
     try {

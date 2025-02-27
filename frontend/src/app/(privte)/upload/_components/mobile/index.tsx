@@ -61,24 +61,16 @@ const UploadMobile = () => {
     const res = await publish(data);
     if (res.status === 201) {
       setEditSignal(false);
-      // if (
-      //   "cards" in res &&
-      //   "videoLink" in res &&
-      //   "duration" in res &&
-      //   "title" in res
-      // ) {
-      //   setVideoLink(res.videoLink);
-      //   setDuration(res.duration);
-      //   setCards(res.cards);
-      //   setTitle(res.title);
-      // } else {
-      //   return alert("Something went wrong.");
-      // }
+      if ("videoLink" in res) {
+        setVideoLink(res.videoLink);
+        cancelVideo();
+      } else {
+        return alert("Something went wrong.");
+      }
     } else {
       alert(res.message);
       return;
     }
-    console.log("upload success");
   };
 
   return (

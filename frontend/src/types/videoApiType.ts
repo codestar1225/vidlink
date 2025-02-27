@@ -2,10 +2,7 @@ import { CardType } from "@/store";
 
 //publish video
 export interface PublishSuccess {
-  videoLink: string;
-  duration: number;
-  title: string;
-  cards: CardType[];
+  videoLink: string; 
   message: string;
   status: number;
 }
@@ -36,6 +33,7 @@ export interface GetVideosError {
 //get video detail
 type User = {
   userName: string;
+  picture: string;
   totalVideos: number;
   like: boolean;
   owner: boolean;

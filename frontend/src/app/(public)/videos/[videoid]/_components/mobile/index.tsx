@@ -89,6 +89,8 @@ const VideoMobile: React.FC<Type> = ({
       if (res.status === 200 && "like" in res) {
         setLike(res.like);
         router.refresh();
+      } else {
+        alert(res.message);
       }
     }
   };

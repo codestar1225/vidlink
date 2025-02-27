@@ -13,7 +13,7 @@ const subHeaderIn: React.FC<Type> = ({
 }) => {
   return (
     <>
-      <header className="pt-[103px] flex flex-col items-center gap-[28.1px] mx-[22px]">
+      <header className="fixed top-0 left-0 right-0 pt-[103px] px-[22px] flex flex-col items-center gap-[28.1px] bg-background z-[1]">
         <div className="flex gap-[83px]">
           <button
             onClick={() => setNav("you")}

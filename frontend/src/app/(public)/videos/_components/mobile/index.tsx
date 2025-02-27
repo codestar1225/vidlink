@@ -2,20 +2,19 @@
 import { Suspense, useEffect, useState } from "react";
 import SubHeaderIn from "./subHeaders/subHeaderIn";
 import Footer from "@/app/_components/layout/mobile/footer";
-import Link from "next/link";
 import SubHeaderOut from "./subHeaders/subHeaderOut";
 import useVerifyAuth from "@/hooks/useVerifyAuth";
 import Loading from "@/app/_components/ui/loading";
 import dynamic from "next/dynamic";
 import { Video } from "../../page";
 const Videos = dynamic(() => import("./videos"));
-// import Videos from './videos'
 interface Type {
   followingVideos: Video[];
   allVideos: Video[];
 }
 
 const VideosMobile: React.FC<Type> = ({ followingVideos, allVideos }) => {
+  const { loading, isAuth } = useVerifyAuth();
   const [nav, setNav] = useState<string>("you");
   const [videos, setVideos] = useState<Video[]>([]);
   const [isSearch, setIsSearch] = useState<string>("");
@@ -43,8 +42,6 @@ const VideosMobile: React.FC<Type> = ({ followingVideos, allVideos }) => {
     }
   }, [isSearch, nav]);
 
-  const { loading, isAuth } = useVerifyAuth();
-
   if (loading) return <Loading />;
   return (
     <>
@@ -59,16 +56,12 @@ const VideosMobile: React.FC<Type> = ({ followingVideos, allVideos }) => {
         ) : (
           <SubHeaderOut setIsSearch={setIsSearch} isSearch={isSearch} />
         )}
-        <div
-          className={`${
-            isAuth ? "top-[202px]" : "top-[249px]"
-          }  overflow-y-scroll fixed  bottom-0`}
-        >
+        <div className={`${isAuth ? "mt-[202px]" : "mt-[249px]"} h-[100vh] `}>
           <Suspense fallback={<Loading />}>
             <Videos videos={videos} />
           </Suspense>
-          {videos.length > 0 && (
-            <div className="w-svw flex justify-center">
+          {/* {videos.length > 0 && (
+            <div className="flex justify-center">
               <Link
                 href={"/videos"}
                 className={`${
@@ -78,7 +71,7 @@ const VideosMobile: React.FC<Type> = ({ followingVideos, allVideos }) => {
                 VIEW MORE
               </Link>
             </div>
-          )}
+          )} */}
         </div>
         <Footer isFixed={true} />
       </main>

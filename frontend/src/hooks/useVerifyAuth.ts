@@ -7,7 +7,7 @@ import { verifyToken } from "@/utils/verifyToken";
 const useVerifyAuth = () => {
   const [isAuth, setIsAuth] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
-  const [token] = useAtom<string>(tokenAtom);
+  const [token] = useAtom<boolean>(tokenAtom);
   const pathName = usePathname();
 
   useEffect(() => {

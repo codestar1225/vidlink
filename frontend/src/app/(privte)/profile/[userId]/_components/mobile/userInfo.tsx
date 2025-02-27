@@ -24,9 +24,9 @@ const UserInfo: React.FC<Type> = ({
   followStatus,
 }) => {
   const router = useRouter();
-  const { followUser } = useVideo();
+  const { followUser, loading } = useVideo();
   const handleFollow = async () => {
-    if (followStatus) return;
+    if (loading) return;
     if (isAuth && userId) {
       const res = await followUser(userId);
       if (res.status === 200 && "followStatus" in res) {
@@ -34,7 +34,6 @@ const UserInfo: React.FC<Type> = ({
       }
     } else {
       alert("You must log in before the following.");
-      router.push("/signin");
     }
   };
   return (

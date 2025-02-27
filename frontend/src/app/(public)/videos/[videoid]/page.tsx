@@ -12,6 +12,7 @@ const VideoMobile = dynamic(() => import("./_components/mobile"));
 
 export interface UserInfo {
   userName: string;
+  picture: string;
   totalVideos: number;
   like: boolean;
   owner: boolean;
@@ -45,6 +46,7 @@ const Page = () => {
   const { getVideo, loading } = useVideo();
   const [userInfo, setUserInfo] = useState<UserInfo>({
     userName: "",
+    picture: "",
     totalVideos: 0,
     like: false,
     owner: false,

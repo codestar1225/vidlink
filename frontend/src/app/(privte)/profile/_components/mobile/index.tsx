@@ -42,11 +42,13 @@ const ProfileMobile: React.FC<Type> = ({
               href={"/upload"}
               className="flex flex-col items-center gap-[7px] text-[10.5px] font-semibold mt-[44px]"
             >
-              <img src="/icon/profile/plus.png" alt="" />
+              <div className="size-[48px]">
+                <img src="/icon/profile/plus.png" alt="" />
+              </div>
               <span>NEW VIDEO</span>
             </Link>
           </div>
-          <div className="mx-[11px] mt-[45px] overflow-hidden mb-[71px]">
+          <div className="mx-[11px] mt-[45px] overflow-hidden mb-[120px]">
             <nav className="flex justify-between relative">
               <NavItem name="videos" nav={nav} setNav={setNav} />
               <NavItem name="cards" nav={nav} setNav={setNav} />
@@ -54,7 +56,10 @@ const ProfileMobile: React.FC<Type> = ({
               <div className="border-[0.5px] absolute bottom-[1px] left-0 w-full -z-10"></div>
             </nav>
             {nav === "videos" ? (
-              <Videos myVideos={myVideos} totalVideos={userInfo?.totalVideos} />
+              <Videos
+                myVideos={myVideos?.slice()?.reverse()}
+                totalVideos={userInfo?.totalVideos}
+              />
             ) : nav === "cards" ? (
               <Suspense fallback={<Loading />}>
                 <Card myVideos={myVideos} userName={userInfo?.userName} />
@@ -66,7 +71,7 @@ const ProfileMobile: React.FC<Type> = ({
             )}
           </div>
         </main>
-        <FooterMobile isFixed={false} />
+        <FooterMobile isFixed={true} />
       </div>
     </>
   );

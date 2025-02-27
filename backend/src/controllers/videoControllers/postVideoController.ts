@@ -95,7 +95,9 @@ export const publishVideo = expressAsyncHandler(
           },
         }
       );
-      res.status(201).json({ message: "Video created", video });
+      res
+        .status(201)
+        .json({ message: "Video created", videoLink: finalVideoLink });
     } catch (error: any) {
       console.error("Error in publishVideo:", error);
       res.status(500).json({
