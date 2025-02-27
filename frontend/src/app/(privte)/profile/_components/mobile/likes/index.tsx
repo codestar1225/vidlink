@@ -15,7 +15,6 @@ const Likes: React.FC<Type> = ({ myLikesVideos }) => {
   const [hasMore, setHasMore] = useState<boolean>(myLikesVideos.length > 18); // Check if more videos exist
 
   const loadMoreVideos = () => {
-    console.log("once load..");
     const nextVideos = myLikesVideos.slice(
       displayedVideos.length,
       displayedVideos.length + 10

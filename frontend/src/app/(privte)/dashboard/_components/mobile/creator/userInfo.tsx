@@ -15,7 +15,7 @@ const UserInfo: React.FC<Type> = ({ picture }) => {
               alt=""
             />
           ) : (
-            <></>
+          <span className="size-[146px]"></span>
           )}
         </div>
         <div className="text-[13.55px] w-full flex gap-[10px] items-center mx-[38px] justify-between">

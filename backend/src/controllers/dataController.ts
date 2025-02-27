@@ -140,11 +140,10 @@ export const getDataViewer = expressAsyncHandler(
     }
     try {
       let data;
-      if (duration === "ever") {
-        data = await User.findById(req.userId)
-          .select("likeVideosViewer cardsClicksViewer savedCardsViewer")
-          .lean();
-      } else {
+      data = await User.findById(req.userId)
+        .select("likeVideosViewer cardsClicksViewer savedCardsViewer")
+        .lean();
+      if (duration !== "ever") {
         const durationAgo = getPastDate(duration);
         data = await User.findById(req.userId)
           .select("likeVideosViewer cardsClicksViewer savedCardsViewer ")

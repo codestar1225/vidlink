@@ -16,7 +16,6 @@ const Videos: React.FC<Type> = ({ myVideos, totalVideos }) => {
   const [hasMore, setHasMore] = useState<boolean>(myVideos.length > 18); // Check if more videos exist
 
   const loadMoreVideos = () => {
-    console.log("once load..");
     const nextVideos = myVideos.slice(
       displayedVideos.length,
       displayedVideos.length + 10

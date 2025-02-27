@@ -16,9 +16,7 @@ const AmountItem: React.FC<Type> = ({ name, src, value }) => {
           />
           {value ? (
             <span>
-              {Math.floor(value / 1000)}
-              {Math.floor((value % 1000) / 10)}
-              {(value % 1000) % 10}
+              {value < 10 ? `00${value}` : value < 100 ? `0${value}` : value}
             </span>
           ) : (
             "000"

@@ -20,26 +20,29 @@ const FileUpload: React.FC<Type> = ({
           <>
             <label
               htmlFor="upload"
-              className="h-[75.64px] flex flex-col items-center justify-between mb-[26.36px] "
+              className="h-[75.64px]  mb-[26.36px]"
             >
-              {!videoSrc ? (
-                <>
-                  <div className="h-[50.39px] w-[50.39px] gap-[8px]">
-                    <img src="/icon/upload/file.svg" alt="" />
-                  </div>
-                  <div className="border-[1.5px] h-[17.26px] flex items-center justify-center border-white rounded-[3.2px] text-[14.53px] font-semibold pt-[3.2px] pb-[1.3px] px-[2.13px] ">
-                    BROWSE FILE
-                  </div>
-                </>
-              ) : (
-                <>
-                  <img
-                    className="mb-[21px] size-[81px]"
-                    src="/icon/upload/checked.svg"
-                    alt=""
-                  />
-                </>
-              )}
+              <div
+                className={`${
+                  videoSrc ? "opacity-0" : "opacity-100"
+                } gap-[8px] duration-500 flex flex-col items-center`}
+              >
+                <img
+                  className="size-[50.39px]"
+                  src="/icon/upload/file.svg"
+                  alt=""
+                />
+                <div className="border-[1.5px] h-[17.26px] flex items-center justify-center border-white rounded-[3.2px] text-[14.53px] font-semibold pt-[3.2px] pb-[1.3px] px-[2.13px] ">
+                  BROWSE FILE
+                </div>
+              </div>
+              <img
+                className={`${
+                  videoSrc ? "opacity-100" : "opacity-0"
+                } size-[81px] duration-1000 absolute top-[54px] right-1/2 translate-x-1/2`}
+                src="/icon/upload/checked.svg"
+                alt=""
+              />
             </label>
           </>
         ) : (
