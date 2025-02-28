@@ -7,6 +7,7 @@ import {
 } from "../controllers/videoControllers/postVideoController";
 import multer from "multer";
 import {
+  getCards,
   getMyVideos,
   getUserInfo,
   getUserName,
@@ -33,6 +34,7 @@ videoRoutes.route("/getvideos").get(authMiddleware, getVideos);
 videoRoutes.route("/getvideo").get(authMiddleware, getVideo);
 videoRoutes.route("/addlike").put(authMiddleware, addLike);
 videoRoutes.route("/getmyvideos").get(authMiddleware, getMyVideos);
+videoRoutes.route("/getcards").get(authMiddleware, getCards);
 videoRoutes.route("/getuservideos").get(authMiddleware, getUserVideos);
 videoRoutes.route("/followuser").put(authMiddleware, followUser);
 videoRoutes.route("/getuserinfo").get(authMiddleware, getUserInfo);

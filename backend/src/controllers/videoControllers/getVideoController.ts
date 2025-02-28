@@ -3,7 +3,7 @@ import { CustomRequest } from "../../middleware/authMiddleware";
 import Video from "../../models/videoModel";
 import { Response } from "express";
 import User from "../../models/userModel";
-import { ICard } from "../../models/cardModel";
+import Card, { ICard } from "../../models/cardModel";
 
 //get videos
 export const getVideos = expressAsyncHandler(
@@ -106,9 +106,9 @@ export const getVideo = expressAsyncHandler(
         );
       }
       await Video.updateOne({ _id: videoId }, { $inc: { views: 1 } });
-      videoInfo.cards.forEach((card: ICard, index) => {
-        card.no = index + 1;
-      });
+      // videoInfo.cards.forEach((card: ICard, index) => {
+      //   card.no = index + 1;
+      // });
       res.status(200).json({
         message: "Video found",
         videoInfo,
@@ -126,30 +126,14 @@ export const getVideo = expressAsyncHandler(
 //get my videos
 export const getMyVideos = expressAsyncHandler(
   async (req: CustomRequest, res: Response) => {
+    if (!req.userId) {
+      res.status(400).json({ message: "No provided userId." });
+      return;
+    }
     try {
       const myVideos = await Video.find({ userId: req.userId })
         .select("videoLink title")
-        .populate<{ cards: ICard[] }>("cards")
         .lean();
-
-      // myVideos.forEach((video) => {
-      //   if (video.cards) {
-      //     video.cards.forEach((card: ICard) => {
-      //       card.isSaved = card.savers.includes(req.userId || "");
-      //       card.savers = [];
-      //     });
-      //   }
-      // });
-      // const cardsArray = myVideos.map((video) => ({
-      //   cards: video.cards || [], // Ensure it always has an array
-      // }));
-
-      // const cards = await Card.find({ userId: req.userId });
-      // console.log(JSON.stringify(cards, null, 2));
-      // cards.forEach((card: ICard) => {
-      //   card.isSaved = card.savers.includes(req.userId || "");
-      //   card.savers = [];
-      // });
       const likes = await User.findById(req.userId)
         .select("likeVideosViewer")
         .lean();
@@ -158,7 +142,7 @@ export const getMyVideos = expressAsyncHandler(
       const myLikesVideos = await Video.find({
         _id: { $in: likeVideosIds },
       })
-        .select("videoLink cards title")
+        .select("videoLink title")
         .lean();
       const userInfo = await User.findById(req.userId)
         .select(
@@ -176,6 +160,62 @@ export const getMyVideos = expressAsyncHandler(
       });
     } catch (error: any) {
       console.log("getMyVideos", error);
+      res.status(500).json({ message: error.message });
+    }
+  }
+);
+//get cards
+export const getCards = expressAsyncHandler(
+  async (req: CustomRequest, res: Response) => {
+    if (!req.userId) {
+      res.status(400).json({ message: "No provided userId." });
+      return;
+    }
+    try {
+      //Fetch cards (Sorted by videoId & no in MongoDB itself)
+      const cards = await Card.find({
+        $or: [{ userId: req.userId }, { "savers.userId": req.userId }],
+      })
+        .sort({ videoId: 1, no: 1 })
+        .lean();
+      // Extract unique userIds from the cards
+      const userIds = [...new Set(cards.map((card) => card.userId))];
+      // Fetch all usernames in one query
+      const users = await User.find({ _id: { $in: userIds } })
+        .select("userName")
+        .lean();
+      // Create a lookup dictionary { userId: userName }
+      const userMap: Record<string, string> = {};
+      users.forEach((user) => {
+        userMap[user._id.toString()] = user.userName;
+      });
+      // Process cards & group them
+      const groupedCards: {
+        title: string;
+        userName: string;
+        videoId: string;
+        cards: ICard[];
+      }[] = [];
+      for (const card of cards) {
+        card.isSaved = card.savers.some((key) => key.userId === req.userId);
+        card.savers = []; // Clear savers list for security reasons
+        let group = groupedCards.find(
+          (g) => g.videoId === String(card.videoId)
+        );
+        if (!group) {
+          group = {
+            title: card.title,
+            userName: userMap[card.userId.toString()] || "Unknown",
+            videoId: String(card.videoId),
+            cards: [],
+          };
+          groupedCards.push(group);
+        }
+        group.cards.push(card);
+      }
+      res.status(200).json({ message: "Cards found.", cards: groupedCards });
+    } catch (error: any) {
+      console.log("getCards", error);
       res.status(500).json({ message: error.message });
     }
   }
@@ -224,6 +264,10 @@ export const getUserVideos = expressAsyncHandler(
 //get user info
 export const getUserInfo = expressAsyncHandler(
   async (req: CustomRequest, res: Response) => {
+    if (!req.userId) {
+      res.status(400).json({ message: "No userId provided." });
+      return;
+    }
     try {
       const userInfo = await User.findById(req.userId)
         .select("userName picture gender bio instagram tiktok youtube linkedin")

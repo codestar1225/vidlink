@@ -1,9 +1,8 @@
 import AmountItem from "./amountItem";
 import Cookies from "js-cookie";
-import { useAtom } from "jotai";
-import { tokenAtom } from "@/store";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
+import Image from "next/image";
 // import EditPic from "./editPic";
 
 interface Type {
@@ -28,14 +27,17 @@ const Index: React.FC<Type> = ({
   return (
     <>
       <div className="relative size-[146px] mx-auto ">
-        {picture && (
-          <img
+        {picture ? (
+          <Image
             width={146}
             height={146}
             className="size-[146px] rounded-full"
-            src={picture ? picture : "/icon/profile/avatar.png"}
+            src={picture}
             alt=""
+            priority
           />
+        ) : (
+          <span className="size-[146px]"></span>
         )}
         <a
           href="/settings"

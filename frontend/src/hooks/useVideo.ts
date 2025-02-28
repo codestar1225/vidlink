@@ -2,6 +2,7 @@ import {
   ADDLIKE,
   CHECKUSERNAME,
   FOLLOWUSER,
+  GETCARDS,
   GETDATACREATOR,
   GETDATAVIEWER,
   GETMYVIDEOS,
@@ -23,6 +24,8 @@ import {
   CheckUserNameSuccess,
   FollowStatusError,
   FollowStatusSccess,
+  GetCardsError,
+  GetCardsSuccess,
   GetDataCreatorError,
   GetDataCreatorSuccess,
   GetDataViewerError,
@@ -217,6 +220,33 @@ const useVideo = () => {
       setLoading(false);
     }
   };
+
+  //get cards
+  const getCards = async (): Promise<GetCardsSuccess | GetCardsError> => {
+    setLoading(true);
+    try {
+      const res: AxiosResponse<GetCardsSuccess | GetCardsError> =
+        await axios.get(GETCARDS, config);
+      return { ...res.data, status: res.status };
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        if (
+          error?.response?.data?.message === "Token is invalid or has expired!"
+        ) {
+          Cookies.remove("token");
+          Cookies.remove("user");
+          router.push("/signin");
+          return { message: "Your session was expired. Please log in again." };
+        } else {
+          return { message: "Something went wrong" };
+        }
+      }
+      return { message: "An unknown error occurred" };
+    } finally {
+      setLoading(false);
+    }
+  };
+
   //get user videos
   const getUserVideos = async (
     userId: string
@@ -514,6 +544,7 @@ const useVideo = () => {
     watchTime,
     getDataCreator,
     getDataViewer,
+    getCards,
     loading,
   };
 };

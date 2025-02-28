@@ -2,7 +2,7 @@ import { CardType } from "@/store";
 
 //publish video
 export interface PublishSuccess {
-  videoLink: string; 
+  videoLink: string;
   message: string;
   status: number;
 }
@@ -107,6 +107,27 @@ export interface GetMyVideosSuccess {
   message: string;
 }
 export interface GetMyVideosError {
+  message: string;
+  status?: number;
+}
+export interface GetCardsSuccess {
+  cards: {
+    title: string;
+    userName: string;
+    cards: {
+      _id: string;
+      name: string;
+      icon: string;
+      start: number;
+      link: string;
+      no: number;
+      isSaved: boolean;
+    }[];
+  }[];
+  status: number;
+  message: string;
+}
+export interface GetCardsError {
   message: string;
   status?: number;
 }

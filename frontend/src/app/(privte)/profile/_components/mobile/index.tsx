@@ -26,7 +26,7 @@ const ProfileMobile: React.FC<Type> = ({
   return (
     <>
       <div className="flex flex-col justify-between min-h-screen">
-        <main className=" mt-[109px] ">
+        <main className=" mt-[109px]">
           <div className="">
             <UserInfo
               picture={userInfo?.picture}
@@ -48,7 +48,7 @@ const ProfileMobile: React.FC<Type> = ({
               <span>NEW VIDEO</span>
             </Link>
           </div>
-          <div className="mx-[11px] mt-[45px] overflow-hidden mb-[120px]">
+          <div className="mx-[11px] mt-[45px] overflow-hidden mb-[120px] min-h-[75vh]">
             <nav className="flex justify-between relative">
               <NavItem name="videos" nav={nav} setNav={setNav} />
               <NavItem name="cards" nav={nav} setNav={setNav} />
@@ -62,7 +62,9 @@ const ProfileMobile: React.FC<Type> = ({
               />
             ) : nav === "cards" ? (
               <Suspense fallback={<Loading />}>
-                <Card myVideos={myVideos} userName={userInfo?.userName} />
+                <Card
+                  nav={nav}
+                />
               </Suspense>
             ) : (
               <Suspense fallback={<Loading />}>

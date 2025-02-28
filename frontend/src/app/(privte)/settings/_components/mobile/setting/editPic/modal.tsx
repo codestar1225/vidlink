@@ -60,7 +60,7 @@ const Modal: React.FC<Type> = ({
     <>
       <ul
         ref={menuRef}
-        className="absolute top-[0px] -left-[5px] flex flex-col justify-between bg-[#191919] text-[13px] tracking-normal font-semibold w-[227px] h-[104px] px-[15px] py-[10px] border-[1px] rounded-[9.1px]"
+        className="absolute top-[0px] -left-[5px] flex flex-col justify-between bg-[#191919] text-[13px] tracking-normal font-semibold w-[235px] h-[104px] px-[15px] py-[10px] border-[1px] rounded-[9.1px]"
       >
         <li className="flex items-center gap-[10px]">
           <img className="size-[18px]" src="/icon/profile/library.png" alt="" />

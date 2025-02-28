@@ -37,7 +37,7 @@ const Card: React.FC<Type> = ({
       <li
         className={`border-black border-[0.7px] text-black bg-white rounded-[6px] w-[122.41px] h-[94.5px] p-[5.9px] flex flex-col overflow-hidden`}
       >
-        <a href={link} target="blank">
+        <a href={link} target="_blank">
           <div className="text-[13.86px] font-semibold flex justify-between w-full items-center">
             <span className="">{no < 10 ? `0${no}` : no}</span>{" "}
             <i className="font-normal">
@@ -62,7 +62,7 @@ const Card: React.FC<Type> = ({
               <img src="/icon/detail/card/left2.svg" alt="" />
             )}
           </button>
-          <a href={link} target="blank" className="z-20">
+          <a href={link} target="_blank" className="z-20">
             <img src="/icon/detail/card/right2.svg" alt="" />
           </a>
         </div>

@@ -76,7 +76,7 @@ const Card: React.FC<Type> = ({
                 <img src="/icon/detail/card/left2.svg" alt="" />
               )}
             </button>
-            <a href={link} target="blank">
+            <a href={link} target="_blank">
               <img src="/icon/detail/card/right2.svg" alt="" />
             </a>
           </div>

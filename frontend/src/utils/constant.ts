@@ -9,6 +9,7 @@ export const GETVIDEO = `${BASE_URL}/api/video/getvideo/`; // get video  api end
 export const ADDLIKE = `${BASE_URL}/api/video/addlike/`; // get video  api endpoint
 export const RECORDWATCHTIME = `${BASE_URL}/api/video/recordwatchtime/`; // record watchtime api endpoint
 export const GETMYVIDEOS = `${BASE_URL}/api/video/getmyvideos/`; // get my videos api endpoint
+export const GETCARDS = `${BASE_URL}/api/video/getcards/`; // get cards api endpoint
 export const GETUSERVIDEOS = `${BASE_URL}/api/video/getuservideos/`; // get user's videos api endpoint
 export const FOLLOWUSER = `${BASE_URL}/api/video/followuser/`; // follow user api endpoint
 export const GETUSERINFO = `${BASE_URL}/api/video/getuserinfo/`; // get user info api endpoint

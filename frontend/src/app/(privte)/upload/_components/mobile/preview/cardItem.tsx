@@ -40,9 +40,7 @@ const CardItem: React.FC<Type> = ({
     <>
       <li
         className={`${
-          currentCard + 1 === no
-            ? "bg-blue text-white"
-            : "bg-white text-black"
+          currentCard + 1 === no ? "bg-blue text-white" : "bg-white text-black"
         } rounded-[6px] w-[122.41px] h-[94.5px] p-[5.9px] flex flex-col overflow-hidden`}
       >
         <button onClick={handlePreview}>
@@ -72,7 +70,7 @@ const CardItem: React.FC<Type> = ({
               <img src="/icon/detail/card/left2.svg" alt="" />
             )}
           </div>
-          <a href={link} target="blank" className="z-20">
+          <a href={link} target="_blank" className="z-20">
             {currentCard >= 0 && currentCard + 1 === no ? (
               <img src="/icon/detail/card/right2_white.png" alt="" />
             ) : (

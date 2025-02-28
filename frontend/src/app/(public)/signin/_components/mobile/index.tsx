@@ -22,7 +22,6 @@ const SigninMobile = () => {
     const fetchSession = async () => {
       const session = await getSession();
       const isSignin = getItem("isSignin");
-
       if (session && isSignin) {
         removeItem("isSignin");
         const res = await signin(session.idToken);
@@ -49,7 +48,6 @@ const SigninMobile = () => {
         }
       }
     };
-
     fetchSession();
   }, []);
 

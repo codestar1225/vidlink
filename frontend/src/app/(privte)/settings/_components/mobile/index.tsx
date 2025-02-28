@@ -35,7 +35,6 @@ const SettingsMobile: React.FC<Type> = ({ userInfo }) => {
           <CameraCapture
             setEdit={setEdit}
             setImgBase64={setImgBase64}
-            picture={userInfo?.picture || ""}
           />
         </Suspense>
       ) : (

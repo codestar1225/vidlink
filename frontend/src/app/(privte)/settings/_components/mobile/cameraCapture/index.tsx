@@ -5,7 +5,6 @@ import { CircleDot, LogOut, SwitchCamera } from "lucide-react";
 interface Type {
   setEdit(value: string): void;
   setImgBase64(value: string): void;
-  picture: string;
 }
 
 const CameraCapture: React.FC<Type> = ({

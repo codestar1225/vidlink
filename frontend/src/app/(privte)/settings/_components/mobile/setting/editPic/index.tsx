@@ -21,17 +21,21 @@ const Index: React.FC<Type> = ({
   return (
     <>
       <div className="flex gap-[17.67px] ml-[19.75px] h-[74px]">
-        <img
-          width={74}
-          height={74}
-          className="size-[74px] rounded-full"
-          src={imgUrl || "/image/profile/avatar.png"}
-          alt=""
-        />
+        {imgUrl ? (
+          <img
+            width={74}
+            height={74}
+            className="size-[74px] rounded-full"
+            src={imgUrl}
+            alt=""
+          />
+        ) : (
+          <span className="size-[74px]"></span>
+        )}
         <div className=" relative mt-[28px] ">
           <button
             onClick={() => setEdit("modal")}
-            className="flex justify-center items-center pt-[1.5px] pb-[1px] border-[1.07px] border-white  rounded-[3.2px] text-[13px] w-[110.3px] h-[17.4px]"
+            className="flex justify-center items-center py-[1px] leading-none border-[1.07px] border-white  rounded-[3.2px] text-[13px] w-[110.3px]"
           >
             EDIT PICTURE
           </button>
