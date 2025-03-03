@@ -8,6 +8,7 @@ import Cookies from "js-cookie";
 import { useAtom } from "jotai";
 import { tokenAtom } from "@/store";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
 
 const HeaderMobile = () => {
   const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false);
@@ -73,7 +74,7 @@ const HeaderMobile = () => {
                 />
               </Link>
               <Link href={"/profile"}>
-                <img
+                <Image
                   width={33.95}
                   height={33}
                   className="w-[33.95px] h-[33px] rounded-full"
