@@ -21,7 +21,7 @@ const RelatedVideo: React.FC<Type> = ({ relatedVideos }) => {
                   <Link href={`/videos/${item._id}`} className="w-full h-full">
                     <ReactPlayer
                       url={item.videoLink}
-                      playing
+                      // playing
                       muted
                       loop
                       width="100%"

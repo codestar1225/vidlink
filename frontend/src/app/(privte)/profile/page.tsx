@@ -46,6 +46,8 @@ const Page = () => {
         setMyVideos(res.myVideos);
         setMyLikesVideos(res.myLikesVideos);
         setUserInfo(res.userInfo);
+      } else {
+        alert(res.message);
       }
     }
     fetchMyVideos();

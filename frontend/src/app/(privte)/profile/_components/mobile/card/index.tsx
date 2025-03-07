@@ -47,6 +47,8 @@ const Cards: React.FC<Type> = ({ nav }) => {
           setCards(res.cards);
           setDisplayedCards(res.cards.slice(0, 10));
           setHasMore(res.cards.length > 10);
+        } else {
+          alert(res.message);
         }
       })();
     }

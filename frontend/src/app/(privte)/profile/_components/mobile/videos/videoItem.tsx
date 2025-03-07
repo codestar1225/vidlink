@@ -9,7 +9,7 @@ const VideoItem: React.FC<Type> = ({ videoLink}) => {
         {videoLink !== "" ? (
             <ReactPlayer
               url={videoLink}
-              playing
+              // playing
               muted
               loop
               width="100%"

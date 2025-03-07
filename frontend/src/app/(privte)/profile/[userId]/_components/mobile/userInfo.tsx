@@ -31,6 +31,8 @@ const UserInfo: React.FC<Type> = ({
       const res = await followUser(userId);
       if (res.status === 200 && "followStatus" in res) {
         setFollowStatus(res.followStatus);
+      } else {
+        alert(res.message);
       }
     } else {
       alert("You must log in before the following.");

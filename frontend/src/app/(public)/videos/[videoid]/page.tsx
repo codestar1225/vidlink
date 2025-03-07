@@ -79,6 +79,8 @@ const Page = () => {
         setRelatedVideos(res.relatedVideos);
         setFollowStatus(res.followStatus);
         setVideoId(videoId);
+      } else {
+        alert(res.message);
       }
     };
     fetchFunc();

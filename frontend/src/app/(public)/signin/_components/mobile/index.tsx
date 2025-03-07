@@ -6,7 +6,7 @@ import { getItem, removeItem, setItem } from "@/utils/localstorage";
 import { useAtom } from "jotai";
 import { getSession, signIn } from "next-auth/react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 import Cookies from "js-cookie";
@@ -16,7 +16,14 @@ const SigninMobile = () => {
   const [token, setToken] = useAtom<boolean>(tokenAtom);
   const { signin, loading } = useAuth();
   const router = useRouter();
-
+  const searchParams = useSearchParams();
+  const error = searchParams.get("error");
+  useEffect(() => {
+    if (error) {
+      alert("Your session has expired. Please sign in again.");
+    }
+  }, [error]);
+  
   //cutstomized sign in
   useEffect(() => {
     const fetchSession = async () => {
@@ -30,7 +37,7 @@ const SigninMobile = () => {
             Cookies.set("user", JSON.stringify(res.user));
           }
           // Successfully authenticated and save token
-          Cookies.set("token", res.token, { expires: 1 });
+          Cookies.set("token", res.token, { expires: 4 });
           setToken(!token);
           //check the there was request routing url
           const reqUrl = Cookies.get("reqUrl");

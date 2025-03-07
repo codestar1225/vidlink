@@ -31,6 +31,8 @@ const Page = () => {
         setUserVideos(res.userVideos);
         setUserInfo(res.userInfo);
         setFollowStatus(res.followStatus);
+      } else {
+        alert(res.message);
       }
     };
     fetchVideos();

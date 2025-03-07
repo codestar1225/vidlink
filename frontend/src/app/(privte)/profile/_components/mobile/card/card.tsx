@@ -16,7 +16,7 @@ const Card: React.FC<Type> = ({
   no,
   _id,
 }) => {
-  const { saveCard, loading } = useVideo();
+  const { saveCard, increaseClicks, loading } = useVideo();
   const [saved, setSaved] = useState<boolean>(isSaved);
 
   const IconComponent = LucideIcons[
@@ -31,6 +31,11 @@ const Card: React.FC<Type> = ({
     } else {
       alert(res.message);
     }
+  };
+
+  const handleVisit = () => {
+    window.open(link, "_blank", "noopener,noreferrer");
+    increaseClicks(_id);
   };
   return (
     <>
@@ -62,9 +67,9 @@ const Card: React.FC<Type> = ({
               <img src="/icon/detail/card/left2.svg" alt="" />
             )}
           </button>
-          <a href={link} target="_blank" className="z-20">
+          <button onClick={handleVisit} className="z-20">
             <img src="/icon/detail/card/right2.svg" alt="" />
-          </a>
+          </button>
         </div>
       </li>
     </>

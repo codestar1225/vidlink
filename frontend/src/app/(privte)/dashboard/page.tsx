@@ -46,6 +46,8 @@ const Page = () => {
         setUserInfo(res.userInfo);
         setVideos(res.videos);
         setCards(res.cards);
+      } else {
+        alert(res.message);
       }
     })();
   }, []);

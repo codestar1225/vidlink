@@ -54,6 +54,8 @@ const DashboardMobile: React.FC<Type> = ({
           setUserInfo(res.userInfo);
           setVideos(res.videos);
           setCards(res.cards);
+        } else {
+          alert(res.message);
         }
       } else {
         const res = await getDataViewer(period);

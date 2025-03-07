@@ -20,10 +20,13 @@ export async function middleware(req: NextRequest): Promise<NextResponse> {
     return NextResponse.next();
   } catch (error) {
     console.error("JWT Verification Error:", error);
-    const res = NextResponse.redirect(new URL("/signin", req.url));
+    const res = NextResponse.redirect(
+      new URL("/signin?error=invalid_token", req.url)
+    );
     res.cookies.set("reqUrl", req.url, { maxAge: 60 * 60 });
     res.cookies.delete("user");
     res.cookies.delete("token");
+    alert("aaaaaaa");
     return res;
   }
 }

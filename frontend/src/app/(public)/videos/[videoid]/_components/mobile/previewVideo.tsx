@@ -90,7 +90,7 @@ const PreviewVideo: React.FC<Type> = ({
     setIsSeeking(false);
   };
 
-  const handleWatchTime = () => {
+  const handleWatchTime = async () => {
     if (!videoId || !watchingTime) return;
     watchTime(watchingTime, videoId); // ✅ Your required function
   };

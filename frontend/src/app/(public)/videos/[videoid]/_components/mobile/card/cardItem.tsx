@@ -60,12 +60,9 @@ const CardItem: React.FC<Type> = ({
     }
   };
   // visite the Link
-  const handleVisit = async () => {
+  const handleVisit = () => {
     window.open(link, "_blank", "noopener,noreferrer");
-    const res = await increaseClicks(cardId);
-    if (res.status !== 200) {
-      alert(res.message);
-    }
+    increaseClicks(cardId);
   };
   return (
     <>

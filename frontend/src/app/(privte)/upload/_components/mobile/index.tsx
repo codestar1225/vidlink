@@ -59,17 +59,12 @@ const UploadMobile = () => {
     data.append("cards", JSON.stringify(cards));
     data.append("duration", duration.toString());
     const res = await publish(data);
-    if (res.status === 201) {
+    if (res.status === 201 && "videoLink" in res) {
       setEditSignal(false);
-      if ("videoLink" in res) {
-        setVideoLink(res.videoLink);
-        cancelVideo();
-      } else {
-        return alert("Something went wrong.");
-      }
+      setVideoLink(res.videoLink);
+      cancelVideo();
     } else {
       alert(res.message);
-      return;
     }
   };
 

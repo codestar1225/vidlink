@@ -29,7 +29,7 @@ const SignupMobile = () => {
             Cookies.set("user", JSON.stringify(res.user));
           }
           // Successful signup
-          Cookies.set("token", res.token, { expires: 1 });
+          Cookies.set("token", res.token, { expires: 4 });
           setToken(!token);
           toast.success("Signed up successfully.", {
             autoClose: 2000,

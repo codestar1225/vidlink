@@ -26,6 +26,8 @@ const Page = () => {
       const res = await getUserInfo();
       if (res.status === 200 && "userInfo" in res) {
         setUserInfo(res.userInfo);
+      } else {
+        alert(res.message);
       }
     };
     fetchFunction();
@@ -33,7 +35,7 @@ const Page = () => {
   if (loading) return <Loading />;
   return (
     <>
-      {isMobile ? <SettingsMobile userInfo={userInfo}/> : <SettingsDesktop />}
+      {isMobile ? <SettingsMobile userInfo={userInfo} /> : <SettingsDesktop />}
     </>
   );
 };

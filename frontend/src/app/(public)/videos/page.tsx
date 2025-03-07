@@ -21,12 +21,18 @@ const Page = () => {
   useEffect(() => {
     const fetchVideos = async () => {
       const res = await getVideos();
-      if ("allVideos" in res && "followingVideos" in res) {
+      if (
+        res.status === 200 &&
+        "allVideos" in res &&
+        "followingVideos" in res
+      ) {
         setAllVideos(res.allVideos || []);
         setFollowingVideos(res.followingVideos || []);
         return;
       } else if ("allVideos" in res) {
         setAllVideos(res.allVideos || []);
+      } else {
+        alert(res.message);
       }
     };
     fetchVideos();

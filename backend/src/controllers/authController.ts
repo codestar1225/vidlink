@@ -35,7 +35,7 @@ const register = async (req: Request, res: Response) => {
       const token = jwt.sign(
         { userId: user._id },
         process.env.JWT_SECRET as string,
-        { expiresIn: "1h" }
+        { expiresIn: "4h" }
       );
       res.status(201).json({
         message: "User created",
@@ -68,7 +68,7 @@ const login = async (req: Request, res: Response) => {
       const token = jwt.sign(
         { userId: user._id },
         process.env.JWT_SECRET as string,
-        { expiresIn: "1h" }
+        { expiresIn: "4h" }
       );
       const userInfo = await User.findOne({ email: payload.email })
         .select("userName picture")
