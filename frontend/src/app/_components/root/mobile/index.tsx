@@ -15,7 +15,7 @@ export default function HomeMobile() {
       <div className=" relative">
         <div className="h-screen">
           {process.env.NEXT_PUBLIC_PRODUCTION === "production" ? (
-            <Video src="/video/home/home1.mp4" />
+            <Video src="/video/main.mp4" />
           ) : (
             <Video src="/video/home/home.mp4" />
           )}
@@ -52,7 +52,7 @@ export default function HomeMobile() {
           {isPlay && (
             <div className="h-[574px] w-full">
               {process.env.NEXT_PUBLIC_PRODUCTION === "production" ? (
-                <Video src="/video/home/home1.mp4" />
+                <Video src="/video/main.mp4" />
               ) : (
                 <Video src="/video/home/home.mp4" />
               )}
