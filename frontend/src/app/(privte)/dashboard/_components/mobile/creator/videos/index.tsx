@@ -6,12 +6,23 @@ import { useEffect, useState } from "react";
 import WatchTimeItem from "./watchTimeItem";
 
 interface Type {
+  setViews(value: number): void;
+  setLikes(value: number): void;
+  setWatchTime(value: number): void;
+  views: number;
+  likes: number;
+  watchTime: number;
   videos: VideoType[];
 }
-const Videos: React.FC<Type> = ({ videos }) => {
-  const [views, setViews] = useState<number>(0);
-  const [likes, setLikes] = useState<number>(0);
-  const [watchTime, setWatchTime] = useState<number>(0);
+const Videos: React.FC<Type> = ({
+  setViews,
+  setLikes,
+  setWatchTime,
+  views,
+  likes,
+  watchTime,
+  videos,
+}) => {
   useEffect(() => {
     let likes = 0;
     let views = 0;
@@ -31,11 +42,11 @@ const Videos: React.FC<Type> = ({ videos }) => {
         <AmountItem name="VIDEOS" src="videos" value={videos.length} />
         <AmountItem name="LIKES" src="likes" value={likes} />
       </div>
-      <Table videos={videos} />
       {/* <div className="flex gap-[8.5px]"> */}
       <AmountItem name="TOTAL VIDEO VIEWS" src="views" value={views} />
       <WatchTimeItem name="TOTAL WATCH TIME" src="" watchTime={watchTime} />
       {/* </div> */}
+      <Table videos={videos} />
     </div>
   );
 };

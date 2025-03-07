@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import lucideIcons from "@/../public/lucideIcon.json";
 import SetIcon from "./setIcon";
 import * as LucideIcons from "lucide-react";
@@ -95,6 +95,12 @@ const Index: React.FC<Type> = ({
       console.error("Failed to read clipboard:", error);
     }
   };
+  // detect name lenth
+  useEffect(() => {
+    if (name.length > 10) {
+      alert("You can't add more. Maximum letter is 10.");
+    }
+  }, [name]);
   return (
     <>
       <div className="mt-[56.5px] text-[12px] font-semibold mx-[19.5px]">
@@ -133,6 +139,7 @@ const Index: React.FC<Type> = ({
           <div>NAME</div>
           <input
             value={name}
+            maxLength={11}
             onChange={(e) => setName(e.target.value)}
             type="text"
             placeholder="Text"

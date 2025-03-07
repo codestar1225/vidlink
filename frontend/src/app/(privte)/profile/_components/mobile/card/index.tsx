@@ -58,7 +58,7 @@ const Cards: React.FC<Type> = ({ nav }) => {
         {loading ? (
           <LoadingTop />
         ) : (
-          <div className="text-[14px] font-normal flex flex-col gap-[15px] w-[379.1px] max-[401px]:w-[251px] mt-[48px]">
+          <div className="text-[14px] font-normal flex flex-col gap-[15px] w-[379.1px] max-[399px]:w-[251px] mt-[48px]">
             <InfiniteScrolling
               next={loadMoreCards}
               dataLength={displayedCards?.length || 0}
@@ -72,7 +72,7 @@ const Cards: React.FC<Type> = ({ nav }) => {
                     </span>{" "}
                     - {item?.userName?.toUpperCase() || ""}
                   </h1>
-                  <ul className="flex flex-wrap justify-start gap-x-[5.9px] gap-y-[7.24px] mt-[13px]">
+                  <ul className="flex flex-wrap justify-start gap-x-[5px] gap-y-[7.24px] mt-[13px] mb-[15px]">
                     {item.cards?.map((item) => (
                       <Card
                         name={item.name}

@@ -165,7 +165,13 @@ export const setUserInfo = expressAsyncHandler(
           throw new Error("Failed to upload video to S3");
         }
       }
-
+      const isAlreadyName = await User.findOne({ userName: userName })
+        .select("userName")
+        .lean();
+      if (isAlreadyName && isAlreadyName._id != req.userId) {
+        res.status(400).json({ message: "Already exist user name." });
+        return;
+      }
       await User.updateOne(
         { _id: req.userId },
         {

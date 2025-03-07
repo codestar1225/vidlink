@@ -17,11 +17,13 @@ export const getVideos = expressAsyncHandler(
         res.status(200).json({ message: "All videos found.", allVideos });
         return;
       } else {
-        const following = await User.findById(req.userId)
-          .select("followers")
+        const following = await User.find({
+          followers: { $elemMatch: { userId: req.userId, create: true } },
+        })
+          .select("_id")
           .lean();
         const followingUserIds =
-          following?.followers?.map((follower) => follower.userId) || [];
+          following?.map((follower) => follower._id) || [];
         const followingVideos = await Video.find({
           userId: { $in: followingUserIds },
         })
@@ -90,25 +92,27 @@ export const getVideo = expressAsyncHandler(
           });
         }
         if (req.userId !== videoInfo.userId.toString()) {
-          await User.updateOne(
+          await Promise.all([
+            User.updateOne(
+              { _id: userInfo?._id },
+              {
+                $addToSet: { videoViews: new Date() },
+              }
+            ),
+            Video.updateOne({ _id: videoId }, { $inc: { views: 1 } }),
+          ]);
+        }
+      } else {
+        await Promise.all([
+          User.updateOne(
             { _id: userInfo?._id },
             {
               $addToSet: { videoViews: new Date() },
             }
-          );
-        }
-      } else {
-        await User.updateOne(
-          { _id: userInfo?._id },
-          {
-            $addToSet: { videoViews: new Date() },
-          }
-        );
+          ),
+          Video.updateOne({ _id: videoId }, { $inc: { views: 1 } }),
+        ]);
       }
-      await Video.updateOne({ _id: videoId }, { $inc: { views: 1 } });
-      // videoInfo.cards.forEach((card: ICard, index) => {
-      //   card.no = index + 1;
-      // });
       res.status(200).json({
         message: "Video found",
         videoInfo,

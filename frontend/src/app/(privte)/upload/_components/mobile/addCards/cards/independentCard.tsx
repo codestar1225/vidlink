@@ -20,7 +20,7 @@ const IndependentCard: React.FC<Type> = ({
   ] as React.ComponentType<React.SVGProps<SVGSVGElement>>;
   return (
     <>
-      <li className="border-blue border-[2px] text-black bg-white rounded-[6px] w-[122.41px] h-[94.5px] p-[5.9px] flex flex-col justify-between overflow-hidden">
+      <li className="border-blue border-[2px] text-black bg-white rounded-[6px] w-[122.41px] h-[94.5px] p-[5.9px] flex flex-col justify-between ">
         <div className="text-[13.86px] font-semibold flex justify-between w-full items-center">
           <span>{no < 10 ? `0${no}` : no}</span>
           <i className="font-normal">
@@ -29,11 +29,11 @@ const IndependentCard: React.FC<Type> = ({
           </i>
         </div>
         <div className="h-[60.91px]">
-          <div className="flex flex-col items-center h-[38.4px] w-full justify-between">
-            <h1 className="text-blue text-[13.86px] font-semibold">
+          <div className="flex flex-col items-center h-[38.4px] w-full justify-between overflow-hidden">
+            <h1 className="text-blue text-[13.86px] font-semibold text-center w-full ">
               {name.toUpperCase()}
             </h1>
-            {icon ? <IconComponent className="size-[18.29px]" /> : <></>}
+            {icon ? <IconComponent className="size-[18.29px] z-50" /> : <></>}
           </div>
           <div className="flex justify-between">
             <button

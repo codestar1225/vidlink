@@ -37,6 +37,10 @@ const DashboardMobile: React.FC<Type> = ({
   const [period, setPeriod] = useState<string>("year");
   const [userInfoViewer, setUserInfoViewer] =
     useState<UserInfoViewerType | null>(null);
+  const [views, setViews] = useState<number>(0);
+  const [likes, setLikes] = useState<number>(0);
+  const [watchTime, setWatchTime] = useState<number>(0);
+
   useEffect(() => {
     (async () => {
       if (user === "creator") {
@@ -50,8 +54,6 @@ const DashboardMobile: React.FC<Type> = ({
           setUserInfo(res.userInfo);
           setVideos(res.videos);
           setCards(res.cards);
-        } else {
-          alert(res.message);
         }
       } else {
         const res = await getDataViewer(period);
@@ -76,14 +78,32 @@ const DashboardMobile: React.FC<Type> = ({
           />
           {user === "creator" ? (
             <>
-              <Videos videos={videos} />
+              <Videos
+                setViews={setViews}
+                setLikes={setLikes}
+                setWatchTime={setWatchTime}
+                views={views}
+                likes={likes}
+                watchTime={watchTime}
+                videos={videos}
+              />
               <Cards cards={cards} />
               <Total userInfo={userInfo} cards={cards} />
             </>
           ) : (
             <Viewer userInfo={userInfoViewer} />
           )}
-          <BtnGroup name="yearly" />
+          <BtnGroup
+            name={period}
+            user={user}
+            userInfo={userInfo}
+            userInfoViewer={userInfoViewer}
+            videos={videos}
+            cards={cards}
+            views={views}
+            likes={likes}
+            watchTime={watchTime}
+          />
         </main>
         <FooterMobile isFixed={false} />
       </div>

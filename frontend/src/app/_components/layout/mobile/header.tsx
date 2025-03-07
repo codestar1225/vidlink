@@ -57,17 +57,27 @@ const HeaderMobile = () => {
     <header className="fixed z-10 top-0 left-0 w-screen">
       <div
         className={`${
-          isBlurred ? "backdrop-blur-md bg-white/50" : "bg-transparent"
+          isBlurred && pathName !== "/videos"
+            ? "backdrop-blur-md bg-white/50"
+            : "bg-transparent"
         } flex justify-between items-center mt-[27px] bg-[red] mx-[30px] px-[3px] py-[3px] rounded-full`}
       >
-        <button onClick={() => setIsOpenMenu(true)} className="size-[32px]">
-          <img src="/icon/layout/menu.png" alt="" />
+        <button onClick={() => setIsOpenMenu(true)}>
+          <Image
+            width={32}
+            height={32}
+            className="size-[32px]"
+            src="/icon/layout/menu.png"
+            alt=""
+          />
         </button>
         <div className="flex gap-[9px] h-[32px] items-center">
           {isAuth ? (
             <>
               <Link href={"/message"}>
-                <img
+                <Image
+                  width={32}
+                  height={32}
                   className="size-[32px]"
                   src="/icon/layout/alert.png"
                   alt=""
@@ -85,7 +95,13 @@ const HeaderMobile = () => {
             </>
           ) : (
             <Link href={"/signin"}>
-              <img className="h-[23px]" src="/icon/layout/logo.svg" alt="" />
+              <Image
+                width={32}
+                height={32}
+                className="h-[32px]"
+                src="/icon/layout/logo.svg"
+                alt=""
+              />
             </Link>
           )}
         </div>
@@ -93,21 +109,33 @@ const HeaderMobile = () => {
     </header>
   ) : (
     // opened header
-    <header ref={menuRef} className={`fixed z-10 top-0 left-0 w-screen `}>
-      <div className="pt-[30px] bg-transparent mx-[22px]">
+    <header ref={menuRef} className={` fixed z-10 top-0 left-0 w-screen `}>
+      <div className={` pt-[30px] bg-transparent mx-[22px]`}>
         <button
           onClick={() => setIsOpenMenu(false)}
           className={`${
-            isBlurred ? "backdrop-blur-md bg-white/50 " : "bg-transparent"
-          } p-[3px] rounded-full ml-[7px] size-[32px]`}
+            isBlurred && pathName !== "/videos"
+              ? "backdrop-blur-md bg-white/50 "
+              : "bg-transparent"
+          } p-[3px] rounded-full ml-[7px] `}
         >
-          <img src="/icon/layout/close.png" alt="" />
+          <Image
+            width={32}
+            height={32}
+            className="size-[32px]"
+            src="/icon/layout/close.png"
+            alt=""
+          />
         </button>
         <nav
           className={`${
-            isAnimate ? "scale-y-[1]" : "scale-y-[0]"
+            isAnimate ? "scale-y-[1] opacity-100" : "scale-y-[0]"
           } transition-all duration-300 mt-[4px] flex px-[10px] py-[8px] rounded-full justify-between
-           ${isBlurred ? "backdrop-blur-md bg-white/50" : "bg-transparent"}`}
+           ${
+             isBlurred && pathName !== "/videos"
+               ? "backdrop-blur-md bg-white/50"
+               : "bg-transparent"
+           }`}
         >
           <Item
             setIsOpenMenu={setIsOpenMenu}

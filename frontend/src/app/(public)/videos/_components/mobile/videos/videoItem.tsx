@@ -16,7 +16,7 @@ const VideoItem: React.FC<Type> = ({ userName, views, src, no, videoId }) => {
             <Link href={`/videos/${videoId}`} className="w-full h-full">
               <ReactPlayer
                 url={src}
-                playing
+                // playing
                 muted
                 loop
                 width="100%"
@@ -30,9 +30,9 @@ const VideoItem: React.FC<Type> = ({ userName, views, src, no, videoId }) => {
         </div>
         <div className="w-[58.6px] h-[43.32px] flex flex-col justify-between items-center">
           <h1 className="text-[7.81px] font-semibold">VIDEO {no}</h1>
-          <p className="text-[7.81px] text-[#7C889D] text-center flex flex-col">
+          <p className="text-[7.81px] text-[#7C889D] text-center flex flex-col overflow-hidden w-full">
             UPLOADED BY
-            <span>{userName}</span>
+            <span className="leading-none ">{userName.toUpperCase()}</span>
           </p>
           <div className="flex flex-wrap items-center justify-center h-[7.81px] w-full gap-[1.67px]">
             <img className="size-[7.81px]" src="/icon/videos/eye.svg" alt="" />

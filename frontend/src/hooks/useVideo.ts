@@ -341,7 +341,7 @@ const useVideo = () => {
           router.push("/signin");
           return { message: "Your session was expired. Please log in again." };
         } else {
-          return { message: "Something went wrong" };
+          return { message: error?.response?.data?.message };
         }
       }
       return { message: "An unknown error occurred" };
