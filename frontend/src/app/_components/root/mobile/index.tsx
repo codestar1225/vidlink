@@ -4,6 +4,7 @@ import { basicBold } from "@/style/fonts/fonts";
 import Footer from "@/app/_components/layout/mobile/footer";
 import { useState } from "react";
 import { Video } from "../../ui/video";
+import Image from "next/image";
 
 export default function HomeMobile() {
   const [isPlay, setIsPLay] = useState<boolean>(false);
@@ -22,7 +23,13 @@ export default function HomeMobile() {
         </div>
         <div className="absolute top-[332px] w-full flex justify-center items-centers">
           <div>
-            <img src="/icon/home/title.png" alt="" />
+            <Image
+              width={356.54}
+              height={54}
+              className="w-[356.54px] h-[54px]"
+              src="/icon/home/title.png"
+              alt=""
+            />
             <div className="flex items-center gap-[12.87px] mt-[13px] pl-[17.54px]">
               <h1 className="text-[15.06px] text-white">
                 CONNECT YOUR VIDEOS TO

@@ -66,7 +66,7 @@ const HeaderMobile = () => {
             : "bg-transparent"
         } flex justify-between items-center mt-[27px] bg-[red] mx-[30px] px-[3px] py-[3px] rounded-full`}
       >
-        <button onClick={() => setIsOpenMenu(true)}>
+        <button onClick={() => setIsOpenMenu((prev) => !prev)}>
           <Image
             width={32}
             height={32}
@@ -116,7 +116,7 @@ const HeaderMobile = () => {
     <header ref={menuRef} className={` fixed z-10 top-0 left-0 w-screen `}>
       <div className={` pt-[27px] bg-transparent mx-[22px]`}>
         <button
-          onClick={() => setIsOpenMenu(false)}
+          onClick={() => setIsOpenMenu((prev) => !prev)}
           className={`${
             isBlurred && pathName !== "/videos"
               ? "backdrop-blur-md bg-white/50 "
