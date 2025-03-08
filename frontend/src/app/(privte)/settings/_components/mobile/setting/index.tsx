@@ -92,7 +92,8 @@ const Index: React.FC<Type> = ({
       if (res.message === "Already exist user name.") {
         setCaution("Sorry, this username is already in use.");
       } else {
-        res.message;
+        setCaution(res.message);
+        alert(res.message);
       }
     }
   };
