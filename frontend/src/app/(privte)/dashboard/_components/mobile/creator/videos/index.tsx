@@ -2,7 +2,7 @@
 import { VideoType } from "@/app/(privte)/dashboard/page";
 import AmountItem from "../../amountItem";
 import Table from "./table";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import WatchTimeItem from "./watchTimeItem";
 
 interface Type {
@@ -44,7 +44,7 @@ const Videos: React.FC<Type> = ({
       </div>
       {/* <div className="flex gap-[8.5px]"> */}
       <AmountItem name="TOTAL VIDEO VIEWS" src="views" value={views} />
-      <WatchTimeItem name="TOTAL WATCH TIME" src="" watchTime={watchTime} />
+      <WatchTimeItem name="TOTAL WATCH TIME" watchTime={watchTime} />
       {/* </div> */}
       <Table videos={videos} />
     </div>

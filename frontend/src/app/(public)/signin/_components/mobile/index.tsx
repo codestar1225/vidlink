@@ -98,7 +98,7 @@ const SigninMobile = () => {
               />
             </button>
             <div className="flex gap-[10px] text-[13px] tracking-wide">
-              <h1 className="text-gray-400">New to VIDLINK?</h1>
+              <h1 className="text-foreground">New to VIDLINK?</h1>
               <Link href={"/signup"} className="text-blue">
                 Sign up
               </Link>
