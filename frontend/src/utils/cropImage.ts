@@ -1,8 +1,13 @@
 import { createImage } from "@/utils/createImage";
-
+type CropArea = {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+};
 export default async function getCroppedImg(
   imageSrc: string,
-  crop: any,
+  crop: CropArea,
   rotation: number = 0
 ): Promise<Blob | null> {
   const image = await createImage(imageSrc);

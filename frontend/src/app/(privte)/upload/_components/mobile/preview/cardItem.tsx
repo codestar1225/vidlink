@@ -1,5 +1,4 @@
 import * as LucideIcons from "lucide-react";
-import { useEffect } from "react";
 
 interface Type {
   setIsSelected(value: number): void;
@@ -8,7 +7,6 @@ interface Type {
   start: number;
   icon: string;
   no: number;
-  index: number;
   isSaved: boolean;
   link: string;
   signal: boolean;
@@ -21,7 +19,6 @@ const CardItem: React.FC<Type> = ({
   start,
   icon,
   no,
-  index,
   isSaved,
   link,
   signal,

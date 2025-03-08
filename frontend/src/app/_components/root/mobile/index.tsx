@@ -77,7 +77,7 @@ export default function HomeMobile() {
         </p>
         <Link
           href={"/videos"}
-          className="border-[1.5px] border-white  rounded-[3.2px] text-[14.91px] pt-[3.2px] pb-[1.3px] px-[2.13px] my-[43px] "
+          className="border-[1.5px] border-white leading-0  rounded-[3.2px] text-[14.91px] pt-[3.2px] pb-[1.3px] px-[2.13px] my-[43px] "
         >
           ALL VIDEOS
         </Link>

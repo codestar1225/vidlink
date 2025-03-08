@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef, useCallback } from "react";
+import React, { useState, useCallback } from "react";
 import Cropper from "react-easy-crop";
 
 interface AvatarCropperProps {
@@ -13,7 +13,6 @@ const AvatarCropper: React.FC<AvatarCropperProps> = ({ imageSrc, onSave, onCance
     const [crop, setCrop] = useState({ x: 0, y: 0 });
     const [zoom, setZoom] = useState(1);
     const [rotation, setRotation] = useState(0);
-    const cropperRef = useRef<HTMLDivElement>(null);
 
     const getCroppedImg = useCallback(async () => {
         if (!imageSrc) return;

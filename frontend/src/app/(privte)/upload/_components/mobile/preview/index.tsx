@@ -102,7 +102,6 @@ const Preview: React.FC<Type> = ({
                     link={item.link}
                     signal={signal}
                     no={item.no}
-                    index={index}
                     currentCard={currentCard}
                   />
                 </Suspense>

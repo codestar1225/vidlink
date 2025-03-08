@@ -83,7 +83,9 @@ const PreviewVideo: React.FC<Type> = ({
     } else {
       setLastTime(currentTime);
       setCurrentTime(currentTime);
-      watchingTime && setIsSeeking(true);
+      if (watchingTime) {
+        setIsSeeking(true);
+      }
     }
   };
   const onSeekEnd = () => {

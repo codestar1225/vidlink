@@ -27,13 +27,13 @@ const Index: React.FC<Type> = ({
       }
       const res = await checkUserName(userName);
       if (res.status === 200 && "isAlreadyOne" in res) {
-        res.isAlreadyOne && setCaution("This username is already in use.");
+        if (res.isAlreadyOne) setCaution("This username is already in use.");
       } else {
         alert(res.message);
         setCaution(res.message);
       }
     }, // Adjust debounce delay as needed
-    [checkUserName]
+    [checkUserName, setCaution]
   );
   useEffect(() => {
     if (userName && !loading) {

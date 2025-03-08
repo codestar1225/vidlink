@@ -1,4 +1,3 @@
-import { Video } from "@/app/_components/ui/video";
 import Link from "next/link";
 import { VideoType } from "../../../page";
 import ReactPlayer from "react-player";

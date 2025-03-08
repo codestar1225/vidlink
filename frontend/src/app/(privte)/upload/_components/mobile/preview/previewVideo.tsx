@@ -37,7 +37,7 @@ const PreviewVideo: React.FC<Type> = ({
 
   const onProgress = () => {
     if (!videoRef.current) return;
-    let currentTime = Math.floor(videoRef.current.getCurrentTime());
+    const currentTime = Math.floor(videoRef.current.getCurrentTime());
     if (currentTime > maxTime) {
       videoRef.current?.seekTo(0, "seconds");
       videoRef.current.getInternalPlayer()?.pause();
@@ -48,7 +48,7 @@ const PreviewVideo: React.FC<Type> = ({
   };
   const onSeek = () => {
     if (!videoRef.current) return;
-    let currentTime = Math.floor(videoRef.current.getCurrentTime());
+    const currentTime = Math.floor(videoRef.current.getCurrentTime());
     if (currentTime > maxTime) {
       videoRef.current?.seekTo(0, "seconds");
       videoRef.current.getInternalPlayer()?.pause();

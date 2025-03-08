@@ -13,11 +13,13 @@ const InputItem: React.FC<Type> = ({ name, holderName, value, setValue }) => {
         </span>
         <input
           value={value}
-          onChange={(e) => setValue(e.target.value)}
+          onChange={(e) => setValue(e.target.value.trim())}
           type="text"
           placeholder={holderName}
           className={`${
-            value ? "bg-blue border-none" : "bg-[#3E3E3E66] border-[#272727] border-[3.12px]"
+            value
+              ? "bg-blue border-none"
+              : "bg-[#3E3E3E66] border-[#272727] border-[3.12px]"
           } h-[38.98px] text-[14px] pt-[1.5px]  rounded-[10.41px] px-[11.47px] placeholder-[#4F4F4F] placeholder:text-[13px] placeholder:font-semibold `}
         />
       </label>

@@ -19,12 +19,18 @@ export default function ImageCropper({
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState<number>(1);
   const [rotation, setRotation] = useState<number>(0); // Rotation state
-  const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
-
-  const handleCropComplete = (_: any, areaPixels: any) => {
+  type AreaPixels = {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+  };
+  
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState<AreaPixels | null>(null);
+  
+  const handleCropComplete = (_: unknown, areaPixels: AreaPixels) => {
     setCroppedAreaPixels(areaPixels);
   };
-
   const handleSave = async () => {
     if (!croppedAreaPixels || !imgBase64) return;
     const blob = await getCroppedImg(imgBase64, croppedAreaPixels, rotation);

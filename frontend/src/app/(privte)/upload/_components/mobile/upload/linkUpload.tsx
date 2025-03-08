@@ -1,5 +1,3 @@
-import { ChangeEvent } from "react";
-
 interface Type {
   setUrl(value: string): void;
   url: string;

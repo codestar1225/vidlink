@@ -1,5 +1,4 @@
 "use client";
-import { useRouter } from "next/navigation";
 import AmountItem from "../../../_components/mobile/userInfo/amountItem";
 import useVideo from "@/hooks/useVideo";
 
@@ -23,7 +22,6 @@ const UserInfo: React.FC<Type> = ({
   userId,
   followStatus,
 }) => {
-  const router = useRouter();
   const { followUser, loading } = useVideo();
   const handleFollow = async () => {
     if (loading) return;

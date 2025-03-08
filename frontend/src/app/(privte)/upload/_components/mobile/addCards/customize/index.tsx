@@ -62,7 +62,7 @@ const Index: React.FC<Type> = ({
   //video time capture
   const onProgress = () => {
     if (!videoRef.current) return;
-    let currentTime = Math.floor(videoRef.current.getCurrentTime());
+    const currentTime = Math.floor(videoRef.current.getCurrentTime());
     if (currentTime > maxTime) {
       videoRef.current?.seekTo(maxTime, "seconds");
       videoRef.current?.getInternalPlayer().pause();
@@ -75,7 +75,7 @@ const Index: React.FC<Type> = ({
 
   const onSeek = () => {
     if (!videoRef.current) return;
-    let currentTime = Math.floor(videoRef.current.getCurrentTime());
+    const currentTime = Math.floor(videoRef.current.getCurrentTime());
     if (currentTime > maxTime) {
       videoRef.current?.seekTo(maxTime, "seconds");
       videoRef.current?.getInternalPlayer().pause();

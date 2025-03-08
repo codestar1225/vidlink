@@ -1,7 +1,7 @@
 "use client";
 import useClickOutside from "@/hooks/useClickOutside";
 import Link from "next/link";
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 
 interface Type {
   setIsOpen(value: boolean): void;
@@ -9,7 +9,6 @@ interface Type {
 
 const EditPic: React.FC<Type> = ({ setIsOpen }) => {
   const menuRef = useRef<HTMLUListElement>(null);
-  const [, setPhoto] = useState<string | null>(null);
 
   // Close the menu if the click is outside
   useClickOutside(menuRef as React.RefObject<HTMLElement>, () =>

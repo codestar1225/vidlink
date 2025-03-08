@@ -2,10 +2,9 @@ import { Clock } from "lucide-react";
 
 interface Type {
   name: string;
-  src: string;
   watchTime: number;
 }
-const WatchTimeItem: React.FC<Type> = ({ name, src, watchTime }) => {
+const WatchTimeItem: React.FC<Type> = ({ name, watchTime }) => {
   return (
     <>
       <div className="flex flex-col items-center justify-center gap-[6px] tracking-wider font-semibold w-full text-foreground h-[64.26px] rounded-[8px] bg-[#191919] pt-[2px] overflow-hidden">

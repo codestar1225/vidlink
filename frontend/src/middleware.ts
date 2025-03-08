@@ -26,7 +26,6 @@ export async function middleware(req: NextRequest): Promise<NextResponse> {
     res.cookies.set("reqUrl", req.url, { maxAge: 60 * 60 });
     res.cookies.delete("user");
     res.cookies.delete("token");
-    alert("aaaaaaa");
     return res;
   }
 }

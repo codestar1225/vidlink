@@ -20,7 +20,7 @@ export const validateSocialMediaUrl = (
   try {
     const parsedUrl = new URL(url);
     return pattern.test(parsedUrl.href);
-  } catch (e) {
+  } catch {
     return false; // Invalid URL
   }
 };

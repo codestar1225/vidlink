@@ -48,7 +48,11 @@ const HeaderMobile = () => {
   );
 
   useEffect(() => {
-    isOpenMenu ? setIsAnimate(true) : setIsAnimate(false);
+    if (isOpenMenu) {
+      setIsAnimate(true);
+    } else {
+      setIsAnimate(false);
+    }
   }, [isOpenMenu]);
 
   if (loading) return <></>;
@@ -110,7 +114,7 @@ const HeaderMobile = () => {
   ) : (
     // opened header
     <header ref={menuRef} className={` fixed z-10 top-0 left-0 w-screen `}>
-      <div className={` pt-[30px] bg-transparent mx-[22px]`}>
+      <div className={` pt-[27px] bg-transparent mx-[22px]`}>
         <button
           onClick={() => setIsOpenMenu(false)}
           className={`${
@@ -130,7 +134,7 @@ const HeaderMobile = () => {
         <nav
           className={`${
             isAnimate ? "scale-y-[1] opacity-100" : "scale-y-[0]"
-          } transition-all duration-300 mt-[4px] flex px-[10px] py-[8px] rounded-full justify-between
+          } transition-all duration-100 mt-[4px] flex px-[10px] py-[8px] rounded-full justify-between
            ${
              isBlurred && pathName !== "/videos"
                ? "backdrop-blur-md bg-white/50"
