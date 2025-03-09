@@ -11,6 +11,7 @@ import { tokenAtom } from "@/store/token";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import { Video } from "@/app/_components/ui/video";
+import Image from "next/image";
 
 const SignupMobile = () => {
   const [token, setToken] = useAtom<boolean>(tokenAtom);
@@ -76,7 +77,14 @@ const SignupMobile = () => {
           )}
         </div>
         <div className="mb-[34px] flex flex-col gap-[40px] items-center">
-          <img className="h-[55.4px]" src="/icon/home/title.png" alt="" />
+          <Image
+            height={55.4}
+            width={356.54}
+            className="h-[55.4px]"
+            src="/icon/home/title.png"
+            alt=""
+            loading="eager"
+          />
           <div className="flex flex-col items-center gap-[20px]">
             <button
               onClick={handleSignup}
@@ -84,10 +92,13 @@ const SignupMobile = () => {
               className="flex items-center justify-center gap-[12.81px] bg-blue rounded-[12.81px] w-[309px] h-[48px]"
             >
               <h1 className="text-[16px] font-semibold">SIGN UP WITH GOOGLE</h1>
-              <img
+              <Image
+                width={32}
+                height={32}
                 className="size-[32px]"
                 src="/icon/register/google.svg"
                 alt=""
+                loading="eager"
               />
             </button>
             <div className="flex gap-[10px] text-[13px] tracking-wide">

@@ -47,6 +47,7 @@ const Cards: React.FC<Type> = ({ cards }) => {
                     height={7.77}
                     src="/icon/dashboard/click.png"
                     alt=""
+                    loading="eager"
                   />
                   <i>CLICKS</i>
                 </div>
@@ -58,6 +59,7 @@ const Cards: React.FC<Type> = ({ cards }) => {
                     height={7.77}
                     src="/icon/dashboard/save.png"
                     alt=""
+                    loading="eager"
                   />
                   <i>SAVED</i>
                 </div>
@@ -69,6 +71,7 @@ const Cards: React.FC<Type> = ({ cards }) => {
                     height={7.77}
                     src="/icon/dashboard/link.png"
                     alt=""
+                    loading="eager"
                   />
                   <i>LINK</i>
                 </div>
@@ -92,6 +95,7 @@ const Cards: React.FC<Type> = ({ cards }) => {
                       height={7.77}
                       src="/icon/dashboard/click.png"
                       alt=""
+                      loading="eager"
                     />
                     {item?.clicks || 0}
                   </div>
@@ -103,6 +107,7 @@ const Cards: React.FC<Type> = ({ cards }) => {
                       height={7.77}
                       src="/icon/dashboard/save.png"
                       alt=""
+                      loading="eager"
                     />
                     {item?.saved || 0}
                   </div>
@@ -118,6 +123,7 @@ const Cards: React.FC<Type> = ({ cards }) => {
                       height={7.77}
                       src="/icon/dashboard/link.png"
                       alt=""
+                      loading="eager"
                     />
                     VISIT
                   </Link>

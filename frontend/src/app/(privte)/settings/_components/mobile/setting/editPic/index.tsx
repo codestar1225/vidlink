@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Modal from "./modal";
 
 interface Type {
@@ -22,12 +23,14 @@ const Index: React.FC<Type> = ({
     <>
       <div className="flex gap-[17.67px] ml-[19.75px] h-[74px]">
         {imgUrl ? (
-          <img
+          <Image
             width={74}
             height={74}
             className="size-[74px] rounded-full"
             src={imgUrl}
             alt=""
+            loading="eager"
+            priority
           />
         ) : (
           <span className="size-[74px]"></span>

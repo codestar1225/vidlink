@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 interface Type {
   picture?: string | null;
 }
@@ -7,15 +9,17 @@ const UserInfo: React.FC<Type> = ({ picture }) => {
       <div className="font-semibold flex flex-col items-center w-full px-[39px] gap-[39px]">
         <div className="size-[146px]">
           {picture ? (
-            <img
+            <Image
               width={146}
               height={146}
               className="size-[146px] rounded-full"
               src={picture}
               alt=""
+              loading="eager"
+              priority
             />
           ) : (
-          <span className="size-[146px]"></span>
+            <span className="size-[146px]"></span>
           )}
         </div>
         <div className="text-[13.55px] w-full flex gap-[10px] items-center mx-[38px] justify-between">

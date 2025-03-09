@@ -29,13 +29,20 @@ export default function HomeMobile() {
               className="w-[356.54px] h-[54px]"
               src="/icon/home/title.png"
               alt=""
+              loading="eager"
             />
             <div className="flex items-center gap-[12.87px] mt-[13px] pl-[17.54px]">
               <h1 className="text-[15.06px] text-white">
                 CONNECT YOUR VIDEOS TO
               </h1>
               <Link href={""}>
-                <img src="/icon/home/youtube.svg" alt="" />
+                <Image
+                  width={28.7}
+                  height={28.7}
+                  src="/icon/home/youtube.svg"
+                  alt=""
+                  loading="eager"
+                />
               </Link>
             </div>
           </div>

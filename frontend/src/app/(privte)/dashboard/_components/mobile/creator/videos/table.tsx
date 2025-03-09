@@ -44,6 +44,7 @@ const Table: React.FC<Type> = ({ videos }) => {
                     height={7.77}
                     src="/icon/dashboard/views.png"
                     alt=""
+                    loading="eager"
                   />
                   <i>VIEWS</i>
                 </div>
@@ -55,6 +56,7 @@ const Table: React.FC<Type> = ({ videos }) => {
                     height={7.77}
                     src="/icon/dashboard/likes.png"
                     alt=""
+                    loading="eager"
                   />
                   <i>LIKES</i>
                 </div>
@@ -66,6 +68,7 @@ const Table: React.FC<Type> = ({ videos }) => {
                     height={7.77}
                     src="/icon/dashboard/cards.png"
                     alt=""
+                    loading="eager"
                   />
                   <i>CARDS</i>
                 </div>
@@ -89,6 +92,7 @@ const Table: React.FC<Type> = ({ videos }) => {
                       height={7.77}
                       src="/icon/dashboard/views.png"
                       alt=""
+                      loading="eager"
                     />
                     {item?.views || 0}
                   </div>
@@ -100,6 +104,7 @@ const Table: React.FC<Type> = ({ videos }) => {
                       height={7.77}
                       src="/icon/dashboard/likes.png"
                       alt=""
+                      loading="eager"
                     />
                     {item?.likes || 0}
                   </div>
@@ -111,6 +116,7 @@ const Table: React.FC<Type> = ({ videos }) => {
                       height={7.77}
                       src="/icon/dashboard/cards.png"
                       alt=""
+                      loading="eager"
                     />
                     {item?.card || 0}
                   </div>

@@ -73,6 +73,7 @@ const HeaderMobile = () => {
             className="size-[32px]"
             src="/icon/layout/menu.png"
             alt=""
+            loading="eager"
           />
         </button>
         <div className="flex gap-[9px] h-[32px] items-center">
@@ -85,6 +86,7 @@ const HeaderMobile = () => {
                   className="size-[32px]"
                   src="/icon/layout/alert.png"
                   alt=""
+                  loading="eager"
                 />
               </Link>
               <Link href={"/profile"}>
@@ -94,6 +96,7 @@ const HeaderMobile = () => {
                   className="w-[33.95px] h-[33px] rounded-full"
                   src={pic ? pic : "/icon/layout/avatar.png"}
                   alt=""
+                  loading="eager"
                 />
               </Link>
             </>
@@ -105,6 +108,7 @@ const HeaderMobile = () => {
                 className="h-[32px]"
                 src="/icon/layout/logo.svg"
                 alt=""
+                loading="eager"
               />
             </Link>
           )}
@@ -129,6 +133,7 @@ const HeaderMobile = () => {
             className="size-[32px]"
             src="/icon/layout/close.png"
             alt=""
+            loading="eager"
           />
         </button>
         <nav

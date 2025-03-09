@@ -34,6 +34,7 @@ const Index: React.FC<Type> = ({
             className="size-[146px] rounded-full"
             src={picture}
             alt=""
+            loading="eager"
             priority
           />
         ) : (
