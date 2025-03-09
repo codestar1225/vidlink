@@ -84,6 +84,7 @@ const SignupMobile = () => {
             src="/icon/home/title.png"
             alt=""
             loading="eager"
+            priority
           />
           <div className="flex flex-col items-center gap-[20px]">
             <button
@@ -99,6 +100,7 @@ const SignupMobile = () => {
                 src="/icon/register/google.png"
                 alt=""
                 loading="eager"
+                priority
               />
             </button>
             <div className="flex gap-[10px] text-[13px] tracking-wide">
