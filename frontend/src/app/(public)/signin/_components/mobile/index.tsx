@@ -103,7 +103,7 @@ const SigninMobile = () => {
                 width={32}
                 height={32}
                 className="size-[32px]"
-                src="/icon/register/google.svg"
+                src="/icon/register/google.png"
                 alt=""
                 loading="eager"
               />

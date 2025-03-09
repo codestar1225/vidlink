@@ -9,6 +9,7 @@ import Loading from "@/app/_components/ui/loading";
 import { UserInfoType, VideoType } from "../../page";
 import Videos from "./videos";
 import UserInfo from "./userInfo";
+import Image from "next/image";
 const Card = dynamic(() => import("./card"));
 const Likes = dynamic(() => import("./likes"));
 
@@ -43,7 +44,13 @@ const ProfileMobile: React.FC<Type> = ({
               className="flex flex-col items-center gap-[7px] text-[10.5px] font-semibold mt-[44px]"
             >
               <div className="size-[48px]">
-                <img src="/icon/profile/plus.png" alt="" />
+                <Image
+                  width={48}
+                  height={48}
+                  src="/icon/profile/plus.png"
+                  alt=""
+                  loading="eager"
+                />
               </div>
               <span>NEW VIDEO</span>
             </Link>
@@ -62,9 +69,7 @@ const ProfileMobile: React.FC<Type> = ({
               />
             ) : nav === "cards" ? (
               <Suspense fallback={<Loading />}>
-                <Card
-                  nav={nav}
-                />
+                <Card nav={nav} />
               </Suspense>
             ) : (
               <Suspense fallback={<Loading />}>

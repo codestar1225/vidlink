@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 interface Type {
   instagram: string;
@@ -15,52 +16,77 @@ const SocialLinks: React.FC<Type> = ({ instagram, tiktok, isAuth, email }) => {
       >
         {instagram ? (
           <Link href={instagram || ""} target="_blank">
-            <img
+            <Image
+              width={26}
+              height={26}
               className="size-[26px]"
               src="/icon/profile/instagram.png"
               alt=""
+              loading="eager"
             />
           </Link>
         ) : (
-          <img
+          <Image
+            width={26}
+            height={26}
             className="size-[26px]"
             src="/icon/profile/instagram.png"
             alt=""
+            loading="eager"
           />
         )}
         {tiktok ? (
           <Link href={tiktok || ""} target="_blank">
-            <img
+            <Image
+              width={26}
+              height={26}
               className="size-[26px]"
               src="/icon/profile/tiktok.png"
               alt=""
+              loading="eager"
             />
           </Link>
         ) : (
-          <img className="size-[26px]" src="/icon/profile/tiktok.png" alt="" />
+          <Image
+            width={26}
+            height={26}
+            className="size-[26px]"
+            src="/icon/profile/tiktok.png"
+            alt=""
+            loading="eager"
+          />
         )}
         {isAuth || (
           <>
             {email ? (
               <Link href={`mailto:${email}`}>
-                <img
+                <Image
+                  width={26}
+                  height={26}
                   className="size-[26px]"
                   src="/icon/profile/envelope.png"
                   alt=""
+                  loading="eager"
                 />
               </Link>
             ) : (
-              <img
+              <Image
+                width={26}
+                height={26}
                 className="size-[26px]"
                 src="/icon/profile/envelope.png"
                 alt=""
+                loading="eager"
               />
             )}
             <Link href={""}>
-              <img
+              <Image
+                width={26}
+                height={26}
                 className="size-[26px]"
                 src="/icon/profile/behancel.png"
                 alt=""
+                loading="eager"
               />
             </Link>
           </>

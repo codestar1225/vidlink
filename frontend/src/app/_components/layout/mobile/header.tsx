@@ -74,6 +74,7 @@ const HeaderMobile = () => {
             src="/icon/layout/menu.png"
             alt=""
             loading="eager"
+            priority
           />
         </button>
         <div className="flex gap-[9px] h-[32px] items-center">
@@ -134,6 +135,7 @@ const HeaderMobile = () => {
             src="/icon/layout/close.png"
             alt=""
             loading="eager"
+            priority
           />
         </button>
         <nav

@@ -39,7 +39,7 @@ export default function HomeMobile() {
                 <Image
                   width={28.7}
                   height={28.7}
-                  src="/icon/home/youtube.svg"
+                  src="/icon/home/youtube.png"
                   alt=""
                   loading="eager"
                 />

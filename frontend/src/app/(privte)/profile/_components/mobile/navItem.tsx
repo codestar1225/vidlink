@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 interface Type {
   nav: string;
   setNav(value: string): void;
@@ -19,9 +21,12 @@ const NavItem: React.FC<Type> = ({ nav, setNav, name }) => {
           onClick={() => setNav(name)}
           className="flex flex-col items-center justify-between h-[37px] w-[65.67px]"
         >
-          <img
+          <Image
+            width={20}
+            height={20}
             src={`/icon/profile/${nav === name ? `${name}Blue` : name}.png`}
             alt=""
+            loading="eager"
           />
           <div className={nav === name ? "text-blue" : ""}>
             {name.toUpperCase()}
