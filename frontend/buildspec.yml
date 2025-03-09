@@ -29,5 +29,5 @@ phases:
 artifacts:
   files:
     - '**/*'
-  base-directory: build   # Specify your build folder!
+  base-directory: .next   # Specify your build folder!
   discard-paths: no
