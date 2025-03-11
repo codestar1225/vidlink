@@ -3,10 +3,11 @@ import { jwtVerify } from "jose";
 
 export async function middleware(req: NextRequest): Promise<NextResponse> {
   const token = req.cookies.get("token")?.value?.trim() || "";
-
+  const { pathname, search } = new URL(req.url);
+  const cleanedUrl = pathname + search;
   if (!token || typeof token !== "string") {
     const res = NextResponse.redirect(new URL("/signin", req.url));
-    res.cookies.set("reqUrl", req.url, { maxAge: 60 * 60 });
+    res.cookies.set("reqUrl", cleanedUrl, { maxAge: 60 * 60 });
     return res;
   }
 
@@ -23,7 +24,7 @@ export async function middleware(req: NextRequest): Promise<NextResponse> {
     const res = NextResponse.redirect(
       new URL("/signin?error=invalid_token", req.url)
     );
-    res.cookies.set("reqUrl", req.url, { maxAge: 60 * 60 });
+    res.cookies.set("reqUrl", cleanedUrl, { maxAge: 60 * 60 });
     res.cookies.delete("user");
     res.cookies.delete("token");
     return res;

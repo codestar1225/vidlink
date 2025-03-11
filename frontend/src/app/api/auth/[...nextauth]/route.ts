@@ -9,6 +9,7 @@ const handler = NextAuth({
       authorization: {
         params: {
           scope: "openid email profile",
+          // timeout: 10000,
         },
       },
     }),

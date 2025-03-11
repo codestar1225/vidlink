@@ -38,7 +38,8 @@ const SignupMobile = () => {
           });
         } else {
           // User already signed up, handle error
-          removeItem("token");
+          Cookies.remove("token");
+          Cookies.remove("user");
           toast.error(
             res.message || "You have already signed up. Please sign in.",
             {
