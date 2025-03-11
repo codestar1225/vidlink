@@ -33,9 +33,9 @@ app.use(express.urlencoded({ extended: true }));
 connectDB();
 
 // Routes
-app.use("/api/customauth", authRoutes);
-app.use("/api/video", videoRoutes);
-app.use("/api/data", dataRoutes);
+app.use("/express/customauth", authRoutes);
+app.use("/express/video", videoRoutes);
+app.use("/express/data", dataRoutes);
 
 // Protected Route Example
 // app.get("/api/protected", authMiddleware, (req, res) => {
