@@ -5,6 +5,7 @@ export async function middleware(req: NextRequest): Promise<NextResponse> {
   const token = req.cookies.get("token")?.value?.trim() || "";
   const { pathname, search } = new URL(req.url);
   const cleanedUrl = pathname + search;
+  console.log("pathname", pathname, "token", token);
   if (!token || typeof token !== "string") {
     const res = NextResponse.redirect(new URL("/signin", req.url));
     res.cookies.set("reqUrl", cleanedUrl, { maxAge: 60 * 60 });
