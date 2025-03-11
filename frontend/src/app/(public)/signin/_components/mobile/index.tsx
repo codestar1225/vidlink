@@ -98,7 +98,7 @@ const SigninMobile = () => {
               className="flex items-center justify-center gap-[12.81px] bg-blue rounded-[12.81px] w-[309px] h-[48px]"
             >
               <h1 className="text-[16px]  font-semibold">
-                SIGN IN WITH GOOGLE google
+                SIGN IN WITH GOOGLE
               </h1>
               <Image
                 width={32}

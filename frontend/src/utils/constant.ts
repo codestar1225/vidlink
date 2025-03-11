@@ -1,7 +1,7 @@
 export const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 // auth urls
-export const SIGNUP = `${BASE_URL}/api/auth/register/`; // sign up user api endpoint
-export const SIGNIN = `${BASE_URL}/api/auth/login/`; // sign in user api endpoint
+export const SIGNUP = `${BASE_URL}/api/customauth/register/`; // sign up user api endpoint
+export const SIGNIN = `${BASE_URL}/api/customauth/login/`; // sign in user api endpoint
 //videos urls
 export const PUBLISHVIDEO = `${BASE_URL}/api/video/publish/`; // video publish api endpoint
 export const GETVIDEOS = `${BASE_URL}/api/video/getvideos/`; // get videos api endpoint

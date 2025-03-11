@@ -33,7 +33,7 @@ app.use(express.urlencoded({ extended: true }));
 connectDB();
 
 // Routes
-app.use("/api/auth", authRoutes);
+app.use("/api/customauth", authRoutes);
 app.use("/api/video", videoRoutes);
 app.use("/api/data", dataRoutes);
 
