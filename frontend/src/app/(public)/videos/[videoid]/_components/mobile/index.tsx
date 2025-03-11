@@ -158,7 +158,7 @@ const VideoMobile: React.FC<Type> = ({
         </div>
         <UserVideo userVideos={userVideos} userName={userInfo.userName} />
         <RelatedVideo relatedVideos={relatedVideos} />
-        <div className="w-svw flex justify-center">
+        <div className="flex justify-center">
           <Link
             href={"/videos"}
             className="border-[1.5px] border-white rounded-[3.2px] text-[14.91px] pt-[3.2px] pb-[1.3px] px-[2.13px] mt-[94.5px] mb-[132.6px]"
