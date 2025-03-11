@@ -22,6 +22,7 @@ const SigninMobile = () => {
   useEffect(() => {
     if (error) {
       alert("Your session has expired. Please sign in again.");
+      router.replace(window.location.pathname);
     }
   }, [error]);
 
