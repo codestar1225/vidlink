@@ -1,13 +1,11 @@
 "use client";
 import Loading from "@/app/_components/ui/loading";
 import useVideo from "@/hooks/useVideo";
-// import dynamic from "next/dynamic";
+import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import { isMobile } from "react-device-detect";
-import VideosMobile from "./_components/mobile";
-import VideosDesktop from "./_components/desktop";
-// const VideosDesktop = dynamic(() => import("./_components/desktop"));
-// const VideosMobile = dynamic(() => import("./_components/mobile"));
+const VideosDesktop = dynamic(() => import("./_components/desktop"));
+const VideosMobile = dynamic(() => import("./_components/mobile"));
 
 export type Video = {
   videoLink: string;

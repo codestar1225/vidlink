@@ -1,14 +1,12 @@
 "use client";
 import { isMobile } from "react-device-detect";
-// import dynamic from "next/dynamic";
+import dynamic from "next/dynamic";
 import { useLayoutEffect, useState } from "react";
 import useVideo from "@/hooks/useVideo";
 import Loading from "@/app/_components/ui/loading";
-import SettingsMobile from "./_components/mobile";
-import SettingsDesktop from "./_components/desktop";
 
-// const SettingsMobile = dynamic(() => import("./_components/mobile"));
-// const SettingsDesktop = dynamic(() => import("./_components/desktop"));
+const SettingsMobile = dynamic(() => import("./_components/mobile"));
+const SettingsDesktop = dynamic(() => import("./_components/desktop"));
 
 export interface UserInfoType {
   userName: string;
