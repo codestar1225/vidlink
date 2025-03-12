@@ -52,7 +52,13 @@ const SigninMobile = () => {
           // Authentication failed, handle error
           toast.error(res.message || "Something went wrong", {
             autoClose: 2000,
-            onClose: () => router.push("/signup"),
+            onClose: () => {
+              if (
+                res.message === "User doesn't exist, please sign up firstly"
+              ) {
+                router.push("/signup");
+              }
+            },
           });
         }
       }
