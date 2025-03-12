@@ -172,7 +172,7 @@ export const setUserInfo = expressAsyncHandler(
         res.status(400).json({ message: "Already exist user name." });
         return;
       }
-      await User.updateOne(
+      const userInfo = await User.findByIdAndUpdate(
         { _id: req.userId },
         {
           userName,
@@ -184,11 +184,12 @@ export const setUserInfo = expressAsyncHandler(
           youtube,
           linkedin,
         },
-        { runValidators: true }
+        { runValidators: true, new: true }
       );
-      res
-        .status(200)
-        .json({ message: "User info saved.", user: { userName, picture } });
+      res.status(200).json({
+        message: "User info saved.",
+        user: { userName, picture: userInfo?.picture },
+      });
     } catch (error: any) {
       res.status(500).json({ message: error.message });
     }
