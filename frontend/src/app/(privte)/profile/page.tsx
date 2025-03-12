@@ -2,11 +2,13 @@
 import { CardT } from "@/app/(public)/videos/[videoid]/page";
 import Loading from "@/app/_components/ui/loading";
 import useVideo from "@/hooks/useVideo";
-import dynamic from "next/dynamic";
+// import dynamic from "next/dynamic";
 import { Suspense, useLayoutEffect, useState } from "react";
 import { isMobile } from "react-device-detect";
-const ProfileMobile = dynamic(() => import("./_components/mobile"));
-const ProfileDesktop = dynamic(() => import("./_components/desktop"));
+import ProfileMobile from "./_components/mobile";
+import ProfileDesktop from "./_components/desktop";
+// const ProfileMobile = dynamic(() => import("./_components/mobile"));
+// const ProfileDesktop = dynamic(() => import("./_components/desktop"));
 
 export type UserInfoType = {
   _id: string;

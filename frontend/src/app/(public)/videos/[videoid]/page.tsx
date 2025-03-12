@@ -3,12 +3,14 @@ import Loading from "@/app/_components/ui/loading";
 import useVideo from "@/hooks/useVideo";
 import { videoIdAtom } from "@/store";
 import { useAtom } from "jotai";
-import dynamic from "next/dynamic";
+// import dynamic from "next/dynamic";
 import { useParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 import { isMobile } from "react-device-detect";
-const VideoDesktop = dynamic(() => import("./_components/desktop"));
-const VideoMobile = dynamic(() => import("./_components/mobile"));
+import VideoMobile from "./_components/mobile";
+import VideoDesktop from "./_components/desktop";
+// const VideoDesktop = dynamic(() => import("./_components/desktop"));
+// const VideoMobile = dynamic(() => import("./_components/mobile"));
 
 export interface UserInfo {
   userName: string;

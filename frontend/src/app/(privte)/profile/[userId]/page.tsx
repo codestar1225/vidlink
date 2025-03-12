@@ -1,13 +1,15 @@
 "use client";
 import { isMobile } from "react-device-detect";
-import dynamic from "next/dynamic";
+// import dynamic from "next/dynamic";
 import { useParams } from "next/navigation";
 import { Suspense, useLayoutEffect, useState } from "react";
 import useVideo from "@/hooks/useVideo";
 import { UserInfoType } from "../page";
 import Loading from "@/app/_components/ui/loading";
-const ProfilesMobile = dynamic(() => import("./_components/mobile"));
-const ProfilesDesktop = dynamic(() => import("./_components/desktop"));
+import ProfilesMobile from "./_components/mobile";
+import ProfilesDesktop from "./_components/desktop";
+// const ProfilesMobile = dynamic(() => import("./_components/mobile"));
+// const ProfilesDesktop = dynamic(() => import("./_components/desktop"));
 
 export interface VideoType {
   videoLink: string;
