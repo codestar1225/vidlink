@@ -21,9 +21,9 @@ export default function HomeMobile() {
             <Video src="/video/home/home.mp4" />
           )}
         </div>
-        <div className="absolute top-[332px] w-full flex justify-center items-centers">
+        <div className="absolute top-[332px] w-full flex justify-center">
           <div>
-            <Image
+            <img
               width={356.54}
               height={54}
               className="w-[356.54px] h-[54px]"
@@ -35,7 +35,7 @@ export default function HomeMobile() {
               <h1 className="text-[15.06px] text-white">
                 CONNECT YOUR VIDEOS TO
               </h1>
-              <Link href={""}>
+              <Link className="size-[28.7px]" href={""}>
                 <Image
                   width={28.7}
                   height={28.7}
