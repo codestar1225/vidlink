@@ -22,8 +22,8 @@ export const metadata: Metadata = {
   title: "Vidlink",
   description: "Vidlink is the best app!",
   icons: {
-    icon: "/logo.png", // Default favicon
-    shortcut: "/logo.png", // Shortcut icon
+    icon: "/favicon.png", // Default favicon
+    shortcut: "/favicon.png", // Shortcut icon
     apple: "/logo.png", // Apple touch icon (optional)
   },
 };
