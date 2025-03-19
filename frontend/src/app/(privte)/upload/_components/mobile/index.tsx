@@ -62,6 +62,7 @@ const UploadMobile = () => {
     console.log(res)
     if (res.status === 201 && "videoLink" in res) {
       setEditSignal(false);
+      console.log('ddddd',editSignal,'link',res.videoLink)
       setVideoLink(res.videoLink);
       cancelVideo();
     } else {
