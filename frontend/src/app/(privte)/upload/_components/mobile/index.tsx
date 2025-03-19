@@ -32,11 +32,6 @@ const UploadMobile = () => {
   const [userName, setUserName] = useState<string>("");
   const { publish, loading } = useVideo();
 
-  // Detect the start of edit.
-  useEffect(() => {
-    setEditSignal(true);
-  }, [videoLink]);
-
   const handlePublish = () => {
     if (loading) return;
     if (cards.length < 1) {
@@ -65,7 +60,7 @@ const UploadMobile = () => {
       cancelVideo();
     } else {
       alert(res.message);
-    }
+    } 
   };
 
   return (
@@ -91,6 +86,7 @@ const UploadMobile = () => {
           setFile={setFile}
           setTitle={setTitle}
           setUserName={setUserName}
+          setEditSignal={setEditSignal}
           videoSrc={videoSrc}
           error={error}
           url={url}

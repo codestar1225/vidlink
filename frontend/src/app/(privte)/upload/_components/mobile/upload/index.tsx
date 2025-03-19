@@ -22,6 +22,7 @@ interface Type {
   setFile(value: File): void;
   setTitle(value: string): void;
   setUserName(value: string): void;
+  setEditSignal(value: boolean): void;
   videoSrc: string | null;
   error: string;
   url: string;
@@ -38,6 +39,7 @@ const Upload: React.FC<Type> = ({
   setFile,
   setTitle,
   setUserName,
+  setEditSignal,
   videoSrc,
   error,
   url,
@@ -84,6 +86,7 @@ const Upload: React.FC<Type> = ({
     setEdit("add");
     setCards([]);
     setTitle("");
+    setEditSignal(false);
   };
 
   return (
