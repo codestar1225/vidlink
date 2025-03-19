@@ -59,6 +59,7 @@ const UploadMobile = () => {
     data.append("cards", JSON.stringify(cards));
     data.append("duration", duration.toString());
     const res = await publish(data);
+    console.log(res)
     if (res.status === 201 && "videoLink" in res) {
       setEditSignal(false);
       setVideoLink(res.videoLink);

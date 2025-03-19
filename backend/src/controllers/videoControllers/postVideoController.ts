@@ -63,7 +63,7 @@ export const publishVideo = expressAsyncHandler(
       if (!finalVideoLink) {
         res.status(400).json({ message: "Video link is required" });
         return;
-      }
+      }      
       const video = new Video({
         userId: req.userId,
         videoLink: finalVideoLink,
@@ -95,6 +95,7 @@ export const publishVideo = expressAsyncHandler(
           },
         }
       );
+      console.log(finalVideoLink,'finalvideo link')
       res
         .status(201)
         .json({ message: "Video created", videoLink: finalVideoLink });
