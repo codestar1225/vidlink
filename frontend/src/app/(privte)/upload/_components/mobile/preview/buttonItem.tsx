@@ -12,6 +12,7 @@ const ButtonItem: React.FC<Type> = ({
   loading,
   editSignal,
 }) => {
+  console.log(editSignal);
   return (
     <>
       <button
@@ -26,6 +27,7 @@ const ButtonItem: React.FC<Type> = ({
           editSignal ? "bg-blue" : "bg-[#002355]"
         } w-[282.8px] h-[50px] text-[25px] font-semibold rounded-[20px]  mx-auto flex justify-center items-center mb-[56px] tracking-wider`}
       >
+        {editSignal}
         {loading ? (
           <>
             <span className="text-white">PUBLISHING...</span>
