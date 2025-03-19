@@ -22,12 +22,13 @@ app.use(
       "x-user-id",
       "x-duration",
     ],
+    credentials: true,
   })
 );
 
-// Middleware
-app.use(express.json()); // Parse JSON requests
-app.use(express.urlencoded({ extended: true }));
+// Middleware to handle large JSON and form data
+app.use(express.json({ limit: "200mb" }));
+app.use(express.urlencoded({ extended: true, limit: "200mb" }));
 
 // Database connection
 connectDB();

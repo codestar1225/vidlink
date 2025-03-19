@@ -204,7 +204,7 @@ const Index: React.FC<Type> = ({
         </div>
         <div className=" ">
           {videoLink ? (
-            <div className="mt-[20px] rounded-[6.1px] min-h-[280px] w-full overflow-hidden">
+            <div className="mt-[20px] rounded-[6.1px] h-full min-h-[380px] w-full ">
               <ReactPlayer
                 ref={videoRef}
                 url={videoLink}
