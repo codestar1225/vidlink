@@ -1,5 +1,5 @@
 "use client";
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useState } from "react";
 import ProgressLine from "./progressLine";
 import { useVideoValidate } from "@/hooks/useVideoValidate";
 import dynamic from "next/dynamic";
@@ -60,7 +60,7 @@ const UploadMobile = () => {
       cancelVideo();
     } else {
       alert(res.message);
-    } 
+    }
   };
 
   return (
