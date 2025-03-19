@@ -60,8 +60,8 @@ const UploadMobile = () => {
     data.append("duration", duration.toString());
     const res = await publish(data);
     if (res.status === 201 && "videoLink" in res) {
-      setEditSignal(false);
       setVideoLink(res.videoLink);
+      setEditSignal(false);
       cancelVideo();
     } else {
       alert(res.message);
