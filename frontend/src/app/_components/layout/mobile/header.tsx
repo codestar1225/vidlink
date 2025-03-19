@@ -25,7 +25,6 @@ const HeaderMobile = () => {
     if (user) {
       const parsedUser = JSON.parse(user);
       setPic(parsedUser.picture);
-      console.log(pic)
     }
   }, [token, pathName]);
 
