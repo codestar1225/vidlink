@@ -1,6 +1,4 @@
 import { ChangeEvent } from "react";
-import images from "../../image.json";
-import Thumbnail from "./thumbnail";
 
 interface Type {
   handleUploadImg(value: ChangeEvent<HTMLInputElement>): void;
@@ -16,8 +14,8 @@ const Index: React.FC<Type> = ({
 }) => {
   return (
     <>
-      <div className="h-[280.51px] text-[9px] tracking-[2px] font-semibold mx-[19.5px] mt-[37px] flex flex-col justify-between">
-        <h1 className="h-[9px] text-center">VIDEO SETTINGS</h1>
+      <div className=" text-[9px] tracking-[2px] font-semibold mx-[19.5px] mt-[37px] flex flex-col justify-between">
+        <h1 className="text-[24px]  text-center">VIDEO</h1>
         <div className="h-[59px] flex flex-col justify-between">
           <h1>TITLE</h1>
           <input
@@ -27,8 +25,8 @@ const Index: React.FC<Type> = ({
             placeholder="Text"
             className="h-[40px] font-normal text-[14px] py-[15px] w-full bg-[#1E1E1E] border-[2.72px] border-[#505050] rounded-[9px] placeholder:text-[12px] placeholder:text-[#505050] placeholder:font-semibold px-[9px]"
           />
-        </div>
-        <Thumbnail images={images} />
+        </div>       
+        {/* <Thumbnail images={images} />
         <div className="h-[81px] flex justify-between items-center">
           <div className="w-[110px] h-full flex flex-col justify-between items-center">
             <h1>PREVIEW FRAME</h1>
@@ -59,7 +57,7 @@ const Index: React.FC<Type> = ({
               id="upload"
             />
           </div>
-        </div>
+        </div> */}
       </div>
     </>
   );

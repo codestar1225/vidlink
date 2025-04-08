@@ -129,7 +129,7 @@ const AddCards: React.FC<Type> = ({
 
   return (
     <>
-      <main className="">
+      <main >
         <Setting
           handleUploadImg={handleUploadImg}
           setTitle={setTitle}
@@ -170,7 +170,7 @@ const AddCards: React.FC<Type> = ({
           PREVIEW & PUBLISH
         </button>
       </main>
-      <FooterMobile isFixed={false} />
+      <FooterMobile isFixed={false} /> 
     </>
   );
 };

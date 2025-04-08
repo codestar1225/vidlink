@@ -7,6 +7,20 @@ interface Type {
   email: string | undefined;
 }
 const SocialLinks: React.FC<Type> = ({ instagram, tiktok, isAuth, email }) => {
+  const createUrl = (platform: string | undefined | null, baseUrl: string) => {
+    if (!platform) return null;
+    if (platform.startsWith("https") || platform.startsWith(baseUrl)) {
+      return platform;
+    }
+    return `https://${baseUrl}.com/${platform}`;
+  };
+
+  const instaUrl = createUrl(instagram, "instagram");
+  const tiktokUrl = createUrl(tiktok, "tiktok");
+  // const behancelUrl = createUrl(behancel, "tiktok");
+
+  // Return null if no URLs are valid
+  if (!instaUrl && !tiktokUrl) return null;
   return (
     <>
       <div
@@ -15,7 +29,7 @@ const SocialLinks: React.FC<Type> = ({ instagram, tiktok, isAuth, email }) => {
         } flex justify-center`}
       >
         {instagram ? (
-          <Link href={instagram || ""} target="_blank">
+          <Link href={instaUrl || ""} target="_blank">
             <Image
               width={26}
               height={26}
@@ -26,17 +40,10 @@ const SocialLinks: React.FC<Type> = ({ instagram, tiktok, isAuth, email }) => {
             />
           </Link>
         ) : (
-          <Image
-            width={26}
-            height={26}
-            className="size-[26px]"
-            src="/icon/profile/instagram.png"
-            alt=""
-            loading="eager"
-          />
+          <></>
         )}
         {tiktok ? (
-          <Link href={tiktok || ""} target="_blank">
+          <Link href={tiktokUrl || ""} target="_blank">
             <Image
               width={26}
               height={26}
@@ -47,14 +54,7 @@ const SocialLinks: React.FC<Type> = ({ instagram, tiktok, isAuth, email }) => {
             />
           </Link>
         ) : (
-          <Image
-            width={26}
-            height={26}
-            className="size-[26px]"
-            src="/icon/profile/tiktok.png"
-            alt=""
-            loading="eager"
-          />
+          <></>
         )}
         {isAuth || (
           <>
@@ -70,25 +70,22 @@ const SocialLinks: React.FC<Type> = ({ instagram, tiktok, isAuth, email }) => {
                 />
               </Link>
             ) : (
-              <Image
-                width={26}
-                height={26}
-                className="size-[26px]"
-                src="/icon/profile/envelope.png"
-                alt=""
-                loading="eager"
-              />
+              <></>
             )}
-            <Link href={""}>
-              <Image
-                width={26}
-                height={26}
-                className="size-[26px]"
-                src="/icon/profile/behancel.png"
-                alt=""
-                loading="eager"
-              />
-            </Link>
+            {/* {behancelUrl ? (
+              <Link href={""}>
+                <Image
+                  width={26}
+                  height={26}
+                  className="size-[26px]"
+                  src="/icon/profile/behancel.png"
+                  alt=""
+                  loading="eager"
+                />
+              </Link>
+            ) : (
+              <></>
+            )} */}
           </>
         )}
       </div>

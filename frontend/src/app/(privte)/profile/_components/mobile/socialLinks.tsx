@@ -5,11 +5,25 @@ interface Type {
   tiktok?: string | null;
 }
 const SocialLinks: React.FC<Type> = ({ instagram, tiktok }) => {
+  const createUrl = (platform: string | undefined | null, baseUrl: string) => {
+    if (!platform) return null;
+    if (platform.startsWith("https") || platform.startsWith(baseUrl)) {
+      return platform;
+    }
+    return `https://${baseUrl}.com/${platform}`;
+  };
+
+  const instaUrl = createUrl(instagram, "instagram");
+  const tiktokUrl = createUrl(tiktok, "tiktok");
+
+  // Return null if no URLs are valid
+  if (!instaUrl && !tiktokUrl) return null;
+
   return (
     <>
       <div className="flex gap-[14px] justify-center ">
         {instagram ? (
-          <Link href={instagram || ""} target="_blank">
+          <Link href={instaUrl || ""} target="_blank">
             <Image
               width={26}
               height={26}
@@ -20,17 +34,10 @@ const SocialLinks: React.FC<Type> = ({ instagram, tiktok }) => {
             />
           </Link>
         ) : (
-          <Image
-            width={26}
-            height={26}
-            className="size-[26px]"
-            src="/icon/profile/instagram.png"
-            alt=""
-            loading="eager"
-          />
+          <></>
         )}
         {tiktok ? (
-          <Link href={tiktok || ""} target="_blank">
+          <Link href={tiktokUrl || ""} target="_blank">
             <Image
               width={26}
               height={26}
@@ -41,14 +48,7 @@ const SocialLinks: React.FC<Type> = ({ instagram, tiktok }) => {
             />
           </Link>
         ) : (
-          <Image
-            width={26}
-            height={26}
-            className="size-[26px]"
-            src="/icon/profile/tiktok.png"
-            alt=""
-            loading="eager"
-          />
+          <></>
         )}
       </div>
     </>

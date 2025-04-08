@@ -1,3 +1,5 @@
+import { Link } from "lucide-react";
+
 interface Type {
   setUrl(value: string): void;
   url: string;
@@ -20,7 +22,8 @@ const LinkUpload: React.FC<Type> = ({ setUrl, url }) => {
             LINK
           </div>
           <button onClick={handleAutoPaste}>
-            <img src="/icon/upload/paste.svg" alt="" />
+            {/* <img src="/icon/upload/paste.svg" alt="" /> */}
+            <Link className="size-[9px]"/>
           </button>
         </div>
         <input

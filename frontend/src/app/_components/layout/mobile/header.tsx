@@ -62,16 +62,16 @@ const HeaderMobile = () => {
       <div
         className={`${
           isBlurred && pathName !== "/videos"
-            ? "backdrop-blur-md bg-white/50"
+            ? "backdrop-blur-m "
             : "bg-transparent"
-        } flex justify-between items-center mt-[27px] bg-[red] mx-[30px] px-[3px] py-[3px] rounded-full`}
+        } flex justify-between items-center mt-[27px] mx-[30px] px-[3px] py-[3px] rounded-full`}
       >
         <button onClick={() => setIsOpenMenu((prev) => !prev)}>
           <Image
             width={32}
             height={32}
             className="size-[32px]"
-            src="/icon/layout/menu.png"
+            src="/icon/layout/menu.svg"
             alt=""
             loading="eager"
             priority
@@ -91,26 +91,23 @@ const HeaderMobile = () => {
                 />
               </Link>
               <Link href={"/profile"}>
-                <Image
+                <img
                   width={33.95}
                   height={33}
                   className="w-[33.95px] h-[33px] rounded-full"
                   src={pic ? pic : "/icon/layout/avatar.png"}
                   alt=""
                   loading="eager"
+                  referrerPolicy="no-referrer"
                 />
               </Link>
             </>
           ) : (
-            <Link href={"/signin"}>
-              <Image
-                width={32}
-                height={32}
-                className="h-[32px]"
-                src="/icon/layout/logo.svg"
-                alt=""
-                loading="eager"
-              />
+            <Link
+              href={"/login"}
+              className="text-[16px] px-[5px] pt-[2px] pb-[1px] font-semibold border-foreground border-[2px] rounded-[7px]"
+            >
+              LOG IN
             </Link>
           )}
         </div>
@@ -124,7 +121,7 @@ const HeaderMobile = () => {
           onClick={() => setIsOpenMenu((prev) => !prev)}
           className={`${
             isBlurred && pathName !== "/videos"
-              ? "backdrop-blur-md bg-white/50 "
+              ? "backdrop-blur-md "
               : "bg-transparent"
           } p-[3px] rounded-full ml-[7px] `}
         >
@@ -132,7 +129,7 @@ const HeaderMobile = () => {
             width={32}
             height={32}
             className="size-[32px]"
-            src="/icon/layout/close.png"
+            src="/icon/layout/close.svg"
             alt=""
             loading="eager"
             priority
@@ -144,7 +141,7 @@ const HeaderMobile = () => {
           } transition-all duration-100 mt-[4px] flex px-[10px] py-[8px] rounded-full justify-between
            ${
              isBlurred && pathName !== "/videos"
-               ? "backdrop-blur-md bg-white/50"
+               ? "backdrop-blur-md "
                : "bg-transparent"
            }`}
         >

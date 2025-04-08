@@ -22,7 +22,7 @@ const LoginModal: React.FC<Type> = ({ setIsOpen }) => {
       </h1>
       <Link
         className="text-[13.3px] h-[26.62px] w-[162px] bg-blue rounded-[3.32px] flex justify-center items-center"
-        href={"/signin"}
+        href={"/login"}
       >
         LOG IN
       </Link>

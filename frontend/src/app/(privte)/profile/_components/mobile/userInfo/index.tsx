@@ -2,7 +2,6 @@ import AmountItem from "./amountItem";
 import Cookies from "js-cookie";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
-import Image from "next/image";
 // import EditPic from "./editPic";
 
 interface Type {
@@ -10,32 +9,36 @@ interface Type {
   totalVideos?: number | null;
   totalCards?: number | null;
   followers?: number | null;
+  bio?: string | null;
 }
 const Index: React.FC<Type> = ({
   picture,
   totalVideos,
   totalCards,
   followers,
+  bio,
 }) => {
   // const [isOpen, setIsOpen] = useState<boolean>(false);
   const handleSignOut = async () => {
-    await signOut({ callbackUrl: "/signin" });
+    await signOut({ callbackUrl: "/login" });
     Cookies.remove("token");
     Cookies.remove("reqUrl");
     Cookies.remove("user");
   };
+  console.log(picture);
   return (
     <>
       <div className="relative size-[146px] mx-auto ">
         {picture ? (
-          <Image
+          <img
             width={146}
             height={146}
             className="size-[146px] rounded-full"
             src={picture}
             alt=""
             loading="eager"
-            priority
+            // priority
+            referrerPolicy="no-referrer"
           />
         ) : (
           <span className="size-[146px]"></span>
@@ -52,25 +55,26 @@ const Index: React.FC<Type> = ({
       <div className="h-[147.04.67px] mx-[91px] mt-[28px] mb-[28px]">
         <div className="flex justify-between mb-[21px]">
           <AmountItem number={followers || 0} label="FOLLOWING" />
-          <AmountItem number={totalCards || 0} label="PROMPTS ADDED" />
+          <AmountItem number={totalCards || 0} label="CARDS ADDED" />
           <AmountItem number={totalVideos || 0} label="VIDEOS" />
         </div>
-        <div className="flex flex-col gap-[5.47px] ">
+        <div className="text-center">{bio}</div>
+        <div className="flex flex-col gap-[5.47px] mt-[5px]">
           <Link
             href={"/dashboard"}
-            className="h-[28.88px] bg-blue rounded-[4.97px] flex items-center justify-center text-[10.5px] font-semibold"
+            className="h-[28.88px] bg-blue rounded-[4.97px] flex items-center pt-[1px] justify-center text-[10.5px] font-semibold"
           >
             DASHBOARD
           </Link>
           <Link
             href={"/settings"}
-            className="h-[28.88px] bg-[#7C889D] rounded-[4.97px] flex items-center justify-center text-[10.5px] font-semibold"
+            className="h-[28.88px] bg-[#7C889D] rounded-[4.97px] flex items-center pt-[1px]  justify-center text-[10.5px] font-semibold"
           >
             SETTINGS
           </Link>
           <button
             onClick={handleSignOut}
-            className="h-[28.88px] bg-[#002355] rounded-[4.97px] flex items-center justify-center text-[10.5px] font-semibold"
+            className="h-[28.88px] bg-[#002355] rounded-[4.97px] flex items-center pt-[1px]  justify-center text-[10.5px] font-semibold"
           >
             LOG OUT
           </button>

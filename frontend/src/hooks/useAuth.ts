@@ -41,7 +41,7 @@ const useAuth = () => {
   };
 
   // login
-  const signin = async (
+  const login = async (
     idToken: string | undefined
   ): Promise<AuthSuccessResponse | AuthErrorResponse> => {
     setLoading(true);
@@ -66,7 +66,7 @@ const useAuth = () => {
     }
   };
 
-  return { signup, signin, loading };
+  return { signup, login, loading };
 };
 
 export default useAuth;

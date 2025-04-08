@@ -23,14 +23,15 @@ const Index: React.FC<Type> = ({
     <>
       <div className="flex gap-[17.67px] ml-[19.75px] h-[74px]">
         {imgUrl ? (
-          <Image
+          <img
             width={74}
             height={74}
             className="size-[74px] rounded-full"
             src={imgUrl}
             alt=""
             loading="eager"
-            priority
+            // priority
+            referrerPolicy="no-referrer"
           />
         ) : (
           <span className="size-[74px]"></span>
@@ -38,7 +39,7 @@ const Index: React.FC<Type> = ({
         <div className=" relative mt-[28px] ">
           <button
             onClick={() => setEdit("modal")}
-            className="flex justify-center items-center py-[1px] leading-none border-[1.07px] border-white  rounded-[3.2px] text-[13px] w-[110.3px]"
+            className="flex justify-center items-center py-[2px] pb-[1px] leading-none border-[1.07px] border-white  rounded-[3.2px] text-[13px] px-[2px]"
           >
             EDIT PICTURE
           </button>

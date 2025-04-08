@@ -11,43 +11,43 @@ export type GoogleTokenPayload = {
 };
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
-const register = async (req: Request, res: Response) => {
-  try {
-    const { idToken } = req.body;
-    const ticket = await client.verifyIdToken({
-      idToken: idToken,
-      audience: process.env.GOOGLE_CLIENT_ID,
-    });
+// const register = async (req: Request, res: Response) => {
+//   try {
+//     const { idToken } = req.body;
+//     const ticket = await client.verifyIdToken({
+//       idToken: idToken,
+//       audience: process.env.GOOGLE_CLIENT_ID,
+//     });
 
-    const payload = ticket.getPayload() as GoogleTokenPayload;
+//     const payload = ticket.getPayload() as GoogleTokenPayload;
 
-    if (!payload || !payload.email) {
-      throw new Error("Invalid token payload");
-    }
+//     if (!payload || !payload.email) {
+//       throw new Error("Invalid token payload");
+//     }
 
-    const user = await authService.findUser(payload.email);
-    if (user)
-      res
-        .status(400)
-        .json({ message: "User already registered, please login" });
-    else {
-      const user = await authService.createUser(payload);
-      const token = jwt.sign(
-        { userId: user._id },
-        process.env.JWT_SECRET as string,
-        { expiresIn: "4h" }
-      );
-      res.status(201).json({
-        message: "User created",
-        token,
-        user: { userName: user.userName, picture: user.picture },
-      });
-    }
-  } catch (error: any) {
-    res.status(400).json({ message: error.message });
-    console.log("error", error.message);
-  }
-};
+//     const user = await authService.findUser(payload.email);
+//     if (user)
+//       res
+//         .status(400)
+//         .json({ message: "User already registered, please login" });
+//     else {
+//       const user = await authService.createUser(payload);
+//       const token = jwt.sign(
+//         { userId: user._id },
+//         process.env.JWT_SECRET as string,
+//         { expiresIn: "4h" }
+//       );
+//       res.status(201).json({
+//         message: "User created",
+//         token,
+//         user: { userName: user.userName, picture: user.picture },
+//       });
+//     }
+//   } catch (error: any) {
+//     res.status(400).json({ message: error.message });
+//     console.log("error", error.message);
+//   }
+// };
 
 const login = async (req: Request, res: Response) => {
   try {
@@ -75,14 +75,23 @@ const login = async (req: Request, res: Response) => {
         .lean();
       res
         .status(201)
-        .json({ message: "User Logged In", token, user: userInfo });
-    } else
-      res
-        .status(400)
-        .json({ message: "User doesn't exist, please sign up firstly" });
+        .json({ message: "Logged in successfully.", token, user: userInfo });
+    } else {
+      const user = await authService.createUser(payload);
+      const token = jwt.sign(
+        { userId: user._id },
+        process.env.JWT_SECRET as string,
+        { expiresIn: "4h" }
+      );
+      res.status(201).json({
+        message: "Signed up successfully.",
+        token,
+        user: { userName: user.userName, picture: user.picture },
+      });
+    }
   } catch (error: any) {
     res.status(400).json({ message: error.message });
   }
 };
 
-export default { register, login };
+export default { login };

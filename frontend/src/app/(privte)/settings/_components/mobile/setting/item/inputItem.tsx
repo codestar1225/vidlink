@@ -1,3 +1,6 @@
+"use client";
+import { ChangeEvent, useState } from "react";
+
 interface Type {
   name: string;
   holderName: string;
@@ -5,6 +8,17 @@ interface Type {
   setValue(value: string): void;
 }
 const InputItem: React.FC<Type> = ({ name, holderName, value, setValue }) => {
+  const [caution, setCaution] = useState<String>("");
+  const handleValue = (e: ChangeEvent<HTMLInputElement>) => {
+    const inputValue = e.target.value;
+
+    if (name === "bio" && inputValue.length > 50) {
+      setCaution("You can't exceed 30 characters in your bio.");
+    } else {
+      setValue(inputValue);
+      setCaution("");
+    }
+  };
   return (
     <>
       <label className="w-full flex flex-col justify-between h-[54.01px]">
@@ -13,7 +27,7 @@ const InputItem: React.FC<Type> = ({ name, holderName, value, setValue }) => {
         </span>
         <input
           value={value}
-          onChange={(e) => setValue(e.target.value.trim())}
+          onChange={handleValue}
           type="text"
           placeholder={holderName}
           className={`${
@@ -23,6 +37,9 @@ const InputItem: React.FC<Type> = ({ name, holderName, value, setValue }) => {
           } h-[38.98px] text-[14px] pt-[1.5px]  rounded-[10.41px] px-[11.47px] placeholder-[#4F4F4F] placeholder:text-[13px] placeholder:font-semibold `}
         />
       </label>
+      <i className="text-[red] text-[12px]">
+        <h1>{caution}</h1>
+      </i>
     </>
   );
 };

@@ -6,7 +6,7 @@ import GenderItem from "./gender";
 import UserName from "./userName";
 import { useEffect, useState } from "react";
 import useVideo from "@/hooks/useVideo";
-import { validateSocialMediaUrl } from "@/utils/validateUrl";
+// import { validateSocialMediaUrl } from "@/utils/validateUrl";
 import { UserInfoType } from "../../../page";
 import EditPic from "./editPic";
 import Cookies from "js-cookie";
@@ -50,19 +50,19 @@ const Index: React.FC<Type> = ({
 
   const handleSave = async () => {
     if (caution || isSaved || loading || checkingName) return;
-    const isInstagram = validateSocialMediaUrl("instagram", instagram);
-    const isTiktok = validateSocialMediaUrl("tiktok", tiktok);
-    const isYoutube = validateSocialMediaUrl("youtube", youtube);
-    const isLinkedin = validateSocialMediaUrl("linkedin", linkedin);
-    if (
-      (instagram && !isInstagram) ||
-      (tiktok && !isTiktok) ||
-      (youtube && !isYoutube) ||
-      (linkedin && !isLinkedin)
-    ) {
-      alert("Please enter the valid links.");
-      return;
-    }
+    // const isInstagram = validateSocialMediaUrl("instagram", instagram);
+    // const isTiktok = validateSocialMediaUrl("tiktok", tiktok);
+    // const isYoutube = validateSocialMediaUrl("youtube", youtube);
+    // const isLinkedin = validateSocialMediaUrl("linkedin", linkedin);
+    // if (
+    //   (instagram && !isInstagram) ||
+    //   (tiktok && !isTiktok) ||
+    //   (youtube && !isYoutube) ||
+    //   (linkedin && !isLinkedin)
+    // ) {
+    //   alert("Please enter the valid links.");
+    //   return;
+    // }
     const userInfo = new FormData();
     if (imgFile) {
       userInfo.append("file", imgFile);
@@ -92,7 +92,6 @@ const Index: React.FC<Type> = ({
       if (res.message === "Already exist user name.") {
         setCaution("Sorry, this username is already in use.");
       } else {
-        setCaution(res.message);
         alert(res.message);
       }
     }

@@ -5,12 +5,35 @@ import Footer from "@/app/_components/layout/mobile/footer";
 import { useState } from "react";
 import { Video } from "../../ui/video";
 import Image from "next/image";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 export default function HomeMobile() {
   const [isPlay, setIsPLay] = useState<boolean>(false);
   const videoPlay = () => {
     setIsPLay(true);
   };
+
+  const settings = {
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    vertical: true,
+    autoplay: true,
+    autoplaySpeed: 1000,
+    arrows: false,
+    adaptiveHeight: true,
+  };
+  const images = [
+    { name: "youtube", src: "/icon/home/youtube.png" },
+    { name: "youtube", src: "/icon/home/max.png" },
+    { name: "youtube", src: "/icon/home/spotify.png" },
+    { name: "youtube", src: "/icon/home/wikipedia.png" },
+    { name: "youtube", src: "/icon/home/linkedin.png" },
+    { name: "youtube", src: "/icon/home/imdb.png" },
+  ];
   return (
     <>
       <div className=" relative">
@@ -35,15 +58,13 @@ export default function HomeMobile() {
               <h1 className="text-[15.06px] text-white">
                 CONNECT YOUR VIDEOS TO
               </h1>
-              <Link className="size-[28.7px]" href={""}>
-                <Image
-                  width={28.7}
-                  height={28.7}
-                  src="/icon/home/youtube.png"
-                  alt=""
-                  loading="eager"
-                />
-              </Link>
+              <Slider {...settings} className="w-[45px] ">
+                {images.map((item, index) => (
+                  <div key={index}>
+                    <Image width={28.7} height={28.7} className="pt-[2px]" src={item.src} alt="" />
+                  </div>
+                ))}
+              </Slider>
             </div>
           </div>
         </div>
@@ -91,7 +112,7 @@ export default function HomeMobile() {
         </p>
         <Link
           href={"/videos"}
-          className="border-[1.5px] border-white leading-0  rounded-[3.2px] text-[14.91px] pt-[3.2px] pb-[1.3px] px-[2.13px] my-[43px] "
+          className="border-[1.5px] border-white leading-0  rounded-[3.2px] text-[14.91px] pt-[2px] pb-[1px] px-[2.13px] my-[43px] "
         >
           ALL VIDEOS
         </Link>

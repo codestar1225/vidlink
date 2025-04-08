@@ -41,7 +41,7 @@ const ProfilesMobile: React.FC<Type> = ({
             tiktok={userInfo?.tiktok || ""}
             email={userInfo?.email || ""}
           />
-          <div className="mx-[11.5px] mt-[9px] mb-[76px]">
+          <div className="mx-[10px] mt-[9px] mb-[76px]">
             <Video
               myVideos={userVideos?.slice()?.reverse()}
               totalVideos={userInfo?.totalVideos}

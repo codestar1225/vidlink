@@ -150,7 +150,7 @@ export const getMyVideos = expressAsyncHandler(
         .lean();
       const userInfo = await User.findById(req.userId)
         .select(
-          "totalVideos totalCards followers tiktok youtube linkedin instagram userName picture"
+          "totalVideos totalCards followers tiktok youtube linkedin instagram userName picture bio"
         )
         .lean();
       const followingNumber = userInfo?.followers.filter(

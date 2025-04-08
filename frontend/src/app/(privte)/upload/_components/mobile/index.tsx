@@ -7,7 +7,6 @@ import Upload from "./upload";
 import Loading from "@/app/_components/ui/loading";
 import { useAtom } from "jotai";
 import { cardAtom, CardType } from "@/store";
-import { confirmModal } from "@/utils/confirm";
 import useVideo from "@/hooks/useVideo";
 const AddCards = dynamic(() => import("./addCards"));
 const Preview = dynamic(() => import("./preview"));
@@ -32,15 +31,12 @@ const UploadMobile = () => {
   const [userName, setUserName] = useState<string>("");
   const { publish, loading } = useVideo();
 
-  const handlePublish = () => {
+  const handlePublish = async () => {
     if (loading) return;
     if (cards.length < 1) {
       return alert("Please fill all the contents.");
     }
     if (!editSignal) return;
-    confirmModal("Are you sure you want to publish this video?", videoPublish);
-  };
-  const videoPublish = async () => {
     const data = new FormData();
     if (file) {
       data.append("file", file);

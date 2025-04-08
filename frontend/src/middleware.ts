@@ -7,7 +7,7 @@ export async function middleware(req: NextRequest): Promise<NextResponse> {
   const cleanedUrl = pathname + search;
   // console.log("pathname", pathname, "token", token);
   if (!token || typeof token !== "string") {
-    const res = NextResponse.redirect(new URL("/signin", req.url));
+    const res = NextResponse.redirect(new URL("/login", req.url));
     res.cookies.set("reqUrl", cleanedUrl, { maxAge: 60 * 60 });
     return res;
   }
@@ -23,7 +23,7 @@ export async function middleware(req: NextRequest): Promise<NextResponse> {
   } catch (error) {
     console.error("JWT Verification Error:", error);
     const res = NextResponse.redirect(
-      new URL("/signin?error=invalid_token", req.url)
+      new URL("/login?error=invalid_token", req.url)
     );
     res.cookies.set("reqUrl", cleanedUrl, { maxAge: 60 * 60 });
     res.cookies.delete("user");

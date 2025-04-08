@@ -71,6 +71,8 @@ const SettingBar: React.FC<Type> = ({
                 className="size-[35px] rounded-full"
                 src={userInfo.picture}
                 alt=""
+                loading="eager"
+                referrerPolicy="no-referrer"
               />
             ) : (
               <span className="size-[35px]"></span>

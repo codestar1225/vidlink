@@ -93,6 +93,7 @@ type UserInfo = {
   youtube: string;
   linkedin: string;
   email?: string;
+  bio: string;
 };
 export interface GetMyVideosSuccess {
   userInfo: UserInfo;

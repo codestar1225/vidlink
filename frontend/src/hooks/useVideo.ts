@@ -111,7 +111,7 @@ const useVideo = () => {
         ) {
           Cookies.remove("token");
           Cookies.remove("user");
-          router.push("/signin");
+          router.push("/login");
           return { message: "Your session was expired. Please log in again." };
         } else {
           return { message: "Something went wrong" };
@@ -181,7 +181,7 @@ const useVideo = () => {
         ) {
           Cookies.remove("token");
           Cookies.remove("user");
-          router.push("/signin");
+          router.push("/login");
           return { message: "Your session was expired. Please log in again." };
         } else {
           return { message: "Something went wrong" };
@@ -209,7 +209,7 @@ const useVideo = () => {
         ) {
           Cookies.remove("token");
           Cookies.remove("user");
-          router.push("/signin");
+          router.push("/login");
           return { message: "Your session was expired. Please log in again." };
         } else {
           return { message: "Something went wrong" };
@@ -235,7 +235,7 @@ const useVideo = () => {
         ) {
           Cookies.remove("token");
           Cookies.remove("user");
-          router.push("/signin");
+          router.push("/login");
           return { message: "Your session was expired. Please log in again." };
         } else {
           return { message: "Something went wrong" };
@@ -283,7 +283,7 @@ const useVideo = () => {
         ) {
           Cookies.remove("token");
           Cookies.remove("user");
-          router.push("/signin");
+          router.push("/login");
           return { message: "Your session was expired. Please log in again." };
         } else {
           return { message: "Something went wrong" };
@@ -310,7 +310,7 @@ const useVideo = () => {
         ) {
           Cookies.remove("token");
           Cookies.remove("user");
-          router.push("/signin");
+          router.push("/login");
           return { message: "Your session was expired. Please log in again." };
         } else {
           return { message: "Something went wrong" };
@@ -338,7 +338,7 @@ const useVideo = () => {
         ) {
           Cookies.remove("token");
           Cookies.remove("user");
-          router.push("/signin");
+          router.push("/login");
           return { message: "Your session was expired. Please log in again." };
         } else {
           return { message: error?.response?.data?.message };
@@ -365,7 +365,7 @@ const useVideo = () => {
         ) {
           Cookies.remove("token");
           Cookies.remove("user");
-          router.push("/signin");
+          router.push("/login");
           return { message: "Your session was expired. Please log in again." };
         } else {
           return { message: "Something went wrong" };
@@ -392,7 +392,7 @@ const useVideo = () => {
         ) {
           Cookies.remove("token");
           Cookies.remove("user");
-          router.push("/signin");
+          router.push("/login");
           return { message: "Your session was expired. Please log in again." };
         } else {
           return { message: "Something went wrong" };
@@ -419,7 +419,7 @@ const useVideo = () => {
         ) {
           Cookies.remove("token");
           Cookies.remove("user");
-          router.push("/signin");
+          router.push("/login");
           return { message: "Your session was expired. Please log in again." };
         } else {
           return { message: "Something went wrong" };
@@ -488,7 +488,7 @@ const useVideo = () => {
         ) {
           Cookies.remove("token");
           Cookies.remove("user");
-          router.push("/signin");
+          router.push("/login");
           return { message: "Your session was expired. Please log in again." };
         } else {
           return { message: "Something went wrong" };
@@ -515,7 +515,7 @@ const useVideo = () => {
         ) {
           Cookies.remove("token");
           Cookies.remove("user");
-          router.push("/signin");
+          router.push("/login");
           return { message: "Your session was expired. Please log in again." };
         } else {
           return { message: "Something went wrong" };

@@ -168,7 +168,7 @@ export const setUserInfo = expressAsyncHandler(
       const isAlreadyName = await User.findOne({ userName: userName })
         .select("userName")
         .lean();
-      if (isAlreadyName && isAlreadyName._id != req.userId) {
+      if (isAlreadyName && isAlreadyName._id != req.userId && userName) {
         res.status(400).json({ message: "Already exist user name." });
         return;
       }

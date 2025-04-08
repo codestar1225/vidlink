@@ -20,6 +20,7 @@ export type UserInfoType = {
   youtube: string;
   linkedin: string;
   email?: string;
+  bio: string;
 };
 
 export type VideoType = {

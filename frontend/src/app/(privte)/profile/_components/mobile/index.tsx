@@ -34,6 +34,7 @@ const ProfileMobile: React.FC<Type> = ({
               totalVideos={userInfo?.totalVideos}
               totalCards={userInfo?.totalCards}
               followers={userInfo?.followers}
+              bio= {userInfo?.bio}
             />
             <SocialLinks
               instagram={userInfo?.instagram}
