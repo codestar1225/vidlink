@@ -5,7 +5,6 @@ import { tokenAtom } from "@/store";
 import { getItem, removeItem, setItem } from "@/utils/localstorage";
 import { useAtom } from "jotai";
 import { getSession, signIn } from "next-auth/react";
-import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import { toast } from "react-toastify";

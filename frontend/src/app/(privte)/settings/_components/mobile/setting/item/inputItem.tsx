@@ -8,7 +8,7 @@ interface Type {
   setValue(value: string): void;
 }
 const InputItem: React.FC<Type> = ({ name, holderName, value, setValue }) => {
-  const [caution, setCaution] = useState<String>("");
+  const [caution, setCaution] = useState<string>("");
   const handleValue = (e: ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
 

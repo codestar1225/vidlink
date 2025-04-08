@@ -2,7 +2,7 @@
 import Customize from "./customize";
 import Cards from "./cards";
 import FooterMobile from "@/app/_components/layout/mobile/footer";
-import { ChangeEvent, useState } from "react";
+import { useState } from "react";
 import { useAtom } from "jotai";
 import { cardAtom, CardType } from "@/store";
 import Setting from "./setting";
@@ -27,32 +27,32 @@ const AddCards: React.FC<Type> = ({
   title,
 }) => {
   const [cards, setCards] = useAtom<CardType[]>(cardAtom);
-  const [imgFile, setImgFile] = useState<string>("");
+  // const [imgFile, setImgFile] = useState<string>("");
   const [link, setLink] = useState<string>("");
   const [name, setName] = useState<string>("");
   const [icon, setIcon] = useState<string>("");
   const [start, setSart] = useState<number>(0);
   const [isSaved, setIsSaveed] = useState<boolean>(false);
 
-  function handleUploadImg(e: ChangeEvent<HTMLInputElement>) {
-    const file = e.target.files?.[0];
-    if (file) {
-      const allowedTypes = [
-        "image/png",
-        "image/jpeg",
-        "image/jpg",
-        "image/gif",
-        "image/webp",
-        "image/svg+xml",
-        "image/bmp",
-      ];
-      if (!allowedTypes.includes(file.type)) {
-        return alert("Invalid file type. Please upload an image.");
-      }
-      const imgUrl = URL.createObjectURL(file);
-      setImgFile(imgUrl);
-    }
-  }
+  // function handleUploadImg(e: ChangeEvent<HTMLInputElement>) {
+  //   const file = e.target.files?.[0];
+  //   if (file) {
+  //     const allowedTypes = [
+  //       "image/png",
+  //       "image/jpeg",
+  //       "image/jpg",
+  //       "image/gif",
+  //       "image/webp",
+  //       "image/svg+xml",
+  //       "image/bmp",
+  //     ];
+  //     if (!allowedTypes.includes(file.type)) {
+  //       return alert("Invalid file type. Please upload an image.");
+  //     }
+  //     const imgUrl = URL.createObjectURL(file);
+  //     setImgFile(imgUrl);
+  //   }
+  // }
 
   const addCard = () => {
     if (cards.length >= Math.floor(duration / 10) + 1 || cards.length >= 24) {
@@ -67,7 +67,7 @@ const AddCards: React.FC<Type> = ({
     }
     if (!checkUrl(link))
       return alert("Invalid link. Please enter a valid link.");
-    
+
     const newCard = {
       link,
       name,
@@ -129,13 +129,8 @@ const AddCards: React.FC<Type> = ({
 
   return (
     <>
-      <main >
-        <Setting
-          handleUploadImg={handleUploadImg}
-          setTitle={setTitle}
-          imgFile={imgFile}
-          title={title}
-        />
+      <main>
+        <Setting setTitle={setTitle} title={title} />
         <Customize
           setName={setName}
           setIcon={setIcon}
@@ -146,7 +141,6 @@ const AddCards: React.FC<Type> = ({
           name={name}
           link={link}
           start={start}
-          duration={duration}
           videoLink={videoLink}
         />
         <Cards
@@ -170,7 +164,7 @@ const AddCards: React.FC<Type> = ({
           PREVIEW & PUBLISH
         </button>
       </main>
-      <FooterMobile isFixed={false} /> 
+      <FooterMobile isFixed={false} />
     </>
   );
 };

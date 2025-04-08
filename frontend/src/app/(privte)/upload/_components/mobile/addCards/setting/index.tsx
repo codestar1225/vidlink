@@ -1,15 +1,11 @@
 import { ChangeEvent } from "react";
 
 interface Type {
-  handleUploadImg(value: ChangeEvent<HTMLInputElement>): void;
   setTitle(value: string): void;
-  imgFile: string;
   title: string;
 }
 const Index: React.FC<Type> = ({
-  handleUploadImg,
   setTitle,
-  imgFile,
   title,
 }) => {
   return (

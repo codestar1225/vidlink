@@ -16,7 +16,6 @@ interface Type {
   start: number;
   icon: string;
   isSaved: boolean;
-  duration: number;
   videoLink: string | null;
 }
 
@@ -29,7 +28,6 @@ const Index: React.FC<Type> = ({
   link,
   name,
   start,
-  duration,
   videoLink,
 }) => {
   const listRef = useRef<HTMLDivElement>(null);

@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Modal from "./modal";
 
 interface Type {
