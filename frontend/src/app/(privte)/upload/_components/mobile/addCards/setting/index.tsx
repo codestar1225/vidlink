@@ -1,5 +1,3 @@
-import { ChangeEvent } from "react";
-
 interface Type {
   setTitle(value: string): void;
   title: string;
