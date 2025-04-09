@@ -7,7 +7,7 @@ interface Type {
   isSaved: boolean;
   setIsSaveed(value: boolean): void;
 }
-const IndependentCard: React.FC<Type> = ({
+const PreviewCard: React.FC<Type> = ({
   name,
   start,
   icon,
@@ -46,11 +46,12 @@ const IndependentCard: React.FC<Type> = ({
                 <img src="/icon/detail/card/left2.svg" alt="" />
               )}
             </button>
-            <img src="/icon/detail/card/right2.svg" alt="" />
+            <LucideIcons.Link className="size-[19px]" />
+            {/* <img src="/icon/detail/card/right2.svg" alt="" /> */}
           </div>
         </div>
       </li>
     </>
   );
 };
-export default IndependentCard;
+export default PreviewCard;

@@ -15,7 +15,7 @@ const FileUpload: React.FC<Type> = ({
 }) => {
   return (
     <>
-      <div className="h-[210px] flex justify-center items-center rounded-[10px] bg-[#1E1E1E] mt-[43px] mx-[13.5px] mb-[149px] relative">
+      <div className="h-[210px] flex justify-center items-center rounded-[10px] bg-[#1E1E1E] mt-[43px] mx-[13.5px] relative">
         {!error ? (
           <>
             <label

@@ -1,6 +1,6 @@
 "use client";
 import CardItem from "./card";
-import IndependentCard from "./independentCard";
+import PreviewCard from "./previewCard";
 import { useAtom } from "jotai";
 import { cardAtom, CardType } from "@/store";
 
@@ -47,7 +47,7 @@ const Index: React.FC<Type> = ({
       <div className="mx-[19.5] flex flex-col items-center gap-[25px] mt-[36px]">
         <h1 className="text-[12px] font-semibold">PREVIEW</h1>
         <div className="flex justify-center">
-          <IndependentCard
+          <PreviewCard
             icon={icon}
             name={name}
             start={start}

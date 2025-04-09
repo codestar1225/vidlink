@@ -100,9 +100,11 @@ const CardItem: React.FC<Type> = ({
           </button>
           <button onClick={handleVisit} className="z-20">
             {currentCard >= 0 && currentCard + 1 === no ? (
-              <img src="/icon/detail/card/right2_white.png" alt="" />
+              // <img src="/icon/detail/card/right2_white.png" alt="" />
+              <LucideIcons.Link className="text-white size-[19px]" />
             ) : (
-              <img src="/icon/detail/card/right2.svg" alt="" />
+              <LucideIcons.Link className="size-[19px]"/>
+              // <img src="/icon/detail/card/right2.svg" alt="" />
             )}
           </button>
         </div>
