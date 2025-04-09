@@ -22,10 +22,11 @@ export const metadata: Metadata = {
   title: "Vidlink",
   description: "Vidlink is the best app!",
   manifest: "/manifest.json",
+  // manifest: "/site.webmanifest",
   icons: {
-    icon: "/favicon.png", // Default favicon
-    shortcut: "/favicon.png", // Shortcut icon
-    apple: "/logo.png", // Apple touch icon (optional)
+    icon: "/favicon.ico", // Default favicon
+    shortcut: "/favicon.ico", // Shortcut icon
+    apple: "/android-chrome-192x192.png", // Apple touch icon (optional)
   },
 };
 

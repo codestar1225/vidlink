@@ -58,7 +58,7 @@ const Index: React.FC<Type> = ({
           <AmountItem number={totalCards || 0} label="CARDS ADDED" />
           <AmountItem number={totalVideos || 0} label="VIDEOS" />
         </div>
-        <div className="text-center">{bio}</div>
+        <div className="text-center text-[13px]">{bio}</div>
         <div className="flex flex-col gap-[5.47px] mt-[5px]">
           <Link
             href={"/dashboard"}

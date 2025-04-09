@@ -1,5 +1,3 @@
-import Image from "next/image";
-
 interface Type {
   nav: string;
   setNav(value: string): void;
@@ -10,7 +8,7 @@ const NavItem: React.FC<Type> = ({ nav, setNav, name }) => {
     <>
       <div
         className={`${
-          name === "vidoes"
+          name === "videos"
             ? "items-start"
             : name === "cards"
             ? "items-center"
@@ -21,12 +19,12 @@ const NavItem: React.FC<Type> = ({ nav, setNav, name }) => {
           onClick={() => setNav(name)}
           className="flex flex-col items-center justify-between h-[37px] w-[65.67px]"
         >
-          <Image
+          <img
             width={20}
             height={20}
             src={`/icon/profile/${nav === name ? `${name}Blue` : name}.png`}
             alt=""
-            loading="eager"
+            // loading="eager"
           />
           <div className={nav === name ? "text-blue" : ""}>
             {name.toUpperCase()}
@@ -34,7 +32,7 @@ const NavItem: React.FC<Type> = ({ nav, setNav, name }) => {
         </button>
         <div
           className={`${
-            name === nav ? "border-blue" : ""
+            name === nav ? "border-blue" : "border-transparent"
           } border-[2px] w-[95px] rounded-full mt-[17px]`}
         ></div>
       </div>
