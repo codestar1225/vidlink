@@ -30,7 +30,7 @@ const VideoItem: React.FC<Type> = ({ userName, views, src, no, videoId }) => {
         </div>
         <div className="w-[58.6px] h-[43.32px] flex flex-col justify-between items-center">
           <h1 className="text-[7.81px] font-semibold">VIDEO {no}</h1>
-          <p className="text-[7.81px] text-[#7C889D] text-center flex flex-col overflow-hidden w-full">
+          <p className="text-[7.81px] text-[#7C889D] text-center flex flex-col w-full">
             UPLOADED BY
             <span className="leading-none ">{userName.toUpperCase()}</span>
           </p>

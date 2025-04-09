@@ -70,7 +70,7 @@ const Index: React.FC<Type> = ({
         </button>
         <div className="flex flex-col items-center gap-[20px] mt-[62.9px]">
           {cards.length > 0 && (
-            <h1 className="text-[12px] font-semibold">LIST OF PROMPTS</h1>
+            <h1 className="text-[12px] font-semibold">LIST OF CARDS</h1>
           )}
           <ul className="flex flex-wrap justify-start max-[401px]:justify-center content-start gap-[6px] max-w-[380px]">
             {cards?.map((item, index) => (

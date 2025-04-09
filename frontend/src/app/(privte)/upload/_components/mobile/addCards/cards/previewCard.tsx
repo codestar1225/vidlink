@@ -23,7 +23,7 @@ const PreviewCard: React.FC<Type> = ({
       <li className="border-blue border-[2px] text-black bg-white rounded-[6px] w-[122.41px] h-[94.5px] p-[5.9px] flex flex-col justify-between ">
         <div className="text-[13.86px] font-semibold flex justify-between w-full items-center">
           <span>{no < 10 ? `0${no}` : no}</span>
-          <i className="font-normal">
+          <i className="font-normal text-blue">
             ({Math.floor(start / 60)}:
             {start % 60 < 10 ? `0${start % 60}` : start % 60})
           </i>
@@ -33,7 +33,7 @@ const PreviewCard: React.FC<Type> = ({
             <h1 className="text-blue text-[13.86px] font-semibold text-center w-full ">
               {name.toUpperCase()}
             </h1>
-            {icon ? <IconComponent className="size-[18.29px] z-50" /> : <></>}
+            {icon ? <IconComponent className="size-[18.29px] z-50 text-blue" /> : <></>}
           </div>
           <div className="flex justify-between">
             <button

@@ -68,7 +68,8 @@ const Card: React.FC<Type> = ({
             )}
           </button>
           <button onClick={handleVisit} className="z-20">
-            <img src="/icon/detail/card/right2.svg" alt="" />
+            {/* <img src="/icon/detail/card/right2.svg" alt="" /> */}
+            <LucideIcons.Link className="size-[19px]" />
           </button>
         </div>
       </li>
