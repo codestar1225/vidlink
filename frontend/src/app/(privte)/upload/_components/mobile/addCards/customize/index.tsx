@@ -175,7 +175,7 @@ const Index: React.FC<Type> = ({
             <></>
           )}
         </div>
-        <div className="flex  flex-col justify-between h-[60px] mt-[15px]">
+        <div className="flex  flex-col justify-between h-[60px] mt-[15px] ">
           <div className="flex  items-center gap-[7px]">
             <div>START</div>
             <button>
@@ -187,27 +187,27 @@ const Index: React.FC<Type> = ({
             {start % 60 < 10 ? `0${start % 60}` : start % 60}
           </div>
         </div>
-        <div className=" ">
-          {videoLink ? (
-            <div className="mt-[20px] rounded-[6.1px] h-full object-cover w-full ">
-              <ReactPlayer
-                ref={videoRef}
-                url={videoLink}
-                preload="auto"
-                controls
-                onProgress={onProgress}
-                onSeek={onSeek}
-                progressInterval={100}
-                width="100%"
-                height="100%"
-              />
-            </div>
-          ) : (
-            <div className="h-[280px] flex items-center justify-center">
-              No video file.
-            </div>
-          )}
-        </div>
+      </div>
+      <div className="sticky top-[20px]">
+        {videoLink ? (
+          <div className="mt-[20px] rounded-[6.1px] h-full object-cover w-full ">
+            <ReactPlayer
+              ref={videoRef}
+              url={videoLink}
+              preload="auto"
+              controls
+              onProgress={onProgress}
+              onSeek={onSeek}
+              progressInterval={100}
+              width="100%"
+              height="100%"
+            />
+          </div>
+        ) : (
+          <div className="h-[280px] flex items-center justify-center">
+            No video file.
+          </div>
+        )}
       </div>
     </>
   );

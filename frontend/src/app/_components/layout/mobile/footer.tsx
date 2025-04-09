@@ -19,11 +19,14 @@ const FooterMobile = ({ isFixed }: { isFixed: boolean }) => {
           </div>
           <p className="text-[6px]">TERMS & CONDITIONS</p>
         </div>
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center gap-[2px]">
           <Link href={"/"}>
             <img src="/icon/layout/title.svg" alt="" />
           </Link>
-          <p className="text-[7px]">A TOOL BY FALCA</p>
+          <div className="flex items-center gap-1">
+            <img src="/icon/layout/falca.png" alt="" className="h-[10px]"/>
+            <p className="text-[7px]">A TOOL BY FALCA</p>
+          </div>
         </div>
         <div className="flex flex-col items-end gap-[3px]">
           <div className="flex gap-[10px] items-center">

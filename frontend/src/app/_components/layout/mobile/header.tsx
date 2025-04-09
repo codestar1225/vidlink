@@ -64,7 +64,7 @@ const HeaderMobile = () => {
           isBlurred && pathName !== "/videos"
             ? "backdrop-blur-m "
             : "bg-transparent"
-        } flex justify-between items-center mt-[27px] mx-[30px] px-[3px] py-[3px] rounded-full`}
+        } flex justify-between items-center mt-[27px] mx-[30px] max-[380px]:mx-[13px] px-[3px] py-[3px] rounded-full`}
       >
         <button onClick={() => setIsOpenMenu((prev) => !prev)}>
           <Image
@@ -116,7 +116,7 @@ const HeaderMobile = () => {
   ) : (
     // opened header
     <header ref={menuRef} className={` fixed z-10 top-0 left-0 w-screen `}>
-      <div className={` pt-[27px] bg-transparent mx-[22px]`}>
+      <div className={` pt-[27px] bg-transparent mx-[22px] max-[380px]:mx-[5px]`}>
         <button
           onClick={() => setIsOpenMenu((prev) => !prev)}
           className={`${

@@ -16,7 +16,7 @@ const ButtonItem: React.FC<Type> = ({
     <>
       <button
         onClick={() => setEdit("add")}
-        className="w-[282.8px] h-[50px] border-[3px] text-[25px] font-semibold rounded-[20px] mx-auto flex justify-center items-center mt-[63.4px] mb-[23px] tracking-wider"
+        className="w-[282.8px] h-[50px] border-[3px] text-[25px] font-semibold rounded-[20px] mx-auto flex justify-center items-center mt-[63.4px] mb-[23px] tracking-wider leading-none"
       >
         EDIT
       </button>
@@ -24,7 +24,7 @@ const ButtonItem: React.FC<Type> = ({
         onClick={handlePublish}
         className={`${
           editSignal ? "bg-blue" : "bg-[#002355]"
-        } w-[282.8px] h-[50px] text-[25px] font-semibold rounded-[20px]  mx-auto flex justify-center items-center mb-[56px] tracking-wider`}
+        } w-[282.8px] h-[50px] text-[25px] font-semibold rounded-[20px]  mx-auto flex justify-center items-center mb-[56px] tracking-wider leading-none`}
       >
         {loading ? (
           <>

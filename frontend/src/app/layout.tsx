@@ -21,6 +21,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Vidlink",
   description: "Vidlink is the best app!",
+  manifest: "/manifest.json",
   icons: {
     icon: "/favicon.png", // Default favicon
     shortcut: "/favicon.png", // Shortcut icon

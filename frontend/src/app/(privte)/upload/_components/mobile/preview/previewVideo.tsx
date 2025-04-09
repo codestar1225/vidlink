@@ -104,7 +104,8 @@ const PreviewVideo: React.FC<Type> = ({
 
       {/* detail */}
       <div className="h-[72.58px] w-full relative flex items-center justify-center">
-        <div className=" absolute left-[11px] top-[10.6px] flex gap-[12px]">
+        {/* <div className="absolute left-[11px] top-[10.6px] flex gap-[12px]"> */}
+        <div className=" absolute left-1/2 -translate-x-1/2 top-[10.6px] flex gap-[12px]">
           <div className="flex flex-col items-center gap-[5px]">
             <h1 className="text-[8px] font-semibold">CARDS</h1>
             <button className="border-[1.43px] w-[43px] h-[34px] rounded-[4.76px] text-center">
@@ -112,7 +113,7 @@ const PreviewVideo: React.FC<Type> = ({
             </button>
           </div>
           <div className="flex flex-col items-center gap-[5px]">
-            <h1 className="text-[8px] font-semibold">SUGGEST</h1>
+            <h1 className="text-[8px] font-semibold">ADD MORE</h1>
             <button
               onClick={() => setEdit("add")}
               className="border-[1.43px] w-[43px] h-[34px] rounded-[4.76px] flex justify-center items-center"

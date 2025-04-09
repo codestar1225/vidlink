@@ -32,7 +32,7 @@ const FileUpload: React.FC<Type> = ({
                   src="/icon/upload/file.svg"
                   alt=""
                 />
-                <div className="border-[1.5px] flex items-center justify-center border-white rounded-[3.2px] text-[14.53px] font-semibold pt-[3px] pb-[1px] px-[2.13px] ">
+                <div className="border-[1.5px] flex items-center justify-center border-white rounded-[3.2px] text-[14.53px] font-semibold pt-[2px] pb-[0px] px-[2.13px] ">
                   BROWSE FILE
                 </div>
               </div>

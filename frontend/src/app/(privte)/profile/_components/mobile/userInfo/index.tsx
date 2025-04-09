@@ -67,6 +67,12 @@ const Index: React.FC<Type> = ({
             DASHBOARD
           </Link>
           <Link
+            href={"/upload"}
+            className="h-[28.88px] bg-[#1e50bbe0] rounded-[4.97px] flex items-center pt-[1px] justify-center text-[10.5px] font-semibold"
+          >
+            DRAFTS
+          </Link>
+          <Link
             href={"/settings"}
             className="h-[28.88px] bg-[#7C889D] rounded-[4.97px] flex items-center pt-[1px]  justify-center text-[10.5px] font-semibold"
           >
