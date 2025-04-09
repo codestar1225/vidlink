@@ -166,7 +166,7 @@ const VideoMobile: React.FC<Type> = ({
             ALL VIDEOS
           </Link>
         </div>
-        <Footer isFixed={true} />
+        <Footer isFixed={false} />
       </div>
     </>
   );

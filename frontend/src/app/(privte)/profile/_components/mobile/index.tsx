@@ -30,7 +30,7 @@ const ProfileMobile: React.FC<Type> = ({
         <main className=" mt-[109px]">
           <div className="">
             <UserInfo
-              picture={userInfo?.picture}
+              picture={userInfo?.picture} 
               totalVideos={userInfo?.totalVideos}
               totalCards={userInfo?.totalCards}
               followers={userInfo?.followers}
@@ -79,7 +79,7 @@ const ProfileMobile: React.FC<Type> = ({
             )}
           </div>
         </main>
-        <FooterMobile isFixed={true} />
+        <FooterMobile isFixed={false} />
       </div>
     </>
   );
