@@ -87,7 +87,6 @@ const Index: React.FC<Type> = ({
                 link={item.link}
                 isSaved={item.isSaved}
                 no={item.no}
-                length={cards.length}
               />
             ))}
           </ul>

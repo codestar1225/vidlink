@@ -11,7 +11,6 @@ interface Type {
   icon: string;
   link: string;
   no: number;
-  length: number;
   isSaved: boolean;
 }
 const Card: React.FC<Type> = ({
@@ -25,7 +24,6 @@ const Card: React.FC<Type> = ({
   icon,
   link,
   no,
-  length,
   isSaved,
 }) => {
   const IconComponent = LucideIcons[
