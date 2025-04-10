@@ -9,7 +9,7 @@ const Index: React.FC<Type> = ({
   return (
     <>
       <div className=" text-[9px] tracking-[2px] font-semibold mx-[19.5px] mt-[37px] flex flex-col justify-between">
-        <h1 className="text-[24px]  text-center">VIDEO</h1>
+        <h1 className="text-[32px]  text-center">VIDEO</h1>
         <div className="h-[59px] flex flex-col justify-between">
           <h1>TITLE</h1>
           <input

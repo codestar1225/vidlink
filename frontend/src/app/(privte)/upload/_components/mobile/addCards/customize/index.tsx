@@ -101,7 +101,7 @@ const Index: React.FC<Type> = ({
   }, [name]);
   return (
     <>
-      <div className="mt-[36.5px] text-[10px] font-semibold mx-[19.5px]">
+      <div className="mt-[49px] text-[10px] font-semibold mx-[19.5px]">
         {/* <div className="flex flex-col items-center justify-between h-[38px]">
           <h1>ADD CARDS</h1>
           <i className=" font-normal text-[10px]">
@@ -118,8 +118,8 @@ const Index: React.FC<Type> = ({
             MAX 1 CARD EVERY 10s
           </i>
         </div> */}
-        <h1 className="text-[24px]  text-center">ADD CARDS</h1>
-        <div className=" h-[59px] flex flex-col justify-between mt-[12px]">
+        <h1 className="text-[32px]  text-center">ADD CARDS</h1>
+        <div className=" h-[59px] flex flex-col justify-between mt-[46px]">
           <div className="flex items-center gap-[7px]">
             <div>LINK</div>
             <button onClick={handleAutoPaste}>
