@@ -40,7 +40,7 @@ const Upload: React.FC<Type> = ({
   // setFile,
   setTitle,
   setUserName,
-  setEditSignal,
+  // setEditSignal,
   videoSrc,
   error,
   url,
