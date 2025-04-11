@@ -6,7 +6,7 @@ import dynamic from "next/dynamic";
 import Upload from "./upload";
 import Loading from "@/app/_components/ui/loading";
 import { useAtom } from "jotai";
-import { cardAtom, CardType, } from "@/store";
+import { cardAtom, CardType } from "@/store";
 import useVideo from "@/hooks/useVideo";
 import { getItem, setItem } from "@/utils/localstorage";
 const AddCards = dynamic(() => import("./addCards"));

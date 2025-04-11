@@ -9,14 +9,14 @@ const UserInfo: React.FC<Type> = ({ picture }) => {
       <div className="font-semibold flex flex-col items-center w-full px-[39px] gap-[39px]">
         <div className="size-[146px]">
           {picture ? (
-            <Image
+            <img
               width={146}
               height={146}
               className="size-[146px] rounded-full"
               src={picture}
               alt=""
               loading="eager"
-              priority
+            //   priority
             />
           ) : (
             <span className="size-[146px]"></span>

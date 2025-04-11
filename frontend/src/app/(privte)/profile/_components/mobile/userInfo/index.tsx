@@ -25,7 +25,6 @@ const Index: React.FC<Type> = ({
     Cookies.remove("reqUrl");
     Cookies.remove("user");
   };
-  console.log(picture);
   return (
     <>
       <div className="relative size-[146px] mx-auto ">
