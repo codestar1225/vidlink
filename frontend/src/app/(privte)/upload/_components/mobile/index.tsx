@@ -61,7 +61,7 @@ const UploadMobile = () => {
     }
   };
 
-  //draft process
+  //draft process for cusomter
   useLayoutEffect(() => {
     (async () => {
       const draftCards = getItem("cards") as CardType[];
