@@ -1,5 +1,6 @@
 "use client";
 import { cardAtom, CardType } from "@/store";
+import { setItem } from "@/utils/localstorage";
 import { useAtom } from "jotai";
 
 interface Type {
@@ -26,6 +27,7 @@ const ProgressLine: React.FC<Type> = ({
   const handleStartPoint = () => {
     if (videoLink) {
       setEdit("upload");
+      setItem('editStatus','upload')
       cancelVideo();
       setUrl("");
     }
@@ -33,11 +35,13 @@ const ProgressLine: React.FC<Type> = ({
   const handleMiddlePoint = () => {
     if (videoLink) {
       setEdit("add");
+      setItem('editStatus','add')
     }
   };
   const handleEndPoint = () => {
     if (videoLink && cards.length) {
       setEdit("preview");
+      setItem('editStatus','preview')
     }
   };
   return (

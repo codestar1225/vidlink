@@ -1,3 +1,4 @@
+import { setItem } from "@/utils/localstorage";
 import { Loader } from "lucide-react";
 
 interface Type {
@@ -15,7 +16,10 @@ const ButtonItem: React.FC<Type> = ({
   return (
     <>
       <button
-        onClick={() => setEdit("add")}
+        onClick={() => {
+          setEdit("add");
+          setItem("editStatus", "add");
+        }}
         className="w-[282.8px] h-[50px] border-[3px] text-[25px] font-semibold rounded-[20px] mx-auto flex justify-center items-center mt-[63.4px] mb-[23px] tracking-wider leading-none"
       >
         EDIT

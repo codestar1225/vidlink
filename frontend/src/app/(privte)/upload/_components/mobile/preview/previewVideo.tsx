@@ -1,5 +1,6 @@
 "use client";
 import { CardType } from "@/store";
+import { setItem } from "@/utils/localstorage";
 import { useEffect, useRef, useState } from "react";
 import ReactPlayer from "react-player";
 
@@ -115,7 +116,10 @@ const PreviewVideo: React.FC<Type> = ({
           <div className="flex flex-col items-center gap-[5px]">
             <h1 className="text-[8px] font-semibold">ADD MORE</h1>
             <button
-              onClick={() => setEdit("add")}
+              onClick={() => {
+                setEdit("add");
+                setItem("editStatus", "add");
+              }}
               className="border-[1.43px] w-[43px] h-[34px] rounded-[4.76px] flex justify-center items-center"
             >
               <img src="/icon/detail/card/plus.svg" alt="" />

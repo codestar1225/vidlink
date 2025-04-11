@@ -8,6 +8,7 @@ import { cardAtom, CardType } from "@/store";
 import Setting from "./setting";
 import { checkUrl } from "@/utils/checkUrl";
 import { confirmModal } from "@/utils/confirm";
+import { setItem } from "@/utils/localstorage";
 
 interface Type {
   setEdit(value: string): void;
@@ -23,7 +24,7 @@ const AddCards: React.FC<Type> = ({
   setEditSignal,
   setTitle,
   videoLink,
-  duration,
+  // duration,
   title,
 }) => {
   const [cards, setCards] = useAtom<CardType[]>(cardAtom);
@@ -55,9 +56,9 @@ const AddCards: React.FC<Type> = ({
   // }
 
   const addCard = () => {
-    if (cards.length >= Math.floor(duration / 10) + 1 || cards.length >= 24) {
-      return alert("Your cards exceed their maximum amount.");
-    }
+    // if (cards.length >= Math.floor(duration / 10) + 1 || cards.length >= 24) {
+    //   return alert("Your cards exceed their maximum amount.");
+    // }
     if (!link || !name || !icon) {
       return alert(
         `Please enter the ${!link ? "Link " : " "}${!name ? "Name " : " "}${
@@ -76,8 +77,8 @@ const AddCards: React.FC<Type> = ({
       isSaved,
       no: cards.filter((key) => key.start < start).length + 1,
     };
-    const alreadyOne = cards.findIndex((item) => item.start === start);
-    if (alreadyOne === -1) {
+    const alreadyOne = cards.some((item) => item.start === start);
+    if (!alreadyOne) {
       addCards(newCard);
     } else {
       confirmModal(
@@ -85,16 +86,22 @@ const AddCards: React.FC<Type> = ({
         () => replaceCard(newCard)
       );
     }
+    setItem("editSignal", true);
   };
 
   // replace existing card with new card
   const replaceCard = (newCard: CardType) => {
-    setCards((prevCards) => {
-      const alreadyOne = cards.findIndex((item) => item.start === start);
-      const updatedCards = [...prevCards];
-      updatedCards[alreadyOne] = newCard;
-      return updatedCards;
-    });
+    const alreadyOne = cards.findIndex((item) => item.start === start);
+    const updatedCards = [...cards];
+    updatedCards[alreadyOne] = newCard;
+    setCards(updatedCards);
+    setItem("cards", updatedCards);
+    // setCards((prevCards) => {
+    //   const alreadyOne = cards.findIndex((item) => item.start === start);
+    //   const updatedCards = [...prevCards];
+    //   updatedCards[alreadyOne] = newCard;
+    //   return updatedCards;
+    // });
     setLink("");
     setName("");
     setIcon("");
@@ -104,15 +111,24 @@ const AddCards: React.FC<Type> = ({
 
   // add new card to existing cards.
   const addCards = (newCard: CardType) => {
-    setCards((cards) =>
-      [...cards, newCard]
-        .sort(function (a, b) {
-          return a.start - b.start;
-        })
-        .map((card) =>
-          card.start > start ? { ...card, no: card.no + 1 } : card
-        )
-    );
+    const newCards = [...cards, newCard]
+      .sort(function (a, b) {
+        return a.start - b.start;
+      })
+      .map((card) =>
+        card.start > start ? { ...card, no: card.no + 1 } : card
+      );
+    setCards(newCards);
+    setItem("cards", newCards);
+    // setCards((cards) =>
+    //   [...cards, newCard]
+    //     .sort(function (a, b) {
+    //       return a.start - b.start;
+    //     })
+    //     .map((card) =>
+    //       card.start > start ? { ...card, no: card.no + 1 } : card
+    //     )
+    // );
     setLink("");
     setName("");
     setIcon("");
@@ -125,6 +141,7 @@ const AddCards: React.FC<Type> = ({
     if (!title) return alert("Please enter a title.");
     if (cards.length < 1) return alert("Please make the cards.");
     setEdit("preview");
+    setItem("editStatus", "preview");
   };
 
   return (
@@ -159,7 +176,7 @@ const AddCards: React.FC<Type> = ({
         />
         <button
           onClick={handlePreviewPage}
-          className="w-[309px] h-[50px] text-[25px] font-semibold rounded-[16px] bg-blue mx-auto flex justify-center items-center mt-[57px] mb-[65px] tracking-wide"
+          className="w-[309px] h-[50px] pt-[2px] text-[25px] font-semibold rounded-[16px] bg-blue mx-auto flex justify-center items-center mt-[57px] mb-[65px] tracking-wide"
         >
           PREVIEW & PUBLISH
         </button>

@@ -195,3 +195,49 @@ export const setUserInfo = expressAsyncHandler(
     }
   }
 );
+
+export const storeVideoFile = expressAsyncHandler(
+  async (req: CustomRequest, res: Response) => {
+    if (!req.userId) {
+      res.status(400).json({ message: "No provided user Id." });
+      return;
+    }
+
+    const file = req.file;
+    if (!file) {
+      res.status(400).json({ message: "Video file is required" });
+      return;
+    }
+
+    try {
+      const params = {
+        Bucket: process.env.AWS_BUCKET_NAME as string,
+        Key: `videos/${Date.now()}-${file.originalname}`,
+        Body: file.buffer,
+        ContentType: file.mimetype,
+        ACL: ObjectCannedACL.public_read,
+      };
+
+      console.log("Starting S3 upload...");
+
+      const upload = new Upload({
+        client: s3Client,
+        params,
+      });
+
+      const s3Response = await upload.done();
+
+      console.log("S3 upload successful");
+
+      res.status(200).json({
+        message: "Video upload successful.",
+        videoLink: s3Response.Location || "",
+      });
+      return;
+    } catch (error: any) {
+      console.error("Error uploading to S3:", error);
+      res.status(500).json({ message: "Failed to upload video to S3" });
+      return;
+    }
+  }
+);

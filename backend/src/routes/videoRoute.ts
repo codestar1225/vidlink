@@ -4,6 +4,7 @@ import {
   checkUserName,
   publishVideo,
   setUserInfo,
+  storeVideoFile,
 } from "../controllers/videoControllers/postVideoController";
 import multer from "multer";
 import {
@@ -47,5 +48,8 @@ videoRoutes.route("/getusername").get(authMiddleware, getUserName);
 videoRoutes.route("/savecard").put(authMiddleware, saveCard);
 videoRoutes.route("/increaseclicks").put(authMiddleware, increaseClicks);
 videoRoutes.route("/watchtime").put(authMiddleware, watchTime);
+videoRoutes
+  .route("/storevideofile")
+  .post(authMiddleware, upload.single("file"), storeVideoFile);
 
 export default videoRoutes;

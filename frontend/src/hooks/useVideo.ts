@@ -15,6 +15,7 @@ import {
   PUBLISHVIDEO,
   SAVECARD,
   SETUSERINFO,
+  STOREVIDOEFILE,
   WATCHTIME,
 } from "@/utils/constant";
 import {
@@ -50,6 +51,8 @@ import {
   SaveCardSuccess,
   SetUserInfoError,
   SetUserInfoSuccess,
+  StoreVideoFileError,
+  StoreVideoFileSuccess,
   WatchTimeError,
   WatchTimeSuccess,
 } from "@/types/videoApiType";
@@ -526,6 +529,33 @@ const useVideo = () => {
       setLoading(false);
     }
   };
+  //get data as a viewer
+  const storeVideoFile = async (
+    file: FormData
+  ): Promise<StoreVideoFileSuccess | StoreVideoFileError> => {
+    setLoading(true);
+    try {
+      const res: AxiosResponse<StoreVideoFileSuccess | StoreVideoFileError> =
+        await axios.post(STOREVIDOEFILE, file, config);
+      return { ...res.data, status: res.status };
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        if (
+          error?.response?.data?.message === "Token is invalid or has expired!"
+        ) {
+          Cookies.remove("token");
+          Cookies.remove("user");
+          router.push("/login");
+          return { message: "Your session was expired. Please log in again." };
+        } else {
+          return { message: "Something went wrong" };
+        }
+      }
+      return { message: "An unknown error occurred" };
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return {
     publish,
@@ -545,6 +575,7 @@ const useVideo = () => {
     getDataCreator,
     getDataViewer,
     getCards,
+    storeVideoFile,
     loading,
   };
 };

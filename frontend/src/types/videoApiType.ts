@@ -279,3 +279,13 @@ export interface GetDataViewerError {
   message: string;
   status?: number;
 }
+//store video file to s3
+export interface StoreVideoFileSuccess {
+  videoLink: string;
+  status: number;
+  message: string;
+}
+export interface StoreVideoFileError {
+  message: string;
+  status?: number;
+}

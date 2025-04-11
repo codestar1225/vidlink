@@ -1,18 +1,19 @@
 "use client";
-import { Suspense, useState } from "react";
+import { Suspense, useLayoutEffect, useState } from "react";
 import ProgressLine from "./progressLine";
 import { useVideoValidate } from "@/hooks/useVideoValidate";
 import dynamic from "next/dynamic";
 import Upload from "./upload";
 import Loading from "@/app/_components/ui/loading";
 import { useAtom } from "jotai";
-import { cardAtom, CardType } from "@/store";
+import { cardAtom, CardType, editAtom, fileAtom } from "@/store";
 import useVideo from "@/hooks/useVideo";
+import { getItem, setItem } from "@/utils/localstorage";
 const AddCards = dynamic(() => import("./addCards"));
 const Preview = dynamic(() => import("./preview"));
 
 const UploadMobile = () => {
-  const [edit, setEdit] = useState<string>("upload");
+  const [edit, setEdit] = useAtom<string>(editAtom);
   const {
     validateVideo,
     cancelVideo,
@@ -24,9 +25,9 @@ const UploadMobile = () => {
   const [videoLink, setVideoLink] = useState<string>("");
   const [url, setUrl] = useState<string>("");
   const [duration, setDuration] = useState<number>(0);
-  const [file, setFile] = useState<File | null>(null);
+  const [file, setFile] = useAtom<File | null>(fileAtom);
   const [title, setTitle] = useState<string>("");
-  const [cards] = useAtom<CardType[]>(cardAtom);
+  const [cards, setCards] = useAtom<CardType[]>(cardAtom);
   const [editSignal, setEditSignal] = useState<boolean>(false);
   const [userName, setUserName] = useState<string>("");
   const { publish, loading } = useVideo();
@@ -53,11 +54,40 @@ const UploadMobile = () => {
     if (res.status === 201 && "videoLink" in res) {
       setVideoLink(res.videoLink);
       setEditSignal(false);
+      setItem("editSignal", false);
       cancelVideo();
     } else {
       alert(res.message);
     }
   };
+
+  //draft process
+  useLayoutEffect(() => {
+    (async () => {
+      const draftCards = getItem("cards") as CardType[];
+      const draftStatus = getItem("editStatus") as string;
+      const draftUrl = getItem("onlineVideo") as string;
+      const draftSignal = getItem("editSignal") as boolean;
+      const draftTitle = getItem("title") as string;
+      if (
+        draftCards ||
+        draftTitle ||
+        (draftStatus && draftUrl && draftSignal)
+      ) {
+        if (draftCards) {
+          setCards(draftCards);
+        }
+        if (draftTitle) {
+          setTitle(draftTitle);
+        }
+        setVideoLink(draftUrl);
+        setEdit(draftStatus);
+        setEditSignal(draftSignal);
+      } else {
+        localStorage.clear();
+      }
+    })();
+  }, []);
 
   return (
     <>

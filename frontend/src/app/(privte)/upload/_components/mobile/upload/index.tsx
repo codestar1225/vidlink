@@ -11,6 +11,7 @@ import { cardAtom, CardType } from "@/store";
 import useVideo from "@/hooks/useVideo";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
+import { removeItem, setItem } from "@/utils/localstorage";
 
 interface Type {
   validateVideo(value: ChangeEvent<HTMLInputElement>): void;
@@ -36,7 +37,7 @@ const Upload: React.FC<Type> = ({
   setUrl,
   cancelVideo,
   setDuration,
-  setFile,
+  // setFile,
   setTitle,
   setUserName,
   setEditSignal,
@@ -48,7 +49,7 @@ const Upload: React.FC<Type> = ({
 }) => {
   const videoRef = useRef<ReactPlayer>(null);
   const [, setCards] = useAtom<CardType[]>(cardAtom);
-  const { getUserName, loading } = useVideo();
+  const { getUserName, storeVideoFile, loading } = useVideo();
   const router = useRouter();
 
   const handleNext = async () => {
@@ -67,9 +68,21 @@ const Upload: React.FC<Type> = ({
     if (videoSrc && url) {
       return alert("Please input one of them.");
     } else if (videoSrc && uploadedFile) {
-      setVideoLink(videoSrc);
-      setDuration(fileDuration);
-      setFile(uploadedFile);
+      // setVideoLink(videoSrc);
+      // setDuration(fileDuration);
+      // setFile(uploadedFile);
+      const file = new FormData();
+      file.append("file", uploadedFile);
+      const res = await storeVideoFile(file);
+      if (res.status === 200 && "videoLink" in res) {
+        setVideoLink(res.videoLink);
+        setDuration(fileDuration);
+        setItem("onlineVideo", res.videoLink);
+        setItem("duration", fileDuration);
+      } else {
+        alert(res.message);
+        return;
+      }
     } else if (url) {
       const linkDuration = videoRef.current?.getDuration();
       if (linkDuration === null || linkDuration === undefined) {
@@ -79,6 +92,8 @@ const Upload: React.FC<Type> = ({
       } else {
         setDuration(linkDuration);
         setVideoLink(url);
+        setItem("onlineVideo", url);
+        setItem("duration", linkDuration);
       }
     } else {
       return alert("Please enter a file or a link.");
@@ -87,6 +102,10 @@ const Upload: React.FC<Type> = ({
     setCards([]);
     setTitle("");
     setEditSignal(false);
+    removeItem('cards')
+    removeItem('title')
+    setItem("editStatus", "add");
+    setItem("editSignal", false);
   };
 
   return (

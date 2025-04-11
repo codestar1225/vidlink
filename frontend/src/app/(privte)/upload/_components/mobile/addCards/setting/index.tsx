@@ -1,11 +1,16 @@
+import { setItem } from "@/utils/localstorage";
+import { ChangeEvent } from "react";
+
 interface Type {
   setTitle(value: string): void;
   title: string;
 }
-const Index: React.FC<Type> = ({
-  setTitle,
-  title,
-}) => {
+const Index: React.FC<Type> = ({ setTitle, title }) => {
+  const handleTitle = (e: ChangeEvent<HTMLInputElement>) => {
+    const title = e.target.value;
+    setTitle(title);
+    setItem("title", title);
+  };
   return (
     <>
       <div className=" text-[9px] tracking-[2px] font-semibold mx-[19.5px] mt-[37px] flex flex-col justify-between">
@@ -14,12 +19,12 @@ const Index: React.FC<Type> = ({
           <h1>TITLE</h1>
           <input
             value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            onChange={handleTitle}
             type="text"
             placeholder="Text"
             className="h-[40px] font-normal text-[14px] py-[15px] w-full bg-[#1E1E1E] border-[2.72px] border-[#505050] rounded-[9px] placeholder:text-[12px] placeholder:text-[#505050] placeholder:font-semibold px-[9px]"
           />
-        </div>       
+        </div>
         {/* <Thumbnail images={images} />
         <div className="h-[81px] flex justify-between items-center">
           <div className="w-[110px] h-full flex flex-col justify-between items-center">
