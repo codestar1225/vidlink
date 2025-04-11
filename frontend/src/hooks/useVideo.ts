@@ -536,7 +536,7 @@ const useVideo = () => {
     setLoading(true);
     try {
       const res: AxiosResponse<StoreVideoFileSuccess | StoreVideoFileError> =
-        await axios.post(STOREVIDOEFILE, file, config);
+        await axios.post(STOREVIDOEFILE, file, multiConfig);
       return { ...res.data, status: res.status };
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {

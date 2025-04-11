@@ -38,11 +38,6 @@ app.use("/express/customauth", authRoutes);
 app.use("/express/video", videoRoutes);
 app.use("/express/data", dataRoutes);
 
-// Protected Route Example
-// app.get("/api/protected", authMiddleware, (req, res) => {
-//   res.json({ message: "You are authenticated!" });
-// });
-
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
