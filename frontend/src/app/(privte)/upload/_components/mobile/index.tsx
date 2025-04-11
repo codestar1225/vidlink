@@ -69,20 +69,12 @@ const UploadMobile = () => {
       const draftUrl = getItem("onlineVideo") as string;
       const draftSignal = getItem("editSignal") as boolean;
       const draftTitle = getItem("title") as string;
-      if (
-        draftCards ||
-        draftTitle ||
-        (draftStatus && draftUrl && draftSignal)
-      ) {
-        if (draftCards) {
-          setCards(draftCards);
-        }
-        if (draftTitle) {
-          setTitle(draftTitle);
-        }
+      if (draftCards || draftTitle || (draftStatus && draftUrl)) {
+        if (draftCards) setCards(draftCards);
+        if (draftTitle) setTitle(draftTitle);
+        if (draftSignal) setEditSignal(draftSignal);
         setVideoLink(draftUrl);
         setEdit(draftStatus);
-        setEditSignal(draftSignal);
       } else {
         localStorage.clear();
       }

@@ -101,11 +101,9 @@ const Upload: React.FC<Type> = ({
     setEdit("add");
     setCards([]);
     setTitle("");
-    setEditSignal(false);
     removeItem('cards')
     removeItem('title')
     setItem("editStatus", "add");
-    setItem("editSignal", false);
   };
 
   return (
