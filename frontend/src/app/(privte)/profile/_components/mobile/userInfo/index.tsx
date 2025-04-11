@@ -52,7 +52,7 @@ const Index: React.FC<Type> = ({
         </a>
         {/* {isOpen && <EditPic setIsOpen={setIsOpen} />} */}
       </div>
-      <div className="h-[147.04.67px] mx-[91px] mt-[28px] mb-[28px]">
+      <div className="mx-[91px] mt-[28px] mb-[28px]">
         <div className="flex justify-between mb-[21px]">
           <AmountItem number={followers || 0} label="FOLLOWING" />
           <AmountItem number={totalCards || 0} label="CARDS ADDED" />

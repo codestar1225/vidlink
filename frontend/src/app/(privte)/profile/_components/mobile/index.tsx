@@ -42,7 +42,7 @@ const ProfileMobile: React.FC<Type> = ({
             />
             <Link
               href={"/upload"}
-              className="flex flex-col items-center gap-[7px] text-[10.5px] font-semibold mt-[44px]"
+              className="flex flex-col items-center gap-[7px] text-[10.5px] font-semibold mt-[97px]"
             >
               <div className="size-[48px]">
                 <Image

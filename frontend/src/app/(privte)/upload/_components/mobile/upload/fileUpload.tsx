@@ -28,8 +28,9 @@ const FileUpload: React.FC<Type> = ({
                 } gap-[8px] duration-500 flex flex-col items-center`}
               >
                 <img
-                  className="size-[50.39px]"
+                  className="size-[50px]"
                   src="/icon/upload/file.svg"
+                  loading='eager'
                   alt=""
                 />
                 <div className="border-[1.5px] flex items-center justify-center border-white rounded-[3.2px] text-[14.53px] font-semibold pt-[2px] pb-[0px] px-[2.13px] ">

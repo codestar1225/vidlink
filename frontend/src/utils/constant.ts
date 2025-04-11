@@ -21,4 +21,4 @@ export const INCREASECLICKS = `${BASE_URL}/express/video/increaseclicks/`; // in
 export const WATCHTIME = `${BASE_URL}/express/video/watchtime/`; // watch time record api endpoint
 export const GETDATACREATOR = `${BASE_URL}/express/data/getdatacreator/`; // get data as a creator api endpoint
 export const GETDATAVIEWER = `${BASE_URL}/express/data/getdataviewer/`; // get data as a viewer api endpoint
-export const STOREVIDOEFILE = `${BASE_URL}/express/video/storevideofile`; // get data as a viewer api endpoint
+export const STOREVIDOEFILE = `${BASE_URL}/express/video/storevideofile/`; // get data as a viewer api endpoint
