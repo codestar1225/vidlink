@@ -3,6 +3,7 @@ import CardItem from "./card";
 import PreviewCard from "./previewCard";
 import { useAtom } from "jotai";
 import { cardAtom, CardType } from "@/store";
+import { setItem } from "@/utils/localstorage";
 
 interface Type {
   addCard(): void;
@@ -34,11 +35,14 @@ const Index: React.FC<Type> = ({
 }) => {
   const [cards, setCards] = useAtom<CardType[]>(cardAtom);
   const handleIsSaved = (e: number) => {
-    setCards((prevCards) =>
-      prevCards.map((card) =>
+    setCards((prevCards) => {
+      const newCards = prevCards.map((card) =>
         card.no === e ? { ...card, isSaved: !card.isSaved } : card
-      )
-    );
+      );
+      setItem("cards", newCards);
+      return newCards;
+    });
+    setItem("editSignal", true);
     setEditSignal(true);
   };
 
