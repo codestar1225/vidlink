@@ -1,3 +1,4 @@
+import { Eye } from "lucide-react";
 import Link from "next/link";
 import ReactPlayer from "react-player";
 interface Type {
@@ -46,7 +47,8 @@ const VideoItem: React.FC<Type> = ({ userName, views, src, no, videoId }) => {
             <span className="leading-none ">{userName.toUpperCase()}</span>
           </p>
           <div className="flex flex-wrap items-center justify-center h-[7.81px] w-full gap-[1.67px]">
-            <img className="size-[7.81px]" src="/icon/videos/eye.svg" alt="" />
+            {/* <img className="size-[7.81px]" src="/icon/videos/eye.svg" alt="" /> */}
+            <Eye className="size-[7px] text-[#7C889D]"/>
             <p className=" text-[6.7px]  text-[#7C889D] flex items-center pt-[1px]">
               {views >= 10000 ? `${views / 10}K+` : views}
             </p>
