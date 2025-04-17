@@ -10,24 +10,24 @@ const FooterMobile = ({ isFixed }: { isFixed: boolean }) => {
       >
         <div className="flex flex-col items-start justify-between h-[41px]">
           <div className="flex gap-[7px] items-center">
-            <Link href={"/menu"}>
+            <Link href={"/"}>
               <img src="/icon/layout/x.svg" className="h-[11px]" alt="" />
             </Link>
-            <Link href={"/message"}>
+            <Link href={"/"}>
               <img
                 src="/icon/layout/youtu.svg"
                 className="size-[16px]"
                 alt=""
               />
             </Link>
-            <Link href={"/menu"}>
+            <Link href={"/"}>
               <img
                 src="/icon/layout/instagram.svg"
                 className="size-[16px]"
                 alt=""
               />
             </Link>
-            <Link href={"/message"}>
+            <Link href={"/"}>
               <img
                 src="/icon/layout/tiktok.svg"
                 className="size-[16px]"

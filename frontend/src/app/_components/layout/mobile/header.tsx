@@ -82,7 +82,7 @@ const HeaderMobile = () => {
         <div className="flex gap-[9px] h-[32px] items-center">
           {isAuth ? (
             <>
-              <Link href={"/message"}>
+              <Link href={"/"}>
                 <Image
                   width={32}
                   height={32}
