@@ -10,6 +10,7 @@ import { UserInfoType, VideoType } from "../../page";
 import Videos from "./videos";
 import UserInfo from "./userInfo";
 import Image from "next/image";
+import { CirclePlus } from "lucide-react";
 const Card = dynamic(() => import("./card"));
 const Likes = dynamic(() => import("./likes"));
 
@@ -30,11 +31,11 @@ const ProfileMobile: React.FC<Type> = ({
         <main className=" mt-[109px]">
           <div className="">
             <UserInfo
-              picture={userInfo?.picture} 
+              picture={userInfo?.picture}
               totalVideos={userInfo?.totalVideos}
               totalCards={userInfo?.totalCards}
               followers={userInfo?.followers}
-              bio= {userInfo?.bio}
+              bio={userInfo?.bio}
             />
             <SocialLinks
               instagram={userInfo?.instagram}
@@ -45,13 +46,14 @@ const ProfileMobile: React.FC<Type> = ({
               className="flex flex-col items-center gap-[7px] text-[10.5px] font-semibold mt-[97px]"
             >
               <div className="size-[48px]">
-                <Image
+                {/* <Image
                   width={48}
                   height={48}
                   src="/icon/profile/plus.png"
                   alt=""
                   loading="eager"
-                />
+                /> */}
+                <CirclePlus className="size-[44px]"/>
               </div>
               <span>NEW VIDEO</span>
             </Link>

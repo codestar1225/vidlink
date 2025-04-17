@@ -11,7 +11,7 @@ const GenderBtn: React.FC<Type> = ({ name, setGender, setIsOpen }) => {
           setGender(name.toLowerCase());
           setIsOpen(false);
         }}
-        className="text-left"
+        className="text-left text-[14px]"
       >
         {name}
       </button>
