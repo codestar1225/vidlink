@@ -20,11 +20,20 @@ const NavItem: React.FC<Type> = ({ nav, setNav, name }) => {
           className="flex flex-col items-center justify-between h-[37px] w-[65.67px]"
         >
           <img
+            className={`${nav === name ? "block" : "hidden"}`}
             width={20}
             height={20}
-            src={`/icon/profile/${nav === name ? `${name}Blue` : name}.png`}
+            src={`/icon/profile/${name}Blue.png`}
             alt=""
-            // loading="eager"
+            loading="eager"
+          />
+          <img
+            className={`${nav === name ? "hidden" : "block"}`}
+            width={20}
+            height={20}
+            src={`/icon/profile/${name}.png`}
+            alt=""
+            loading="eager"
           />
           <div className={nav === name ? "text-blue" : ""}>
             {name.toUpperCase()}
