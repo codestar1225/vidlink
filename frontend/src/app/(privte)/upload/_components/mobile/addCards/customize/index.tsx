@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import lucideIcons from "@/../public/lucideIcon.json";
 import SetIcon from "./setIcon";
 import * as LucideIcons from "lucide-react";
@@ -33,6 +33,8 @@ const Index: React.FC<Type> = ({
   const listRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<ReactPlayer>(null);
   const [iconSearch, setIconSearch] = useState<string>("");
+  const [startTxt, setStartTxt] = useState<string>("00:00");
+  const [caution, setCaution] = useState<string>("");
   const maxTime = Number(process.env.NEXT_PUBLIC_MAX_TIME || 240);
 
   // Filter icons from the JSON based on the input (case insensitive)
@@ -99,6 +101,57 @@ const Index: React.FC<Type> = ({
       alert("You can't add more. Maximum letter is 10.");
     }
   }, [name]);
+
+  useEffect(() => {
+    setStartTxt(
+      `${
+        Math.floor(start / 60) < 10
+          ? `0${Math.floor(start / 60)}`
+          : Math.floor(start / 60)
+      }:${start % 60 < 10 ? `0${start % 60}` : start % 60}`
+    );
+    setCaution("");
+  }, [start]);
+
+  const handleStartTxt = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.trim();
+    const parts = value.split(":");
+
+    if (parts.length !== 2 || !parts[0] || !parts[1]) {
+      setCaution(
+        'You must enter the start time in the correct format like "00:00".'
+      );
+    } else {
+      const minute = Number(parts[0].trim());
+      const seconds = Number(parts[1].trim());
+
+      if (isNaN(minute) || isNaN(seconds) || minute > 59 || seconds > 59) {
+        setCaution("You must enter valid numbers for minutes and seconds.");
+      } else {
+        if (!videoRef.current) return;
+        const duration = videoRef.current.getDuration();
+        const totalSeconds = minute * 60 + seconds;
+
+        if (totalSeconds > maxTime) {
+          setCaution(
+            "You can't select any further. The maximum time is 4 minutes."
+          );
+        } else if (totalSeconds > duration) {
+          setCaution(
+            `You can't select any further. The video length is limited to ${Math.floor(
+              duration
+            )} seconds.`
+          );
+        } else {
+          setCaution("");
+          videoRef.current.seekTo(totalSeconds, "seconds");
+        }
+      }
+    }
+
+    setStartTxt(value);
+  };
+
   return (
     <>
       <div className="mt-[49px] text-[10px] font-semibold mx-[19.5px]">
@@ -175,18 +228,21 @@ const Index: React.FC<Type> = ({
             <></>
           )}
         </div>
-        <div className="flex  flex-col justify-between h-[60px] mt-[15px] ">
+        <div className="flex  flex-col justify-between h-[60px] mt-[15px] mb-[6px]">
           <div className="flex  items-center gap-[7px]">
             <div>START</div>
             <button>
               <img src="/icon/upload/clock1.svg" alt="" />
             </button>
           </div>
-          <div className="h-[40px] pt-1 text-[12px] font-normal w-full bg-[#1E1E1E] border-[2.72px] border-[#505050] rounded-[9px] flex items-center px-[9px]">
-            {Math.floor(start / 60)}:
-            {start % 60 < 10 ? `0${start % 60}` : start % 60}
-          </div>
+          <input
+            type="text"
+            value={startTxt}
+            onChange={handleStartTxt}
+            className="h-[40px] pt-1 text-[12px] font-normal w-full bg-[#1E1E1E] border-[2.72px] border-[#505050] rounded-[9px] flex items-center px-[9px]"
+          />
         </div>
+        <i className="text-[red] text-[11px]">{caution}</i>
       </div>
       <div className="sticky top-[20px]">
         {videoLink ? (

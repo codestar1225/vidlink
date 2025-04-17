@@ -68,7 +68,8 @@ const AddCards: React.FC<Type> = ({
     }
     if (!checkUrl(link))
       return alert("Invalid link. Please enter a valid link.");
-
+    if (!isTimeDif(start))
+      return alert("You must keep 3s difference between cards.");
     const newCard = {
       link,
       name,
@@ -89,6 +90,24 @@ const AddCards: React.FC<Type> = ({
     setItem("editSignal", true);
   };
 
+  const isTimeDif = (time: number) => {
+    const bigItem = cards.find((item) => item.start > time);
+    const lessItem = cards.findLast((item) => item.start < time);
+    let dif1 = 4;
+    let dif2 = 4;
+    if (bigItem?.start) {
+      dif1 = bigItem.start - time;
+    }
+    if (lessItem?.start) {
+      dif2 = time - lessItem.start; // Flip to get positive diff
+    }
+    if (dif1 < 3 || dif2 < 3) {
+      return false;
+    } else {
+      return true;
+    }
+  };
+
   // replace existing card with new card
   const replaceCard = (newCard: CardType) => {
     const alreadyOne = cards.findIndex((item) => item.start === start);
@@ -96,12 +115,6 @@ const AddCards: React.FC<Type> = ({
     updatedCards[alreadyOne] = newCard;
     setCards(updatedCards);
     setItem("cards", updatedCards);
-    // setCards((prevCards) => {
-    //   const alreadyOne = cards.findIndex((item) => item.start === start);
-    //   const updatedCards = [...prevCards];
-    //   updatedCards[alreadyOne] = newCard;
-    //   return updatedCards;
-    // });
     setLink("");
     setName("");
     setIcon("");
@@ -120,15 +133,6 @@ const AddCards: React.FC<Type> = ({
       );
     setCards(newCards);
     setItem("cards", newCards);
-    // setCards((cards) =>
-    //   [...cards, newCard]
-    //     .sort(function (a, b) {
-    //       return a.start - b.start;
-    //     })
-    //     .map((card) =>
-    //       card.start > start ? { ...card, no: card.no + 1 } : card
-    //     )
-    // );
     setLink("");
     setName("");
     setIcon("");

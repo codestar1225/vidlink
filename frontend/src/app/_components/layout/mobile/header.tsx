@@ -9,6 +9,7 @@ import { useAtom } from "jotai";
 import { tokenAtom } from "@/store";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
+import { AlignJustify, X } from "lucide-react";
 
 const HeaderMobile = () => {
   const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false);
@@ -67,7 +68,7 @@ const HeaderMobile = () => {
         } flex justify-between items-center mt-[27px] mx-[30px] max-[380px]:mx-[13px] px-[3px] py-[3px] rounded-full`}
       >
         <button onClick={() => setIsOpenMenu((prev) => !prev)}>
-          <Image
+          {/* <Image
             width={32}
             height={32}
             className="size-[32px]"
@@ -75,7 +76,8 @@ const HeaderMobile = () => {
             alt=""
             loading="eager"
             priority
-          />
+          /> */}
+          <AlignJustify className="size-[31px] h-[35px]" />
         </button>
         <div className="flex gap-[9px] h-[32px] items-center">
           {isAuth ? (
@@ -116,7 +118,9 @@ const HeaderMobile = () => {
   ) : (
     // opened header
     <header ref={menuRef} className={` fixed z-10 top-0 left-0 w-screen `}>
-      <div className={` pt-[27px] bg-transparent mx-[22px] max-[380px]:mx-[5px]`}>
+      <div
+        className={` pt-[27px] bg-transparent mx-[22px] max-[380px]:mx-[5px]`}
+      >
         <button
           onClick={() => setIsOpenMenu((prev) => !prev)}
           className={`${
@@ -125,7 +129,7 @@ const HeaderMobile = () => {
               : "bg-transparent"
           } p-[3px] rounded-full ml-[7px] `}
         >
-          <Image
+          {/* <Image
             width={32}
             height={32}
             className="size-[32px]"
@@ -133,7 +137,8 @@ const HeaderMobile = () => {
             alt=""
             loading="eager"
             priority
-          />
+          /> */}
+          <X className="size-[35px]" />
         </button>
         <nav
           className={`${
