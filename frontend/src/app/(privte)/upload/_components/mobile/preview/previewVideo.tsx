@@ -83,7 +83,7 @@ const PreviewVideo: React.FC<Type> = ({
         </div>
       </div>
       {videoLink ? (
-        <div className="h-[225.42px]  rounded-[7.36px] overflow-hidden">
+        <div className="h-[225.42px] w-full rounded-[7.36px] overflow-hidden">
           <ReactPlayer
             ref={videoRef}
             url={videoLink}
@@ -95,6 +95,17 @@ const PreviewVideo: React.FC<Type> = ({
             progressInterval={100}
             width="100%"
             height="100%"
+            config={{
+              file: {
+                attributes: {
+                  style: {
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                  },
+                },
+              },
+            }}
           />
         </div>
       ) : (

@@ -10,8 +10,8 @@ interface Type {
 const VideoItem: React.FC<Type> = ({ userName, views, src, no, videoId }) => {
   return (
     <>
-      <li className="h-[149.33px] w-[117.73px] flex flex-col items-center  justify-between">
-        <div className="w-full bg-[#27272798] h-[86.48px] rounded-[8.37px] overflow-hidden relative">
+      <li className="h-[149.33px] w-[31%] flex flex-col items-center  justify-between">
+        <div className="h-[86.48px] w-full rounded-[8.37px] overflow-hidden">
           {src !== "" ? (
             <Link href={`/videos/${videoId}`} className="w-full h-full">
               <ReactPlayer
@@ -22,6 +22,17 @@ const VideoItem: React.FC<Type> = ({ userName, views, src, no, videoId }) => {
                 width="100%"
                 height="100%"
                 progressInterval={1000}
+                config={{
+                  file: {
+                    attributes: {
+                      style: {
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                      },
+                    },
+                  },
+                }}
               />
             </Link>
           ) : (

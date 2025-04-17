@@ -76,7 +76,7 @@ const Index: React.FC<Type> = ({
           {cards.length > 0 && (
             <h1 className="text-[12px] font-semibold">LIST OF CARDS</h1>
           )}
-          <ul className="flex flex-wrap justify-start max-[401px]:justify-center content-start gap-[6px] max-w-[380px]">
+          <ul className="flex flex-wrap gap-y-[6px] gap-x-[2%] w-full">
             {cards?.map((item, index) => (
               <CardItem
                 handleIsSaved={handleIsSaved}

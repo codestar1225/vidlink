@@ -76,38 +76,36 @@ const Preview: React.FC<Type> = ({
             userName={userName}
             title={title}
           />
-          <div className="flex justify-center  px-[10px]">
-            <ul className="flex flex-wrap justify-start content-start max-[401px]:justify-center gap-[6px] max-h-[391.7px] max-w-[380px]">
-              {nextCard.start !== -1 && nextCard.no !== -1 ? (
-                <Suspense fallback={<Loading />}>
-                  <CardNext
-                    handleNext={handleNext}
-                    no={nextCard.no}
-                    start={nextCard.start}
-                  />
-                </Suspense>
-              ) : (
-                <></>
-              )}
-              {fltCards.map((item, index) => (
-                <Suspense key={index} fallback={<Loading />}>
-                  <CardItem
-                    setIsSelected={setIsSelected}
-                    setSignal={setSignal}
-                    key={index}
-                    name={item.name}
-                    icon={item.icon}
-                    start={item.start}
-                    isSaved={item.isSaved}
-                    link={item.link}
-                    signal={signal}
-                    no={item.no}
-                    currentCard={currentCard}
-                  />
-                </Suspense>
-              ))}
-            </ul>
-          </div>
+          <ul className="flex flex-wrap gap-x-[2%]  gap-y-[6px] max-h-[391.7px] w-full px-[11px]">
+            {nextCard.start !== -1 && nextCard.no !== -1 ? (
+              <Suspense fallback={<Loading />}>
+                <CardNext
+                  handleNext={handleNext}
+                  no={nextCard.no}
+                  start={nextCard.start}
+                />
+              </Suspense>
+            ) : (
+              <></>
+            )}
+            {fltCards.map((item, index) => (
+              <Suspense key={index} fallback={<Loading />}>
+                <CardItem
+                  setIsSelected={setIsSelected}
+                  setSignal={setSignal}
+                  key={index}
+                  name={item.name}
+                  icon={item.icon}
+                  start={item.start}
+                  isSaved={item.isSaved}
+                  link={item.link}
+                  signal={signal}
+                  no={item.no}
+                  currentCard={currentCard}
+                />
+              </Suspense>
+            ))}
+          </ul>
           <ButtonItem
             setEdit={setEdit}
             handlePublish={handlePublish}

@@ -39,7 +39,7 @@ const Card: React.FC<Type> = ({
   return (
     <>
       <li
-        className={`border-[2px] text-black bg-white rounded-[6px] w-[122.41px] h-[94.5px] p-[5.9px] flex flex-col justify-between overflow-hidden`}
+        className={`border-[2px] text-black bg-white rounded-[6px] w-[32%] h-[94.5px] p-[5.9px] flex flex-col justify-between overflow-hidden`}
       >
         <button onClick={handleInit}>
           <div className="text-[13.86px] font-semibold flex justify-between w-full items-center">

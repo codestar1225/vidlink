@@ -2,11 +2,12 @@ import ReactPlayer from "react-player";
 interface Type {
   videoLink: string;
 }
-const VideoItem: React.FC<Type> = ({ videoLink}) => {
+const VideoItem: React.FC<Type> = ({ videoLink }) => {
   return (
     <>
-      <li className="w-[118.43px] bg-[#27272798] relative h-[86.48px] rounded-[8.37px] overflow-hidden">
+      <li className=" flex flex-col items-center  justify-between">
         {videoLink !== "" ? (
+          <div className="h-[86.48px] w-full rounded-[8.37px] overflow-hidden">
             <ReactPlayer
               url={videoLink}
               // playing
@@ -14,7 +15,20 @@ const VideoItem: React.FC<Type> = ({ videoLink}) => {
               loop
               width="100%"
               height="100%"
-            />  
+              progressInterval={1000}
+              config={{
+                file: {
+                  attributes: {
+                    style: {
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                    },
+                  },
+                },
+              }}
+            />
+          </div>
         ) : (
           <></>
         )}

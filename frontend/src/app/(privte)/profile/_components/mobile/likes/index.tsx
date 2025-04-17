@@ -31,9 +31,9 @@ const Likes: React.FC<Type> = ({ myLikesVideos }) => {
         dataLength={displayedVideos.length}
         hasMore={hasMore}
       >
-        <ul className="overflow-hidden gap-[11px] flex flex-wrap justify-center items-start mt-[48px]">
+        <ul className="overflow-hidden gap-x-[3.5%] gap-y-[15px] flex flex-wrap items-start mt-[48px]">
           {displayedVideos?.slice(0, 12)?.map((item, index) => (
-            <Link key={index} href={`/videos/${item._id}`}>
+            <Link key={index} href={`/videos/${item._id}`} className="w-[31%]">
               <VideoItem videoLink={item.videoLink} />
             </Link>
           ))}

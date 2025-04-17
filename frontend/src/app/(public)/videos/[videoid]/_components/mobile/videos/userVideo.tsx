@@ -14,13 +14,13 @@ const UserVideo: React.FC<Type> = ({ userVideos, userName }) => {
           <span className="text-blue">MORE OF</span>&nbsp;-{" "}
           {userName.toUpperCase()}
         </h1>
-        <ul className=" overflow-hidden h-[189.5px] gap-x-[11px] gap-y-[15px] flex flex-wrap justify-center items-start">
+        <ul className=" overflow-hidden h-[189.5px] gap-x-[3.5%] gap-y-[15px] flex flex-wrap items-start">
           {userVideos.map((item, index) => (
             <li
-              className="w-[118.43px] h-[86.48px] rounded-[8.37px] overflow-hidden "
+              className="w-[31%]"
               key={index}
             >
-              <div className="w-full bg-[#27272798] h-[86.48px] rounded-[8.37px] overflow-hidden relative">
+              <div className="w-full h-[86.48px] rounded-[8.37px] overflow-hidden relative">
                 {item.videoLink !== "" ? (
                   <Link href={`/videos/${item._id}`} className="w-full h-full">
                     <ReactPlayer
@@ -31,6 +31,17 @@ const UserVideo: React.FC<Type> = ({ userVideos, userName }) => {
                       width="100%"
                       height="100%"
                       progressInterval={1000}
+                      config={{
+                        file: {
+                          attributes: {
+                            style: {
+                              width: "100%",
+                              height: "100%",
+                              objectFit: "cover",
+                            },
+                          },
+                        },
+                      }}
                     />
                   </Link>
                 ) : (

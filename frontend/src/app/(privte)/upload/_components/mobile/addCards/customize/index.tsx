@@ -152,6 +152,11 @@ const Index: React.FC<Type> = ({
     setStartTxt(value);
   };
 
+  useEffect(() => {
+    if (videoLink) {
+    }
+  }, [videoLink]);
+
   return (
     <>
       <div className="mt-[49px] text-[10px] font-semibold mx-[19.5px]">
@@ -244,9 +249,9 @@ const Index: React.FC<Type> = ({
         </div>
         <i className="text-[red] text-[11px]">{caution}</i>
       </div>
-      <div className="sticky top-[20px]">
+      <div className="sticky top-[20px] ">
         {videoLink ? (
-          <div className="mt-[20px] rounded-[6.1px] h-full object-cover w-full ">
+          <div className="mt-[20px]  h-[280px] overflow-hidden rounded-[6.1px] mx-[19.5px]">
             <ReactPlayer
               ref={videoRef}
               url={videoLink}
@@ -257,6 +262,17 @@ const Index: React.FC<Type> = ({
               progressInterval={100}
               width="100%"
               height="100%"
+              config={{
+                file: {
+                  attributes: {
+                    style: {
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                    },
+                  },
+                },
+              }}
             />
           </div>
         ) : (

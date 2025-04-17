@@ -69,7 +69,7 @@ const CardItem: React.FC<Type> = ({
       <li
         className={`${
           currentCard + 1 === no ? "bg-blue text-white" : "bg-white text-black"
-        } rounded-[6px] w-[122.41px] max-[400px]:w-[115px] max-[380px]:w-[110px] max-[370px]:w-[105px] max-[365px]:w-[103px] h-[94.5px] p-[5.9px] flex flex-col overflow-hidden`}
+        } rounded-[6px] w-[32%] h-[94.5px] p-[5.9px] flex flex-col overflow-hidden`}
       >
         <button onClick={handlePreview}>
           <div className="text-[13.86px] font-semibold flex justify-between w-full items-center">

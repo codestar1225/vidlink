@@ -33,7 +33,7 @@ const PreviewCard: React.FC<Type> = ({
             <h1 className="text-blue text-[13.86px] font-semibold text-center w-full ">
               {name.toUpperCase()}
             </h1>
-            {icon ? <IconComponent className="size-[18.29px] z-50 text-blue" /> : <></>}
+            {icon ? <IconComponent className="size-[18.29px] text-blue" /> : <></>}
           </div>
           <div className="flex justify-between">
             <button

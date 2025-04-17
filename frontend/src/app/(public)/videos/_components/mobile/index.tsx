@@ -56,7 +56,7 @@ const VideosMobile: React.FC<Type> = ({ followingVideos, allVideos }) => {
         ) : (
           <SubHeaderOut setIsSearch={setIsSearch} isSearch={isSearch} />
         )}
-        <div className={`${isAuth ? "mt-[202px]" : "mt-[249px]"} h-[100vh] `}>
+        <div className={`${isAuth ? "mt-[202px]" : "mt-[249px]"} h-[100vh] mx-[10px]`}>
           <Suspense fallback={<Loading />}>
             <Videos videos={videos} />
           </Suspense>

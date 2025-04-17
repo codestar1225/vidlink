@@ -41,9 +41,9 @@ const Videos: React.FC<Type> = ({ myVideos, totalVideos }) => {
         dataLength={displayedVideos.length}
         hasMore={hasMore}
       >
-        <ul className="gap-x-[11px] gap-y-[15px] flex flex-wrap justify-center items-start  ">
+        <ul className="gap-x-[2%] gap-y-[15px] flex flex-wrap items-start">
           {displayedVideos?.map((item, index) => (
-            <Link href={`/videos/${item._id}`} key={index}>
+            <Link href={`/videos/${item._id}`} key={index} className="w-[32%]">
               <VideoItem videoLink={item.videoLink} />
             </Link>
           ))}
