@@ -9,7 +9,6 @@ import Loading from "@/app/_components/ui/loading";
 import { UserInfoType, VideoType } from "../../page";
 import Videos from "./videos";
 import UserInfo from "./userInfo";
-import Image from "next/image";
 import { CirclePlus } from "lucide-react";
 const Card = dynamic(() => import("./card"));
 const Likes = dynamic(() => import("./likes"));
