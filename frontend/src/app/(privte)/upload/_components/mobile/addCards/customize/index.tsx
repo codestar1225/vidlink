@@ -95,12 +95,15 @@ const Index: React.FC<Type> = ({
       console.error("Failed to read clipboard:", error);
     }
   };
-  // detect name lenth
-  useEffect(() => {
+
+  const handleName = (e: ChangeEvent<HTMLInputElement>) => {
+    const name = e.target.value;
     if (name.length > 10) {
       alert("You can't add more. Maximum letter is 10.");
+    } else {
+      setName(name);
     }
-  }, [name]);
+  };
 
   useEffect(() => {
     setStartTxt(
@@ -111,6 +114,8 @@ const Index: React.FC<Type> = ({
       }:${start % 60 < 10 ? `0${start % 60}` : start % 60}`
     );
     setCaution("");
+    if (!videoRef.current) return;
+    videoRef.current.seekTo(start, "seconds");
   }, [start]);
 
   const handleStartTxt = (e: ChangeEvent<HTMLInputElement>) => {
@@ -151,11 +156,6 @@ const Index: React.FC<Type> = ({
 
     setStartTxt(value);
   };
-
-  useEffect(() => {
-    if (videoLink) {
-    }
-  }, [videoLink]);
 
   return (
     <>
@@ -198,7 +198,7 @@ const Index: React.FC<Type> = ({
           <input
             value={name}
             maxLength={11}
-            onChange={(e) => setName(e.target.value)}
+            onChange={handleName}
             type="text"
             placeholder="Text"
             className="h-[40px] text-[12px] font-normal w-full bg-[#1E1E1E] border-[2.72px] border-[#505050] rounded-[9px] placeholder:text-[10.5px] placeholder:text-[#505050] placeholder:font-semibold px-[9px]"
