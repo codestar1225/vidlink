@@ -108,7 +108,7 @@ export default function ImageCropper({
         <div className="absolute bottom-[80px] left-1/2 -translate-x-1/2 text-[20px] flex gap-3 bg-[#050505]">
           <button
             onClick={handleSave}
-            className="bg-blue text-white font-semibold tracking-widest h-[40px] w-[120px] flex justify-center items-center rounded-full"
+            className="bg-blue text-white pt-[2px] font-semibold tracking-widest h-[40px] w-[120px] flex justify-center items-center rounded-full"
           >
             SAVE
           </button>
@@ -116,7 +116,7 @@ export default function ImageCropper({
             onClick={() => {
               setEdit("");
             }}
-            className="border-[3px] border-white text-white font-semibold tracking-widest h-[40px] w-[120px] flex justify-center items-center rounded-full"
+            className="border-[3px] border-white pt-[2px] text-white font-semibold tracking-widest h-[40px] w-[130px] flex justify-center items-center rounded-full"
           >
             CANCEL
           </button>

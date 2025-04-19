@@ -180,7 +180,7 @@ const AddCards: React.FC<Type> = ({
         />
         <button
           onClick={handlePreviewPage}
-          className="w-[309px] h-[50px] pt-[2px] text-[25px] font-semibold rounded-[16px] bg-blue mx-auto flex justify-center items-center mt-[57px] mb-[65px] tracking-wide"
+          className="w-[309px] h-[50px] pt-[3px] text-[25px] font-semibold rounded-[16px] bg-blue mx-auto flex justify-center items-center mt-[57px] mb-[65px] tracking-wide"
         >
           PREVIEW & PUBLISH
         </button>

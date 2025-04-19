@@ -38,7 +38,7 @@ const Index: React.FC<Type> = ({
         <div className=" relative mt-[28px] ">
           <button
             onClick={() => setEdit("modal")}
-            className="flex justify-center items-center pt-[2px] border-[1.07px] border-white  rounded-[3.2px] text-[13px] px-[2px]"
+            className="flex justify-center items-center pt-[1px] border-[1.07px] border-white  rounded-[3.2px] text-[13px] px-[2px]"
           >
             EDIT PICTURE
           </button>

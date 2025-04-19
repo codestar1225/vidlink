@@ -96,7 +96,7 @@ const LoginMobile = () => {
               type="submit"
               className="flex items-center justify-center gap-[12.81px] bg-blue rounded-[12.81px] w-[309px] h-[48px]"
             >
-              <h1 className="text-[16px]  font-semibold">LOG IN WITH GOOGLE</h1>
+              <h1 className="text-[16px]  font-semibold pt-[3px]">LOG IN WITH GOOGLE</h1>
               <Image
                 width={32}
                 height={32}

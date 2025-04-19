@@ -21,7 +21,7 @@ const ButtonItem: React.FC<Type> = ({
           onClick={handleNext}
           className={` ${
             videoSrc || url ? "bg-blue" : "bg-[#1E1E1E]"
-          } w-[282.81px] h-[50px] flex justify-center rounded-[20px] items-center gap-[10px] mx-auto mt-[88px] mb-[60px] font-semibold text-black text-[25px]`}
+          } w-[282.81px] h-[50px] flex justify-center rounded-[20px] pt-[3px] items-center gap-[10px] mx-auto mt-[88px] mb-[60px] font-semibold text-black text-[25px]`}
         >
           {loading ? (
             <>

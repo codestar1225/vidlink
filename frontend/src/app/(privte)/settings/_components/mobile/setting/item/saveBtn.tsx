@@ -11,7 +11,7 @@ const SaveBtn: React.FC<Type> = ({ handleSave, isSaved, loading }) => {
       onClick={handleSave}
       className={`${
         isSaved ? "bg-blue" : "bg-[#002355]"
-      } h-[50px] w-[282.8px] bg-blue rounded-[20px] text-[25px] mb-[71px] font-semibold flex items-center justify-center mx-auto`}
+      } h-[50px] w-[282.8px] pt-[3px] bg-blue rounded-[20px] text-[25px] mb-[71px] font-semibold flex items-center justify-center mx-auto`}
     >
       {loading ? (
         <>
