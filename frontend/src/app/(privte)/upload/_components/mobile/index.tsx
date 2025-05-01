@@ -9,7 +9,7 @@ import { useAtom } from "jotai";
 import { cardAtom, CardType } from "@/store";
 import useVideo from "@/hooks/useVideo";
 import { getItem, setItem } from "@/utils/localstorage";
-const AddCards = dynamic(() => import("./addCards"));
+const AddCards = dynamic(() => import("./addCards"), { ssr: false });
 const Preview = dynamic(() => import("./preview"));
 
 const UploadMobile = () => {
@@ -39,22 +39,28 @@ const UploadMobile = () => {
     }
     if (!editSignal) return;
     const data = new FormData();
-    if (file) {
+    console.log('file',file)
+    console.log('videolink',videoLink)
+    if (file instanceof File) {
       data.append("file", file);
-    } else if (videoLink) {
+    } else 
+    if (videoLink) {
       data.append("videoLink", videoLink);
     } else {
       alert("Please provide either a file or a video link.");
       return;
     }
-    data.append("title", title);
-    data.append("cards", JSON.stringify(cards));
-    data.append("duration", duration.toString());
+    data.append("title", title || "");
+    data.append("cards", JSON.stringify(cards || []));
+    data.append("duration", String(duration || 0));
     const res = await publish(data);
     if (res.status === 201 && "videoLink" in res) {
       setVideoLink(res.videoLink);
       setEditSignal(false);
       setItem("editSignal", false);
+      // if (typeof window !== "undefined") {
+      //   setItem("editSignal", false);
+      // }
       cancelVideo();
     } else {
       alert(res.message);

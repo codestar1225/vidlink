@@ -80,7 +80,7 @@ const LoginMobile = () => {
             <Video src="/video/home/home2.mp4" />
           )}
         </div>
-        <div className="mb-[34px] flex flex-col gap-[40px] items-center">
+        <div className="mb-[34px] flex flex-col gap-[40px] items-center font-sans">
           <Image
             height={55.4}
             width={356.54}

@@ -68,7 +68,7 @@ const Index: React.FC<Type> = ({
             link && icon && name
               ? "bg-blue border-none"
               : "bg-background border-[2px]"
-          } tracking-wider text-[16px] pt-[3px]  rounded-[14.7px] w-[207.5px] h-[36.7px] flex justify-center items-center mx-auto mt-[31.55px]`}
+          } tracking-wider text-[16px] pt-[2px]  rounded-[14.7px] w-[207.5px] h-[36.7px] flex justify-center items-center mx-auto mt-[31.55px]`}
         >
           CARD DONE
         </button>
