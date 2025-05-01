@@ -25,7 +25,7 @@ const UploadMobile = () => {
   const [videoLink, setVideoLink] = useState<string>("");
   const [url, setUrl] = useState<string>("");
   const [duration, setDuration] = useState<number>(0);
-  const [file, setFile] = useState<File | null>(null);
+  const [, setFile] = useState<File | null>(null);
   const [title, setTitle] = useState<string>("");
   const [cards, setCards] = useAtom<CardType[]>(cardAtom);
   const [editSignal, setEditSignal] = useState<boolean>(false);
