@@ -10,7 +10,7 @@ import { cardAtom, CardType } from "@/store";
 import useVideo from "@/hooks/useVideo";
 import { getItem, setItem } from "@/utils/localstorage";
 const AddCards = dynamic(() => import("./addCards"), { ssr: false });
-const Preview = dynamic(() => import("./preview"));
+const Preview = dynamic(() => import("./preview"), { ssr: false });
 
 const UploadMobile = () => {
   const [edit, setEdit] = useState<string>("upload");
@@ -39,11 +39,9 @@ const UploadMobile = () => {
     }
     if (!editSignal) return;
     const data = new FormData();
-    console.log('file',file)
-    console.log('videolink',videoLink)
-    if (file instanceof File) {
-      data.append("file", file);
-    } else 
+    // if (file instanceof File) {
+    //   data.append("file", file);
+    // } else 
     if (videoLink) {
       data.append("videoLink", videoLink);
     } else {
@@ -57,10 +55,9 @@ const UploadMobile = () => {
     if (res.status === 201 && "videoLink" in res) {
       setVideoLink(res.videoLink);
       setEditSignal(false);
-      setItem("editSignal", false);
-      // if (typeof window !== "undefined") {
-      //   setItem("editSignal", false);
-      // }
+      if (typeof window !== "undefined") {
+        setItem("editSignal", false);
+      }
       cancelVideo();
     } else {
       alert(res.message);
