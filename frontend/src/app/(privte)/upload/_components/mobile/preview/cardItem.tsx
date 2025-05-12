@@ -1,11 +1,16 @@
+import { cardAtom, CardType } from "@/store";
+import { setItem } from "@/utils/localstorage";
+import { useAtom } from "jotai";
 import * as LucideIcons from "lucide-react";
+import { useState } from "react";
 
 interface Type {
   setIsSelected(value: number): void;
   setSignal(value: boolean): void;
+  setEditSignal(value: boolean): void;
   name: string;
   start: number;
-  icon: string;
+  // icon: string;
   no: number;
   isSaved: boolean;
   link: string;
@@ -15,32 +20,51 @@ interface Type {
 const CardItem: React.FC<Type> = ({
   setIsSelected,
   setSignal,
+  setEditSignal,
   name,
   start,
-  icon,
+  // icon,
   no,
   isSaved,
   link,
   signal,
   currentCard,
 }) => {
-  const IconComponent = LucideIcons[
-    icon as keyof typeof LucideIcons
-  ] as React.ComponentType<React.SVGProps<SVGSVGElement>>;
+  // const IconComponent = LucideIcons[
+  //   icon as keyof typeof LucideIcons
+  // ] as React.ComponentType<React.SVGProps<SVGSVGElement>>;
+  const [, setCards] = useAtom<CardType[]>(cardAtom);
+  const [saved, setSaved] = useState<boolean>(isSaved);
 
   const handlePreview = () => {
     setIsSelected(start);
     setSignal(!signal);
   };
 
+  const handleIsSaved = (e: number) => {
+    setCards((prevCards) => {
+      const newCards = prevCards.map((card) =>
+        card.no === e ? { ...card, isSaved: !card.isSaved } : card
+      );
+      setItem("cards", newCards);
+      return newCards;
+    });
+    setItem("editSignal", true);
+    setEditSignal(true);
+    setSaved(!saved);
+  };
   return (
     <>
       <li
-        className={`${
-          currentCard + 1 === no ? "bg-blue text-white" : "bg-white text-black"
-        } rounded-[6px] w-[32%] h-[94.5px] p-[5.9px] flex flex-col overflow-hidden`}
+        className={`text-black w-[32%] h-[104.5px] flex flex-col justify-between z-50 relative`}
       >
-        <button onClick={handlePreview}>
+        <button
+          onClick={handlePreview}
+          className={`${
+            currentCard + 1 === no ? "hidden" : "block"
+          } absolute top-0 left-0 w-full h-full opacity-[40%] bg-gray-900 rounded-[6px]`}
+        ></button>
+        <div className="bg-white rounded-[6px] h-[73.5px] p-[6px]">
           <div className="text-[13.86px] font-semibold flex justify-between w-full items-center">
             <span className="">{no < 10 ? `0${no}` : no}</span>{" "}
             <i className="font-normal">
@@ -49,32 +73,35 @@ const CardItem: React.FC<Type> = ({
             </i>
           </div>
           <div
-            className={`flex flex-col items-center h-[38.4px] w-full justify-between mt-[10px]`}
+            className={`flex flex-col items-center h-[38.4px] w-full justify-between mt-[19px]`}
           >
             <h1 className={`text-[13.86px] font-semibold`}>
               {name.toUpperCase()}
             </h1>
-            <IconComponent className="size-[18.29px]" />
+            {/* <IconComponent className="size-[18.29px]" /> */}
           </div>
-        </button>
-        <div className="flex justify-between">
-          <div className="size-[22.51px]">
-            {isSaved ? (
-              <img src="/icon/detail/card/left2Blue.png" alt="" />
-            ) : currentCard >= 0 && currentCard + 1 === no ? (
-              <img src="/icon/detail/card/left2_white.png" alt="" />
-            ) : (
-              <img src="/icon/detail/card/left2.svg" alt="" />
-            )}
+        </div>
+        <div className="flex h-[29px] gap-1 justify-between">
+          <div
+            className={`bg-white h-full rounded-[6px] w-[50%] flex justify-center items-center`}
+          >
+            <button
+              onClick={() => handleIsSaved(no)}
+              className="size-[22.51px]"
+            >
+              {saved ? (
+                <img src="/icon/detail/card/left2Blue.png" alt="" />
+              ) : (
+                <img src="/icon/detail/card/left2.svg" alt="" />
+              )}
+            </button>
           </div>
-          <a href={link} target="_blank" className="z-20">
-            {currentCard >= 0 && currentCard + 1 === no ? (
-              // <img src="/icon/detail/card/right2_white.png" alt="" />
-              <LucideIcons.Link className="text-white size-[19px]" />
-            ) : (
-              // <img src="/icon/detail/card/right2.svg" alt="" />
-              <LucideIcons.Link className="size-[19px]" />
-            )}
+          <a
+            href={link}
+            target="_blank"
+            className={`bg-blue h-full rounded-[6px] w-[50%] flex justify-center items-center`}
+          >
+            <LucideIcons.Link className="size-[19px]" />
           </a>
         </div>
       </li>

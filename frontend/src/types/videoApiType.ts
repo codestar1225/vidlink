@@ -42,7 +42,7 @@ interface CardT {
   _id: string;
   link: string;
   name: string;
-  icon: string;
+  // icon: string;
   start: number;
   no: number;
   isSaved: boolean;
@@ -118,7 +118,7 @@ export interface GetCardsSuccess {
     cards: {
       _id: string;
       name: string;
-      icon: string;
+      // icon: string;
       start: number;
       link: string;
       no: number;

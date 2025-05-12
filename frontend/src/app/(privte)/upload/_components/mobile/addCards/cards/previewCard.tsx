@@ -2,43 +2,44 @@ import * as LucideIcons from "lucide-react";
 interface Type {
   name: string;
   start: number;
-  icon: string;
+  // icon: string;
   no: number;
   isSaved: boolean;
+  link: string;
   setIsSaveed(value: boolean): void;
 }
 const PreviewCard: React.FC<Type> = ({
   name,
   start,
-  icon,
+  // icon,
   no,
   isSaved,
+  link,
   setIsSaveed,
 }) => {
-  const IconComponent = LucideIcons[
-    icon as keyof typeof LucideIcons
-  ] as React.ComponentType<React.SVGProps<SVGSVGElement>>;
+  // const IconComponent = LucideIcons[
+  //   icon as keyof typeof LucideIcons
+  // ] as React.ComponentType<React.SVGProps<SVGSVGElement>>;
   return (
     <>
-      <li className="border-blue border-[2px] text-black bg-white rounded-[6px] w-[122.41px] h-[94.5px] p-[5.9px] flex flex-col justify-between ">
-        <div className="text-[13.86px] font-semibold flex justify-between w-full items-center">
-          <span>{no < 10 ? `0${no}` : no}</span>
-          <i className="font-normal text-blue">
-            ({Math.floor(start / 60)}:
-            {start % 60 < 10 ? `0${start % 60}` : start % 60})
-          </i>
-        </div>
-        <div className="h-[60.91px]">
-          <div className="flex flex-col items-center h-[38.4px] w-full justify-between overflow-hidden">
-            <h1 className="text-blue text-[13.86px] font-semibold text-center w-full ">
-              {name.toUpperCase()}
-            </h1>
-            {icon ? <IconComponent className="size-[18.29px] text-blue" /> : <></>}
+      <li className="text-black w-[122.41px] h-[104.5px] flex flex-col justify-between ">
+        <div className="bg-white rounded-[6px] h-[73.5px] p-[6px]">
+          <div className="text-[13.86px] font-semibold flex justify-between w-full items-center">
+            <span>{no < 10 ? `0${no}` : no}</span>
+            <i className="font-normal text-blue">
+              ({Math.floor(start / 60)}:
+              {start % 60 < 10 ? `0${start % 60}` : start % 60})
+            </i>
           </div>
-          <div className="flex justify-between">
+          <h1 className="text-blue text-[13.86px] mt-[25px] font-semibold text-center w-full ">
+            {name.toUpperCase()}
+          </h1>
+        </div>
+        <div className="flex h-[29px] gap-1">
+          <div className="h-full bg-white rounded-[6px] w-[59.7px] flex justify-center items-center">
             <button
               onClick={() => setIsSaveed(!isSaved)}
-              className="size-[22.51px]"
+              className="size-[22.5px]"
             >
               {isSaved ? (
                 <img src="/icon/detail/card/left2Blue.png" alt="" />
@@ -46,9 +47,21 @@ const PreviewCard: React.FC<Type> = ({
                 <img src="/icon/detail/card/left2.svg" alt="" />
               )}
             </button>
-            <LucideIcons.Link className="size-[19px]" />
-            {/* <img src="/icon/detail/card/right2.svg" alt="" /> */}
           </div>
+          {link ? (
+            <a
+              href={link}
+              target="_blank"
+              className="h-full bg-white rounded-[6px] w-[59.7px] flex justify-center items-center"
+            >
+              <LucideIcons.Link className="size-[19px]" />
+            </a>
+          ) : (
+            <div className="h-full bg-white rounded-[6px] w-[59.7px] flex justify-center items-center">
+              <LucideIcons.Link className="size-[19px]" />
+            </div>
+          )}
+          {/* <img src="/icon/detail/card/right2.svg" alt="" /> */}
         </div>
       </li>
     </>

@@ -61,25 +61,25 @@ const Index: React.FC<Type> = ({
         <div className="flex flex-col gap-[5.47px] mt-[5px]">
           <Link
             href={"/dashboard"}
-            className="h-[28.88px] bg-blue rounded-[4.97px] flex items-center pt-[2px] justify-center text-[10.5px] font-semibold"
+            className="h-[28.88px] bg-blue rounded-[4.97px] flex items-center py-[2px] justify-center text-[10.5px] font-semibold"
           >
             DASHBOARD
           </Link>
           <Link
             href={"/upload"}
-            className="h-[28.88px] bg-[#1e50bbe0] rounded-[4.97px] flex items-center pt-[2px] justify-center text-[10.5px] font-semibold"
+            className="h-[28.88px] bg-[#1e50bbe0] rounded-[4.97px] flex items-center py-[2px] justify-center text-[10.5px] font-semibold"
           >
             DRAFTS
           </Link>
           <Link
             href={"/settings"}
-            className="h-[28.88px] bg-[#7C889D] rounded-[4.97px] flex items-center pt-[2px]  justify-center text-[10.5px] font-semibold"
+            className="h-[28.88px] bg-[#7C889D] rounded-[4.97px] flex items-center py-[2px]  justify-center text-[10.5px] font-semibold"
           >
             SETTINGS
           </Link>
           <button
             onClick={handleSignOut}
-            className="h-[28.88px] bg-[#002355] rounded-[4.97px] flex items-center pt-[2px]  justify-center text-[10.5px] font-semibold"
+            className="h-[28.88px] bg-[#002355] rounded-[4.97px] flex items-center py-[2px]  justify-center text-[10.5px] font-semibold"
           >
             LOG OUT
           </button>

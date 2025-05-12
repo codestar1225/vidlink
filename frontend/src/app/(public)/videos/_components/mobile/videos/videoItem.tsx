@@ -11,8 +11,8 @@ interface Type {
 const VideoItem: React.FC<Type> = ({ userName, views, src, no, videoId }) => {
   return (
     <>
-      <li className="h-[149.33px] w-[31%] flex flex-col items-center  justify-between">
-        <div className="h-[86.48px] w-full rounded-[8.37px] overflow-hidden">
+      <li className="w-full flex flex-col items-center  justify-between">
+        <div className="h-[281px] w-full rounded-[8.37px] overflow-hidden">
           {src !== "" ? (
             <Link href={`/videos/${videoId}`} className="w-full h-full">
               <ReactPlayer

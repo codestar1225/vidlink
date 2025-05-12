@@ -12,6 +12,7 @@ import Loading from "@/app/_components/ui/loading";
 interface Type {
   setEdit(value: string): void;
   handlePublish(): void;
+  setEditSignal(value: boolean): void;
   videoLink: string;
   loading: boolean;
   editSignal: boolean;
@@ -21,6 +22,7 @@ interface Type {
 const Preview: React.FC<Type> = ({
   setEdit,
   handlePublish,
+  setEditSignal,
   videoLink,
   loading,
   editSignal,
@@ -93,9 +95,10 @@ const Preview: React.FC<Type> = ({
                 <CardItem
                   setIsSelected={setIsSelected}
                   setSignal={setSignal}
+                  setEditSignal={setEditSignal}
                   key={index}
                   name={item.name}
-                  icon={item.icon}
+                  // icon={item.icon}
                   start={item.start}
                   isSaved={item.isSaved}
                   link={item.link}

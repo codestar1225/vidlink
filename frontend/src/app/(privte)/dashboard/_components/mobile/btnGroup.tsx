@@ -84,7 +84,7 @@ const BtnGroup: React.FC<Type> = ({
       <div className="font-semibold text-[20px] tracking-wider mt-[50px] mb-[140px] flex flex-col items-center gap-[20px]">
         <button
           onClick={handleExport}
-          className="bg-blue rounded-[20.2px] w-[282.8px] h-[50px] flex justify-center items-center gap-[20.2px] pt-[2px] "
+          className="bg-blue rounded-[20.2px] w-[282.8px] h-[50px] flex justify-center items-center gap-[20.2px] py-[2px] "
         >
           {name.toUpperCase()}
           <img
@@ -95,7 +95,7 @@ const BtnGroup: React.FC<Type> = ({
         </button>
         <Link
           href={"/profile"}
-          className="border-[3px] rounded-[20.2px] w-[282.8px] h-[50px] flex justify-center items-center gap-[20.2px] pt-[2px]"
+          className="border-[3px] rounded-[20.2px] w-[282.8px] h-[50px] flex justify-center items-center gap-[20.2px] py-[2px]"
         >
           BACK TO PROFILE
         </Link>

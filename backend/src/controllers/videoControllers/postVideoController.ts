@@ -27,7 +27,7 @@ export const publishVideo = expressAsyncHandler(
       res.status(400).json({ message: "No provided user Id." });
       return;
     }
-    const { videoLink, duration, title, cards } = req.body;
+    const { videoLink, duration, title, info, cards } = req.body;
     const file = req.file;
     let parsedCards: CardType[];
     try {
@@ -69,6 +69,7 @@ export const publishVideo = expressAsyncHandler(
         videoLink: finalVideoLink,
         duration: Number(duration),
         title,
+        info,
         card: parsedCards.length,
       });
       await video.save();

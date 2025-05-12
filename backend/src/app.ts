@@ -28,7 +28,7 @@ app.use(
 
 // Middleware to handle large JSON and form data
 app.use(express.json());
-app.use(express.urlencoded());
+app.use(express.urlencoded({ extended: true }));
 
 // Database connection
 connectDB();

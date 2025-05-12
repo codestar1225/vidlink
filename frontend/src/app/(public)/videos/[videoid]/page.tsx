@@ -21,7 +21,7 @@ export interface CardT {
   _id: string;
   link: string;
   name: string;
-  icon: string;
+  // icon: string;
   start: number;
   no: number;
   isSaved: boolean;

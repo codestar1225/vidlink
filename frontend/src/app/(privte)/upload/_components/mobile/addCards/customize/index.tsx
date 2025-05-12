@@ -1,7 +1,7 @@
 "use client";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
-import lucideIcons from "@/../public/lucideIcon.json";
-import SetIcon from "./setIcon";
+// import lucideIcons from "@/../public/lucideIcon.json";
+// import SetIcon from "./setIcon";
 import * as LucideIcons from "lucide-react";
 import useClickOutside from "@/hooks/useClickOutside";
 import ReactPlayer from "react-player";
@@ -9,12 +9,12 @@ import ReactPlayer from "react-player";
 interface Type {
   setLink(value: string): void;
   setName(value: string): void;
-  setIcon(value: string): void;
+  // setIcon(value: string): void;
   setStart(value: number): void;
   link: string;
   name: string;
   start: number;
-  icon: string;
+  // icon: string;
   isSaved: boolean;
   videoLink: string | null;
 }
@@ -22,42 +22,41 @@ interface Type {
 const Index: React.FC<Type> = ({
   setLink,
   setName,
-  setIcon,
   setStart,
-  icon,
+  // icon,
   link,
   name,
   start,
   videoLink,
 }) => {
-  const listRef = useRef<HTMLDivElement>(null);
+  // const listRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<ReactPlayer>(null);
-  const [iconSearch, setIconSearch] = useState<string>("");
+  // const [iconSearch, setIconSearch] = useState<string>("");
   const [startTxt, setStartTxt] = useState<string>("00:00");
   const [caution, setCaution] = useState<string>("");
   const maxTime = Number(process.env.NEXT_PUBLIC_MAX_TIME || 240);
 
   // Filter icons from the JSON based on the input (case insensitive)
-  const matchingIcons = lucideIcons
-    .filter(
-      (key) =>
-        iconSearch && key.toLowerCase().includes(iconSearch.toLowerCase())
-    )
-    .map((key) =>
-      key
-        .split("-")
-        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-        .join("")
-    );
+  // const matchingIcons = lucideIcons
+  //   .filter(
+  //     (key) =>
+  //       iconSearch && key.toLowerCase().includes(iconSearch.toLowerCase())
+  //   )
+  //   .map((key) =>
+  //     key
+  //       .split("-")
+  //       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+  //       .join("")
+  //   );
 
-  const IconComponent = LucideIcons[
-    icon as keyof typeof LucideIcons
-  ] as React.ComponentType<React.SVGProps<SVGSVGElement>>;
+  // const IconComponent = LucideIcons[
+  //   icon as keyof typeof LucideIcons
+  // ] as React.ComponentType<React.SVGProps<SVGSVGElement>>;
 
   // Close the menu if the click is outside
-  useClickOutside(listRef as React.RefObject<HTMLElement>, () =>
-    setIconSearch("")
-  );
+  // useClickOutside(listRef as React.RefObject<HTMLElement>, () =>
+  //   setIconSearch("")
+  // );
 
   //video time capture
   const onProgress = () => {
@@ -159,7 +158,7 @@ const Index: React.FC<Type> = ({
 
   return (
     <>
-      <div className="mt-[49px] text-[10px] font-semibold mx-[19.5px]">
+      <div className="mt-[49px] text-[12px] font-semibold mx-[19.5px]">
         {/* <div className="flex flex-col items-center justify-between h-[38px]">
           <h1>ADD CARDS</h1>
           <i className=" font-normal text-[10px]">
@@ -176,8 +175,12 @@ const Index: React.FC<Type> = ({
             MAX 1 CARD EVERY 10s
           </i>
         </div> */}
-        <h1 className="text-[32px]  text-center">ADD CARDS</h1>
-        <div className=" h-[59px] flex flex-col justify-between mt-[46px]">
+        <div className="flex items-center justify-between">
+          <span className="border-t border-white w-[28%]"></span>
+          <h1 className="text-[20px]  text-center">ADD CARDS</h1>
+          <span className="border-t border-white w-[28%]"></span>
+        </div>
+        <div className=" h-[59px] flex flex-col justify-between mt-[10px]">
           <div className="flex items-center gap-[7px]">
             <div>LINK</div>
             <button onClick={handleAutoPaste}>
@@ -189,7 +192,7 @@ const Index: React.FC<Type> = ({
             value={link.trim().toLowerCase()}
             onChange={(e) => setLink(e.target.value)}
             type="url"
-            placeholder="Text"
+            placeholder="www.jshdksdk.com/jdnknksndkns"
             className="h-[40px] text-[12px] font-normal w-full bg-[#1E1E1E] border-[2.72px] border-[#505050] rounded-[9px] placeholder:text-[10.5px] placeholder:text-[#505050] placeholder:font-semibold px-[9px]"
           />
         </div>
@@ -204,7 +207,7 @@ const Index: React.FC<Type> = ({
             className="h-[40px] text-[12px] font-normal w-full bg-[#1E1E1E] border-[2.72px] border-[#505050] rounded-[9px] placeholder:text-[10.5px] placeholder:text-[#505050] placeholder:font-semibold px-[9px]"
           />
         </div>
-        <div
+        {/* <div
           ref={listRef}
           className=" relative h-[59px] flex flex-col justify-between mt-[15px]"
         >
@@ -232,7 +235,7 @@ const Index: React.FC<Type> = ({
           ) : (
             <></>
           )}
-        </div>
+        </div> */}
         <div className="flex  flex-col justify-between h-[60px] mt-[15px] mb-[6px]">
           <div className="flex  items-center gap-[7px]">
             <div>START</div>

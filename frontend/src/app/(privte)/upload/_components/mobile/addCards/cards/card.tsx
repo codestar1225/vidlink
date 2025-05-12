@@ -1,81 +1,107 @@
-import * as LucideIcons from "lucide-react";
+// import * as LucideIcons from "lucide-react";
+import { cardAtom, CardType } from "@/store";
+import { confirmModal } from "@/utils/confirm";
+import { setItem } from "@/utils/localstorage";
+import { useAtom } from "jotai";
+import { Link, Trash2 } from "lucide-react";
 
 interface Type {
   handleIsSaved(value: number): void;
   setName(value: string): void;
-  setIcon(value: string): void;
+  // setIcon(value: string): void;
   setLink(value: string): void;
   setStart(value: number): void;
   name: string;
   start: number;
-  icon: string;
+  // icon: string;
   link: string;
   no: number;
   isSaved: boolean;
 }
 const Card: React.FC<Type> = ({
   handleIsSaved,
-  setName,
-  setIcon,
-  setLink,
-  setStart,
+  // setName,
+  // setIcon,
+  // setLink,
+  // setStart,
   name,
   start,
-  icon,
+  // icon,
   link,
   no,
   isSaved,
 }) => {
-  const IconComponent = LucideIcons[
-    icon as keyof typeof LucideIcons
-  ] as React.ComponentType<React.SVGProps<SVGSVGElement>>;
+  const [cards, setCards] = useAtom<CardType[]>(cardAtom);
+  // const IconComponent = LucideIcons[
+  //   icon as keyof typeof LucideIcons
+  // ] as React.ComponentType<React.SVGProps<SVGSVGElement>>;
 
-  const handleInit = () => {
-    setName(name);
-    setIcon(icon);
-    setLink(link);
-    setStart(start);
+  // const handleInit = () => {
+  //   setName(name);
+  //   // setIcon(icon);
+  //   setLink(link);
+  //   setStart(start);
+  // };
+  const handleDelete = (no: number) => {
+    confirmModal(
+      "A card with the same start time already exists. Do you want to replace the existing card with this one?",
+      () =>
+        setCards((prevCards) => {
+          const newCards = prevCards.filter((card) => card.no !== no);
+          setItem("cards", newCards);
+          return newCards;
+        })
+    );
   };
   return (
     <>
-      <li
-        className={`border-[2px] text-black bg-white rounded-[6px] w-[32%] h-[94.5px] p-[5.9px] flex flex-col justify-between overflow-hidden`}
-      >
-        <button onClick={handleInit}>
-          <div className="text-[13.86px] font-semibold flex justify-between w-full items-center">
-            <span className="text-black">{no < 10 ? `0${no}` : no}</span>{" "}
-            <i className="font-normal">
-              ({Math.floor(start / 60)}:
-              {start % 60 < 10 ? `0${start % 60}` : start % 60})
-            </i>
-          </div>
+      <li className="w-[32%] flex flex-col items-center gap-[5px]">
+        <button
+          onClick={() => handleDelete(no)}
+          className="border-[1.2px] rounded-full size-[26px] flex justify-center items-center"
+        >
+          <Trash2 className="w-[13px]" />
         </button>
-        <div className="h-[60.91px]">
-          <button className="w-full" onClick={handleInit}>
-            <div
-              className={`flex flex-col items-center h-[38.4px] w-full justify-between`}
-            >
-              <h1 className={`text-[13.84px] font-semibold`}>
-                {name.toUpperCase()}
-              </h1>
-              <IconComponent className="size-[18.29px]" />
+        <div className="text-black w-full h-[104.5px] flex flex-col justify-between ">
+          <div className="bg-white rounded-[6px] h-[73.5px] p-[6px]">
+            <div className="text-[13.86px] font-semibold flex justify-between w-full items-center">
+              <span>{no < 10 ? `0${no}` : no}</span>
+              <i className="font-normal text-blue">
+                ({Math.floor(start / 60)}:
+                {start % 60 < 10 ? `0${start % 60}` : start % 60})
+              </i>
             </div>
-          </button>
-          <div className="flex justify-between">
-            <button
-              onClick={() => handleIsSaved(no)}
-              className="size-[22.51px]"
-            >
-              {isSaved ? (
-                <img src="/icon/detail/card/left2Blue.png" alt="" />
-              ) : (
-                <img src="/icon/detail/card/left2.svg" alt="" />
-              )}
-            </button>
-            <a href={link} target="_blank">
-              {/* <img src="/icon/detail/card/right2.svg" alt="" /> */}
-              <LucideIcons.Link className="size-[19px]" />
-            </a>
+            <h1 className="text-blue text-[13.86px] mt-[19px] font-semibold text-center w-full ">
+              {name.toUpperCase()}
+            </h1>
+          </div>
+          <div className="flex h-[29px] gap-1">
+            <div className="h-full bg-white rounded-[6px] w-[50%] flex justify-center items-center">
+              <button
+                onClick={() => handleIsSaved(no)}
+                className="size-[22.5px]"
+              >
+                {isSaved ? (
+                  <img src="/icon/detail/card/left2Blue.png" alt="" />
+                ) : (
+                  <img src="/icon/detail/card/left2.svg" alt="" />
+                )}
+              </button>
+            </div>
+            {link ? (
+              <a
+                href={link}
+                target="_blank"
+                className="h-full bg-white rounded-[6px] w-[50%] flex justify-center items-center"
+              >
+                <Link className="size-[19px]" />
+              </a>
+            ) : (
+              <div className="h-full bg-white rounded-[6px] w-[50%] flex justify-center items-center">
+                <Link className="size-[19px]" />
+              </div>
+            )}
+            {/* <img src="/icon/detail/card/right2.svg" alt="" /> */}
           </div>
         </div>
       </li>

@@ -6,7 +6,7 @@ export interface ICard extends Document {
   title: string;
   link: string;
   name: string;
-  icon: string;
+  // icon: string;
   start: number;
   no: number;
   isSaved: boolean;
@@ -22,7 +22,7 @@ const CardSchema = new Schema<ICard>(
     title: { type: String, required: true },
     link: { type: String, default: "" },
     name: { type: String, default: "" },
-    icon: { type: String, default: "" },
+    // icon: { type: String, default: "" },
     start: { type: Number, default: 0 },
     no: { type: Number, default: 0 },
     isSaved: { type: Boolean, default: false },

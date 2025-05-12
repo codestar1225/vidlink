@@ -32,6 +32,6 @@ html.light {
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: "MyCustomFont", Arial, Helvetica, sans-serif;
+  /* font-family: MyCustomFont, Arial, Helvetica, sans-serif; */
   line-height: 1;
 }

@@ -34,7 +34,7 @@ const InputItem: React.FC<Type> = ({ name, holderName, value, setValue }) => {
             value
               ? "bg-blue border-none"
               : "bg-[#3E3E3E66] border-[#272727] border-[3.12px]"
-          } h-[40px] text-[14px] pt-[2px]  rounded-[10.41px] px-[11.47px] placeholder-[#4F4F4F] placeholder:text-[13px] placeholder:font-semibold `}
+          } h-[40px] text-[14px] py-[2px]  rounded-[10.41px] px-[11.47px] placeholder-[#4F4F4F] placeholder:text-[13px] placeholder:font-semibold `}
         />
       </label>
       <i className="text-[red] text-[12px]">

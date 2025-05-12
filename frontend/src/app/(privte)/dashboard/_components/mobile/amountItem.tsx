@@ -6,7 +6,7 @@ interface Type {
 const AmountItem: React.FC<Type> = ({ name, src, value }) => {
   return (
     <>
-      <div className="flex flex-col items-center justify-center gap-[6px] tracking-wider font-semibold w-full text-foreground h-[64.26px] rounded-[8px] bg-[#191919] pt-[2px] overflow-hidden">
+      <div className="flex flex-col items-center justify-center gap-[6px] tracking-wider font-semibold w-full text-foreground h-[64.26px] rounded-[8px] bg-[#191919] py-[2px] overflow-hidden">
         <span className="text-[10px]">{name.toUpperCase()}</span>
         <div className="flex gap-[6px] items-center text-[25.7px]">
           <img

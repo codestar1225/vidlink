@@ -107,7 +107,7 @@ const HeaderMobile = () => {
           ) : (
             <Link
               href={"/login"}
-              className="text-[16px] px-[5px] pt-[2px] pb-[1px] font-semibold border-foreground border-[2px] rounded-[7px]"
+              className="text-[16px] px-[5px] py-[1px] font-semibold border-foreground border-[2px] rounded-[7px]"
             >
               LOG IN
             </Link>

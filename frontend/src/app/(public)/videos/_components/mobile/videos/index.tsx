@@ -34,7 +34,7 @@ const Index: React.FC<Type> = ({ videos }) => {
       dataLength={displayedVideos.length}
       hasMore={hasMore}
     >
-      <ul className="gap-x-[3.5%] gap-y-[15px] flex flex-wrap items-start">
+      <ul className="gap-y-[15px] ">
         {displayedVideos.map((item, index) => (
           <VideoItem
             userName={item.user.userName}

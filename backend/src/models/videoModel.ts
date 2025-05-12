@@ -3,6 +3,7 @@ import mongoose, { Document, Schema, Model } from "mongoose";
 interface IVideo extends Document {
   userId: mongoose.Schema.Types.ObjectId;
   title: string;
+  info: string;
   videoLink: string;
   duration: number;
   views: number;
@@ -15,6 +16,7 @@ const VideoSchema = new Schema<IVideo>(
   {
     userId: { type: mongoose.Schema.Types.ObjectId, required: true },
     title: { type: String, required: true },
+    info: { type: String, required: true },
     duration: { type: Number, required: true },
     videoLink: { type: String, required: true },
     views: { type: Number, default: 0 },

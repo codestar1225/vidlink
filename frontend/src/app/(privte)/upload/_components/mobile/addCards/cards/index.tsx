@@ -10,12 +10,12 @@ interface Type {
   setIsSaveed(value: boolean): void;
   setEditSignal(value: boolean): void;
   setName(value: string): void;
-  setIcon(value: string): void;
+  // setIcon(value: string): void;
   setLink(value: string): void;
   setStart(value: number): void;
   name: string;
   start: number;
-  icon: string;
+  // icon: string;
   isSaved: boolean;
   link: string;
 }
@@ -24,12 +24,12 @@ const Index: React.FC<Type> = ({
   setIsSaveed,
   setEditSignal,
   setName,
-  setIcon,
+  // setIcon,
   setLink,
   setStart,
   name,
   start,
-  icon,
+  // icon,
   isSaved,
   link,
 }) => {
@@ -52,11 +52,12 @@ const Index: React.FC<Type> = ({
         <h1 className="text-[12px] font-semibold">PREVIEW</h1>
         <div className="flex justify-center">
           <PreviewCard
-            icon={icon}
+            // icon={icon}
             name={name}
             start={start}
             no={cards.length + 1}
             isSaved={isSaved}
+            link={link}
             setIsSaveed={setIsSaveed}
           />
         </div>
@@ -65,9 +66,7 @@ const Index: React.FC<Type> = ({
         <button
           onClick={addCard}
           className={`${
-            link && icon && name
-              ? "bg-blue border-none"
-              : "bg-background border-[2px]"
+            link && name ? "bg-blue border-none" : "bg-background border-[2px]"
           } tracking-wider text-[16px] pt-[2px]  rounded-[14.7px] w-[207.5px] h-[36.7px] flex justify-center items-center mx-auto mt-[31.55px]`}
         >
           CARD DONE
@@ -81,12 +80,12 @@ const Index: React.FC<Type> = ({
               <CardItem
                 handleIsSaved={handleIsSaved}
                 setName={setName}
-                setIcon={setIcon}
+                // setIcon={setIcon}
                 setLink={setLink}
                 setStart={setStart}
                 key={index}
                 name={item.name}
-                icon={item.icon}
+                // icon={item.icon}
                 start={item.start}
                 link={item.link}
                 isSaved={item.isSaved}

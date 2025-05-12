@@ -6,7 +6,7 @@ interface Type {
 const CardNext: React.FC<Type> = ({ handleNext, no, start }) => {
   return (
     <>
-      <div className="border-[0.7px] rounded-[6px] w-[32%] max-[400px]:w-[115px] max-[380px]:w-[110px] max-[370px]:w-[105px] max-[365px]:w-[103px] h-[93.06px] p-[5.9px] flex flex-col gap-[11px]">
+      <div className="border-[0.7px] rounded-[6px] w-[32%] p-[5.9px] flex flex-col gap-[11px]">
         <div className="text-[13.86px] font-semibold">
           {no < 10 ? `0${no}` : no}
         </div>

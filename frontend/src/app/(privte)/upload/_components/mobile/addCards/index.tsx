@@ -14,24 +14,28 @@ interface Type {
   setEdit(value: string): void;
   setEditSignal(value: boolean): void;
   setTitle(value: string): void;
+  setInfo(value: string): void;
   duration: number;
   videoLink: string;
   title: string;
+  info: string;
 }
 
 const AddCards: React.FC<Type> = ({
   setEdit,
   setEditSignal,
   setTitle,
+  setInfo,
   videoLink,
   // duration,
   title,
+  info,
 }) => {
   const [cards, setCards] = useAtom<CardType[]>(cardAtom);
   // const [imgFile, setImgFile] = useState<string>("");
   const [link, setLink] = useState<string>("");
   const [name, setName] = useState<string>("");
-  const [icon, setIcon] = useState<string>("");
+  // const [icon, setIcon] = useState<string>("");
   const [start, setSart] = useState<number>(0);
   const [isSaved, setIsSaveed] = useState<boolean>(false);
 
@@ -59,11 +63,9 @@ const AddCards: React.FC<Type> = ({
     // if (cards.length >= Math.floor(duration / 10) + 1 || cards.length >= 24) {
     //   return alert("Your cards exceed their maximum amount.");
     // }
-    if (!link || !name || !icon) {
+    if (!link || !name ) {
       return alert(
-        `Please enter the ${!link ? "Link " : " "}${!name ? "Name " : " "}${
-          !icon ? "Icon" : ""
-        }.`
+        `Please enter the ${!link ? "Link " : " "}${!name ? "Name " : " "}.`
       );
     }
     if (!checkUrl(link))
@@ -73,7 +75,6 @@ const AddCards: React.FC<Type> = ({
     const newCard = {
       link,
       name,
-      icon,
       start,
       isSaved,
       no: cards.filter((key) => key.start < start).length + 1,
@@ -117,7 +118,7 @@ const AddCards: React.FC<Type> = ({
     setItem("cards", updatedCards);
     setLink("");
     setName("");
-    setIcon("");
+    // setIcon("");
     setIsSaveed(false);
     setEditSignal(true);
   };
@@ -135,7 +136,7 @@ const AddCards: React.FC<Type> = ({
     setItem("cards", newCards);
     setLink("");
     setName("");
-    setIcon("");
+    // setIcon("");
     setIsSaveed(false);
     setEditSignal(true);
   };
@@ -143,6 +144,7 @@ const AddCards: React.FC<Type> = ({
   //Open the preview page
   const handlePreviewPage = () => {
     if (!title) return alert("Please enter a title.");
+    if (!info) return alert("Please enter a extra info.");
     if (cards.length < 1) return alert("Please make the cards.");
     setEdit("preview");
     setItem("editStatus", "preview");
@@ -151,14 +153,19 @@ const AddCards: React.FC<Type> = ({
   return (
     <>
       <main>
-        <Setting setTitle={setTitle} title={title} />
+        <Setting
+          setTitle={setTitle}
+          setInfo={setInfo}
+          title={title}
+          info={info}
+        />
         <Customize
           setName={setName}
-          setIcon={setIcon}
+          // setIcon={setIcon}
           setLink={setLink}
           setStart={setSart}
           isSaved={isSaved}
-          icon={icon}
+          // icon={icon}
           name={name}
           link={link}
           start={start}
@@ -169,10 +176,10 @@ const AddCards: React.FC<Type> = ({
           setIsSaveed={setIsSaveed}
           setEditSignal={setEditSignal}
           setName={setName}
-          setIcon={setIcon}
+          // setIcon={setIcon}
           setLink={setLink}
           setStart={setSart}
-          icon={icon}
+          // icon={icon}
           name={name}
           start={start}
           link={link}
@@ -180,7 +187,7 @@ const AddCards: React.FC<Type> = ({
         />
         <button
           onClick={handlePreviewPage}
-          className="h-[50px] pt-[3px] px-[20px] text-[25px] font-semibold rounded-[16px] bg-blue mx-auto flex justify-center items-center mt-[57px] mb-[65px] tracking-wide"
+          className="h-[50px] py-[3px] px-[20px] text-[25px] font-semibold rounded-[16px] bg-blue mx-auto flex justify-center items-center mt-[57px] mb-[65px] tracking-wide"
         >
           PREVIEW & PUBLISH
         </button>

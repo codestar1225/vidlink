@@ -20,7 +20,7 @@ const ButtonItem: React.FC<Type> = ({
           setEdit("add");
           setItem("editStatus", "add");
         }}
-        className="w-[282.8px] h-[50px] border-[3px] pt-[3px] text-[25px] font-semibold rounded-[20px] mx-auto flex justify-center items-center mt-[63.4px] mb-[23px] tracking-wider leading-none"
+        className="w-[282.8px] h-[50px] border-[3px] py-[3px] text-[25px] font-semibold rounded-[20px] mx-auto flex justify-center items-center mt-[63.4px] mb-[23px] tracking-wider leading-none"
       >
         EDIT
       </button>
@@ -28,7 +28,7 @@ const ButtonItem: React.FC<Type> = ({
         onClick={handlePublish}
         className={`${
           editSignal ? "bg-blue" : "bg-[#002355]"
-        } w-[282.8px] h-[50px] pt-[3px] text-[25px] font-semibold rounded-[20px]  mx-auto flex justify-center items-center mb-[56px] tracking-wider leading-none`}
+        } w-[282.8px] h-[50px] py-[3px] text-[25px] font-semibold rounded-[20px]  mx-auto flex justify-center items-center mb-[56px] tracking-wider leading-none`}
       >
         {loading ? (
           <>

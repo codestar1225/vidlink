@@ -3,19 +3,30 @@ import { ChangeEvent } from "react";
 
 interface Type {
   setTitle(value: string): void;
+  setInfo(value: string): void;
   title: string;
+  info: string;
 }
-const Index: React.FC<Type> = ({ setTitle, title }) => {
+const Index: React.FC<Type> = ({ setTitle, setInfo, title, info }) => {
   const handleTitle = (e: ChangeEvent<HTMLInputElement>) => {
     const title = e.target.value;
     setTitle(title);
     setItem("title", title);
   };
+  const handleInfo = (e: ChangeEvent<HTMLInputElement>) => {
+    const info = e.target.value;
+    setInfo(info);
+    setItem("info", info);
+  };
   return (
     <>
-      <div className=" text-[9px] tracking-[2px] font-semibold mx-[19.5px] mt-[37px] flex flex-col justify-between">
-        <h1 className="text-[32px]  text-center">VIDEO</h1>
-        <div className="h-[59px] flex flex-col justify-between">
+      <div className=" text-[12px] tracking-[2px] font-semibold mx-[19.5px] mt-[37px] flex flex-col justify-between">
+        <div className="flex items-center justify-between">
+          <span className="border-t border-white w-[20%] ml-1"></span>
+          <h1 className="text-[20px]  text-center">VIDEO SETTINGS</h1>
+          <span className="border-t border-white w-[20%] mr-1"></span>
+        </div>
+        <div className="h-[59px] mt-2 flex flex-col justify-between">
           <h1>TITLE</h1>
           <input
             value={title}
@@ -24,6 +35,22 @@ const Index: React.FC<Type> = ({ setTitle, title }) => {
             placeholder="Text"
             className="h-[40px] font-normal text-[14px] py-[15px] w-full bg-[#1E1E1E] border-[2.72px] border-[#505050] rounded-[9px] placeholder:text-[12px] placeholder:text-[#505050] placeholder:font-semibold px-[9px]"
           />
+        </div>
+        <div className="h-[59px] flex flex-col justify-between mt-3">
+          <h1>-EXTRA INFO</h1>
+          <input
+            value={info}
+            onChange={handleInfo}
+            type="text"
+            placeholder="Text"
+            className="h-[40px] font-normal text-[14px] py-[15px] w-full bg-[#1E1E1E] border-[2.72px] border-[#505050] rounded-[9px] placeholder:text-[12px] placeholder:text-[#505050] placeholder:font-semibold px-[9px]"
+          />
+        </div>
+        <div className="flex flex-col items-center mt-3 gap-y-3">
+          <h1 className="text-[12px]">PREVIEW</h1>
+          <h2 className="text-[15px] tracking-normal">
+            <span className="text-blue ">Text</span> - Text
+          </h2>
         </div>
         {/* <Thumbnail images={images} />
         <div className="h-[81px] flex justify-between items-center">
