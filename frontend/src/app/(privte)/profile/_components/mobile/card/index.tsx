@@ -14,7 +14,7 @@ export interface CardType {
   cards: {
     _id: string;
     name: string;
-    icon: string;
+    // icon: string;
     start: number;
     link: string;
     no: number;
@@ -79,7 +79,7 @@ const Cards: React.FC<Type> = ({ nav }) => {
                       <Card
                         name={item.name}
                         link={item.link}
-                        icon={item.icon}
+                        // icon={item.icon}
                         isSaved={item.isSaved}
                         start={item.start}
                         no={item.no}
