@@ -39,38 +39,46 @@ const Card: React.FC<Type> = ({
   };
   return (
     <>
-      <li
-        className={`border-black border-[0.7px] text-black bg-white rounded-[6px] w-[32%] h-[94.5px] p-[5.9px] flex flex-col overflow-hidden`}
-      >
-        <a href={link} target="_blank">
+      <li className="text-black w-[32%] h-[104.5px] flex flex-col justify-between ">
+        <div className="bg-white rounded-[6px] h-[73.5px] p-[6px]">
           <div className="text-[13.86px] font-semibold flex justify-between w-full items-center">
-            <span className="">{no < 10 ? `0${no}` : no}</span>{" "}
-            <i className="font-normal">
+            <span>{no < 10 ? `0${no}` : no}</span>
+            <i className="font-normal text-blue">
               ({Math.floor(start / 60)}:
               {start % 60 < 10 ? `0${start % 60}` : start % 60})
             </i>
           </div>
-          <div
-            className={`flex flex-col items-center h-[38.4px] w-full justify-between mt-[10px]`}
-          >
-            <h1 className={`text-[13.86px] font-semibold`}>
-              {name.toUpperCase()}
-            </h1>
-            {/* <IconComponent className="size-[18.29px]" /> */}
+          <h1 className="text-blue text-[13.86px] mt-[19px] font-semibold text-center w-full ">
+            {name.toUpperCase()}
+          </h1>
+        </div>
+        <div className="flex h-[29px] gap-1">
+          <div className="h-full bg-white rounded-[6px] w-[50%] flex justify-center items-center">
+            <button onClick={handleSavingCard} className="size-[22.5px]">
+              {isSaved ? (
+                <img src="/icon/detail/card/left2Blue.png" alt="" />
+              ) : (
+                <img src="/icon/detail/card/left2.svg" alt="" />
+              )}
+            </button>
           </div>
-        </a>
-        <div className="flex justify-between">
-          <button onClick={handleSavingCard} className="size-[22.51px]">
-            {saved ? (
-              <img src="/icon/detail/card/left2Blue.png" alt="" />
-            ) : (
-              <img src="/icon/detail/card/left2.svg" alt="" />
-            )}
-          </button>
-          <button onClick={handleVisit} className="z-20">
-            {/* <img src="/icon/detail/card/right2.svg" alt="" /> */}
-            <LucideIcons.Link className="size-[19px]" />
-          </button>
+          {link ? (
+            <a
+              href={link}
+              target="_blank"
+              className="h-full bg-white rounded-[6px] w-[50%] flex justify-center items-center"
+            >
+              <LucideIcons.Link className="size-[19px]" />
+            </a>
+          ) : (
+            <button
+              onClick={handleVisit}
+              className="h-full bg-white rounded-[6px] w-[50%] flex justify-center items-center"
+            >
+              <LucideIcons.Link className="size-[19px]" />
+            </button>
+          )}
+          {/* <img src="/icon/detail/card/right2.svg" alt="" /> */}
         </div>
       </li>
     </>

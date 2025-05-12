@@ -60,7 +60,7 @@ const Cards: React.FC<Type> = ({ nav }) => {
         {loading ? (
           <LoadingTop />
         ) : (
-          <div className="text-[14px] font-normal flex flex-col gap-[15px] mt-[48px]">
+          <div className="text-[14px] w-full font-normal flex flex-col gap-[15px] mt-[48px]">
             <InfiniteScrolling
               next={loadMoreCards}
               dataLength={displayedCards?.length || 0}
