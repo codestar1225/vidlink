@@ -3,7 +3,7 @@ import { ChangeEvent, useEffect, useRef, useState } from "react";
 // import lucideIcons from "@/../public/lucideIcon.json";
 // import SetIcon from "./setIcon";
 import * as LucideIcons from "lucide-react";
-import useClickOutside from "@/hooks/useClickOutside";
+// import useClickOutside from "@/hooks/useClickOutside";
 import ReactPlayer from "react-player";
 
 interface Type {

@@ -31,7 +31,7 @@ const Card: React.FC<Type> = ({
   no,
   isSaved,
 }) => {
-  const [cards, setCards] = useAtom<CardType[]>(cardAtom);
+  const [, setCards] = useAtom<CardType[]>(cardAtom);
   // const IconComponent = LucideIcons[
   //   icon as keyof typeof LucideIcons
   // ] as React.ComponentType<React.SVGProps<SVGSVGElement>>;
