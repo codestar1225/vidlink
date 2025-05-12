@@ -10,7 +10,7 @@ interface Type extends CardT {
 const Card: React.FC<Type> = ({
   name,
   link,
-  icon,
+  // icon,
   isSaved,
   start,
   no,
@@ -19,9 +19,9 @@ const Card: React.FC<Type> = ({
   const { saveCard, increaseClicks, loading } = useVideo();
   const [saved, setSaved] = useState<boolean>(isSaved);
 
-  const IconComponent = LucideIcons[
-    icon as keyof typeof LucideIcons
-  ] as React.ComponentType<React.SVGProps<SVGSVGElement>>;
+  // const IconComponent = LucideIcons[
+  //   icon as keyof typeof LucideIcons
+  // ] as React.ComponentType<React.SVGProps<SVGSVGElement>>;
 
   const handleSavingCard = async () => {
     if (loading) return;
@@ -56,7 +56,7 @@ const Card: React.FC<Type> = ({
             <h1 className={`text-[13.86px] font-semibold`}>
               {name.toUpperCase()}
             </h1>
-            <IconComponent className="size-[18.29px]" />
+            {/* <IconComponent className="size-[18.29px]" /> */}
           </div>
         </a>
         <div className="flex justify-between">
