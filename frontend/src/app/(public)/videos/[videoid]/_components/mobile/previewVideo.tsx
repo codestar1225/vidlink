@@ -142,7 +142,7 @@ const PreviewVideo: React.FC<Type> = ({
             onProgress={onProgress}
             onSeek={onSeek}
             onReady={() => setIsReady(true)}
-            progressInterval={100}
+            progressInterval={1000}
             width="100%"
             height="100%"
             onPause={onSeekEnd} // ✅ Detects when seeking stops

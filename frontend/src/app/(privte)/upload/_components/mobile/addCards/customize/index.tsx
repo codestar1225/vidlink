@@ -116,6 +116,25 @@ const Index: React.FC<Type> = ({
     if (!videoRef.current) return;
     videoRef.current.seekTo(start, "seconds");
   }, [start]);
+  
+//   useEffect(() => {
+//   setStartTxt(
+//     `${
+//       Math.floor(start / 60) < 10
+//         ? `0${Math.floor(start / 60)}`
+//         : Math.floor(start / 60)
+//     }:${start % 60 < 10 ? `0${start % 60}` : start % 60}`
+//   );
+//   setCaution("");
+
+//   if (!videoRef.current) return;
+
+//   // Only seek if current time is not already close to `start`
+//   const current = videoRef.current.getCurrentTime();
+//   if (Math.abs(current - start) > 0.5) {
+//     videoRef.current.seekTo(start, "seconds");
+//   }
+// }, [start]);
 
   const handleStartTxt = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.trim();
@@ -262,7 +281,7 @@ const Index: React.FC<Type> = ({
               controls
               onProgress={onProgress}
               onSeek={onSeek}
-              progressInterval={100}
+              progressInterval={1000}
               width="100%"
               height="100%"
               config={{
