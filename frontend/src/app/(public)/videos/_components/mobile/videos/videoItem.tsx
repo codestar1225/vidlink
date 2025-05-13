@@ -1,4 +1,4 @@
-import { Eye, EyeIcon } from "lucide-react";
+import { Eye } from "lucide-react";
 import Link from "next/link";
 import ReactPlayer from "react-player";
 interface Type {
