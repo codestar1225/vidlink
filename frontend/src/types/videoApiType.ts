@@ -15,8 +15,9 @@ export interface PublishError {
 type Video = {
   videoLink: string;
   views: number;
+  card: number;
   title: string;
-  user: { _id: string; userName: string };
+  user: { _id: string; userName: string; picture: string };
   _id: string;
 };
 export interface GetVideosSuccess {

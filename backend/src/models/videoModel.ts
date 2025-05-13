@@ -32,7 +32,7 @@ VideoSchema.virtual("user", {
   localField: "userId",
   foreignField: "_id",
   justOne: true, // Ensures a single object (not an array)
-  options: { select: "userName" }, // Select only userName
+  options: { select: "userName picture" }, // Select only userName
 });
 VideoSchema.virtual("cards", {
   ref: "Card",

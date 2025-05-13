@@ -64,7 +64,7 @@ const SettingBar: React.FC<Type> = ({
   return (
     <>
       <div className="h-[72.58px] w-full relative flex items-center justify-center">
-        <div className="absolute top-[18.6px] left-[11px] flex gap-[10.3px] items-start">
+        <div className="absolute top-[18.6px] left-[11px] flex gap-[10px] items-center">
           <Link href={`/profile/${userInfo.owner ? "" : userId.trim()}`}>
             {userInfo.picture ? (
               <img
@@ -78,13 +78,13 @@ const SettingBar: React.FC<Type> = ({
               <span className="size-[35px]"></span>
             )}
           </Link>
-          <div className="flex flex-col h-[38.3px] justify-between items-start">
+          <div className="flex flex-col gap-[7px] justify-between items-start">
             <div className="text-[12px] text-blue font-semibold ">
               {userInfo.userName.toUpperCase()}
             </div>
-            <div className="text-[8px] font-normal ">
+            {/* <div className="text-[8px] font-normal ">
               {userInfo.totalVideos || 0} VIDEOS
-            </div>
+            </div> */}
 
             <button
               onClick={handleFollow}
@@ -92,17 +92,17 @@ const SettingBar: React.FC<Type> = ({
                 followStatus
                   ? "bg-blue border-none"
                   : "bg-background border-[0.41px]"
-              } text-[8px] font-semibold  rounded-[1.24px] px-[2px] h-[10.5px] leading-none`}
+              } text-[12px] font-semibold  rounded-[3px] px-[10px] h-[22px] leading-none`}
             >
               {followStatus ? "FOLLOWED" : "FOLLOW"}
             </button>
           </div>
         </div>
-        <button onClick={handleLike} className=" pl-[12px] pt-[4px]">
+        <button onClick={handleLike} className=" pl-[12px] pt-[4px] ">
           {like ? (
-            <img src="/icon/detail/blueHeart.png" alt="" />
+            <img src="/icon/detail/blueHeart.png" className="size-[32px]" alt="" />
           ) : (
-            <img src="/icon/detail/whiteHeart.png" alt="" />
+            <img src="/icon/detail/whiteHeart.png" className="size-[32px]" alt="" />
           )}
         </button>
         <div className=" absolute right-[9.23px] top-[10.6px] flex gap-[12px]">

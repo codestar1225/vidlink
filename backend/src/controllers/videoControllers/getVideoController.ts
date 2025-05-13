@@ -10,7 +10,7 @@ export const getVideos = expressAsyncHandler(
   async (req: CustomRequest, res: Response) => {
     try {
       const allVideos = await Video.find({})
-        .select("videoLink views title userId _id")
+        .select("videoLink views card title userId _id")
         .populate("user")
         .lean();
       if (!req.userId) {
@@ -27,9 +27,9 @@ export const getVideos = expressAsyncHandler(
         const followingVideos = await Video.find({
           userId: { $in: followingUserIds },
         })
-          .select("videoLink views title userId _id")
+          .select("videoLink views card title userId _id")
           .populate("user")
-          .lean();
+          .lean(); 
         res.status(200).json({
           message: "All and following videos found.",
           allVideos,
