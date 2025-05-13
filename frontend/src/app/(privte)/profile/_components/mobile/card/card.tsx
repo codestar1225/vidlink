@@ -55,7 +55,7 @@ const Card: React.FC<Type> = ({
         <div className="flex h-[29px] gap-1">
           <div className="h-full bg-white rounded-[6px] w-[50%] flex justify-center items-center">
             <button onClick={handleSavingCard} className="size-[22.5px]">
-              {isSaved ? (
+              {saved ? (
                 <img src="/icon/detail/card/left2Blue.png" alt="" />
               ) : (
                 <img src="/icon/detail/card/left2.svg" alt="" />
