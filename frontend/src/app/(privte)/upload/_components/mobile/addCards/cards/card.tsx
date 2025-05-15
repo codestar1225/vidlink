@@ -43,14 +43,12 @@ const Card: React.FC<Type> = ({
   //   setStart(start);
   // };
   const handleDelete = (no: number) => {
-    confirmModal(
-      "A card with the same start time already exists. Do you want to replace the existing card with this one?",
-      () =>
-        setCards((prevCards) => {
-          const newCards = prevCards.filter((card) => card.no !== no);
-          setItem("cards", newCards);
-          return newCards;
-        })
+    confirmModal("Are you sure you want to delete this card?", () =>
+      setCards((prevCards) => {
+        const newCards = prevCards.filter((card) => card.no !== no);
+        setItem("cards", newCards);
+        return newCards;
+      })
     );
   };
   return (
